@@ -1,26 +1,20 @@
 .firstSection {
-    height: 100vh;
+    height: 200vh;
     width: 100vw;
     background-image: url("../images/home_image.jpg");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position-y: 50%;
-    overflow: scroll;
-}
-
-.firstDiv {
-    height: 100vh;
-    width: 100vw;
+    background-size: 100% 60%;
+    background-position: 0px -55px;
+    overflow: hidden;
 }
 
 .secondSection {
-    height: 100vh;
+    height: 200vh;
     width: 100vw;
     background-image: url("../images/banner-03.jpg");
     background-repeat: no-repeat;
-    background-size: 100% 116%;
-    background-position-y: 50%;
-    overflow: scroll;
+    background-size: 100% 50%;
+    background-position: 0 0;
 }
 
 .navBg {
@@ -77,4 +71,41 @@
 .shopNowHover:hover {
     background: #000;
     color: white;
+}
+
+.product {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-size: cover;
+}
+
+.product:nth-child(1) {
+    background-image: url("https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/women-fashion-free-img.jpg");
+    background-position: -90px 0;
+}
+
+.product:nth-child(2) {
+    background-image: url("https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/men-fashion-free-img.jpg");
+    background-position: 0 0;
+}
+
+.product:nth-child(3) {
+    background-image: url("https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/footwear-free-img.jpg");
+    background-position: -90px 0;
+}
+
+.product > span {
+    background: #00000076;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    color: white;
+    display: flex;
+}
+
+.product > span > div {
+    width: 100%;
+    margin-left: 40px;
+    margin-top: 276px;
 }
