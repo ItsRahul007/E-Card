@@ -26,4 +26,10 @@ body {
     rgb(var(--background-start-rgb)); */
     color: black;
     background: white;
+    height: 100%;
+    width: 100%;
+}
+
+#main::-webkit-scrollbar {
+  display: none;
 }
