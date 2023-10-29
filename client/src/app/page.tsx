@@ -1,27 +1,24 @@
-"use client"
-
 import style from "@/app/style/style.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/app/images/logo.png";
 import 'remixicon/fonts/remixicon.css';
 import { Roboto } from 'next/font/google';
+import Item from "./components/Item";
 const roboto = Roboto({
   weight: '700',
   subsets: ['latin'],
   style: ["normal"]
 });
-import { useRef, useEffect } from "react";
 
 export default function Home() {
-  const { firstSection, secondSection, navBg, rightSpan, linkHover, hero, border, shopNowHover, product } = style;
-  const mainRef = useRef<HTMLDivElement>(null);
+  const { firstSection, secondSection, navBg, rightSpan, linkHover, hero, border, shopNowHover, product, featureProducts } = style;
 
 
 
   return (
     <>
-      <section className={firstSection} ref={mainRef}>
+      <section className={firstSection}>
         <nav className={`h-28 p-3 w-full flex items-center justify-between ${navBg}`}>
           <span className={`ml-6 flex gap-7 text-sm text-white ${linkHover}`}>
             <Link href="/">
@@ -101,9 +98,19 @@ export default function Home() {
           </div>
         </div>
 
-      </section>
+        <div className={featureProducts}>
+          <div className="self-center text-center flex flex-col gap-7 mt-24">
+            <h1 className="font-semibold text-4xl">
+              Featured Products
+            </h1>
+            <div className="w-24 self-center" style={{ background: "#1f92da", height: "1.5px" }}></div>
+          </div>
+          <div className="self-center mt-14 w-11/12 grid grid-cols-2 grid-rows-5">
+            <Item />
+          </div>
+        </div>
 
-      <section className={secondSection}></section>
+      </section>
     </>
   );
 };

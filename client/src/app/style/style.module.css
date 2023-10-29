@@ -1,11 +1,11 @@
 .firstSection {
-    height: 200vh;
+    height: 100vh;
     width: 100vw;
     background-image: url("../images/home_image.jpg");
     background-repeat: no-repeat;
-    background-size: 100% 60%;
+    background-size: 100% 116%;
     background-position: 0px -55px;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .secondSection {
@@ -108,4 +108,12 @@
     width: 100%;
     margin-left: 40px;
     margin-top: 276px;
+}
+
+.featureProducts {
+    background: #f5f7f9;
+    color: black;
+    height: 150vh;
+    display: flex;
+    flex-direction: column;
 }
