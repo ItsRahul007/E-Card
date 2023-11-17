@@ -1,0 +1,31 @@
+.banner {
+    height: 90Vh;
+    width: 100%;
+    background-image: url("../images/banner-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.nav_child::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -80px;
+    border-bottom: 80px solid transparent;
+    border-left: 80px solid #2b2a29;
+    width: 0;
+}
+
+.nav_child::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -80px;
+    border-bottom: 80px solid transparent;
+    border-right: 80px solid #2b2a29;
+    width: 0;
+}
+
+.nav_child li {
+    transition: all ease .5s;
+}
