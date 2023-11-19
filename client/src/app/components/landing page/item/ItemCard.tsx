@@ -1,5 +1,4 @@
 import React from 'react';
-import itemStyle from "@/app/style/item.module.css";
 
 interface itemProps {
     imgUrl: string | any | undefined;
@@ -9,7 +8,6 @@ interface itemProps {
 };
 
 function Item({ imgUrl, itemName, itemCategory, itemRate }: itemProps) {
-    const { star, category } = itemStyle;
 
     return (
         <div className='flex flex-col'>
@@ -18,15 +16,15 @@ function Item({ imgUrl, itemName, itemCategory, itemRate }: itemProps) {
             </span>
             <span className='flex flex-col gap-1 mt-5'>
                 <h5 className='font-semibold cursor-pointer'>{itemName}</h5>
-                <div className={category}>{itemCategory}</div>
+                <div className="text-[#00000067]">{itemCategory}</div>
                 <div className='font-medium cursor-pointer'>${itemRate}</div>
-                <div>
-                    <i className={"ri-star-line cursor-pointer " + star}></i>
-                    <i className={"ri-star-line cursor-pointer " + star}></i>
-                    <i className={"ri-star-line cursor-pointer " + star}></i>
-                    <i className={"ri-star-line cursor-pointer " + star}></i>
-                    <i className={"ri-star-line cursor-pointer " + star}></i>
-                </div>
+                {/* <div>
+                    <i className={"ri-star-line cursor-pointer text-[rgba(0, 0, 0, 0.621)]"}></i>
+                    <i className={"ri-star-line cursor-pointer text-[rgba(0, 0, 0, 0.621)]"}></i>
+                    <i className={"ri-star-line cursor-pointer text-[rgba(0, 0, 0, 0.621)]"}></i>
+                    <i className={"ri-star-line cursor-pointer text-[rgba(0, 0, 0, 0.621)]"}></i>
+                    <i className={"ri-star-line cursor-pointer text-[rgba(0, 0, 0, 0.621)]"}></i>
+                </div> */}
             </span>
         </div>
     )

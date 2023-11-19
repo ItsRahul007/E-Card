@@ -7,7 +7,7 @@ interface button {
 };
 
 const Button: React.FC<button> = ({ className, onClick }) => {
-    const defaultStyle = `mt-5 text-black bg-white p-3 mr-4 font-semibold w-36 ${style.shopNowHover}`;
+    const defaultStyle = `mt-5 text-black bg-white p-3 mr-4 font-semibold w-36 hover:text-white hover:bg-black`;
 
     return (
         <button className={`${className ? className : defaultStyle} `} onClick={onClick}>
