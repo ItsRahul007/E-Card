@@ -6,12 +6,9 @@ export default function Home() {
 
   return (
     <>
-      <section>
-        <Banner />
-        <Card />
-        <FeatureProduct />
-        
-      </section>
+      <Banner />
+      <Card />
+      <FeatureProduct />
     </>
   );
 };

@@ -15,11 +15,11 @@ interface bigcard {
 
 const BigCard: React.FC<bigcard> = ({ url, headText, position }) => {
     return (
-        <div className={`w-96 h-2/3 relative text-white bg-cover bg-no-repeat`} 
+        <div className={`w-96 h-[32rem] relative text-white bg-cover bg-no-repeat`} 
         style={{backgroundImage: "url(" + url + ")", backgroundPosition: position? "-85px 0" : "0 0"}}
         >
             <span className='bg-[#00000076] h-full w-full absolute flex '>
-                <div className='w-full ml-10 mt-[276px]'>
+                <div className='w-full ml-6 mt-[276px]'>
                     <h3 className={"text-3xl " + roboto.className}>
                         {headText}
                     </h3>

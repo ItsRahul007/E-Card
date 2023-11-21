@@ -1,11 +1,10 @@
-"use client"
-
 import React, { useEffect } from 'react';
 import style from "@/app/style/banner.module.css";
 import { Poppins, Roboto } from 'next/font/google';
 import Button from '../../common/Button';
 import Link from 'next/link';
 import { Power3, gsap } from 'gsap';
+import BannerGsap from './BannerGsap';
 
 const poppins = Poppins({
   weight: ['500'],
@@ -19,25 +18,14 @@ const roboto = Roboto({
 });
 
 const Banner: React.FC = () => {
-  useEffect(() => {
-    gsap.fromTo("#banner-nav", {
-      y: -100,
-      duration: 0.5
-    },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5
-      }
-    );
-  }, []);
 
   return (
     <section className={`${style.banner} text-white`}>
+      <BannerGsap />
       {/* the nav bar */}
       <nav id='banner-nav' className={`w-full h-[70px] flex justify-center items-center opacity-0 ${poppins.className}`}>
         <div className={`bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child}`}>
-          <ul className='h-full w-full flex justify-center items-center gap-6 text-base font-normal'>
+          <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/home">Home</Link>
             </li>
@@ -64,12 +52,17 @@ const Banner: React.FC = () => {
       </nav>
 
       {/* icon */}
-      <div className='text-[40px] text-center font-bold mt-9'>E-Card</div>
+      <div className='text-[40px] text-center font-bold mt-9 opacity-0' id='logo'>E-Card</div>
 
       {/* head lines */}
       <div className='text-center mt-12'>
-        <h1 className={'text-[70px] font-extrabold ' + roboto.className}>GET START<br />YOUR FAVRIOT SHOPING</h1>
-        <Button className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg' />
+        <h1 className={'text-[70px] font-extrabold ' + roboto.className}>
+          <div className='opacity-0' id='h-text-1'>GET START</div>
+          <div className='opacity-0' id='h-text-2'>YOUR FAVRIOT SHOPING</div>
+        </h1>
+        <span className='opacity-0' id='banner-btn'>
+          <Button className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg' />
+        </span>
       </div>
     </section>
   );
