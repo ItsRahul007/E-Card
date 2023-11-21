@@ -5,3 +5,63 @@
   align-items: center;
   justify-content: center;
 }
+.banner {
+  height: 95Vh;
+  width: 100%;
+  background-image: url("../images/banner-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.nav_child::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: -80px;
+  border-bottom: 80px solid transparent;
+  border-left: 80px solid #2b2a29;
+  width: 0;
+}
+
+.nav_child::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -80px;
+  border-bottom: 80px solid transparent;
+  border-right: 80px solid #2b2a29;
+  width: 0;
+}
+
+.nav_child li {
+  transition: all ease .5s;
+}
+
+.login_image {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../images/shop.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parent_glass {
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(4px);
+  position: relative;
+}
+
+.glass {
+  height: 30rem;
+  width: 25.5rem;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 0 20px #000;
+  position: absolute;
+  z-index: inherit;
+}
