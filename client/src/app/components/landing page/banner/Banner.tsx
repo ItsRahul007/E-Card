@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import style from "@/app/style/style.module.css";
 import { Poppins, Roboto } from 'next/font/google';
 import Button from '../../common/Button';
@@ -10,6 +10,7 @@ const poppins = Poppins({
   subsets: ['latin'],
   style: ["normal"]
 });
+
 const roboto = Roboto({
   weight: ['900'],
   subsets: ['latin'],
@@ -22,8 +23,8 @@ const Banner: React.FC = () => {
     <section className={`${style.banner} text-white`}>
       <BannerGsap />
       {/* the nav bar */}
-      <nav id='banner-nav' className={`w-full h-[70px] flex justify-center items-center opacity-0 ${poppins.className}`}>
-        <div className={`bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child}`}>
+      <nav id='banner-nav' className="w-full h-[70px] flex justify-center items-center opacity-0">
+        <div className={`bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} ${poppins.className}`}>
           <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/home">Home</Link>
