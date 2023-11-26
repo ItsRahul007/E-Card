@@ -6,13 +6,13 @@ import Link from 'next/link';
 import BannerGsap from './BannerGsap';
 
 const poppins = Poppins({
-  weight: ['500'],
+  weight: '500',
   subsets: ['latin'],
   style: ["normal"]
 });
 
 const roboto = Roboto({
-  weight: ['900'],
+  weight: '900',
   subsets: ['latin'],
   style: ["normal"]
 });
@@ -46,6 +46,9 @@ const Banner: React.FC = () => {
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/">Fevorite <i className="ri-heart-fill"></i></Link>
+            </li>
+            <li className='cursor-pointer list-none hover:text-[#f26522]'>
+              <Link href="/login">Login <i className="ri-login-box-fill"></i></Link>
             </li>
           </ul>
         </div>

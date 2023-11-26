@@ -12,7 +12,7 @@ const Button: React.FC<button> = ({ className, onClick, type, text }) => {
 
     return (
         <button className={`${className ? className : defaultStyle} `} onClick={onClick} type={type}>
-            {text? text :"SHOP NOW"}
+            {text ? text : "SHOP NOW"}
         </button>
     );
 };
