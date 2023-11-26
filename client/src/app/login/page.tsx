@@ -10,7 +10,7 @@ const poppins = Poppins({
   style: ["normal"]
 });
 
-const Login: React.FC = () => {
+const page: React.FC = () => {
   return (
     <div className={style.login_image}>
       <div className={style.parent_glass}>
@@ -42,4 +42,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default page;
