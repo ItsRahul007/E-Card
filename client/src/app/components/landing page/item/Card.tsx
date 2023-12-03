@@ -4,7 +4,7 @@ import { Mukta } from 'next/font/google';
 const mukta = Mukta({
   weight: '700',
   subsets: ['latin'],
-  style: ["normal"]
+  style: "normal"
 });
 
 const Card: React.FC = () => {

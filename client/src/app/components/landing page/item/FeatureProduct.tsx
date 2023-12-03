@@ -10,7 +10,8 @@ const FeatureProduct = () => {
                 <h1 className="font-semibold text-4xl">
                     Featured Products
                 </h1>
-                <div className="w-24 self-center" style={{ background: "#1f92da", height: "1.5px" }}></div>
+                <div className="w-24 self-center" style={{ background: "#1f92da", height: "1.5px" }}>
+                </div>
             </div>
             <div className={"self-center mt-14 w-11/12 " + style.grid}>
                 {

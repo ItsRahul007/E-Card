@@ -18,7 +18,7 @@ const roboto = Roboto({
 });
 
 const Signup: React.FC = () => {
-  return <Login name="Signup" />
+  return <Login signup="Signup" />
 };
 
 export default Signup;

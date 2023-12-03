@@ -4,7 +4,7 @@ import Button from '../../common/Button';
 const roboto = Roboto({
     weight: '700',
     subsets: ['latin'],
-    style: ["normal"]
+    style: "normal"
 });
 
 interface bigcard {
