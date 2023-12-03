@@ -21,10 +21,18 @@ const Footer = () => {
       <div className='flex justify-between w-[95%] h-16'>
         <span>Copyright &#169; 2024 All Rights Reserved by Rahul</span>
         <span className='flex gap-2'>
-        <i className="ri-facebook-fill p-2 px-3 bg-[#35383f] rounded-full text-xl cursor-pointer"></i>
-        <i className="ri-twitter-fill p-2 px-3 bg-[#35383f] rounded-full text-xl cursor-pointer"></i>
-        <i className="ri-global-line p-2 px-3 bg-[#35383f] rounded-full text-xl cursor-pointer"></i>
-        <i className="ri-linkedin-fill p-2 px-3 bg-[#35383f] rounded-full text-xl cursor-pointer"></i>
+        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+          <i className="ri-facebook-fill"></i>
+        </button>
+        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+          <i className="ri-twitter-fill"></i>
+        </button>
+        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+          <i className="ri-global-line"></i>
+        </button>
+        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+          <i className="ri-linkedin-fill"></i>
+        </button>
         </span>
       </div>
     </footer>

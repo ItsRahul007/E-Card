@@ -36,7 +36,7 @@ const Banner: React.FC = () => {
   }, [bannerTimeLine]);
 
   return (
-    <section className={`${style.banner} text-white`}>
+    <header className={`${style.banner} text-white`}>
       {/* the nav bar */}
       <nav id='banner-nav' className="w-full h-[70px] flex justify-center items-center">
         <div className={`bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} ${poppins.className}`}>
@@ -82,7 +82,7 @@ const Banner: React.FC = () => {
           <Button className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg' />
         </span>
       </div>
-    </section>
+    </header>
   );
 };
 
