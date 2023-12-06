@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import style from "@/app/style/style.module.css";
 import { Poppins, Roboto } from 'next/font/google';
 import Button from '../../common/Button';
