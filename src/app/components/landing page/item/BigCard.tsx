@@ -11,12 +11,14 @@ interface bigcard {
     url: string;
     headText: string;
     position?: boolean;
+    id?: string;
 };
 
-const BigCard: React.FC<bigcard> = ({ url, headText, position }) => {
+const BigCard: React.FC<bigcard> = ({ url, headText, position, id }) => {
     return (
         <div className={`w-96 h-[32rem] relative text-white bg-cover bg-no-repeat`} 
         style={{backgroundImage: "url(" + url + ")", backgroundPosition: position? "-85px 0" : "0 0"}}
+        id={id}
         >
             <span className='bg-[#00000076] h-full w-full absolute flex '>
                 <div className='w-full ml-6 mt-[276px]'>
