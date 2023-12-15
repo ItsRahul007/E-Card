@@ -10,7 +10,7 @@ const Footer = () => {
         </span>
         <span className='w-1/4'>
           <h5 className='text-white font-semibold text-lg'>SERVICES</h5>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro quisquam fuga harum autem corrupti totam quia, nemo odio alias quis?</p>
+          <p>It&apos;s an pratice project, so you can order anything but don&apos;t expect that you got any product to your home 😂</p>
         </span>
         <span className='w-1/4'>
           <h5 className='text-white font-semibold text-lg'>PRODUCTS</h5>
