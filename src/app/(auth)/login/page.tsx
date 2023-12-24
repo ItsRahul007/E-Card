@@ -1,9 +1,9 @@
 import React from "react";
 import style from "@/app/style/style.module.css";
 import { Poppins, Roboto } from "next/font/google";
-import Button from "../components/common/Button";
+import Button from "../../components/common/Button";
 import Link from "next/link";
-import InputCompo from "../components/common/InputCompo";
+import InputCompo from "../../components/common/InputCompo";
 
 const poppins = Poppins({
   weight: '600',
