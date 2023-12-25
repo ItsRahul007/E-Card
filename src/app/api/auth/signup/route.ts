@@ -12,7 +12,7 @@ export async function POST(req: Request) {
         //! If not of name, email and password or it's an invalid email
         if (!name || !email || !password) {
             return NextResponse.json({ error: "Invalid criteria" }, { status: 401 });
-        } else if (!isValidEmail(email)) return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+        } else if (!isValidEmail(email)) return NextResponse.json({ error: "Invalid email" }, { status: 401 });
 
         //* First connect the mongo then create a new user and save it
         await connectWithMongo();
@@ -48,6 +48,6 @@ export async function POST(req: Request) {
         });
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+        return NextResponse.json({ error: "Internal server error", problem: error }, { status: 500 });
     }
 };
