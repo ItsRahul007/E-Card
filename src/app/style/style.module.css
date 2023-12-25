@@ -57,7 +57,7 @@
 }
 
 .glass {
-  height: 30rem;
+  min-height: 30rem;
   width: 25.5rem;
   backdrop-filter: blur(10px);
   border-radius: 20px;

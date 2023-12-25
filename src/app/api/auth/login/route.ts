@@ -19,16 +19,16 @@ export async function POST(req: Request) {
         //* First connect the mongo then login user
         await connectWithMongo();
 
-        //! If the dosen't email exists
+        //! If the given email dosen't exists
         const user = await User.findOne({ email });
         if (!user) {
             return NextResponse.json({ error: "No user exist with this email" }, { status: 400 });
-        }
+        };
 
         //* Comparing the given password and stored password
         const comparePassword = await bcrypt.compare(password, user.password);
         if (!comparePassword) {
-            return NextResponse.json({ errors: "Wrong password" }, { status: 400 });
+            return NextResponse.json({ error: "Wrong password" }, { status: 400 });
         };
 
         const data = {
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
         const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
 
-        // Creating and sending an authentication token in responce
+        //* Creating and sending an authentication token in responce
         if (!JWT_SECRET) {
             return NextResponse.json({ error: "Unable to finde JWT_SECRET" }, { status: 500 });
         }
