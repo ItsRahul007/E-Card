@@ -3,15 +3,20 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        //! how to add checks in req, like if the request have name or email or not
+        const {email, password} = await req.json();
+
+        //! If not of email and password then sending error
+        if (!email || !password) {
+            return NextResponse.json({ error: "Invalid criteria"}, {status: 401});
+        }
+
         await connectWithMongo();
-        const data = await req.json();
         
         return NextResponse.json({
-            data
+            data: "ok",
         });
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: "error"}, {status: 500});
+        return NextResponse.json({ error: "Internal server error"}, {status: 500});
     }
 };
