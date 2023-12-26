@@ -10,9 +10,8 @@ const userModel = new Schema({
         type: String,
         unique: true,
     },
-    password: {
-        type: String,
-    },
+    password: String,
+    socialUser: Boolean,
 });
 
 const User = models.users || model("users", userModel);

@@ -37,6 +37,8 @@ const Login: React.FC<I_login> = ({ signup }) => {
   async function onSubmit(e: any) {
     e.preventDefault();
     const { name, email, password, cPassword } = inputValue;
+
+    //? If not of user then login user otherwise signup
     if (!signup) {
       try {
         //* Sending request with given details
@@ -60,7 +62,7 @@ const Login: React.FC<I_login> = ({ signup }) => {
       try {
         //* Sending request with given details
         toast.loading("Sending request");
-        const response = await signupWithEmailPassword({ name, email, password, cPassword });
+        const response = await signupWithEmailPassword({ name, email, password });
         toast.dismiss();
 
         //* If success then saving the authToken to localStorage
@@ -74,8 +76,8 @@ const Login: React.FC<I_login> = ({ signup }) => {
         toast.error(errorResponse ? errorResponse.data.error : "Internal Server Error");
         //console.log(error);
       }
-    }
-  }
+    };
+  };
 
   return (
     <div className={style.login_image}>
@@ -127,13 +129,11 @@ const Login: React.FC<I_login> = ({ signup }) => {
             type="submit"
             className="p-2 px-4 bg-[#0d0827cc] mt-3 rounded-xl text-lg text-[#ffffffde] hover:text-cyan-400 hover:bg-[#060507cc] font-medium"
           />
-          <div>
-            <p className="text-white">{signup ? "Already" : "Don't"} have an account? <Link href={`/${signup ? "login" : "signup"}`} className="text-blue-600 hover:decoration-blue-800 hover:underline font-semibold">{signup ? "Login" : "Signup"}</Link></p>
-            <div className="w-full flex justify-center items-start gap-5 text-2xl text-slate-100 mt-3">
-              <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-google-fill" style={{ transition: "all ease .4s" }}></i></Link>
-              <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-facebook-fill" style={{ transition: "all ease .4s" }}></i></Link>
-              <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-linkedin-fill" style={{ transition: "all ease .4s" }}></i></Link>
-            </div>
+          <p className="text-white">{signup ? "Already" : "Don't"} have an account? <Link href={`/${signup ? "login" : "signup"}`} className="text-blue-600 hover:decoration-blue-800 hover:underline font-semibold">{signup ? "Login" : "Signup"}</Link></p>
+          <div className="w-full flex justify-center items-start gap-5 text-2xl text-slate-100 mt-3">
+            <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-google-fill" style={{ transition: "all ease .4s" }}></i></Link>
+            <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-facebook-fill" style={{ transition: "all ease .4s" }}></i></Link>
+            <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-linkedin-fill" style={{ transition: "all ease .4s" }}></i></Link>
           </div>
         </div>
       </form>
