@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemCompo from "./ItemCard";
+import ItemCompo from "./FeatureItem";
 import itemInfo from "@/app/item/itemInfo";
 import style from "@/app/style/style.module.css";
 
@@ -15,9 +15,9 @@ const FeatureProduct = () => {
             </div>
             <div className={"self-center mt-14 w-11/12 " + style.grid}>
                 {
-                    itemInfo.map((e: any, i: number) => {
+                    itemInfo.map((e: any) => {
                         const { imgUrl, itemName, itemCategory, itemRate } = e;
-                        return <ItemCompo key={i} imgUrl={imgUrl} itemName={itemName} itemCategory={itemCategory} itemRate={itemRate} />
+                        return <ItemCompo key={e.imgUrl} {...e} />
                     })
                 }
             </div>

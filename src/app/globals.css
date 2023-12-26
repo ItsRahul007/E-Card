@@ -17,6 +17,6 @@ html, body {
   width: 100%;
 }
 
-button {
+button, a {
   transition: all ease .5s;
 }

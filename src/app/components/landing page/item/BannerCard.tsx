@@ -8,7 +8,7 @@ const mukta = Mukta({
   style: "normal"
 });
 
-const Card: React.FC = () => {
+const BannerCard: React.FC = () => {
   return (
     <section 
     className={"h-screen w-full bg-white flex flex-col items-center justify-center gap-2 z-20"}
@@ -43,4 +43,4 @@ const Card: React.FC = () => {
   )
 }
 
-export default Card;
+export default BannerCard;
