@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
+import React from 'react';
 
 const ItemCard: React.FC = () => {
   return (
-    <div className='border h-[23rem] w-64 m-2 p-2 flex flex-col items-center gap-1 overflow-hidden rounded-md'>
+    <div className='border h-[20rem] w-52 m-2 p-2 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white'>
       <div className='h-3/4 w-full'>
         <div className='relative h-3/4 w-full'>
           <Image
@@ -25,11 +25,11 @@ const ItemCard: React.FC = () => {
       </div>
       <div className='h-1/4 w-[110%]'>
       <div className='w-full h-[1px] bg-slate-800' />
-        <span className='h-full w-full ml-3 flex items-center font-semibold gap-3 text-[15px]'>
-          <Link href="/home/kuchvi" className='bg-sky-600 hover:bg-sky-700 text-white p-2 px-3 rounded-md'>
+        <span className='h-full w-full ml-3 flex items-center font-semibold gap-3 text-sm'>
+          <Link href="/home/kuchvi" className='bg-sky-600 hover:bg-sky-700 text-white p-[7px] px-2 rounded-md'>
             Buy now
           </Link>
-          <Link href="/home/kuchvi" className='text-sky-600 hover:bg-sky-100 p-2 px-3 rounded-md'>
+          <Link href="/home/kuchvi" className='text-sky-600 hover:bg-sky-100 p-[7px] px-2 rounded-md'>
             Add to cart
           </Link>
         </span>
