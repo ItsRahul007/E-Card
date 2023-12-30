@@ -10,7 +10,7 @@ const ubuntu = Ubuntu({
 
 const AllProductNav: React.FC = () => {
   return (
-    <nav className='w-screen h-20 bg-[#41B4CD] text-white flex'>
+    <nav className='w-screen min-h-[11%] bg-[#41B4CD] text-white flex'>
         <span className='h-full w-1/3 flex justify-end items-center gap-8'>
             <span className={`!font-black text-3xl ${ubuntu.className}`}>E-Card</span>
             <input type="text" placeholder='Search products and brands' className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans' />

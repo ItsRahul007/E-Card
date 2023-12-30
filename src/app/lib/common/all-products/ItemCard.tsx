@@ -1,38 +1,39 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import style from "@/app/style/style.module.css";
 
-const ItemCard: React.FC = () => {
+interface I_ItemCard {
+  imgUrl: string;
+  itemName: string;
+  itemRate: number | string;
+}
+
+const ItemCard: React.FC<I_ItemCard> = (props) => {
+  const { imgUrl, itemName, itemRate } = props;
+
   return (
-    <div className='border h-[20rem] w-52 m-2 p-2 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white'>
-      <div className='h-3/4 w-full'>
-        <div className='relative h-3/4 w-full'>
-          <Image
-            src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2021/03/sports-shoe3.jpg"
-            alt="item"
-            fill
-            className='rounded-md'
-          />
-        </div>
-        <div className='h-1/4 w-full flex flex-col items-center justify-start gap-1'>
-          <span className='w-full whitespace-nowrap text-ellipsis font-semibold mt-1'>
-            Shoes
-          </span>
-          <span className='w-full text-xl text-sky-600'>
-            $200
-          </span>
-        </div>
-      </div>
-      <div className='h-1/4 w-[110%]'>
-      <div className='w-full h-[1px] bg-slate-800' />
-        <span className='h-full w-full ml-3 flex items-center font-semibold gap-3 text-sm'>
-          <Link href="/home/kuchvi" className='bg-sky-600 hover:bg-sky-700 text-white p-[7px] px-2 rounded-md'>
-            Buy now
-          </Link>
-          <Link href="/home/kuchvi" className='text-sky-600 hover:bg-sky-100 p-[7px] px-2 rounded-md'>
-            Add to cart
-          </Link>
+    <div className='border h-[18rem] w-64 m-2 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px]'>
+      <div className={'relative h-3/4 w-full ' + style.itemImage}>
+        <Image
+          src={imgUrl}
+          alt="item"
+          fill
+        />
+        <span className={'absolute text-slate-50 text-2xl bottom-0 flex items-center justify-end w-full h-16 ' + style.hoverCompo}>
+          <div className='w-20 flex gap-3 h-full items-center'>
+            <Link href="#"><i className="hover:text-white ri-shopping-cart-2-fill font-thin"></i></Link>
+            <Link href="#"><i className="hover:text-white ri-heart-fill font-thin"></i></Link>
+          </div>
         </span>
+      </div>
+      <div className='h-1/4 w-full flex flex-col items-center gap-1'>
+        <div className='w-full whitespace-nowrap text-ellipsis font-bold mt-1 ml-6'>
+          {itemName}
+        </div>
+        <div className='w-full text-base text-gray-700 ml-6 font-semibold'>
+          ${itemRate}
+        </div>
       </div>
     </div>
   )

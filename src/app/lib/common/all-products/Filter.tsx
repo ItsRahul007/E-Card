@@ -15,7 +15,7 @@ const nunito = Nunito({
 
 const Filter = () => {
   return (    
-    <span className='bg-[#F8F8F8] w-1/5 h-full overflow-scroll flex flex-col'>
+    <div className='bg-[#F8F8F8] w-1/5 h-full overflow-scroll flex flex-col'>
       <div className={`h-1/5 w-full ${kanit.className}`}>
         <h3 className='text-4xl ml-4 mt-6'>Filters</h3>
       </div>
@@ -43,7 +43,7 @@ const Filter = () => {
           </ul>
         </div>
       </div>
-    </span>
+    </div>
   )
 }
 

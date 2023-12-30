@@ -61,3 +61,13 @@
   position: absolute;
   z-index: inherit;
 }
+
+.hoverCompo {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.283) 80%);
+  opacity: 0;
+  transition: .3s ease;
+}
+
+.itemImage:hover .hoverCompo{
+  opacity: 1;
+}
