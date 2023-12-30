@@ -1,7 +1,7 @@
 import React from 'react';
 import style from "@/app/style/style.module.css";
 import { Poppins, Roboto } from 'next/font/google';
-import Button from '../../common/Button';
+import Button from '../../../lib/common/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 

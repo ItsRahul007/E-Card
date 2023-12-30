@@ -33,10 +33,6 @@
   width: 0;
 }
 
-.nav_child li {
-  transition: all ease .5s;
-}
-
 .login_image {
   height: 100vh;
   width: 100vw;

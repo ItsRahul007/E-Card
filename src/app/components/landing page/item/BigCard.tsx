@@ -1,6 +1,6 @@
 import React from 'react';
 import { Roboto } from 'next/font/google';
-import Button from '../../common/Button';
+import Button from '../../../lib/common/Button';
 const roboto = Roboto({
     weight: '700',
     subsets: ['latin'],
