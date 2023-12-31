@@ -20,9 +20,9 @@ export async function POST(req: Request) {
         //! If the email already exists
         const isEmailAlreadyExist = await User.findOne({ email });
         if (isEmailAlreadyExist) {
-            return NextResponse.json({ error: "A user with this email already exists" }, { status: 400 });
+            return NextResponse.json({ error: "A user with this email already exists", success: false }, { status: 400 });
         }
-        
+
         const salt = await bcrypt.genSalt(10);
         // hashing password and adding salt with it
         const secPas = await bcrypt.hash(password, salt);
@@ -39,15 +39,16 @@ export async function POST(req: Request) {
 
         // Creating and sending an authentication token in responce
         if (!JWT_SECRET) {
-            return NextResponse.json({ error: "Unable to finde JWT_SECRET" }, { status: 500 });
+            return NextResponse.json({ error: "Unable to finde JWT_SECRET", success: false }, { status: 500 });
         }
         const authToken = jwt.sign(data, JWT_SECRET);
 
         return NextResponse.json({
+            success: true,
             authToken,
         });
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: "Internal server error", problem: error }, { status: 500 });
+        return NextResponse.json({ error: "Internal server error", problem: error, success: false }, { status: 500 });
     }
 };

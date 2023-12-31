@@ -11,9 +11,9 @@ export async function POST(req: Request) {
 
         //! If not of email and password or it's an valid email
         if (!email || !password) {
-            return NextResponse.json({ error: "Invalid criteria" }, { status: 401 });
+            return NextResponse.json({ error: "Invalid criteria", success: false }, { status: 401 });
         } else if (!isValidEmail(email)) {
-            return NextResponse.json({ error: "Invalid email" }, { status: 401 });
+            return NextResponse.json({ error: "Invalid email", success: false }, { status: 401 });
         };
 
         //* First connect the mongo then login user
@@ -22,13 +22,13 @@ export async function POST(req: Request) {
         //! If the given email dosen't exists
         const user = await User.findOne({ email });
         if (!user) {
-            return NextResponse.json({ error: "No user exist with this email" }, { status: 400 });
+            return NextResponse.json({ error: "No user exist with this email", success: false }, { status: 400 });
         };
 
         //* Comparing the given password and stored password
         const comparePassword = await bcrypt.compare(password, user.password);
         if (!comparePassword) {
-            return NextResponse.json({ error: "Wrong password" }, { status: 400 });
+            return NextResponse.json({ error: "Wrong password", success: false }, { status: 400 });
         };
 
         const data = {
@@ -41,15 +41,16 @@ export async function POST(req: Request) {
 
         //* Creating and sending an authentication token in responce
         if (!JWT_SECRET) {
-            return NextResponse.json({ error: "Unable to finde JWT_SECRET" }, { status: 500 });
+            return NextResponse.json({ error: "Unable to finde JWT_SECRET", success: false }, { status: 500 });
         }
         const authToken = jwt.sign(data, JWT_SECRET);
 
         return NextResponse.json({
+            success: true,
             authToken
         }, { status: 200 });
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: "Internal server error", problem: error }, { status: 500 });
+        return NextResponse.json({ error: "Internal server error", problem: error, success: false }, { status: 500 });
     }
 };

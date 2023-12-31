@@ -3,13 +3,12 @@ import React from 'react';
 
 interface itemProps {
     imgUrl: string;
-    itemName: string;
-    itemRate: string | number;
+    product_name: string;
+    price: string | number;
 };
 
 function Item(props: itemProps) {
-    const { imgUrl, itemName, itemRate } = props;
-    console.log(imgUrl);
+    const { imgUrl, product_name, price } = props;
 
     return (
         <div className='flex flex-col'>
@@ -21,8 +20,8 @@ function Item(props: itemProps) {
                 />
             </span>
             <span className='flex flex-col gap-1 mt-5'>
-                <h5 className='font-semibold cursor-pointer'>{itemName}</h5>
-                <div className='font-medium cursor-pointer'>${itemRate}</div>
+                <h5 className='font-semibold cursor-pointer'>{product_name}</h5>
+                <div className='font-medium cursor-pointer'>${price}</div>
             </span>
         </div>
     )

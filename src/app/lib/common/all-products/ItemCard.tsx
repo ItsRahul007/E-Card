@@ -5,15 +5,15 @@ import style from "@/app/style/style.module.css";
 
 interface I_ItemCard {
   imgUrl: string;
-  itemName: string;
-  itemRate: number | string;
+  product_name: string;
+  price: number | string;
 }
 
 const ItemCard: React.FC<I_ItemCard> = (props) => {
-  const { imgUrl, itemName, itemRate } = props;
+  const { imgUrl, product_name, price } = props;
 
   return (
-    <div className='border h-[18rem] w-64 m-2 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px]'>
+    <div className='border h-[18rem] w-64 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px]'>
       <div className={'relative h-3/4 w-full ' + style.itemImage}>
         <Image
           src={imgUrl}
@@ -29,10 +29,10 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
       </div>
       <div className='h-1/4 w-full flex flex-col items-center gap-1'>
         <div className='w-full whitespace-nowrap text-ellipsis font-bold mt-1 ml-6'>
-          {itemName}
+          {product_name}
         </div>
         <div className='w-full text-base text-gray-700 ml-6 font-semibold'>
-          ${itemRate}
+          ${price}
         </div>
       </div>
     </div>

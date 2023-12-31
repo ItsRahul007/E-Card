@@ -4,7 +4,7 @@ import React from 'react';
 
 interface I_InputComponent {
     type: string;
-    placeholder: string;
+    placeholder?: string;
     name: string;
     className?: string;
     isRequired?: boolean;
@@ -24,6 +24,7 @@ const InputCompo: React.FC<I_InputComponent> = ({
             value={currentValue}
             onChange={onChange}
             required={isRequired}
+            min={type === "number" ? 1 : undefined}
         />
     );
 };

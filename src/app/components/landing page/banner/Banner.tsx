@@ -29,7 +29,7 @@ const Banner: React.FC = () => {
               <Link href="/home">Home</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Fashion</Link>
+              <Link href="/">Accessories</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/">Jewellery</Link>

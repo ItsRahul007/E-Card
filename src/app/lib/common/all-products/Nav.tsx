@@ -1,6 +1,7 @@
 import React from 'react';
 import { Ubuntu } from 'next/font/google';
 import Link from 'next/link';
+import InputCompo from '../InputCompo';
 
 const ubuntu = Ubuntu({
   weight: "700",
@@ -12,8 +13,8 @@ const AllProductNav: React.FC = () => {
   return (
     <nav className='w-screen min-h-[11%] bg-[#41B4CD] text-white flex'>
         <span className='h-full w-1/3 flex justify-end items-center gap-8'>
-            <span className={`!font-black text-3xl ${ubuntu.className}`}>E-Card</span>
-            <input type="text" placeholder='Search products and brands' className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans' />
+            <span className={`text-3xl ${ubuntu.className}`}>E-Card</span>
+            <InputCompo type="text" name='navSearch' placeholder='Search products and brands' className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans' />
         </span>
         <span className='h-full flex-1 flex justify-center items-center gap-8 text-white font-sans text-lg'>
           <Link href="/home/search?search=shoes" className='cursor-pointer'>Shoes</Link>
