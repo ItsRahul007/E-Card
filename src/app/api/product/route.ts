@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Products from "@/app/lib/model/productSchema";
 import connectWithMongo from "@/app/lib/mongoConnection/mongoConnect";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest ) {
     try {
-        const { AUTH_TOKEN } = await req.json();
+        const requestHeaders = new Headers(req.headers);
+        const AUTH_TOKEN = requestHeaders.get('AUTH_TOKEN');
 
         if (AUTH_TOKEN !== process.env.AUTH_TOKEN) {
             return NextResponse.json({
@@ -15,7 +16,12 @@ export async function GET(req: Request) {
 
         await connectWithMongo();
 
-        const products = await Products.find();
+        const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
+        const itemNumber = 10;
+        //! compares the first and second numbers and returns the biggest number
+        const skipNumber = Math.max((pageNumber - 1) * itemNumber, 1);
+
+        const products = await Products.find().skip(skipNumber).limit(itemNumber);
 
         return NextResponse.json({
             success: true,
@@ -23,6 +29,7 @@ export async function GET(req: Request) {
         });
 
     } catch (error) {
+        console.log(error);
         return NextResponse.json({
             success: false,
             error: "Internal server error",

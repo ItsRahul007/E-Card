@@ -1,7 +1,7 @@
 import React from 'react';
 import style from "@/app/style/style.module.css";
-import { Poppins, Roboto } from 'next/font/google';
-import Button from '../../../lib/common/Button';
+import { Poppins, Roboto, Ubuntu } from 'next/font/google';
+import Button from '@/app/lib/common/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 
@@ -15,6 +15,12 @@ const roboto = Roboto({
   weight: '700',
   subsets: ['latin'],
   style: ["normal"]
+});
+
+const ubuntu = Ubuntu({
+  weight: "700",
+  subsets: ["latin-ext", ],
+  style: 'normal'
 });
 
 const Banner: React.FC = () => {
@@ -54,7 +60,7 @@ const Banner: React.FC = () => {
       </nav>
 
       {/* icon */}
-      <div className='text-[40px] text-center font-bold mt-9' id='logo'>E-Card</div>
+      <div className={`text-[40px] text-center font-bold mt-9 ${ubuntu.className}`} id='logo'>E-Card</div>
 
       {/* head lines */}
       <div className='text-center mt-12'>
