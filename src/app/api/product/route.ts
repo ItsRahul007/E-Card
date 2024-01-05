@@ -6,8 +6,9 @@ export async function GET(req: NextRequest ) {
     try {
         const requestHeaders = new Headers(req.headers);
         const AUTH_TOKEN = requestHeaders.get('AUTH_TOKEN');
+        const parsedAuthToken = AUTH_TOKEN && JSON.parse(AUTH_TOKEN);
 
-        if (AUTH_TOKEN !== process.env.AUTH_TOKEN) {
+        if (parsedAuthToken !== process.env.AUTH_TOKEN) {
             return NextResponse.json({
                 error: "Not a authenticated request",
                 success: false
@@ -22,10 +23,12 @@ export async function GET(req: NextRequest ) {
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 1);
 
         const products = await Products.find().skip(skipNumber).limit(itemNumber);
+        const totalProducts = await Products.find();
 
         return NextResponse.json({
             success: true,
-            products
+            products,
+            totalProducts: totalProducts.length,
         });
 
     } catch (error) {

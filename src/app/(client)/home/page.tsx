@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   return (
     <div className='h-screen w-screen bg-[#EAEAEA] flex flex-col'>
       <AllProductNav />
-      <div className='h-[88%] flex gap-3 mt-3'>
+      <div className='h-[87%] flex gap-3 mt-3'>
         <Filter />
         <Products />
       </div>
