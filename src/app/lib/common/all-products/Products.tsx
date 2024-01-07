@@ -20,7 +20,6 @@ const Products: React.FC = () => {
 
   return (
     <div className='bg-[#F8F8F8] flex-1'>
-      <button onClick={() => fetchNextPage()}>next</button>
       <div className='h-full w-full overflow-scroll flex items-center justify-center'>
         <div className='h-full w-[72rem] p-4 grid grid-cols-4 grid-rows-none gap-4 items-center justify-center'>
           {isLoading &&

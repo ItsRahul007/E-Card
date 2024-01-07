@@ -1,6 +1,18 @@
 import mongoose from "mongoose";
-const { URL_PASSWORD, URL_COLLECTION_NAME } = process.env;
+let isAlreadyConnected: boolean = false;
 
 export default async function connectWithMongo() {
-    await mongoose.connect("mongodb+srv://Rahul:" + URL_PASSWORD + "@cluster0.wydmyio.mongodb.net/" + URL_COLLECTION_NAME + "?retryWrites=true&w=majority");
+    try {
+        if (isAlreadyConnected) return;
+        process.env.MONGODB_URI && await mongoose.connect(process.env.MONGODB_URI);
+        const db = mongoose.connection;
+        db.on('error', () => {
+            isAlreadyConnected = false;
+        });
+        db.once('open', () => {
+            isAlreadyConnected = true;
+        });
+    } catch (error) {
+        isAlreadyConnected = false;
+    }
 }

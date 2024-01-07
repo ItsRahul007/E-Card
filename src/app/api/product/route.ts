@@ -18,17 +18,15 @@ export async function GET(req: NextRequest ) {
         await connectWithMongo();
 
         const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
-        const itemNumber = 10;
+        const itemNumber = 8;
         //! compares the first and second numbers and returns the biggest number
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 1);
 
         const products = await Products.find().skip(skipNumber).limit(itemNumber);
-        const totalProducts = await Products.find();
 
         return NextResponse.json({
             success: true,
-            products,
-            totalProducts: totalProducts.length,
+            products
         });
 
     } catch (error) {

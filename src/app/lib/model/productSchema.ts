@@ -26,6 +26,7 @@ const productSchema = new Schema({
         type: Array,
     },
     brand_name: String,
+    rating: Number,
 });
 
 const Products = models.products || model("products", productSchema);
