@@ -1,5 +1,15 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
+interface itemProps {
+    imgUrl: string;
+    product_name: string;
+    product_category: string;
+    price: string | number;
+    product_type: string;
+    search_keys: string[] | string;
+    brand_name: string;    
+};
 
 export default function useFetchProducts() {
     async function getProducts({ pageParam }: { pageParam: number }) {
@@ -28,7 +38,14 @@ export default function useFetchProducts() {
         },
     });
 
-    const allProducts =  data?.pages.reduce((acc, page) => [...acc, ...page.products], []);
+    const allProducts: itemProps[] = data?.pages.reduce((acc, page) => {
+        if(page.success) return [...acc, ...page.products]
+        else {
+            toast(page.error);
+            return [...acc];
+        }
+        
+    }, []);
 
     return {
         allProducts,
@@ -40,5 +57,4 @@ export default function useFetchProducts() {
         status,
         isFetching,
     }
-
 };

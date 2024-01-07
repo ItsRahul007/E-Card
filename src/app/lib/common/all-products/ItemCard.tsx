@@ -19,6 +19,7 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
           src={imgUrl}
           alt="item"
           fill
+          // sizes='(max-width: 768px) 100vw, 33vw'
         />
         <span className={'absolute text-slate-50 text-2xl bottom-0 flex items-center justify-end w-full h-16 ' + style.hoverCompo}>
           <div className='w-20 flex gap-3 h-full items-center'>
