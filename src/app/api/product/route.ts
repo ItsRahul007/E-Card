@@ -6,7 +6,13 @@ export async function GET(req: NextRequest ) {
     try {
         const requestHeaders = new Headers(req.headers);
         const AUTH_TOKEN = requestHeaders.get('AUTH_TOKEN');
-        const parsedAuthToken = AUTH_TOKEN && JSON.parse(AUTH_TOKEN);
+
+        if (!AUTH_TOKEN) return NextResponse.json({
+            error: "Not a authenticated request",
+            success: false
+        }, { status: 401 });
+
+        const parsedAuthToken = JSON.parse(AUTH_TOKEN);
 
         if (parsedAuthToken !== process.env.AUTH_TOKEN) {
             return NextResponse.json({
@@ -34,6 +40,6 @@ export async function GET(req: NextRequest ) {
         return NextResponse.json({
             success: false,
             error: "Internal server error",
-        });
+        }, {status: 500});
     }
 };

@@ -17,7 +17,7 @@ export default function useFetchProducts() {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN)
+                AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN || "")
             }
         })
         const data = await res.json();
@@ -30,7 +30,6 @@ export default function useFetchProducts() {
         queryKey: ['products'],
         queryFn: getProducts,
         initialPageParam: 1,
-
         getNextPageParam: (lastPage, allPages) => {
             const nextPage =
                 lastPage.success && lastPage.products.length ? allPages.length + 1 : undefined;
@@ -41,10 +40,9 @@ export default function useFetchProducts() {
     const allProducts: itemProps[] = data?.pages.reduce((acc, page) => {
         if(page.success) return [...acc, ...page.products]
         else {
-            toast(page.error);
+            toast.error(page.error);
             return [...acc];
-        }
-        
+        }        
     }, []);
 
     return {
