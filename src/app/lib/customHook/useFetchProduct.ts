@@ -37,6 +37,7 @@ export default function useFetchProducts() {
         },
     });
 
+    //? collecting all products array into one array
     const allProducts: itemProps[] = data?.pages.reduce((acc, page) => {
         if(page.success) return [...acc, ...page.products]
         else {
