@@ -32,7 +32,7 @@ const Banner: React.FC = () => {
         <div className={`bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} ${poppins.className}`}>
           <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/home">Home</Link>
+              <Link href="/products/all">Products</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/">Accessories</Link>

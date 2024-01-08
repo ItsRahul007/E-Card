@@ -1,15 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
 const productSchema = new Schema({
-    product_name: { //
+    product_name: {
         required: true,
         type: String,
     },
-    imgUrl: { //
+    imgUrl: {
         required: true,
         type: String,
+        unique: true,
     },
-    price: { //
+    price: {
         required: true,
         type: Number,
     },
@@ -17,7 +18,7 @@ const productSchema = new Schema({
         required: true,
         type: String,
     },
-    product_category: { //
+    product_category: {
         required: true,
         type: String,
     },

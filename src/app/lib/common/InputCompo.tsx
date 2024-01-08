@@ -10,10 +10,11 @@ interface I_InputComponent {
     isRequired?: boolean;
     onChange?: (e: any) => void;
     currentValue?: string;
+    onEnter?: () => void;
 };
 
 const InputCompo: React.FC<I_InputComponent> = ({
-    type, placeholder, className, onChange, isRequired, currentValue, name
+    type, placeholder, className, onChange, isRequired, currentValue, name, onEnter
 }) => {
     return (
         <input
@@ -25,6 +26,11 @@ const InputCompo: React.FC<I_InputComponent> = ({
             onChange={onChange}
             required={isRequired}
             min={type === "number" ? 1 : undefined}
+            onKeyUp={(e) => {
+                if (onEnter && e.code.toLowerCase() === "enter") {
+                    onEnter();
+                }
+            }}
         />
     );
 };

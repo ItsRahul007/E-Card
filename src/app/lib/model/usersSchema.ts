@@ -12,6 +12,7 @@ const userModel = new Schema({
     },
     password: String,
     socialUser: Boolean,
+    fevoriteItems: Array,
 });
 
 const User = models.users || model("users", userModel);

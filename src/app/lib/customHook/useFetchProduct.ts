@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-interface itemProps {
+type itemProps = {
     imgUrl: string;
     product_name: string;
     product_category: string;

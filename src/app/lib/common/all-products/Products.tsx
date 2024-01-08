@@ -4,11 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import ItemCard from './ItemCard';
 import ProductSkeletonLoading from '../loading/Product-Skeleton-loading';
 import useFetchProducts from '@/app/lib/customHook/useFetchProduct';
-import style from "@/app/style/style.module.css";
 
 
 const Products: React.FC = () => {
   const productContainer = useRef<HTMLDivElement>(null);
+  const loadingRef = useRef<HTMLDivElement>(null);
 
   const {
     allProducts,
@@ -22,16 +22,24 @@ const Products: React.FC = () => {
   } = useFetchProducts();
 
   useEffect(() => {
+    if (loadingRef.current) {
+      const { bottom } = loadingRef.current.getBoundingClientRect();
+
+      if (bottom < window.innerHeight) {
+        fetchNextPage();
+        // TODO: if its an big height screen then paginaton is not working properly
+      }
+    }
 
     const handleScroll = () => {
       if (productContainer.current) {
-          const { scrollTop, clientHeight, scrollHeight } = productContainer.current;
-      
-          // Check if the user is at the bottom (with a small threshold for better user experience)
-          const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
-          if (isBottom && !isFetchingNextPage) {
-            fetchNextPage();
-          }
+        const { scrollTop, clientHeight, scrollHeight } = productContainer.current;
+
+        // Check if the user is at the bottom (with a small threshold for better user experience)
+        const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
+        if (isBottom && !isFetchingNextPage) {
+          fetchNextPage();
+        }
       }
     };
 
@@ -44,7 +52,6 @@ const Products: React.FC = () => {
 
   return (
     <div className='bg-[#F8F8F8] flex-1'>
-      {/* <button onClick={() => fetchNextPage()}>next</button> */}
       <div
         className='h-full w-full overflow-scroll flex items-center justify-center'
         ref={productContainer}
@@ -55,8 +62,13 @@ const Products: React.FC = () => {
               <ProductSkeletonLoading key={index} />
             ))
           }
-          {!error && allProducts?.map((item: any) => <ItemCard key={item.imgUrl} {...item} />)}
-          <div className={'h-10 w-full flex items-center justify-center col-span-4 '}>
+          {!error && allProducts?.length > 0 &&
+            allProducts.map((item: any) => <ItemCard key={item._id} {...item} />)
+          }
+          <div
+            className='h-10 w-full flex items-center justify-center col-span-4'
+            ref={loadingRef}
+          >
             <span className={`h-10 w-10 block border-4 border-transparent rounded-full border-r-black animate-spin ${!isFetchingNextPage && "!hidden"}`} />
           </div>
         </div>

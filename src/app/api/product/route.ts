@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Products from "@/app/lib/model/productSchema";
+import ProductsSchema from "@/app/lib/model/productSchema";
 import connectWithMongo from "@/app/lib/mongoConnection/mongoConnect";
 
 export async function GET(req: NextRequest ) {
@@ -26,9 +26,9 @@ export async function GET(req: NextRequest ) {
         const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
         const itemNumber = 8;
         //! compares the first and second numbers and returns the biggest number
-        const skipNumber = Math.max((pageNumber - 1) * itemNumber, 1);
+        const skipNumber = Math.max((pageNumber - 1) * itemNumber, 0);
 
-        const products = await Products.find().skip(skipNumber).limit(itemNumber);
+        const products = await ProductsSchema.find().skip(skipNumber).limit(itemNumber);
 
         return NextResponse.json({
             success: true,
