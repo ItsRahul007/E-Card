@@ -36,14 +36,14 @@ const Products: React.FC = () => {
     <div className='bg-[#F8F8F8] flex-1'>
       <div className='h-full w-full overflow-scroll flex items-center justify-center'>
         <div className='h-full w-[72rem] p-4 grid grid-cols-4 grid-rows-none gap-4 items-center justify-center relative'>
-          {/* {isLoading &&
+          {isLoading &&
             Array.from({ length: 8 }).map((_, index) => (
               <ProductSkeletonLoading key={index} />
             ))
-          } */}
-          {/* {!error && allProducts?.length > 0 &&
+          }
+          {!error && allProducts?.length > 0 &&
             allProducts.map((item: any) => <ItemCard key={item._id} {...item} />)
-          } */}
+          }
 
           <div className={`h-full hidden items-center justify-center w-full absolute top-0 right-0 ${!error && !isLoading && allProducts?.length === 0 && "flex"}`}>
             <div className='relative h-3/4 w-96 flex flex-col items-center justify-center gap-2 text-3xl text-[#00bf85]'>
