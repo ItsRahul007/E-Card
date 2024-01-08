@@ -4,11 +4,18 @@ import React, { useEffect, useRef } from 'react';
 import ItemCard from './ItemCard';
 import ProductSkeletonLoading from '../loading/Product-Skeleton-loading';
 import useFetchProducts from '@/app/lib/customHook/useFetchProduct';
+import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
+import { Ubuntu } from 'next/font/google';
 
+const ubuntu = Ubuntu({
+  weight: "700",
+  style: "italic",
+  subsets: ["latin"]
+});
 
 const Products: React.FC = () => {
-  const productContainer = useRef<HTMLDivElement>(null);
-  const loadingRef = useRef<HTMLDivElement>(null);
+  const { ref: loadingRef, inView, entry } = useInView();
 
   const {
     allProducts,
@@ -17,54 +24,41 @@ const Products: React.FC = () => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-    status,
-    isFetching,
   } = useFetchProducts();
 
   useEffect(() => {
-    if (loadingRef.current) {
-      const { bottom } = loadingRef.current.getBoundingClientRect();
-
-      if (bottom < window.innerHeight) {
-        fetchNextPage();
-        // TODO: if its an big height screen then paginaton is not working properly
-      }
+    if (inView && !isLoading) {
+      fetchNextPage();
     }
-
-    const handleScroll = () => {
-      if (productContainer.current) {
-        const { scrollTop, clientHeight, scrollHeight } = productContainer.current;
-
-        // Check if the user is at the bottom (with a small threshold for better user experience)
-        const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
-        if (isBottom && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      }
-    };
-
-    productContainer.current && productContainer.current.addEventListener('scroll', handleScroll);
-
-    return () => {
-      productContainer.current && productContainer.current.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  }, [inView, entry, fetchNextPage, isLoading]);
 
   return (
     <div className='bg-[#F8F8F8] flex-1'>
-      <div
-        className='h-full w-full overflow-scroll flex items-center justify-center'
-        ref={productContainer}
-      >
-        <div className='h-full w-[72rem] p-4 grid grid-cols-4 grid-rows-none gap-4 items-center justify-center'>
-          {isLoading &&
+      <div className='h-full w-full overflow-scroll flex items-center justify-center'>
+        <div className='h-full w-[72rem] p-4 grid grid-cols-4 grid-rows-none gap-4 items-center justify-center relative'>
+          {/* {isLoading &&
             Array.from({ length: 8 }).map((_, index) => (
               <ProductSkeletonLoading key={index} />
             ))
-          }
-          {!error && allProducts?.length > 0 &&
+          } */}
+          {/* {!error && allProducts?.length > 0 &&
             allProducts.map((item: any) => <ItemCard key={item._id} {...item} />)
-          }
+          } */}
+
+          <div className={`h-full hidden items-center justify-center w-full absolute top-0 right-0 ${!error && !isLoading && allProducts?.length === 0 && "flex"}`}>
+            <div className='relative h-3/4 w-96 flex flex-col items-center justify-center gap-2 text-3xl text-[#00bf85]'>
+              <p className={ubuntu.className}>No Products Founded</p>
+              <span className='relative h-full w-full'>
+                <Image
+                  src="/images/not-found.png"
+                  alt='No results found'
+                  fill
+                  onError={(e) => console.log(e)}
+                />
+              </span>
+            </div>
+          </div>
+
           <div
             className='h-10 w-full flex items-center justify-center col-span-4'
             ref={loadingRef}
