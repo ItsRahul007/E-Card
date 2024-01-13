@@ -10,6 +10,17 @@ const productSchema = new Schema({
         type: String,
         unique: true,
     },
+    secondryImgUrls: {
+        required: true,
+        type: [String],
+        unique: true,
+        validate: {
+            validator: function (value: string[]) {
+                return value.length === 3; //? if length is 3 then its valid
+            },
+            message: 'Must have 3 secondry images',
+        },
+    },
     price: {
         required: true,
         type: Number,
@@ -28,6 +39,7 @@ const productSchema = new Schema({
     },
     brand_name: String,
     rating: Number,
+    ratedBy: Array,
 });
 
 const Products = models.products || model("products", productSchema);

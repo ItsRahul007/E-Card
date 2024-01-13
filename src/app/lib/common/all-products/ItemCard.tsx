@@ -7,20 +7,23 @@ interface I_ItemCard {
   imgUrl: string;
   product_name: string;
   price: number | string;
+  _id: string;
 }
 
 const ItemCard: React.FC<I_ItemCard> = (props) => {
-  const { imgUrl, product_name, price } = props;
+  const { imgUrl, product_name, price, _id } = props;
 
   return (
-    <div className='border h-[18rem] w-64 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px]'>
+    <div className='border h-64 w-52 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px]'>
       <div className={'relative h-3/4 w-full ' + style.itemImage}>
-        <Image
-          src={imgUrl}
-          alt="item"
-          fill
+        <Link href={`/single-product/${_id}`}>
+          <Image
+            src={imgUrl}
+            alt="item"
+            fill
           // sizes='(max-width: 768px) 100vw, 33vw'
-        />
+          />
+        </Link>
         <span className={'absolute text-slate-50 text-2xl bottom-0 flex items-center justify-end w-full h-16 ' + style.hoverCompo}>
           <div className='w-20 flex gap-3 h-full items-center'>
             <Link href="#"><i className="hover:text-white ri-shopping-cart-2-fill font-thin"></i></Link>
