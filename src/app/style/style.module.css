@@ -71,3 +71,10 @@
 .itemImage:hover .hoverCompo{
   opacity: 1;
 }
+
+.half_star {
+  background: linear-gradient(to right, #35a3bc 52%, #A0AEC0 48%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

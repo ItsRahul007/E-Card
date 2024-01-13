@@ -35,7 +35,7 @@ const productSchema = new Schema({
     },
     search_keys: {
         required: true,
-        type: Array,
+        type: [String],
     },
     brand_name: String,
     rating: Number,

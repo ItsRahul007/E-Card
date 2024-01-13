@@ -12,7 +12,7 @@ interface I_SmallImageContainer {
 const SmallImageContainer: FC<I_SmallImageContainer> = ({ src, alt, onClick }) => {
     return (
         <button
-            className='h-20 w-16 bg-black rounded relative border-2 overflow-hidden'
+            className='h-20 w-16 rounded relative border-2 overflow-hidden'
             onClick={onClick}
         >
             <Image
