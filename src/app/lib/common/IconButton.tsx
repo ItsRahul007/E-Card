@@ -3,9 +3,9 @@ import React, { FC } from 'react';
 interface I_button {
     className?: string;
     onClick?: () => void;
-    type?: "button" | "submit" | "reset" | undefined;
+    type: "button" | "submit" | "reset" | undefined;
     text?: string;
-    icon?: React.ReactElement;
+    icon: React.ReactElement;
     iconFirst?: boolean;
 };
 

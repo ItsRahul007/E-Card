@@ -8,10 +8,10 @@ type itemProps = {
     price: string | number;
     product_type: string;
     search_keys: string[] | string;
-    brand_name: string;    
+    brand_name: string;
 };
 
-export default function useFetchProducts() {
+export default function useFetchProducts({ query }: { query: string[] }) {
     async function getProducts({ pageParam }: { pageParam: number }) {
         const res = await fetch('/api/product?page=' + pageParam, {
             method: 'GET',
@@ -27,7 +27,7 @@ export default function useFetchProducts() {
     const {
         data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, status, isFetching
     } = useInfiniteQuery({
-        queryKey: ['products'],
+        queryKey: query,
         queryFn: getProducts,
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages) => {
@@ -39,11 +39,11 @@ export default function useFetchProducts() {
 
     //? collecting all products array into one array
     const allProducts: itemProps[] = data?.pages.reduce((acc, page) => {
-        if(page.success) return [...acc, ...page.products]
+        if (page.success) return [...acc, ...page.products]
         else {
             toast.error(page.error);
             return [...acc];
-        }        
+        }
     }, []);
 
     return {

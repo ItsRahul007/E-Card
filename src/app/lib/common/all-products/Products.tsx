@@ -24,7 +24,7 @@ const Products: React.FC = () => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useFetchProducts();
+  } = useFetchProducts({query: ['products']});
 
   useEffect(() => {
     if (inView && !isLoading) {
