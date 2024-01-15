@@ -13,7 +13,11 @@ const ubuntu = Ubuntu({
   style: 'italic'
 });
 
-const AllProductNav: React.FC = () => {
+interface I_ProductNav {
+  filters?: boolean;
+}
+
+const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const router = useRouter();
 
@@ -38,7 +42,7 @@ const AllProductNav: React.FC = () => {
       </span>
 
       {/* side bar logo for small screens */}
-      <SideNavBar />
+      <SideNavBar filters={filters} />
 
       {/* search keys and cart fevorite */}
       <span className='h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white font-sans lg:text-lg text-base'>

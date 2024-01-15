@@ -14,7 +14,9 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
   const { imgUrl, product_name, price, _id } = props;
 
   return (
-    <div className='border h-64 w-52 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px]'>
+    <div 
+      className='border sm:h-64 min-[360px]:h-56 h-48 sm:w-52 min-[360px]:w-44 w-36 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px] col-span-1'
+    >
       <div className={'relative h-3/4 w-full ' + style.itemImage}>
         <Link href={`/single-product/${_id}`}>
           <Image
@@ -31,11 +33,11 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
           </div>
         </span>
       </div>
-      <div className='h-1/4 w-full flex flex-col items-center gap-1'>
-        <div className='w-full whitespace-nowrap text-ellipsis font-bold mt-1 ml-6'>
+      <div className='h-1/4 w-full flex flex-col items-center justify-start min-[360px]:gap-1'>
+        <div className='w-full whitespace-nowrap overflow-hidden !text-ellipsis font-bold min-[360px]:mt-1 mt-[1px] min-[360px]:ml-6 ml-1'>
           {product_name}
         </div>
-        <div className='w-full text-base text-gray-700 ml-6 font-semibold'>
+        <div className='w-full text-base text-gray-700 min-[360px]:ml-6 ml-1 font-semibold'>
           ${price}
         </div>
       </div>

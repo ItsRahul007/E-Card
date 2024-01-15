@@ -11,13 +11,13 @@ interface pageProps {
 const page: FC<pageProps> = ({ params, searchParams }) => {
   return (
     <div className='h-screen w-screen bg-[#EAEAEA] flex flex-col'>
-      <AllProductNav />
+      <AllProductNav filters={true} />
       <div className='h-[87%] flex gap-3 mt-3'>
         <Filter />
         <Products />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default page;

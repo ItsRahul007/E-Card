@@ -24,7 +24,7 @@ const Products: React.FC = () => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useFetchProducts({query: ['products']});
+  } = useFetchProducts({ query: ['products'] });
 
   useEffect(() => {
     if (inView && !isLoading) {
@@ -36,14 +36,11 @@ const Products: React.FC = () => {
     <div className='bg-[#F8F8F8] flex-1'>
       <div className='h-full w-full overflow-scroll flex items-center justify-center'>
         <div
-          className='h-full w-11/12 p-4 grid grid-cols-4 grid-rows-none gap-4 justify-center relative xl:w-[72rem] xl:grid-cols-5'
+          className='h-full grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:w-[72rem] lg:w-full xl:grid-cols-5'
         >
           {/* loading components */}
           {isLoading &&
-            Array.from({ length: 10 }).map((_, index) => (
-              <ProductSkeletonLoading key={index} />
-            ))
-          }
+            Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={index} /> )}
 
           {/* looping products */}
           {!error && allProducts?.length > 0 &&
@@ -67,7 +64,7 @@ const Products: React.FC = () => {
 
           {/* pagination loading component */}
           <div
-            className='h-10 w-full flex items-center justify-center col-span-4'
+            className='h-10 w-full flex items-center justify-center xl:col-span-5 lg:col-span-4 col-span-2'
             ref={loadingRef}
           >
             <span className={`h-10 w-10 block border-4 border-transparent rounded-full border-r-black animate-spin ${!isFetchingNextPage && "!hidden"}`} />
