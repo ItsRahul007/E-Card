@@ -46,12 +46,12 @@ const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
 
       {/* search keys and cart fevorite */}
       <span className='h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white font-sans lg:text-lg text-base'>
-        <Link href="/home/search?search=shoes" className='cursor-pointer'>Shoes</Link>
-        <Link href="/home/search?search=eyeware" className='cursor-pointer'>Eyeware</Link>
-        <Link href="/home/search?search=electronics" className='cursor-pointer'>Electronics</Link>
-        <Link href="/home" className='cursor-pointer'>Become a Seller</Link>
+        <Link href="/products/search-products?search=shoes" className='cursor-pointer'>Shoes</Link>
+        <Link href="/products/search-products?search=eyeware" className='cursor-pointer'>Eyeware</Link>
+        <Link href="/products/search-products?search=electronics" className='cursor-pointer'>Electronics</Link>
+        <Link href="#" className='cursor-pointer'>Become a Seller</Link>
         <Link href="/cart" className='cursor-pointer'>Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
-        <Link href="/cart" className='cursor-pointer'>Fevorite <i className="ri-heart-fill font-thin"></i></Link>
+        <Link href="/fevorite" className='cursor-pointer'>Fevorite <i className="ri-heart-fill font-thin"></i></Link>
       </span>
 
       {/* cart and fevorite for small screens */}

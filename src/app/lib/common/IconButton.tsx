@@ -11,18 +11,18 @@ interface I_button {
 
 const IconButton: FC<I_button> = ({ onClick, text, className, type, icon, iconFirst }) => {
     return (
-        <button onClick={onClick} className={className} type={type}>
+        <button onClick={ onClick } className={ className } type={ type }>
             {
                 iconFirst ? (
                     <>
-                        {icon}
-                        {text}
+                        { icon }
+                        { text }
                     </>
                 ) :
                     (
                         <>
-                            {text}
-                            {icon}
+                            { text }
+                            { icon }
                         </>
                     )
             }
