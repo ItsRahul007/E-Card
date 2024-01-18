@@ -69,7 +69,7 @@ const page: FC<pageProps> = ({ params }) => {
             <AllProductNav />
             <div className='h-[89%] overflow-scroll w-screen bg-slate-100 '>
                 {/* first section (product) */ }
-                <section className='w-full md:h-[35rem]'>
+                <section className='w-full md:max-h-[35rem]'>
                     <div className='h-full w-full lg:w-11/12 p-4 px-6 flex md:flex-row flex-col lg:gap-2 max-[768px]:items-center gap-6'>
                         {/* images container */ }
                         <div className='h-full md:w-[28rem] flex'>
