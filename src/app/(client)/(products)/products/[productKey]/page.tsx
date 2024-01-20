@@ -11,8 +11,8 @@ interface pageProps {
 const page: FC<pageProps> = ({ params, searchParams }) => {
   return (
     <div className='h-screen w-screen bg-[#EAEAEA] flex flex-col'>
-      <AllProductNav filters={true} />
-      <div className='h-[87%] flex gap-3 mt-3'>
+      <AllProductNav filters={ true } />
+      <div className='h-[92%] sm:h-[91%] flex gap-3 lg:mt-3'>
         <Filter />
         <Products />
       </div>

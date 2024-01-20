@@ -19,17 +19,17 @@ const roboto = Roboto({
 
 const ubuntu = Ubuntu({
   weight: "700",
-  subsets: ["latin-ext", ],
+  subsets: ["latin-ext",],
   style: 'normal'
 });
 
 const Banner: React.FC = () => {
   return (
-    <header className={`${style.banner} text-white`} id="banner_component">
+    <header className={ `${style.banner} text-white` } id="banner_component">
       <BannerGSAP />
-      {/* the nav bar */}
+      {/* the nav bar */ }
       <nav id='banner-nav' className="w-full h-[70px] flex justify-center items-center">
-        <div className={`bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} ${poppins.className}`}>
+        <div className={ `bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} ${poppins.className}` }>
           <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/products/all">Products</Link>
@@ -47,10 +47,10 @@ const Banner: React.FC = () => {
               <Link href="/">Customer Service</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
+              <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Fevorite <i className="ri-heart-fill font-thin"></i></Link>
+              <Link href="/favourite">Favourite <i className="ri-heart-fill font-thin"></i></Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/login">Login <i className="ri-login-box-fill font-thin"></i></Link>
@@ -59,12 +59,12 @@ const Banner: React.FC = () => {
         </div>
       </nav>
 
-      {/* icon */}
-      <div className={`text-[40px] text-center font-bold mt-9 ${ubuntu.className}`} id='logo'>E-Card</div>
+      {/* icon */ }
+      <div className={ `text-[40px] text-center font-bold mt-9 ${ubuntu.className}` } id='logo'>E-Card</div>
 
-      {/* head lines */}
+      {/* head lines */ }
       <div className='text-center mt-12'>
-        <h1 className={'text-[70px] font-extrabold ' + roboto.className}>
+        <h1 className={ 'text-[70px] font-extrabold ' + roboto.className }>
           <div id='h-text-1'>GET START</div>
           <div id='h-text-2'>YOUR FAVRIOT SHOPING</div>
         </h1>

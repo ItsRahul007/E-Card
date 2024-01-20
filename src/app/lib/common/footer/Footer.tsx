@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const Footer = () => {
+const Footer: FC = () => {
   return (
     <footer className='bg-[#26272b] h-[50vh] w-screen flex gap-2 flex-col items-center justify-center text-[#ffffff94]'>
       <div className='flex gap-6 w-[95%] h-[65%] mt-6'>
@@ -21,18 +21,18 @@ const Footer = () => {
       <div className='flex justify-between w-[95%] h-16'>
         <span>Copyright &#169; 2024 All Rights Reserved by Rahul</span>
         <span className='flex gap-2'>
-        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
-          <i className="ri-facebook-fill"></i>
-        </button>
-        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
-          <i className="ri-twitter-fill"></i>
-        </button>
-        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
-          <i className="ri-global-line"></i>
-        </button>
-        <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
-          <i className="ri-linkedin-fill"></i>
-        </button>
+          <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+            <i className="ri-facebook-fill"></i>
+          </button>
+          <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+            <i className="ri-twitter-fill"></i>
+          </button>
+          <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+            <i className="ri-global-line"></i>
+          </button>
+          <button className='bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center'>
+            <i className="ri-linkedin-fill"></i>
+          </button>
         </span>
       </div>
     </footer>

@@ -8,6 +8,9 @@ import Button from '@/app/lib/common/Button';
 import IconButton from '@/app/lib/common/IconButton';
 import ReviewBox from '@/app/(client)/components/ReviewBox';
 import ReviewStar from '@/app/(client)/components/ReviewStar';
+import itemArr from '@/app/item/itemInfo';
+import ItemCard from '@/app/lib/common/all-products/ItemCard';
+import Footer from '@/app/lib/common/footer/Footer';
 
 interface pageProps {
     params: { productKey: string };
@@ -67,15 +70,15 @@ const page: FC<pageProps> = ({ params }) => {
     return (
         <div className='h-screen w-screen bg-slate-100 flex flex-col'>
             <AllProductNav />
-            <div className='h-[89%] overflow-scroll w-screen bg-slate-100 '>
+            <div className='overflow-scroll w-screen bg-slate-100 '>
                 {/* first section (product) */ }
                 <section className='w-full md:max-h-[35rem]'>
-                    <div className='h-full w-full lg:w-11/12 p-4 px-6 flex md:flex-row flex-col lg:gap-2 max-[768px]:items-center gap-6'>
+                    <div className='h-full w-full lg:w-11/12 p-4 px-6 flex sm:flex-row flex-col lg:gap-2 max-[639.5px]:items-center gap-6'>
                         {/* images container */ }
                         <div className='h-full md:w-[28rem] flex'>
                             <div className='h-3/4 w-full flex md:gap-4 gap-1'>
                                 {/* sub images */ }
-                                <div className='h-80 w-20 max-[400px]:h-60 max-[400px]:w-16 flex flex-col gap-1 items-center'>
+                                <div className='h-80 w-20 sm:w-16 max-[400px]:h-60 max-[400px]:w-16 flex flex-col gap-1 items-center'>
                                     <SmallImageContainer
                                         src="https://m.media-amazon.com/images/I/61xXO4SSioL._SX569_.jpg"
                                         alt='t-shirt'
@@ -95,7 +98,7 @@ const page: FC<pageProps> = ({ params }) => {
                                 </div>
 
                                 {/* main images */ }
-                                <div className='relative h-80 lg:w-4/6 w-72 border rounded-md overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
+                                <div className='relative md:h-80 sm:h-72 sm:w-64 lg:w-4/6 w-72 border rounded-md overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
                                     <Image
                                         src="https://m.media-amazon.com/images/I/61xXO4SSioL._SX569_.jpg"
                                         alt='t-shirt'
@@ -113,20 +116,20 @@ const page: FC<pageProps> = ({ params }) => {
                         {/* text container */ }
                         <div className='lg:flex-1'>
                             {/* product name */ }
-                            <div className="w-11/12 h-8 text-left text-2xl uppercase text-ellipsis overflow-hidden sm:text-3xl">
+                            <div className="w-11/12 h-8 text-left text-2xl uppercase whitespace-nowrap text-ellipsis overflow-hidden sm:text-3xl">
                                 <h2 className={ `$${rubik.className}` }>Wild soul t-shirt</h2>
                             </div>
 
                             {/* product rating */ }
-                            <div className='mt-4 flex items-center select-none touch-none'>
+                            <div className='mt-4 flex items-center select-none'>
                                 { generateStars() }
                                 <span className={ `ml-4 sm:text-sm text-xs text-slate-500 ${rubik.className}` }>
-                                    (2 customer review)
+                                    (2 customer reviewed)
                                 </span>
                             </div>
 
                             {/* product price */ }
-                            <div className={ `mt-5 ${rubik.className} flex gap-2` }>
+                            <div className={ `mt-5 ${rubik.className} flex gap-2 select-none` }>
                                 <span className='sm:text-2xl text-xl'>$90.00</span>
                                 <span className='sm:text-xl text-lg !font-normal text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     $99.00
@@ -159,7 +162,7 @@ const page: FC<pageProps> = ({ params }) => {
                 <section className='w-full flex justify-center items-center mt-2'>
                     <div className='w-11/12 h-auto border-[3px] p-2 bg-white flex flex-col gap-4 rounded-lg'>
                         {/* header */ }
-                        <div className='w-full text-3xl mt-2'>
+                        <div className='w-full text-2xl md:text-3xl mt-2'>
                             <h1 className={ 'ml-5 ' + rubik.className }>Reviews</h1>
                         </div>
 
@@ -184,7 +187,7 @@ const page: FC<pageProps> = ({ params }) => {
                                     <ReviewStar />
                                 </div>
                             </div>
-                            <textarea className='border-2 h-3/5 w-full outline-[#3090a5] p-1' />
+                            <textarea className='border-2 h-3/5 w-full outline-[#3090a5] p-1 rounded-md' />
                             <div className='flex-1 flex items-center justify-end'>
                                 <Button
                                     text='Submit'
@@ -194,6 +197,27 @@ const page: FC<pageProps> = ({ params }) => {
                         </div>
                     </div>
                 </section>
+
+                {/* third section (related products) */ }
+                <section className='w-full my-5'>
+                    <div className='h-auto w-full xl:w-11/12 flex flex-col p-2 gap-4'>
+
+                        {/* heading */ }
+                        <div className='w-11/12 self-end text-2xl md:text-3xl mt-2'>
+                            <h1 className={ '2xl:mml-[2vw] ' + rubik.className }>Related Products</h1>
+                        </div>
+
+                        {/* product container */ }
+                        <div
+                            className='h-full grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:w-[72rem] lg:w-full xl:grid-cols-5 self-center'
+                        >
+                            { itemArr.map((item) => <ItemCard { ...item } />) }
+                        </div>
+                    </div>
+                </section>
+
+                {/* footer */ }
+                <Footer />
             </div>
         </div>
     );
