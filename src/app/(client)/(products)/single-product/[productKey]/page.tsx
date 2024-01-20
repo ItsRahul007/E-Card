@@ -211,7 +211,7 @@ const page: FC<pageProps> = ({ params }) => {
                         <div
                             className='h-full grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:w-[72rem] lg:w-full xl:grid-cols-5 self-center'
                         >
-                            { itemArr.map((item) => <ItemCard { ...item } />) }
+                            { itemArr.map((item) => <ItemCard key={ item._id } { ...item } />) }
                         </div>
                     </div>
                 </section>
