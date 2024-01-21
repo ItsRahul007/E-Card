@@ -11,6 +11,7 @@ import ReviewStar from '@/app/(client)/components/ReviewStar';
 import itemArr from '@/app/item/itemInfo';
 import ItemCard from '@/app/lib/common/all-products/ItemCard';
 import Footer from '@/app/lib/common/footer/Footer';
+import Link from 'next/link';
 
 interface pageProps {
     params: { productKey: string };
@@ -208,10 +209,15 @@ const page: FC<pageProps> = ({ params }) => {
                         </div>
 
                         {/* product container */ }
-                        <div
-                            className='h-full grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:w-[72rem] lg:w-full xl:grid-cols-5 self-center'
-                        >
-                            { itemArr.map((item) => <ItemCard key={ item._id } { ...item } />) }
+                        <div className='flex flex-col h-full xl:w-[72rem] lg:w-full self-center'>
+                            <div
+                                className='grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:grid-cols-5'
+                            >
+                                { itemArr.map((item) => <ItemCard key={ item._id } { ...item } />) }
+                            </div>
+                            <Link href="#" className='mt-3 text-xs sm:text-sm text-center font-semibold border-2 border-blue-600 rounded-2xl lg:bg-blue-100 lg:hover:bg-blue-200 bg-blue-200 text-blue-600  px-2 self-end'>
+                                See all related products
+                            </Link>
                         </div>
                     </div>
                 </section>

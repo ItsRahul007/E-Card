@@ -12,7 +12,9 @@ const userModel = new Schema({
     },
     password: String,
     socialUser: Boolean,
-    fevoriteItems: Array,
+    favourite: Array,
+    cart: Array,
+    orders: Array,
 });
 
 const User = models.users || model("users", userModel);

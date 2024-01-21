@@ -1,11 +1,12 @@
 import { Schema, model, models } from "mongoose";
 
 const productSchema = new Schema({
+    //! required fields
     product_name: {
         required: true,
         type: String,
     },
-    imgUrl: {
+    primaryImgUrl: {
         required: true,
         type: String,
         unique: true,
@@ -14,12 +15,6 @@ const productSchema = new Schema({
         required: true,
         type: [String],
         unique: true,
-        validate: {
-            validator: function (value: string[]) {
-                return value.length === 3; //? if length is 3 then its valid
-            },
-            message: 'Must have 3 secondry images',
-        },
     },
     price: {
         required: true,
@@ -37,9 +32,20 @@ const productSchema = new Schema({
         required: true,
         type: [String],
     },
+
+    //! not required fields
     brand_name: String,
-    rating: Number,
-    ratedBy: Array,
+    totalRating: Number,
+    ratings: [
+        {
+            ratingBy: {
+                type: String,
+            },
+            ratingNumber: {
+                type: Number,
+            },
+        },
+    ],
 });
 
 const Products = models.products || model("products", productSchema);
