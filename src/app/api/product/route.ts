@@ -29,6 +29,19 @@ export async function GET(req: NextRequest) {
 
 //? for adding a new product
 export async function POST(req: NextRequest) {
+    //! if the primary image or secondry images are empty strings
+    function checkIsImageUrlEmptyString(primaryImage: string, secondaryImage: string[]): { success: boolean, error?: string } {
+        if (primaryImage.length === 0) {
+            return { success: false, error: "Primary image url is empty" };
+        } else {
+            for (const str of secondaryImage) {
+                if (str === '') {
+                    return { success: false, error: "Secondary image url is empty" };
+                } else if (str === primaryImage) return { success: false, error: "Primary image url and secondry image url is same" };
+            }
+        }
+        return { success: true };
+    }
     try {
         const {
             product_name,
@@ -41,7 +54,7 @@ export async function POST(req: NextRequest) {
             brand_name
         } = await req.json();
 
-        //! if there is some or any required field data is missing
+        //! if there is any required field data is missing
         if (
             !product_name ||
             !primaryImgUrl ||
@@ -53,15 +66,23 @@ export async function POST(req: NextRequest) {
         ) {
             return NextResponse.json({
                 success: false,
-                message: "Required field invalid",
+                error: "Required field invalid",
             }, { status: 404 });
         }
 
         //! if there is more than or less than three secondry images
         if (secondryImgUrls.length > 3 || secondryImgUrls.length < 3) {
             return NextResponse.json({
-                message: "Three secondry images required",
+                error: "Three secondry images required",
                 success: false,
+            }, { status: 400 });
+        }
+
+        const urlCkeck = checkIsImageUrlEmptyString(primaryImgUrl, secondryImgUrls);
+        if (!urlCkeck.success) {
+            return NextResponse.json({
+                success: false,
+                error: urlCkeck.error
             }, { status: 400 });
         }
 
@@ -72,7 +93,7 @@ export async function POST(req: NextRequest) {
         if (isPrimaryImgExists) {
             return NextResponse.json({
                 success: false,
-                message: "Given primary image already exists"
+                error: "Given primary image already exists"
             }, { status: 400 });
         }
 

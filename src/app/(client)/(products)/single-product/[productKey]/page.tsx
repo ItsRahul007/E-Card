@@ -78,7 +78,7 @@ const page: FC<pageProps> = ({ params }) => {
                         {/* images container */ }
                         <div className='h-full md:w-[28rem] flex'>
                             <div className='h-3/4 w-full flex md:gap-4 gap-1'>
-                                {/* sub images */ }
+                                {/* secondry images */ }
                                 <div className='h-80 w-20 sm:w-16 max-[400px]:h-60 max-[400px]:w-16 flex flex-col gap-1 items-center'>
                                     <SmallImageContainer
                                         src="https://m.media-amazon.com/images/I/61xXO4SSioL._SX569_.jpg"
@@ -98,7 +98,7 @@ const page: FC<pageProps> = ({ params }) => {
                                     />
                                 </div>
 
-                                {/* main images */ }
+                                {/* primary image */ }
                                 <div className='relative md:h-80 sm:h-72 sm:w-64 lg:w-4/6 w-72 border rounded-md overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
                                     <Image
                                         src="https://m.media-amazon.com/images/I/61xXO4SSioL._SX569_.jpg"

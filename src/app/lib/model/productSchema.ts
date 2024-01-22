@@ -35,7 +35,6 @@ const productSchema = new Schema({
 
     //! not required fields
     brand_name: String,
-    totalRating: Number,
     ratings: [
         {
             ratingBy: {
