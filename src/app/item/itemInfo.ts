@@ -1,6 +1,6 @@
 interface itemProps {
     _id: string | number;
-    imgUrl: string;
+    primaryImgUrl: string;
     product_name: string;
     product_category: string;
     price: string | number;
@@ -12,7 +12,7 @@ interface itemProps {
 const itemArr: itemProps[] = [
     {
         _id: 1,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2021/03/sports-shoe3.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2021/03/sports-shoe3.jpg",
         product_name: "DNK Yellow Shoes",
         product_category: "men",
         price: 120,
@@ -22,7 +22,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 2,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2021/03/sports-shoe1.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2021/03/sports-shoe1.jpg",
         product_name: "DNK Blue Shoes",
         product_category: "men",
         price: 200,
@@ -32,7 +32,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 3,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-m-jeans1.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-m-jeans1.jpg",
         product_name: "Dark Brown Jeans",
         product_category: "men",
         price: 150.00,
@@ -42,7 +42,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 4,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-w-jeans2.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-w-jeans2.jpg",
         product_name: "Blue Denim Jeans",
         product_category: "women",
         price: 150.00,
@@ -52,7 +52,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 5,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-w-jeans4.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-w-jeans4.jpg",
         product_name: "Basic Gray Jeans",
         product_category: "women",
         price: 150.00,
@@ -62,7 +62,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 6,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-w-jeans1.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-w-jeans1.jpg",
         product_name: "Blue Denim Shorts",
         product_category: "women",
         price: 130.00,
@@ -73,7 +73,7 @@ const itemArr: itemProps[] = [
     {
 
         _id: 7,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-accessory2.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-accessory2.jpg",
         product_name: "Anchor Bracelet",
         product_category: "women",
         price: 180.00,
@@ -83,7 +83,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 8,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-accessory1.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-accessory1.jpg",
         product_name: "Boho Bangle Bracelet",
         product_category: "women",
         price: 170.00,
@@ -93,7 +93,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 9,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-bag1.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-bag1.jpg",
         product_name: "Light Brown Purse",
         product_category: "women",
         price: 150.00,
@@ -103,7 +103,7 @@ const itemArr: itemProps[] = [
     },
     {
         _id: 10,
-        imgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-bag3.jpg",
+        primaryImgUrl: "https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2017/12/product-bag3.jpg",
         product_name: "Bright Red Bag",
         product_category: "women",
         price: 100.00,
