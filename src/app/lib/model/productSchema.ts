@@ -1,5 +1,10 @@
 import { Schema, model, models } from "mongoose";
 
+const ratingSchema = new Schema({
+    ratingBy: String,
+    ratingNumber: Number,
+});
+
 const productSchema = new Schema({
     //! required fields
     product_name: {
@@ -35,16 +40,10 @@ const productSchema = new Schema({
 
     //! not required fields
     brand_name: String,
-    ratings: [
-        {
-            ratingBy: {
-                type: String,
-            },
-            ratingNumber: {
-                type: Number,
-            },
-        },
-    ],
+    ratings: [{
+        ratingBy: String,
+        ratingNumber: Number,
+    }],
 });
 
 const Products = models.products || model("products", productSchema);

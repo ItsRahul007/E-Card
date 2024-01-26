@@ -28,5 +28,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: '/api/product/:path*',
+    matcher: ['/api/product/:path*', '/api/single-product/:path*'],
 }

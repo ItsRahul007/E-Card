@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import ProductsSchema from "@/app/lib/model/productSchema";
 import connectWithMongo from "@/app/lib/mongoConnection/mongoConnect";
 
-//? for getting all products or a single product
+//? for getting all products
 export async function GET(req: NextRequest) {
     try {
         await connectWithMongo();
@@ -18,11 +18,11 @@ export async function GET(req: NextRequest) {
             products
         });
 
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: "Internal server error",
+            error: error.message,
         }, { status: 500 });
     }
 };
@@ -51,7 +51,8 @@ export async function POST(req: NextRequest) {
             product_type,
             product_category,
             search_keys,
-            brand_name
+            brand_name,
+            ratings
         } = await req.json();
 
         //! if there is any required field data is missing
@@ -98,7 +99,7 @@ export async function POST(req: NextRequest) {
         }
 
         //? adding new product
-        await ProductsSchema.create({
+        const product = await ProductsSchema.create({
             product_name,
             primaryImgUrl,
             secondryImgUrls,
@@ -107,11 +108,13 @@ export async function POST(req: NextRequest) {
             product_category,
             search_keys,
             brand_name: brand_name || "Unknown",
+            ratings: ratings || [],
         });
 
         return NextResponse.json({
             message: "Product added successfully",
             success: true,
+            product
         }, { status: 200 })
 
     } catch (error) {

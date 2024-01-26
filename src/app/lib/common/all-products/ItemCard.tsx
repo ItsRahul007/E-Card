@@ -6,15 +6,27 @@ import style from "@/app/style/style.module.css";
 interface I_ItemCard {
   primaryImgUrl: string;
   product_name: string;
-  price: number | string;
-  _id: string | number;
+  price: number;
+  ratings: {
+    ratingBy: string;
+    ratingNumber: number;
+    _id: string;
+  }[];
+  _id: string;
 }
 
 const ItemCard: React.FC<I_ItemCard> = (props) => {
-  const { primaryImgUrl, product_name, price, _id } = props;
+  const { primaryImgUrl, product_name, price, _id, ratings } = props;
+
+  //? getting the total rating number
+  let totalRatingNumber: number = 0;
+  ratings.map(obj => {
+    const prevTotal = totalRatingNumber;
+    totalRatingNumber = prevTotal + obj.ratingNumber;
+  })
 
   // Round the rating to the nearest half
-  const rating = 3.450
+  const rating: number = totalRatingNumber / ratings.length;
   const roundedRating = Math.round(rating * 2) / 2;
 
   // Function to generate star icons based on the rounded rating
@@ -25,9 +37,9 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
       let starColorClass;
 
       if ((i - 1) + .5 === roundedRating) {
-        starColorClass = `${style.half_star}`; // Half yellow and half gray
-      } else if (i < roundedRating) {
-        starColorClass = 'text-[#35a3bc]'; // Full yellow star
+        starColorClass = `${style.half_star}`; // Half star
+      } else if (i <= roundedRating) {
+        starColorClass = 'text-[#35a3bc]'; // Full star
       } else {
         starColorClass = 'text-gray-400'; // Inactive star
       }
@@ -41,9 +53,9 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
 
   return (
     <div
-      className='border sm:h-64 min-[390px]:h-56 h-48 sm:w-52 min-[390px]:w-44 w-36 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px] col-span-1'
+      className='border sm:h-72 min-[390px]:h-60 h-52 sm:w-52 min-[390px]:w-44 w-36 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px] col-span-1'
     >
-      <div className={ 'relative h-3/4 w-[90%] ' + style.itemImage }>
+      <div className={ 'relative h-3/4 w-full ' + style.itemImage }>
         <Link href={ `/single-product/${_id}` }>
           <Image
             src={ primaryImgUrl }
@@ -59,12 +71,14 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
         </span>
       </div>
       <div className='h-1/4 w-full flex flex-col items-center justify-start min-[390px]:gap-[2px]'>
-        <div className='w-full whitespace-nowrap overflow-hidden !text-ellipsis font-bold min-[390px]:mt-1 mt-[1px] min-[390px]:ml-6 ml-1 capitalize'>
+        <div className='w-[96%] whitespace-nowrap overflow-hidden !text-ellipsis font-bold min-[390px]:mt-1 mt-[1px] min-[390px]:ml-6 ml-1 capitalize md:text-base text-sm'>
           { product_name }
         </div>
         <div className='w-[90%] text-base text-gray-700 ml-1 font-semibold flex items-center justify-between'>
           <span>${ price }</span>
-          <span>{ generateStars() }</span>
+          <span>
+            { ratings.length > 0 ? generateStars() : <span className='text-xs text-[#0000007b]'>No Ratings</span> }
+          </span>
         </div>
       </div>
     </div>

@@ -1,13 +1,21 @@
 interface itemProps {
-    _id: string | number;
+    _id?: string | number;
     primaryImgUrl: string;
     product_name: string;
     product_category: string;
-    price: string | number;
+    price: number;
     product_type: string;
-    search_keys: string[] | string;
+    search_keys: string[];
     brand_name: string;
 };
+
+interface newItemProp extends itemProps {
+    secondaryImgUrl: string[];
+    ratings: {
+        ratingBy: String,
+        ratingNumber: Number,
+    }[];
+}
 
 const itemArr: itemProps[] = [
     {
@@ -111,6 +119,25 @@ const itemArr: itemProps[] = [
         product_type: "bag",
         search_keys: ["bag", "purse", "venity bag"],
     }
+];
+
+const newItems: newItemProp[] = [
+    {
+        product_name: "",
+        product_category: "",
+        price: 50,
+        product_type: "",
+        brand_name: "Unknown",
+        search_keys: [],
+        primaryImgUrl: "",
+        secondaryImgUrl: [],
+        ratings: [
+            {
+                ratingBy: "system",
+                ratingNumber: 3
+            }
+        ]
+    },
 ];
 
 export default itemArr;
