@@ -9,10 +9,12 @@ import IconButton from '@/app/lib/common/IconButton';
 import ReviewBox from '@/app/(client)/components/ReviewBox';
 import ReviewStar from '@/app/(client)/components/ReviewStar';
 import Footer from '@/app/lib/common/footer/Footer';
-import RelatedProducts from './RelatedProducts';
+import RelatedProducts from '../../../components/single-product-compos/RelatedProducts';
 import { reviewText } from './reviewText';
 import toast from 'react-hot-toast';
 import { ProductType } from '@/app/lib/types/productTyps';
+import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
+import type { Metadata } from 'next'
 
 interface pageProps {
     params: { productKey: string };
@@ -26,8 +28,7 @@ const rubik = Rubik({
 });
 
 async function getProductById(productId: string) {
-    const url = 'https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=' + productId;
-    const res = await fetch(url, {
+    const res = await fetch(`${process.env.SINGLE_PRODUCT_URL}${productId}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
@@ -38,10 +39,21 @@ async function getProductById(productId: string) {
     return res.json();
 };
 
-const page: FC<pageProps> = async ({ params }) => {
+export async function generateMetadata({ params, searchParams }: pageProps): Promise<Metadata> {
+    // read route params
+    const productId = params.productKey;
+
+    // fetch data
+    const product = await getProductById(productId);
+
+    return {
+        title: product.success ? "E-Card - " + product.product.product_name : product.error,
+    }
+}
+
+const SingleProductPage: FC<pageProps> = async ({ params }) => {
     const productId = params.productKey;
     const isProduct = await getProductById(productId);
-    console.log(isProduct);
 
     if (!isProduct.success) {
         toast.error(isProduct.error);
@@ -91,39 +103,11 @@ const page: FC<pageProps> = async ({ params }) => {
                 <section className='w-full md:max-h-[35rem]'>
                     <div className='h-full w-full lg:w-11/12 p-4 px-6 flex sm:flex-row flex-col lg:gap-2 max-[639.5px]:items-center gap-6'>
                         {/* images container */ }
-                        <div className='h-full md:w-[28rem] flex'>
-                            <div className='h-3/4 w-full flex md:gap-4 gap-1'>
-                                {/* secondry images */ }
-                                <div className='h-80 w-20 sm:w-16 max-[400px]:h-60 max-[400px]:w-16 flex flex-col gap-1 items-center'>
-                                    <SmallImageContainer
-                                        src={ primaryImgUrl }
-                                        alt={ product_type }
-                                    />
-                                    {
-                                        secondryImgUrls.map((imageUrl) => <SmallImageContainer
-                                            src={ imageUrl }
-                                            alt={ product_type }
-                                            key={ imageUrl }
-                                        />
-                                        )
-                                    }
-                                </div>
-
-                                {/* primary image */ }
-                                <div className='relative md:h-80 sm:h-72 sm:w-64 lg:w-4/6 w-72 border rounded-md overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
-                                    <Image
-                                        src={ primaryImgUrl }
-                                        alt={ product_type }
-                                        fill
-                                    />
-                                    <IconButton
-                                        className='absolute top-3 right-3 text-base p-1 px-2 rounded-full text-gray-50 bg-gray-400 cursor-pointer'
-                                        icon={ <i className="ri-heart-line"></i> }
-                                        type='button'
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <ImageContainer
+                            primaryImgUrl={ primaryImgUrl }
+                            product_type={ product_type }
+                            secondryImgUrls={ secondryImgUrls }
+                        />
 
                         {/* text container */ }
                         <div className='lg:flex-1'>
@@ -136,7 +120,7 @@ const page: FC<pageProps> = async ({ params }) => {
                             <div className='mt-4 flex items-center select-none'>
                                 { generateStars() }
                                 <span className={ `ml-4 sm:text-sm text-xs text-slate-500 ${rubik.className}` }>
-                                    { ratings.length > 0 ? "(2 customer reviewed)" : "(no reviews)" }
+                                    { ratings.length > 0 ? `(${ratings.length} customer reviewed)` : "(no reviews)" }
                                 </span>
                             </div>
 
@@ -220,4 +204,4 @@ const page: FC<pageProps> = async ({ params }) => {
     );
 };
 
-export default page;
+export default SingleProductPage;
