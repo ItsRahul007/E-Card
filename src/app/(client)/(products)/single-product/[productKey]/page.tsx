@@ -27,7 +27,7 @@ const rubik = Rubik({
 
 async function getProductById(productId: string) {
     const url = 'https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=' + productId;
-    const res = await fetch(`http://localhost:3000/api/single-product?productId=${productId}`, {
+    const res = await fetch(url, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
