@@ -24,7 +24,7 @@ const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
   return (
     <nav className='w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-[#41B4CD] text-white flex'>
       {/* search box and logo */ }
-      <span className='h-full xl:w-[30rem] lg:flex hidden justify-end items-center gap-8'>
+      <span className='h-full xl:w-[30rem] min-[1281px]:flex hidden justify-end items-center gap-8'>
         <span className={ `text-3xl ${ubuntu.className}` }>E-Card</span>
         <InputCompo
           type="text"

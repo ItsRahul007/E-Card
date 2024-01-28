@@ -6,7 +6,6 @@ import connectWithMongo from "@/app/lib/mongoConnection/mongoConnect";
 export async function GET(req: NextRequest) {
     try {
         const productId = String(req.nextUrl.searchParams.get("productId"));
-        // console.log(productId);
 
         //! if not of productId
         if (!productId) {

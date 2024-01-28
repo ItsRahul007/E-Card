@@ -37,7 +37,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
         <>
             {/* sub nav icon */ }
             <span
-                className='h-full w-10 text-2xl lg:hidden flex justify-start items-center ml-3 cursor-pointer'
+                className='h-full w-10 text-2xl min-[1281px]:hidden flex justify-start items-center ml-3 cursor-pointer'
                 onClick={ () => setIsNavOpen(true) }
             >
                 <i className="ri-menu-2-line"></i>

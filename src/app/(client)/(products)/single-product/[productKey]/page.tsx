@@ -15,8 +15,9 @@ import toast from 'react-hot-toast';
 import { ProductType } from '@/app/lib/types/productTyps';
 import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
+import { getProductDescription } from '@/app/lib/gimini-AI/giminiAI';
 
-interface pageProps {
+interface I_SingleProductPage {
     params: { productKey: string };
     searchParams: { search: string };
 }
@@ -39,19 +40,34 @@ async function getProductById(productId: string) {
     return res.json();
 };
 
-export async function generateMetadata({ params, searchParams }: pageProps): Promise<Metadata> {
-    // read route params
+export async function generateMetadata({ params, searchParams }: I_SingleProductPage): Promise<Metadata> {
+    //? reading route params
     const productId = params.productKey;
 
-    // fetch data
+    //? capitalizing the product name
+    function capitalizeText(text: string): string {
+        if (text) {
+            let wordsArray = text.split(/[\s-]+/);
+
+            let capitalizedArray = wordsArray.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+
+            let capitalizedText = capitalizedArray.join(" ");
+
+            return capitalizedText;
+        } else return "";
+    }
+
+    //? fetching product
     const product = await getProductById(productId);
+    const description = product.success ? await getProductDescription(product.product.product_type, product.product.product_name) : "";
 
     return {
-        title: product.success ? "E-Card - " + product.product.product_name : product.error,
+        title: product.success ? "E-Card - " + capitalizeText(product.product.product_name) : product.error,
+        description
     }
-}
+};
 
-const SingleProductPage: FC<pageProps> = async ({ params }) => {
+const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
     const productId = params.productKey;
     const isProduct = await getProductById(productId);
 
@@ -62,6 +78,8 @@ const SingleProductPage: FC<pageProps> = async ({ params }) => {
 
     const product: ProductType = isProduct.product;
     const { ratings, primaryImgUrl, secondryImgUrls, price, product_name, product_type } = product;
+    const ProductDescription = await getProductDescription(product_type, product_name);
+
 
 
     // Function to generate star icons based on the rounded rating
@@ -112,12 +130,12 @@ const SingleProductPage: FC<pageProps> = async ({ params }) => {
                         {/* text container */ }
                         <div className='lg:flex-1'>
                             {/* product name */ }
-                            <div className="w-11/12 h-8 text-left text-2xl uppercase whitespace-nowrap text-ellipsis overflow-hidden sm:text-3xl">
-                                <h2 className={ `$${rubik.className}` }>{ product_name }</h2>
+                            <div className="min-h-8 h-auto max-md:w-72 text-left text-2xl capitalize text-ellipsis sm:text-3xl">
+                                <h2 className={ `${rubik.className}` }>{ product_name }</h2>
                             </div>
 
                             {/* product rating */ }
-                            <div className='mt-4 flex items-center select-none'>
+                            <div className='mt-1 sm:mt-2 flex items-center select-none'>
                                 { generateStars() }
                                 <span className={ `ml-4 sm:text-sm text-xs text-slate-500 ${rubik.className}` }>
                                     { ratings.length > 0 ? `(${ratings.length} customer reviewed)` : "(no reviews)" }
@@ -125,7 +143,7 @@ const SingleProductPage: FC<pageProps> = async ({ params }) => {
                             </div>
 
                             {/* product price */ }
-                            <div className={ `mt-5 ${rubik.className} flex gap-2 select-none` }>
+                            <div className={ `mt-3 sm:mt-5 ${rubik.className} flex gap-2 select-none` }>
                                 <span className='sm:text-2xl text-xl'>${ price }</span>
                                 <span className='sm:text-xl text-lg !font-normal text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     $99.00
@@ -134,7 +152,7 @@ const SingleProductPage: FC<pageProps> = async ({ params }) => {
 
                             {/* about the product */ }
                             <div className="font-medium text-sm text-gray-500 md:w-[90%] w-72 mt-4">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas numquam a laudantium ratione suscipit cupiditate repellat beatae eum sint voluptates quia laboriosam ex iure cum, distinctio eos exercitationem quisquam laborum earum labore aliquam autem eveniet vitae praesentium. Ipsa placeat qui, omnis iure eius autem repellendus quos, quisquam est dolores iste dicta excepturi vero sit rem ipsam amet quo ullam aliquam!
+                                { ProductDescription }
                             </div>
 
                             {/* buy or add to cart button */ }
