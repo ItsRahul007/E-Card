@@ -62,16 +62,6 @@
   z-index: inherit;
 }
 
-.hoverCompo {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.283) 80%);
-  opacity: 0;
-  transition: .3s ease;
-}
-
-.itemImage:hover .hoverCompo{
-  opacity: 1;
-}
-
 .half_star {
   background: linear-gradient(to right, #35a3bc 52%, #A0AEC0 48%);
   -webkit-background-clip: text;

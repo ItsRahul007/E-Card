@@ -1,18 +1,12 @@
 "use client";
 
-import ItemCard from '@/app/lib/common/all-products/ItemCard';
-import { useGetFetchQuery } from '@/app/lib/customHook/useGetFetchedQuery';
-import { ProductType } from '@/app/lib/types/productTyps';
-import { Rubik } from 'next/font/google';
+import ItemCard from '@/app/(client)/components/common/all-products/ItemCard';
+import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
+import { rubik } from '@/lib/fonts/fonts';
+import { ProductType } from '@/lib/types/productTyps';
 import Link from 'next/link';
 import React, { FC } from 'react'
 import toast from 'react-hot-toast';
-
-const rubik = Rubik({
-    weight: ["700", "500"],
-    style: "normal",
-    subsets: ["latin"]
-});
 
 type productQuery = {
     pageParams: number[];

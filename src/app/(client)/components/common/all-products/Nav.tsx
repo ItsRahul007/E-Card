@@ -1,17 +1,11 @@
 "use client";
 
 import React, { ChangeEvent, useState } from 'react';
-import { Ubuntu } from 'next/font/google';
 import Link from 'next/link';
 import InputCompo from '../InputCompo';
 import { useRouter } from 'next/navigation';
 import SideNavBar from './SideNavBar';
-
-const ubuntu = Ubuntu({
-  weight: "700",
-  subsets: ["latin-ext",],
-  style: 'italic'
-});
+import { ubuntu700 } from '@/lib/fonts/fonts';
 
 interface I_ProductNav {
   filters?: boolean;
@@ -25,7 +19,7 @@ const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
     <nav className='w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-[#41B4CD] text-white flex'>
       {/* search box and logo */ }
       <span className='h-full xl:w-[30rem] min-[1281px]:flex hidden justify-end items-center gap-8'>
-        <span className={ `text-3xl ${ubuntu.className}` }>E-Card</span>
+        <span className={ `text-3xl ${ubuntu700.className}` }>E-Card</span>
         <InputCompo
           type="text"
           name='navSearch'

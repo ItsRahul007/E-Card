@@ -1,27 +1,9 @@
 import React from 'react';
 import style from "@/app/style/style.module.css";
-import { Poppins, Roboto, Ubuntu } from 'next/font/google';
-import Button from '@/app/lib/common/Button';
+import Button from '@/app/(client)/components/common/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
-
-const poppins = Poppins({
-  weight: '600',
-  subsets: ['latin'],
-  style: ["normal"]
-});
-
-const roboto = Roboto({
-  weight: '700',
-  subsets: ['latin'],
-  style: ["normal"]
-});
-
-const ubuntu = Ubuntu({
-  weight: "700",
-  subsets: ["latin-ext",],
-  style: 'normal'
-});
+import { poppins, ubuntu700, roboto700 } from '@/lib/fonts/fonts';
 
 const Banner: React.FC = () => {
   return (
@@ -60,11 +42,11 @@ const Banner: React.FC = () => {
       </nav>
 
       {/* icon */ }
-      <div className={ `text-[40px] text-center font-bold mt-9 ${ubuntu.className}` } id='logo'>E-Card</div>
+      <div className={ `text-[40px] text-center font-bold mt-9 ${ubuntu700.className}` } id='logo'>E-Card</div>
 
       {/* head lines */ }
       <div className='text-center mt-12'>
-        <h1 className={ 'text-[70px] font-extrabold ' + roboto.className }>
+        <h1 className={ 'text-[70px] font-extrabold ' + roboto700.className }>
           <div id='h-text-1'>GET START</div>
           <div id='h-text-2'>YOUR FAVRIOT SHOPING</div>
         </h1>

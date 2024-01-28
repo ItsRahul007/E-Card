@@ -1,10 +1,5 @@
 import { Schema, model, models } from "mongoose";
 
-const ratingSchema = new Schema({
-    ratingBy: String,
-    ratingNumber: Number,
-});
-
 const productSchema = new Schema({
     //! required fields
     product_name: {
@@ -47,5 +42,4 @@ const productSchema = new Schema({
 });
 
 const Products = models.products || model("products", productSchema);
-
 export default Products;

@@ -1,9 +1,9 @@
-import isValidEmail from "@/app/lib/emailChecker";
-import User from "@/app/lib/model/usersSchema";
-import connectWithMongo from "@/app/lib/mongoConnection/mongoConnect";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
+import isValidEmail from "@/lib/emailChecker";
+import User from "@/lib/model/usersSchema";
+import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 
 export async function POST(req: Request) {
     try {

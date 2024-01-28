@@ -53,9 +53,9 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
 
   return (
     <div
-      className='border sm:h-72 min-[390px]:h-60 h-52 sm:w-52 min-[390px]:w-44 w-36 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px] col-span-1'
+      className='border sm:h-72 min-[390px]:h-60 h-52 sm:w-52 min-[390px]:w-44 w-36 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px] col-span-1 duration-200'
     >
-      <div className={ 'relative h-3/4 w-full ' + style.itemImage }>
+      <div className='group relative h-3/4 w-full'>
         <Link href={ `/single-product/${_id}` }>
           <Image
             src={ primaryImgUrl }
@@ -63,7 +63,7 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
             fill
           />
         </Link>
-        <span className={ 'absolute text-slate-50 text-2xl bottom-0 flex items-center justify-end w-full h-16 ' + style.hoverCompo }>
+        <span className='absolute text-slate-50 text-2xl bottom-0 group-hover:opacity-100 opacity-0 flex items-center justify-end w-full h-16 bg-gradient-to-t from-[#0000005e] to-transparent duration-300'>
           <div className='w-20 flex gap-3 h-full items-center'>
             <Link href="#"><i className="hover:text-white ri-shopping-cart-2-fill font-thin"></i></Link>
             <Link href="#"><i className="hover:text-white ri-heart-fill font-thin"></i></Link>

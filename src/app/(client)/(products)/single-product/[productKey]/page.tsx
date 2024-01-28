@@ -1,32 +1,23 @@
-import SmallImageContainer from '@/app/(client)/components/small-image-container/SmallImageContainer';
-import AllProductNav from '@/app/lib/common/all-products/Nav';
-import { Rubik } from 'next/font/google';
-import Image from 'next/image';
+import AllProductNav from '@/app/(client)/components/common/all-products/Nav';
 import React, { FC } from 'react';
 import style from "@/app/style/style.module.css";
-import Button from '@/app/lib/common/Button';
-import IconButton from '@/app/lib/common/IconButton';
+import Button from '@/app/(client)/components/common/Button';
 import ReviewBox from '@/app/(client)/components/ReviewBox';
 import ReviewStar from '@/app/(client)/components/ReviewStar';
-import Footer from '@/app/lib/common/footer/Footer';
+import Footer from '@/app/(client)/components/common/footer/Footer';
 import RelatedProducts from '../../../components/single-product-compos/RelatedProducts';
 import { reviewText } from './reviewText';
 import toast from 'react-hot-toast';
-import { ProductType } from '@/app/lib/types/productTyps';
+import { ProductType } from '@/lib/types/productTyps';
 import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
-import { getProductDescription } from '@/app/lib/gimini-AI/giminiAI';
+import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
+import { rubik, rubik500 } from '@/lib/fonts/fonts';
 
 interface I_SingleProductPage {
     params: { productKey: string };
     searchParams: { search: string };
 }
-
-const rubik = Rubik({
-    weight: ["700", "500"],
-    style: "normal",
-    subsets: ["latin"]
-});
 
 async function getProductById(productId: string) {
     const res = await fetch(`${process.env.SINGLE_PRODUCT_URL}${productId}`, {
@@ -82,7 +73,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
 
 
-    // Function to generate star icons based on the rounded rating
+    //? Function to generate star icons based on the rounded rating
     const generateStars = () => {
         //? getting the total rating number
         let totalRatingNumber: number = 0;
@@ -131,7 +122,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                         <div className='lg:flex-1'>
                             {/* product name */ }
                             <div className="min-h-8 h-auto max-md:w-72 text-left text-2xl capitalize text-ellipsis sm:text-3xl">
-                                <h2 className={ `${rubik.className}` }>{ product_name }</h2>
+                                <h4 className={ `${rubik500.className}` }>{ product_name }</h4>
                             </div>
 
                             {/* product rating */ }
@@ -143,7 +134,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                             </div>
 
                             {/* product price */ }
-                            <div className={ `mt-3 sm:mt-5 ${rubik.className} flex gap-2 select-none` }>
+                            <div className={ `mt-3 sm:mt-5 ${rubik500.className} flex gap-2 select-none` }>
                                 <span className='sm:text-2xl text-xl'>${ price }</span>
                                 <span className='sm:text-xl text-lg !font-normal text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     $99.00

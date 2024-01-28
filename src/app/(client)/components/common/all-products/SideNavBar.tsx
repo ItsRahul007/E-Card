@@ -1,28 +1,11 @@
 "use client";
 
-import { Kanit, Nunito, Ubuntu } from 'next/font/google';
 import React, { ChangeEvent, FC, useState } from 'react';
 import InputCompo from '../InputCompo';
 import IconButton from '../IconButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-const ubuntu = Ubuntu({
-    weight: "700",
-    subsets: ["latin-ext",],
-    style: 'italic'
-});
-
-const kanit = Kanit({
-    weight: "500",
-    subsets: ["latin-ext"],
-    style: 'italic'
-});
-
-const nunito = Nunito({
-    weight: "600",
-    subsets: ["latin-ext"]
-});
+import { kanit500, ubuntu700, nunito } from '@/lib/fonts/fonts';
 
 interface I_ProductNav {
     filters?: boolean;
@@ -52,7 +35,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                 <div className="bg-slate-800 h-full w-full min-[426px]:w-[64%] overflow-y-scroll">
                     {/* header */ }
                     <div className='w-full h-14 flex items-center justify-between'>
-                        <h2 className={ `text-3xl ml-3 ${ubuntu.className}` }>E-Card</h2>
+                        <h2 className={ `text-3xl ml-3 ${ubuntu700.className}` }>E-Card</h2>
                         <span
                             className='h-6 w-6 border-2 border-white mr-3 flex justify-center items-center rounded-md text-xl'
                             onClick={ () => setIsNavOpen(false) }
@@ -109,7 +92,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                     {/* filters */ }
                     <div className={ `w-full h-full mt-4 ${filters ? "block" : "hidden"}` }>
                         <div className='w-11/12 ml-3 flex flex-col gap-2'>
-                            <div className={ `h-10 w-full ${kanit.className}` }>
+                            <div className={ `h-10 w-full ${kanit500.className}` }>
                                 <h3 className='text-4xl'>Filters</h3>
                             </div>
 

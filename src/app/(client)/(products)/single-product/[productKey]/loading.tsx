@@ -1,6 +1,6 @@
 "use client";
 
-import PageLoading from '@/app/lib/common/loading/PageLoading';
+import PageLoading from '@/app/(client)/components/common/loading/PageLoading';
 import React from 'react'
 
 const loading = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import Error from '@/app/lib/common/error/ErrorComponent';
+import Error from '@/app/(client)/components/common/error/ErrorComponent';
 import React from 'react'
 
 const error = (props: any) => {

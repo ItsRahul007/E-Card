@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import AllProductNav from '@/app/lib/common/all-products/Nav';
-import Products from '@/app/lib/common/all-products/Products';
-import Filter from '@/app/lib/common/all-products/Filter';
+import AllProductNav from '@/app/(client)/components/common/all-products/Nav';
+import Products from '@/app/(client)/components/common/all-products/Products';
+import Filter from '@/app/(client)/components/common/all-products/Filter';
 import { Metadata } from 'next';
-import { getProductDescription } from '@/app/lib/gimini-AI/giminiAI';
+import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
 
 interface I_AllProduct {
   params: { productKey: string };

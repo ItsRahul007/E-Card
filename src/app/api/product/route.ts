@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import ProductsSchema from "@/app/lib/model/productSchema";
-import connectWithMongo from "@/app/lib/mongoConnection/mongoConnect";
+import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import ProductsSchema from "@/lib/model/productSchema";
 
 //? for getting all products
 export async function GET(req: NextRequest) {
