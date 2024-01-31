@@ -11,7 +11,7 @@ export interface itemProps {
 
 export interface ProductType extends itemProps {
     id: string;
-    secondryImgUrls: string[];
+    secondaryImgUrls: string[];
     ratings: {
         ratingBy: string,
         ratingNumber: number,

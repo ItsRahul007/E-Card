@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Button from '@/app/(client)/components/common/Button';
+import Button from '@/app/(client)/components/common/buttons/Button';
 import Link from 'next/link';
 import style from "@/app/style/style.module.css";
 import InputCompo from '@/app/(client)/components/common/InputCompo';

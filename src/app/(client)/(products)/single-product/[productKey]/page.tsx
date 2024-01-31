@@ -1,7 +1,7 @@
 import AllProductNav from '@/app/(client)/components/common/all-products/Nav';
 import React, { FC } from 'react';
 import style from "@/app/style/style.module.css";
-import Button from '@/app/(client)/components/common/Button';
+import Button from '@/app/(client)/components/common/buttons/Button';
 import ReviewBox from '@/app/(client)/components/ReviewBox';
 import ReviewStar from '@/app/(client)/components/ReviewStar';
 import Footer from '@/app/(client)/components/common/footer/Footer';
@@ -12,7 +12,7 @@ import { ProductType } from '@/lib/types/productTyps';
 import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
-import { rubik, rubik500 } from '@/lib/fonts/fonts';
+import { outfit, rubik, rubik500 } from '@/lib/fonts/fonts';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -68,7 +68,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
     }
 
     const product: ProductType = isProduct.product;
-    const { ratings, primaryImgUrl, secondryImgUrls, price, product_name, product_type } = product;
+    const { ratings, primaryImgUrl, secondaryImgUrls, price, product_name, product_type } = product;
     const ProductDescription = await getProductDescription(product_type, product_name);
 
 
@@ -115,14 +115,14 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                         <ImageContainer
                             primaryImgUrl={ primaryImgUrl }
                             product_type={ product_type }
-                            secondryImgUrls={ secondryImgUrls }
+                            secondaryImgUrls={ secondaryImgUrls }
                         />
 
                         {/* text container */ }
                         <div className='lg:flex-1'>
                             {/* product name */ }
                             <div className="min-h-8 h-auto max-md:w-72 text-left text-2xl capitalize text-ellipsis sm:text-3xl">
-                                <h4 className={ `${rubik500.className}` }>{ product_name }</h4>
+                                <h4 className={ `${outfit.className}` }>{ product_name }</h4>
                             </div>
 
                             {/* product rating */ }

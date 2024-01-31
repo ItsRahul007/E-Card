@@ -11,7 +11,7 @@ const productSchema = new Schema({
         type: String,
         unique: true,
     },
-    secondryImgUrls: {
+    secondaryImgUrls: {
         required: true,
         type: [String],
         unique: true,
@@ -39,6 +39,7 @@ const productSchema = new Schema({
         ratingBy: String,
         ratingNumber: Number,
     }],
+    discount_percentage: Number,
 });
 
 const Products = models.products || model("products", productSchema);

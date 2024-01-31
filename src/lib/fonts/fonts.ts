@@ -1,9 +1,15 @@
-import { Inter, Kanit, Mukta, Nunito, Poppins, Roboto, Rubik, Ubuntu } from "next/font/google";
+import { Inter, Kanit, Mukta, Nunito, Outfit, Poppins, Roboto, Rubik, Ubuntu } from "next/font/google";
 
 const inter = Inter({ subsets: ['latin'] });
 
 const rubik = Rubik({
     weight: ["700", "500"],
+    style: "normal",
+    subsets: ["latin"]
+});
+
+const outfit = Outfit({
+    weight: "400",
     style: "normal",
     subsets: ["latin"]
 });
@@ -64,13 +70,14 @@ const mukta700 = Mukta({
 export {
     inter,
     rubik,
-    rubik500,
     kanit,
-    kanit500,
     nunito,
     poppins,
     roboto,
+    rubik500,
+    kanit500,
     ubuntu700,
     roboto700,
     mukta700,
+    outfit,
 };

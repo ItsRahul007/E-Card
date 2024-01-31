@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, FC, useState } from 'react';
 import InputCompo from '../InputCompo';
-import IconButton from '../IconButton';
+import IconButton from '../buttons/IconButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { kanit500, ubuntu700, nunito } from '@/lib/fonts/fonts';

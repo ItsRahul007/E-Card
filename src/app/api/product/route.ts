@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
     try {
         await connectWithMongo();
         const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
-        const itemNumber = 8;
+        const itemNumber = 10;
         //! compares the first and second numbers and returns the biggest number
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 0);
 
@@ -46,24 +46,26 @@ export async function POST(req: NextRequest) {
         const {
             product_name,
             primaryImgUrl,
-            secondryImgUrls,
+            secondaryImgUrls,
             price,
             product_type,
             product_category,
             search_keys,
             brand_name,
-            ratings
+            ratings,
+            discount_percentage
         } = await req.json();
-
+        //primaryImgUrl product_name product_category price product_type search_keys secondaryImgUrls
         //! if there is any required field data is missing
         if (
             !product_name ||
             !primaryImgUrl ||
-            !secondryImgUrls ||
+            !secondaryImgUrls ||
             !price ||
             !product_type ||
             !product_category ||
-            !search_keys
+            !search_keys ||
+            !discount_percentage
         ) {
             return NextResponse.json({
                 success: false,
@@ -72,14 +74,14 @@ export async function POST(req: NextRequest) {
         }
 
         //! if there is more than or less than three secondry images
-        if (secondryImgUrls.length > 3 || secondryImgUrls.length < 3) {
+        if (secondaryImgUrls.length > 3 || secondaryImgUrls.length < 3) {
             return NextResponse.json({
                 error: "Three secondry images required",
                 success: false,
             }, { status: 400 });
         }
 
-        const urlCkeck = checkIsImageUrlEmptyString(primaryImgUrl, secondryImgUrls);
+        const urlCkeck = checkIsImageUrlEmptyString(primaryImgUrl, secondaryImgUrls);
         if (!urlCkeck.success) {
             return NextResponse.json({
                 success: false,
@@ -102,13 +104,14 @@ export async function POST(req: NextRequest) {
         const product = await ProductsSchema.create({
             product_name,
             primaryImgUrl,
-            secondryImgUrls,
+            secondaryImgUrls,
             price,
             product_type,
             product_category,
             search_keys,
             brand_name: brand_name || "Unknown",
             ratings: ratings || [],
+            discount_percentage
         });
 
         return NextResponse.json({

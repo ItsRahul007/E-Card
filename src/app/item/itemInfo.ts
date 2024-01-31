@@ -10,11 +10,12 @@ interface itemProps {
 };
 
 interface newItemProp extends itemProps {
-    secondaryImgUrl: string[];
+    secondaryImgUrls: string[];
     ratings: {
         ratingBy: String,
         ratingNumber: Number,
     }[];
+    discount_percentage: number;
 }
 
 const itemArr: itemProps[] = [
@@ -121,22 +122,25 @@ const itemArr: itemProps[] = [
     }
 ];
 
-const newItems: newItemProp[] = [
+export const newItems: newItemProp[] = [
     {
-        product_name: "",
-        product_category: "",
-        price: 50,
-        product_type: "",
-        brand_name: "Unknown",
-        search_keys: [],
-        primaryImgUrl: "",
-        secondaryImgUrl: [],
-        ratings: [
+        "product_name": "",
+        "product_category": "",
+        "price": 50,
+        "product_type": "",
+        "brand_name": "Unknown",
+        "search_keys": [],
+        "primaryImgUrl": "",
+        "secondaryImgUrls": [
+
+        ],
+        "ratings": [
             {
-                ratingBy: "system",
-                ratingNumber: 3
+                "ratingBy": "system",
+                "ratingNumber": 3
             }
-        ]
+        ],
+        "discount_percentage": 10
     },
 ];
 

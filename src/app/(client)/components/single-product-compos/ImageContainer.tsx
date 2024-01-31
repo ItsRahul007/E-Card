@@ -1,6 +1,6 @@
 "use client";
 
-import IconButton from '@/app/(client)/components/common/IconButton';
+import IconButton from '@/app/(client)/components/common/buttons/IconButton';
 import Image from 'next/image';
 import React, { FC, useState } from 'react'
 import SmallImageContainer from '../small-image-container/SmallImageContainer';
@@ -8,12 +8,12 @@ import SmallImageContainer from '../small-image-container/SmallImageContainer';
 interface I_ImageContainer {
     primaryImgUrl: string;
     product_type: string;
-    secondryImgUrls: string[];
+    secondaryImgUrls: string[];
 }
 
-const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, secondryImgUrls }) => {
+const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, secondaryImgUrls }) => {
     const [currentImageUrl, setCurrentImageUrl] = useState<string>(primaryImgUrl);
-    const allImages: string[] = [primaryImgUrl, ...secondryImgUrls];
+    const allImages: string[] = [primaryImgUrl, ...secondaryImgUrls];
 
     return (
         <div className='h-full md:w-[28rem] flex'>
@@ -31,7 +31,7 @@ const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, sec
                     }
                 </div>
 
-                {/* primary image */ }
+                {/* primary image or selected image */ }
                 <div className='relative md:h-80 sm:h-72 sm:w-64 lg:w-4/6 w-72 border rounded-md overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
                     <Image
                         src={ currentImageUrl }
