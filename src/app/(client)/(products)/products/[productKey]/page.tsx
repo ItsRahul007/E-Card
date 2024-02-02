@@ -35,13 +35,13 @@ export async function generateMetadata({ searchParams }: I_AllProduct): Promise<
   }
 }
 
-const AllProduct: FC<I_AllProduct> = async ({ params, searchParams }) => {
+const AllProduct: FC<I_AllProduct> = async ({ searchParams }) => {
   return (
     <div className='h-screen w-screen bg-[#EAEAEA] flex flex-col'>
       <AllProductNav filters={ true } />
       <div className='h-[92%] sm:h-[91%] lg:h-[87%] flex gap-3 lg:mt-3'>
         <Filter />
-        <Products />
+        <Products searchKey={ searchParams.search || "" } />
       </div>
     </div>
   );

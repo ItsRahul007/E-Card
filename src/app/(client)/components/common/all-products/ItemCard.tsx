@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import style from "@/app/style/style.module.css";
 import IconButton from '../buttons/IconButton';
+import { rubik500 } from '@/lib/fonts/fonts';
 
 interface I_ItemCard {
   primaryImgUrl: string;
@@ -11,13 +12,14 @@ interface I_ItemCard {
   ratings: {
     ratingBy: string;
     ratingNumber: number;
-    _id: string;
+    _id?: string;
   }[];
   _id: string;
+  discount_percentage: number;
 }
 
 const ItemCard: React.FC<I_ItemCard> = (props) => {
-  const { primaryImgUrl, product_name, price, _id, ratings } = props;
+  const { primaryImgUrl, product_name, price, _id, ratings, discount_percentage } = props;
 
   //? getting the total rating number
   let totalRatingNumber: number = 0;
@@ -66,6 +68,15 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
               objectFit: "contain"
             } }
           />
+
+          {/* discount percentage */ }
+          <span
+            className={ `absolute flex items-end justify-center h-12 md:h-[50px] w-[140px] left-[-40px] top-[-20px] text-sm md:text-base px-1 text-gray-50 bg-opacity-60 bg-green-500 ${rubik500.className}
+              -rotate-45
+          `}
+          >
+            <span className='pr-8'>{ discount_percentage }% off</span>
+          </span>
         </Link>
 
         {/* desktop hover component */ }
@@ -82,14 +93,13 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
           icon={ <i className="ri-heart-line"></i> }
           type='button'
         />
-        <span></span>
       </div>
       <div className='h-1/4 w-full flex flex-col items-center justify-start min-[390px]:gap-[2px]'>
         <div className='w-[96%] whitespace-nowrap overflow-hidden !text-ellipsis font-bold min-[390px]:mt-1 mt-[1px] min-[390px]:ml-6 ml-1 capitalize md:text-base text-sm'>
           { product_name }
         </div>
         <div className='w-[90%] text-base text-gray-700 ml-1 font-semibold flex items-center justify-between'>
-          <span>${ price }</span>
+          <span>${ price - (price * discount_percentage / 100) }</span>
           <span>
             { ratings.length > 0 ? generateStars() : <span className='text-xs text-[#0000007b]'>No Ratings</span> }
           </span>

@@ -17,4 +17,5 @@ export interface ProductType extends itemProps {
         ratingNumber: number,
         _id: string;
     }[];
+    discount_percentage: number;
 }

@@ -11,21 +11,31 @@ type itemProps = {
     brand_name: string;
 };
 
-export default function useFetchProducts({ query }: { query: string[] }) {
+type T_useFetchProducts = { query: string[], searchKey: string };
+
+export default function useFetchProducts({ query, searchKey }: T_useFetchProducts) {
     async function getProducts({ pageParam }: { pageParam: number }) {
         const res = await fetch('/api/product?page=' + pageParam, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
                 AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN || "")
-            }
+            },
         })
         const data = await res.json();
         return { ...data }
     };
 
     const {
-        data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, status, isFetching
+        data,
+        error,
+        isLoading,
+        isFetchingNextPage,
+        hasNextPage,
+        fetchNextPage,
+        status,
+        isFetching,
+        refetch,
     } = useInfiniteQuery({
         queryKey: query,
         queryFn: getProducts,
@@ -55,5 +65,6 @@ export default function useFetchProducts({ query }: { query: string[] }) {
         fetchNextPage,
         status,
         isFetching,
+        refetch,
     }
 };
