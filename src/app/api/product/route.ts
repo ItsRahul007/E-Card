@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
         //! compares the first and second numbers and returns the biggest number
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 0);
 
-        const products = await ProductsSchema.find().skip(skipNumber).limit(itemNumber);
+        const products = await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
 
         return NextResponse.json({
             success: true,

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import style from "@/app/style/style.module.css";
+import IconButton from '../buttons/IconButton';
 
 interface I_ItemCard {
   primaryImgUrl: string;
@@ -61,14 +62,27 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
             src={ primaryImgUrl }
             alt="item"
             fill
+            style={ {
+              objectFit: "contain"
+            } }
           />
         </Link>
-        <span className='absolute text-slate-50 text-2xl bottom-0 group-hover:opacity-100 opacity-0 flex items-center justify-end w-full h-16 bg-gradient-to-t from-[#0000005e] to-transparent duration-300'>
+
+        {/* desktop hover component */ }
+        <span className='absolute text-slate-50 text-2xl bottom-0 group-hover:opacity-100 opacity-0 hidden xl:flex items-center justify-end w-full h-16 bg-gradient-to-t from-[#0000005e] to-transparent duration-300'>
           <div className='w-20 flex gap-3 h-full items-center'>
             <Link href="#"><i className="hover:text-white ri-shopping-cart-2-fill font-thin"></i></Link>
             <Link href="#"><i className="hover:text-white ri-heart-fill font-thin"></i></Link>
           </div>
         </span>
+
+        {/* fevorite icon for mobile */ }
+        <IconButton
+          className='absolute top-1 right-1 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 bg-gray-400 cursor-pointer block xl:hidden'
+          icon={ <i className="ri-heart-line"></i> }
+          type='button'
+        />
+        <span></span>
       </div>
       <div className='h-1/4 w-full flex flex-col items-center justify-start min-[390px]:gap-[2px]'>
         <div className='w-[96%] whitespace-nowrap overflow-hidden !text-ellipsis font-bold min-[390px]:mt-1 mt-[1px] min-[390px]:ml-6 ml-1 capitalize md:text-base text-sm'>

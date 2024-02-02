@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
-import InputCompo from '../InputCompo';
+import InputCompo from '../common/InputCompo';
 import { kanit, nunito } from "@/lib/fonts/fonts"
+import FilterByPrice from './FilterByPrice';
 
 const Filter: React.FC = () => {
   return (
@@ -11,18 +12,7 @@ const Filter: React.FC = () => {
       </div>
       <div className='w-full flex-1 flex flex-col items-center gap-10'>
         {/* filter by price */ }
-        <div className='w-[85%]'>
-          <h5 className={ 'mb-2 text-2xl ' + nunito.className }>Filter by price</h5>
-          <div className='flex xl:flex-col 2xl:flex-row gap-9 2xl:items-center xl:items-start xl:gap-3'>
-            <span className='flex flex-col gap-1'>
-              <InputCompo type='number' name='from' className='w-20 h-10 outline-none border-0 border-b-2 border-black bg-transparent text-sm' />
-              <InputCompo type='number' name='to' className='w-20 h-10 outline-none border-0 border-b-2 border-black bg-transparent text-sm' />
-            </span>
-            <button className='text-xl h-10 border-2 rounded-md px-2 hover:bg-gray-100'>
-              <i className="ri-search-line"></i>
-            </button>
-          </div>
-        </div>
+        <FilterByPrice />
 
         {/* categories */ }
         <div className='w-[85%]'>

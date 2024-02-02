@@ -1,11 +1,12 @@
 "use client";
 
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useState, useRef, useEffect } from 'react';
 import InputCompo from '../InputCompo';
 import IconButton from '../buttons/IconButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { kanit500, ubuntu700, nunito } from '@/lib/fonts/fonts';
+import FilterByPrice from '../../filters/FilterByPrice';
 
 interface I_ProductNav {
     filters?: boolean;
@@ -32,7 +33,9 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                 `}
             >
                 {/* main div that contains everything */ }
-                <div className="bg-slate-800 h-full w-full min-[426px]:w-[64%] overflow-y-scroll">
+                <div
+                    className="bg-slate-800 h-full w-full min-[426px]:w-[64%] overflow-y-scroll"
+                >
                     {/* header */ }
                     <div className='w-full h-14 flex items-center justify-between'>
                         <h2 className={ `text-3xl ml-3 ${ubuntu700.className}` }>E-Card</h2>
@@ -90,27 +93,14 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                     </div>
 
                     {/* filters */ }
-                    <div className={ `w-full h-full mt-4 ${filters ? "block" : "hidden"}` }>
+                    <div className={ `w-full h-full mt-4 ${filters ? "block" : "hidden"} lg:hidden` }>
                         <div className='w-11/12 ml-3 flex flex-col gap-2'>
                             <div className={ `h-10 w-full ${kanit500.className}` }>
                                 <h3 className='text-4xl'>Filters</h3>
                             </div>
 
                             {/* filter by price */ }
-                            <div className='w-full'>
-                                <span className={ 'text-xl ' + nunito.className }>Filter by price</span>
-                                <div className='flex flex-col items-start gap-3'>
-                                    <span className='flex flex-col gap-1'>
-                                        <InputCompo type='number' name='from' className='w-20 h-10 outline-none border-0 border-b-2 border-white bg-transparent text-sm' />
-                                        <InputCompo type='number' name='to' className='w-20 h-10 outline-none border-0 border-b-2 border-white bg-transparent text-sm' />
-                                    </span>
-                                    <IconButton
-                                        icon={ <i className="ri-search-line"></i> }
-                                        className='h-6 w-6 p-4 border-2 border-white flex justify-center items-center rounded-md text-lg'
-                                        type='button'
-                                    />
-                                </div>
-                            </div>
+                            <FilterByPrice />
 
                             {/* categories */ }
                             <div className='w-full mt-3'>
@@ -127,7 +117,10 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                 </div>
 
                 {/* blur div */ }
-                <div className='h-full w-[36%] backdrop-blur-[2px] hidden min-[426px]:block'>
+                <div
+                    className='h-full w-[36%] backdrop-blur-[2px] hidden min-[426px]:block'
+                    onClick={ () => setIsNavOpen(false) }
+                >
                     <div className={ `h-full w-full bg-[#00000012] ease-out duration-300 ${isNavOpen ? "opacity-100" : "opacity-0 bg-transparent"}` } />
                 </div>
             </div>

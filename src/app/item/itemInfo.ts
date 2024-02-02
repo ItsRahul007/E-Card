@@ -126,7 +126,7 @@ export const newItems: newItemProp[] = [
     {
         "product_name": "",
         "product_category": "",
-        "price": 50,
+        "price": 99,
         "product_type": "",
         "brand_name": "Unknown",
         "search_keys": [],
@@ -137,10 +137,10 @@ export const newItems: newItemProp[] = [
         "ratings": [
             {
                 "ratingBy": "system",
-                "ratingNumber": 3
+                "ratingNumber": 5
             }
         ],
-        "discount_percentage": 10
+        "discount_percentage": 7
     },
 ];
 

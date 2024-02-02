@@ -40,7 +40,7 @@ const productSchema = new Schema({
         ratingNumber: Number,
     }],
     discount_percentage: Number,
-});
+}, { timestamps: true, get: (time: any) => time.toDateString() });
 
 const Products = models.products || model("products", productSchema);
 export default Products;
