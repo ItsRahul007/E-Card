@@ -207,7 +207,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                 </section>
 
                 {/* third section (related products) */ }
-                <RelatedProducts />
+                {/* <RelatedProducts /> */ }
 
                 {/* footer */ }
                 <Footer />

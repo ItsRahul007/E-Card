@@ -43,7 +43,7 @@ const RelatedProducts: FC = () => {
                     <div
                         className='grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:grid-cols-5'
                     >
-                        {
+                        {/* {
                             relatedProductdata?.map((item) => <ItemCard key={ item._id }
                                 price={ item.price }
                                 primaryImgUrl={ item.primaryImgUrl }
@@ -51,7 +51,7 @@ const RelatedProducts: FC = () => {
                                 ratings={ item.ratings }
                                 _id={ item._id || '' }
                             />)
-                        }
+                        } */}
                     </div>
                     <Link href="#" className='mt-3 text-xs sm:text-sm text-center font-semibold border-2 border-blue-600 rounded-2xl lg:bg-blue-100 lg:hover:bg-blue-200 bg-blue-200 text-blue-600  px-2 self-end'>
                         See all related products
