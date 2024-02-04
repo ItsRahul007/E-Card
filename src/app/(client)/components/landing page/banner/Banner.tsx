@@ -48,7 +48,7 @@ const Banner: React.FC = () => {
       <div className='text-center mt-12'>
         <h1 className={ 'text-[70px] font-extrabold ' + roboto700.className }>
           <div id='h-text-1'>GET START</div>
-          <div id='h-text-2'>YOUR FAVOURIOT SHOPING</div>
+          <div id='h-text-2'>YOUR FAVOURITE SHOPING</div>
         </h1>
         <span id='banner-btn'>
           <Button className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg' />

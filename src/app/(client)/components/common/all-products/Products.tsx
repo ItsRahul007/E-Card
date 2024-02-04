@@ -37,9 +37,6 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
     refetch();
   }, [searchKey])
 
-  console.log(!error && !isLoading && allProducts?.length < 1)
-  console.log(allProducts);
-
   return (
     <div className='bg-[#F8F8F8] flex-1'>
       <div className='h-full w-full overflow-scroll flex items-center justify-center'>
@@ -65,7 +62,7 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
             }
           >
             <div className='relative h-3/4 w-60 md:w-96 flex flex-col items-center justify-center gap-2 text-xl md:text-3xl text-[#00bf85]'>
-              <p className={ `text-center ${ubuntu700.className}` }>There are no <span className='capitalize'>"{ searchKey }"</span> related products</p>
+              <p className={ `text-center ${ubuntu700.className}` }>There are no <span className='capitalize'>&quot;{ searchKey }&quot;</span> related products</p>
               <span className='relative h-80 md:h-96 w-80 md:w-96'>
                 <Image
                   src="/images/not-found.png"
