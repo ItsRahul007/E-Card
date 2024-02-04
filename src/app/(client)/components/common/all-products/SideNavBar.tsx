@@ -55,7 +55,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                             placeholder='Search products and brands'
                             className='h-10 rounded-md text-sm outline-none text-[#222222] w-60  placeholder:font-sans font-sans bg-slate-100 px-2 ml-3'
                             onChange={ (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value) }
-                            currentValue={ inputValue }
+                            value={ inputValue }
                         />
                         <IconButton
                             icon={ <i className="ri-search-line"></i> }
@@ -106,10 +106,26 @@ const SideNavBar: FC<I_ProductNav> = ({ filters }) => {
                             <div className='w-full mt-3'>
                                 <h5 className={ 'text-2xl mb-2 ' + nunito.className }>Categories</h5>
                                 <ul className='list-none text-base flex flex-col gap-3'>
-                                    <li><Link href="#">For Men</Link></li>
-                                    <li><Link href="#">For Women</Link></li>
-                                    <li><Link href="#">Bracelet</Link></li>
-                                    <li><Link href="#">Bag</Link></li>
+                                    <li>
+                                        <Link onClick={ () => setIsNavOpen(false) } href="/products/search-products?search=for men">
+                                            For Men
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link onClick={ () => setIsNavOpen(false) } href="/products/search-products?search=for women">
+                                            For Women
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link onClick={ () => setIsNavOpen(false) } href="/products/search-products?search=bracelet">
+                                            Bracelet
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link onClick={ () => setIsNavOpen(false) } href="/products/search-products?search=bag">
+                                            Bag
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

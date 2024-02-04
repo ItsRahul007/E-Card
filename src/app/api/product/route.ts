@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import ProductsSchema from "@/lib/model/productSchema";
+import { ProductType } from "@/lib/types/productTyps";
 
 //? for getting all products
 export async function GET(req: NextRequest) {
@@ -8,10 +9,27 @@ export async function GET(req: NextRequest) {
         await connectWithMongo();
         const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
         const itemNumber = 10;
-        //! compares the first and second numbers and returns the biggest number
+        const search = req.nextUrl.searchParams.get("search") || undefined;
+        const price = req.nextUrl.searchParams.get("price") || undefined;
+
+        //? compares the first and second numbers and returns the biggest number
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 0);
 
-        const products = await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+        //? finding products according to the search key
+        const getProducts = async (): Promise<ProductType[]> => {
+            if (!search) {
+                return await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+            }
+            else if (search === "for men" || search === "for women") {
+                return await ProductsSchema.find({ product_category: search.includes("women") ? "women" : "men" })
+                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+            }
+            else {
+                return await ProductsSchema.find({ search_keys: { $in: [search] } }).sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+            };
+        };
+
+        const products = await getProducts();
 
         return NextResponse.json({
             success: true,
@@ -55,7 +73,7 @@ export async function POST(req: NextRequest) {
             ratings,
             discount_percentage
         } = await req.json();
-        //primaryImgUrl product_name product_category price product_type search_keys secondaryImgUrls
+
         //! if there is any required field data is missing
         if (
             !product_name ||

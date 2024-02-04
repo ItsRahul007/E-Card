@@ -1,12 +1,12 @@
 export interface itemProps {
     _id?: string;
-    primaryImgUrl: string;
     product_name: string;
     product_category: string;
     price: number;
     product_type: string;
     search_keys: string[];
     brand_name: string;
+    primaryImgUrl: string;
 };
 
 export interface ProductType extends itemProps {
@@ -18,4 +18,6 @@ export interface ProductType extends itemProps {
         _id: string;
     }[];
     discount_percentage: number;
+    createdAt: Date;
+    updatedAt: Date;
 }

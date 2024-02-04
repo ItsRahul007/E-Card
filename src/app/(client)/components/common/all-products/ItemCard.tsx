@@ -19,7 +19,14 @@ interface I_ItemCard {
 }
 
 const ItemCard: React.FC<I_ItemCard> = (props) => {
-  const { primaryImgUrl, product_name, price, _id, ratings, discount_percentage } = props;
+  const {
+    primaryImgUrl,
+    product_name,
+    price,
+    _id,
+    ratings,
+    discount_percentage,
+  } = props;
 
   //? getting the total rating number
   let totalRatingNumber: number = 0;

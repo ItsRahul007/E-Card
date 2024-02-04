@@ -3,7 +3,7 @@
 import IconButton from '@/app/(client)/components/common/buttons/IconButton';
 import Image from 'next/image';
 import React, { FC, useState } from 'react'
-import SmallImageContainer from '../small-image-container/SmallImageContainer';
+import SmallImageContainer from './SmallImageContainer';
 
 interface I_ImageContainer {
     primaryImgUrl: string;
@@ -32,11 +32,12 @@ const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, sec
                 </div>
 
                 {/* primary image or selected image */ }
-                <div className='relative md:h-80 sm:h-72 sm:w-64 lg:w-4/6 w-72 border rounded-md overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
+                <div className='relative md:h-80 sm:h-72 sm:w-64 lg:w-4/6 w-72 overflow-hidden max-[400px]:h-60 max-[400px]:w-56'>
                     <Image
                         src={ currentImageUrl }
                         alt={ product_type }
                         fill
+                        style={ { objectFit: 'contain', borderRadius: '10px' } }
                     />
                     <IconButton
                         className='absolute top-3 right-3 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 bg-gray-400 cursor-pointer'

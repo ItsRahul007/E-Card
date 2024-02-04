@@ -26,7 +26,7 @@ const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
           placeholder='Search products and brands'
           className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans'
           onChange={ (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value) }
-          currentValue={ inputValue }
+          value={ inputValue }
           onEnter={ () => {
             if (inputValue.length) {
               router.push("/products/search-products?search=" + inputValue);

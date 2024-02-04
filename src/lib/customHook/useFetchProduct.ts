@@ -11,11 +11,16 @@ type itemProps = {
     brand_name: string;
 };
 
-type T_useFetchProducts = { query: string[], searchKey: string };
+type T_useFetchProducts = {
+    query: string[];
+    searchKey?: string;
+    price?: string;
+};
 
-export default function useFetchProducts({ query, searchKey }: T_useFetchProducts) {
+export default function useFetchProducts({ query, searchKey, price }: T_useFetchProducts) {
     async function getProducts({ pageParam }: { pageParam: number }) {
-        const res = await fetch('/api/product?page=' + pageParam, {
+        const url = `/api/product?page=${pageParam}${searchKey ? `&search=${searchKey}` : ""}${price ? `&price=${price}` : ""}`;
+        const res = await fetch(url, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",

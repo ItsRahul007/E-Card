@@ -19,6 +19,9 @@ const SmallImageContainer: FC<I_SmallImageContainer> = ({ src, alt, onClick }) =
                 src={ src }
                 alt={ alt }
                 fill
+                style={ {
+                    objectFit: 'contain'
+                } }
             />
         </button>
     );

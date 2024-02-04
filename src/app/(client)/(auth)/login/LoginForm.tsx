@@ -79,7 +79,7 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
             name="name"
             placeholder="Enter your name"
             isRequired={ true }
-            currentValue={ inputValue.name }
+            value={ inputValue.name }
             onChange={ onInputChange }
           />
         }
@@ -88,7 +88,7 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
           name="email"
           placeholder="Enter your email"
           isRequired={ true }
-          currentValue={ inputValue.email }
+          value={ inputValue.email }
           onChange={ onInputChange }
         />
         <InputCompo
@@ -96,7 +96,7 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
           name="password"
           placeholder="Enter your password"
           isRequired={ true }
-          currentValue={ inputValue.password }
+          value={ inputValue.password }
           onChange={ onInputChange }
         />
         { signup &&
@@ -105,7 +105,7 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
             name="cPassword"
             placeholder="Confirm password"
             isRequired={ true }
-            currentValue={ inputValue.cPassword }
+            value={ inputValue.cPassword }
             onChange={ onInputChange }
           />
         }
