@@ -39,3 +39,30 @@ export async function GET(req: NextRequest) {
         }, { status: 500 });
     }
 };
+
+// export async function POST() {
+//     try {
+//         await connectWithMongo();
+//         const allProductsIds = await ProductsSchema.find().select("_id price discount_percentage");
+
+//         allProductsIds.map(async (obj) => {
+//             const { _id, price, discount_percentage } = obj;
+//             const current_price = price - (price * discount_percentage / 100);
+//             await ProductsSchema.findByIdAndUpdate(_id, { $set: { current_price } }, { new: true });
+
+//         })
+
+//         const allProducts = await ProductsSchema.find();
+
+//         return NextResponse.json({
+//             allProducts
+//         });
+
+//     } catch (error: any) {
+//         console.log(error);
+//         return NextResponse.json({
+//             success: false,
+//             error: error.message,
+//         }, { status: 500 });
+//     }
+// }

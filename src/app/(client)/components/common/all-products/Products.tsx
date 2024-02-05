@@ -25,7 +25,11 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
     hasNextPage,
     fetchNextPage,
     refetch
-  } = useFetchProducts({ query: searchKey ? ['products', searchKey] : ['products'], searchKey, price });
+  } = useFetchProducts({
+    query: searchKey ? ['products', price ? price : "", searchKey] : ['products', price ? price : ""],
+    searchKey,
+    price
+  });
 
   useEffect(() => {
     if (inView && !isLoading && hasNextPage) {

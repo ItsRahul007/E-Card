@@ -15,13 +15,38 @@ export async function GET(req: NextRequest) {
         //? compares the first and second numbers and returns the biggest number
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 0);
 
-        //? finding products according to the search key
+        //? finding products according to the search key and price
         const getProducts = async (): Promise<ProductType[]> => {
-            if (!search) {
+            if (!search && !price) {
                 return await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
             }
-            else if (search === "for men" || search === "for women") {
+
+            else if ((search === "for men" || search === "for women") && !price) {
                 return await ProductsSchema.find({ product_category: search.includes("women") ? "women" : "men" })
+                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+            }
+
+            else if ((search === "for men" || search === "for women") && price) {
+                const numbers = price.match(/\d+/g);
+                const values = numbers?.map(Number);
+
+                return await ProductsSchema.find({
+                    product_category: search.includes("women") ? "women" : "men",
+                    current_price: { $gte: values?.[0], $lte: values?.[1] }
+                }).sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+            }
+            else if (!search && price) {
+                const numbers = price.match(/\d+/g);
+                const values = numbers?.map(Number);
+
+                return await ProductsSchema.find({ current_price: { $gte: values?.[0], $lte: values?.[1] } })
+                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+            }
+            else if (search && price) {
+                const numbers = price.match(/\d+/g);
+                const values = numbers?.map(Number);
+
+                return await ProductsSchema.find({ search_keys: { $in: [search] }, current_price: { $gte: values?.[0], $lte: values?.[1] } })
                     .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
             }
             else {
@@ -129,7 +154,8 @@ export async function POST(req: NextRequest) {
             search_keys,
             brand_name: brand_name || "Unknown",
             ratings: ratings || [],
-            discount_percentage
+            discount_percentage,
+            current_price: price - (price * discount_percentage / 100),
         });
 
         return NextResponse.json({

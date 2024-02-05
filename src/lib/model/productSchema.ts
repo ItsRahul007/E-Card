@@ -32,6 +32,10 @@ const productSchema = new Schema({
         required: true,
         type: [String],
     },
+    current_price: {
+        required: true,
+        type: Number,
+    },
 
     //! not required fields
     brand_name: String,

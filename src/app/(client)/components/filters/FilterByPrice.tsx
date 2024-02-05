@@ -26,7 +26,7 @@ const FilterByPrice: FC<{ search?: string | undefined }> = ({ search }) => {
         else {
             setUrl("#");
         };
-    }, [filterprice]);
+    }, [filterprice, search]);
 
     function showProblemInNotification() {
         const { from, to } = filterprice;
