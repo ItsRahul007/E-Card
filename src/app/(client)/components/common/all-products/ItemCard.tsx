@@ -8,7 +8,6 @@ import { rubik500 } from '@/lib/fonts/fonts';
 interface I_ItemCard {
   primaryImgUrl: string;
   product_name: string;
-  price: number;
   ratings: {
     ratingBy: string;
     ratingNumber: number;
@@ -16,16 +15,17 @@ interface I_ItemCard {
   }[];
   _id: string;
   discount_percentage: number;
+  current_price: number;
 }
 
 const ItemCard: React.FC<I_ItemCard> = (props) => {
   const {
     primaryImgUrl,
     product_name,
-    price,
     _id,
     ratings,
     discount_percentage,
+    current_price
   } = props;
 
   //? getting the total rating number
@@ -106,7 +106,7 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
           { product_name }
         </div>
         <div className='w-[90%] text-base text-gray-700 ml-1 font-semibold flex items-center justify-between'>
-          <span>${ price - (price * discount_percentage / 100) }</span>
+          <span>${ current_price }</span>
           <span>
             { ratings.length > 0 ? generateStars() : <span className='text-xs text-[#0000007b]'>No Ratings</span> }
           </span>

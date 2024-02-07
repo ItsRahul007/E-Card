@@ -20,12 +20,10 @@ export async function GET(req: NextRequest) {
             if (!search && !price) {
                 return await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
             }
-
             else if ((search === "for men" || search === "for women") && !price) {
                 return await ProductsSchema.find({ product_category: search.includes("women") ? "women" : "men" })
                     .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
             }
-
             else if ((search === "for men" || search === "for women") && price) {
                 const numbers = price.match(/\d+/g);
                 const values = numbers?.map(Number);

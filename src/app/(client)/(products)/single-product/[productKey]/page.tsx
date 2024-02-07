@@ -68,7 +68,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
     }
 
     const product: ProductType = isProduct.product;
-    const { ratings, primaryImgUrl, secondaryImgUrls, price, product_name, product_type, discount_percentage } = product;
+    const { ratings, primaryImgUrl, secondaryImgUrls, price, product_name, product_type, discount_percentage, current_price } = product;
     const ProductDescription = await getProductDescription(product_type, product_name);
 
 
@@ -135,8 +135,8 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
                             {/* product price */ }
                             <div className={ `mt-3 sm:mt-5 ${rubik500.className} flex gap-2 select-none` }>
-                                <span className='sm:text-2xl text-xl'>${ price - (price * discount_percentage / 100) }</span>
-                                <span className='sm:text-xl text-lg !font-normal text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
+                                <span className='sm:text-2xl text-xl'>${ current_price }</span>
+                                <span className='sm:text-xl text-lg font-sans text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     ${ price }
                                 </span>
                                 <span className='sm:text-xl text-lg italic opacity-80 text-green-600'>

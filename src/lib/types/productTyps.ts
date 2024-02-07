@@ -18,6 +18,7 @@ export interface ProductType extends itemProps {
         _id: string;
     }[];
     discount_percentage: number;
+    current_price: number;
     createdAt: Date;
     updatedAt: Date;
 }

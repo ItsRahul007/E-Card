@@ -43,9 +43,9 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
 
   return (
     <div className='bg-[#F8F8F8] flex-1'>
-      <div className='h-full w-full overflow-scroll flex items-center justify-center'>
+      <div className='h-full w-full overflow-scroll flex items-start justify-center'>
         <div
-          className='h-full grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:w-[72rem] lg:w-full xl:grid-cols-5'
+          className='grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:w-[72rem] lg:w-full xl:grid-cols-5'
         >
           {
             //? loading components
