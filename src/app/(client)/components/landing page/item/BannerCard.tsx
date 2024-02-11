@@ -1,7 +1,6 @@
 import React from 'react';
 import BigCard from './BigCard';
 import CardGsap from './CardGsap';
-import { mukta700 } from '@/lib/fonts/fonts';
 
 const BannerCard: React.FC = () => {
   return (
@@ -11,7 +10,7 @@ const BannerCard: React.FC = () => {
     >
       <CardGsap />
       <div className='w-full h-[15%] flex items-center justify-center'>
-        <h1 className={ 'text-5xl mt-6 text-[#474e56] ' + mukta700.className } id='card_head'>
+        <h1 className={ 'text-5xl mt-6 text-[#474e56] font-mukta font-bold' } id='card_head'>
           Today<span className='text-[#f26522]'>&apos;</span>s Special
         </h1>
       </div>

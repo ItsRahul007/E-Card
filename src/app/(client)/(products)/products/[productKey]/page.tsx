@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import AllProductNav from '@/app/(client)/components/common/all-products/Nav';
+import Navbar from '@/app/(client)/components/common/all-products/Nav';
 import Products from '@/app/(client)/components/common/all-products/Products';
 import Filter from '@/app/(client)/components/filters/Filter';
 import { Metadata } from 'next';
@@ -38,7 +38,7 @@ export async function generateMetadata({ searchParams }: I_AllProduct): Promise<
 const AllProduct: FC<I_AllProduct> = async ({ searchParams }) => {
   return (
     <div className='h-screen w-screen bg-[#EAEAEA] flex flex-col'>
-      <AllProductNav filters={ true } />
+      <Navbar filters={ true } />
       <div className='h-[92%] sm:h-[91%] lg:h-[87%] flex gap-3 lg:mt-3'>
         <Filter search={ searchParams.search?.toLowerCase() } />
         <Products searchKey={ searchParams.search?.toLowerCase() || "" } price={ searchParams.price } />

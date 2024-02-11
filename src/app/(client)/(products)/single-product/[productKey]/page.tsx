@@ -12,7 +12,6 @@ import { ProductType } from '@/lib/types/productTyps';
 import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
-import { outfit, rubik, rubik500 } from '@/lib/fonts/fonts';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -122,19 +121,19 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                         <div className='lg:flex-1'>
                             {/* product name */ }
                             <div className="min-h-8 h-auto max-md:w-72 text-left text-2xl capitalize text-ellipsis sm:text-3xl">
-                                <h4 className={ `${outfit.className}` }>{ product_name }</h4>
+                                <h4 className={ `font-outfit` }>{ product_name }</h4>
                             </div>
 
                             {/* product rating */ }
                             <div className='mt-1 sm:mt-2 flex items-center select-none'>
                                 { generateStars() }
-                                <span className={ `ml-4 sm:text-sm text-xs text-slate-500 ${rubik.className}` }>
+                                <span className={ `ml-4 sm:text-sm text-xs text-slate-500 font-rubik` }>
                                     { ratings.length > 0 ? `(${ratings.length} customer reviewed)` : "(no reviews)" }
                                 </span>
                             </div>
 
                             {/* product price */ }
-                            <div className={ `mt-3 sm:mt-5 ${rubik500.className} flex gap-2 select-none` }>
+                            <div className={ `mt-3 sm:mt-5 font-rubik font-medium flex gap-2 select-none` }>
                                 <span className='sm:text-2xl text-xl'>${ current_price }</span>
                                 <span className='sm:text-xl text-lg font-sans text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     ${ price }
@@ -171,7 +170,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                     <div className='w-11/12 h-auto border-[3px] p-2 bg-white flex flex-col gap-4 rounded-lg'>
                         {/* header */ }
                         <div className='w-full text-2xl md:text-3xl mt-2'>
-                            <h1 className={ 'ml-5 ' + rubik.className }>Reviews</h1>
+                            <h1 className={ 'ml-5 font-rubik font-medium' }>Reviews</h1>
                         </div>
 
                         {/* reviews */ }
@@ -188,7 +187,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                         <div className='h-64 w-full flex flex-col'>
                             {/* heading */ }
                             <div className='h-[25%] w-full'>
-                                <h3 className={ 'text-base ' + rubik.className }>
+                                <h3 className={ 'text-base font-rubik font-medium' }>
                                     Add your review and rating
                                 </h3>
                                 <div>

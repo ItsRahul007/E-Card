@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '@/app/(client)/components/common/buttons/Button';
-import { roboto700 } from '@/lib/fonts/fonts';
 interface bigcard {
     url: string;
     headText: string;
@@ -16,7 +15,7 @@ const BigCard: React.FC<bigcard> = ({ url, headText, position, id }) => {
         >
             <span className='bg-[#00000076] h-full w-full absolute flex '>
                 <div className='w-full ml-6 mt-[276px]'>
-                    <h3 className={ "text-3xl " + roboto700.className }>
+                    <h3 className={ "text-3xl font-roboto font-bold" }>
                         { headText }
                     </h3>
                     <p className="text-sm leading-7 mt-2">

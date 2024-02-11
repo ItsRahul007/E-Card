@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import isValidEmail from "@/lib/emailChecker";
 import User from "@/lib/model/usersSchema";
-import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import connectWithMongo, { disconnectMongooseConnection } from "@/lib/mongoConnection/mongoConnect";
 
 export async function POST(req: Request) {
     try {
@@ -50,5 +50,7 @@ export async function POST(req: Request) {
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error: "Internal server error", problem: error, success: false }, { status: 500 });
+    } finally {
+        await disconnectMongooseConnection();
     }
 };

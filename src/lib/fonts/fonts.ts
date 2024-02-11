@@ -1,70 +1,60 @@
 import { Inter, Kanit, Mukta, Nunito, Outfit, Poppins, Roboto, Rubik, Ubuntu } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: "--font-inter" });
 
 const rubik = Rubik({
-    weight: ["700", "500"],
+    weight: "variable",
     style: "normal",
-    subsets: ["latin"]
+    subsets: ["latin"],
+    variable: "--font-rubik"
 });
 
 const outfit = Outfit({
-    weight: "400",
+    weight: "variable",
     style: "normal",
-    subsets: ["latin"]
-});
-
-const rubik500 = Rubik({
-    weight: "500",
-    style: "normal",
-    subsets: ["latin"]
+    subsets: ["latin"],
+    variable: "--font-outfit"
 });
 
 const kanit = Kanit({
-    weight: "600",
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
     subsets: ["latin-ext"],
-    style: 'italic'
-});
-
-const kanit500 = Kanit({
-    weight: "500",
-    subsets: ["latin-ext"],
-    style: 'italic'
+    style: 'italic',
+    variable: "--font-kanit"
 });
 
 const nunito = Nunito({
-    weight: "600",
-    subsets: ["latin-ext"]
+    weight: "variable",
+    subsets: ["latin-ext"],
+    variable: "--font-nunito"
 });
 
 const poppins = Poppins({
-    weight: '600',
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
     subsets: ['latin'],
-    style: ["normal"]
+    style: ["normal"],
+    variable: "--font-poppins"
 });
 
 const roboto = Roboto({
-    weight: "400",
+    weight: ["100", "300", "400", "500", "700", "900"],
     subsets: ['latin'],
     display: 'swap',
+    variable: "--font-roboto"
 });
 
-const ubuntu700 = Ubuntu({
-    weight: "700",
-    subsets: ["latin-ext",],
-    style: 'normal'
-});
-
-const roboto700 = Roboto({
-    weight: '700',
+const ubuntu = Ubuntu({
+    weight: ["300", "400", "500", "700"],
     subsets: ['latin'],
-    style: ["normal"]
+    display: 'swap',
+    variable: "--font-ubuntu"
 });
 
-const mukta700 = Mukta({
-    weight: '700',
+const mukta = Mukta({
+    weight: ["200", "300", "400", "500", "600", "700", "800"],
     subsets: ['latin'],
-    style: "normal"
+    style: "normal",
+    variable: "--font-mukta"
 });
 
 export {
@@ -74,10 +64,7 @@ export {
     nunito,
     poppins,
     roboto,
-    rubik500,
-    kanit500,
-    ubuntu700,
-    roboto700,
-    mukta700,
     outfit,
+    ubuntu,
+    mukta,
 };

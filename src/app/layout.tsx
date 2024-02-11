@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import 'remixicon/fonts/remixicon.css';
 import Provider from '@/lib/util/Provider';
-import { inter } from '@/lib/fonts/fonts';
 
 export const metadata: Metadata = {
   title: 'E-Card',
@@ -16,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={ inter.className }>
+      <body className="font-inter">
         <Provider>{ children }</Provider>
       </body>
     </html>

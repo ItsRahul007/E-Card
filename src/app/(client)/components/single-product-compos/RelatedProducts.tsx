@@ -1,8 +1,6 @@
 "use client";
 
-import ItemCard from '@/app/(client)/components/common/all-products/ItemCard';
 import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
-import { rubik } from '@/lib/fonts/fonts';
 import { ProductType } from '@/lib/types/productTyps';
 import Link from 'next/link';
 import React, { FC } from 'react'
@@ -35,7 +33,7 @@ const RelatedProducts: FC = () => {
 
                 {/* heading */ }
                 <div className='w-11/12 self-end text-2xl md:text-3xl mt-2'>
-                    <h1 className={ '2xl:mml-[2vw] ' + rubik.className }>Related Products</h1>
+                    <h1 className='2xl:mml-[2vw] font-rubik'>Related Products</h1>
                 </div>
 
                 {/* product container */ }

@@ -13,6 +13,17 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        mukta: ['var(--font-mukta)'],
+        ubuntu: ['var(--font-ubuntu)'],
+        roboto: ['var(--font-roboto)'],
+        poppins: ['var(--font-poppins)'],
+        nunito: ['var(--font-nunito)'],
+        kanit: ['var(--font-kanit)'],
+        outfit: ['var(--font-outfit)'],
+        rubik: ['var(--font-rubik)'],
+        inter: ['var(--font-inter)'],
+      }
     },
   },
   plugins: [],

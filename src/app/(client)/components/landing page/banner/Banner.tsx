@@ -3,7 +3,6 @@ import style from "@/app/style/style.module.css";
 import Button from '@/app/(client)/components/common/buttons/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
-import { poppins, ubuntu700, roboto700 } from '@/lib/fonts/fonts';
 
 const Banner: React.FC = () => {
   return (
@@ -11,7 +10,7 @@ const Banner: React.FC = () => {
       <BannerGSAP />
       {/* the nav bar */ }
       <nav id='banner-nav' className="w-full h-[70px] flex justify-center items-center">
-        <div className={ `bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} ${poppins.className}` }>
+        <div className={ `bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} font-poppins font-bold` }>
           <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/products/all">Products</Link>
@@ -42,11 +41,11 @@ const Banner: React.FC = () => {
       </nav>
 
       {/* icon */ }
-      <div className={ `text-[40px] text-center font-bold mt-9 ${ubuntu700.className}` } id='logo'>E-Card</div>
+      <div className={ `text-[40px] text-center font-bold mt-9 font-ubuntu` } id='logo'>E-Card</div>
 
       {/* head lines */ }
       <div className='text-center mt-12'>
-        <h1 className={ 'text-[70px] font-extrabold ' + roboto700.className }>
+        <h1 className='text-[70px] font-bold font-roboto'>
           <div id='h-text-1'>GET START</div>
           <div id='h-text-2'>YOUR FAVOURITE SHOPING</div>
         </h1>

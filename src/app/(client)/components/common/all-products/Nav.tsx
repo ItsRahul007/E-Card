@@ -5,13 +5,12 @@ import Link from 'next/link';
 import InputCompo from '../InputCompo';
 import { useRouter } from 'next/navigation';
 import SideNavBar from './SideNavBar';
-import { ubuntu700 } from '@/lib/fonts/fonts';
 
 interface I_ProductNav {
   filters?: boolean;
 }
 
-const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
+const Navbar: React.FC<I_ProductNav> = ({ filters }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const router = useRouter();
 
@@ -19,7 +18,7 @@ const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
     <nav className='w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-[#41B4CD] text-white flex'>
       {/* search box and logo */ }
       <span className='h-full xl:w-[30rem] min-[1281px]:flex hidden justify-end items-center gap-8'>
-        <span className={ `text-3xl ${ubuntu700.className}` }>E-Card</span>
+        <span className={ `text-3xl font-ubuntu font-bold` }>E-Card</span>
         <InputCompo
           type="text"
           name='navSearch'
@@ -57,4 +56,4 @@ const AllProductNav: React.FC<I_ProductNav> = ({ filters }) => {
   )
 }
 
-export default AllProductNav;
+export default Navbar;
