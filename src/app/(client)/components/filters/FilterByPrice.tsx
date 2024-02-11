@@ -39,7 +39,7 @@ const FilterByPrice: FC<{ search?: string | undefined }> = ({ search }) => {
 
     return (
         <div className='w-full lg:w-[85%]'>
-            <h5 className={ 'mb-2 text-2xl font-semibold font-nunito' }>Filter by price</h5>
+            <h5 className='mb-2 text-2xl font-nunito'>Filter by price</h5>
             <div className='flex flex-col items-start gap-3'>
                 <span className='flex flex-col gap-1'>
                     <InputCompo

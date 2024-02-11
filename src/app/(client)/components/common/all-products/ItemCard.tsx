@@ -77,7 +77,7 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
 
           {/* discount percentage */ }
           <span
-            className={ `absolute flex items-end justify-center h-12 md:h-[50px] w-[140px] left-[-40px] top-[-20px] text-sm md:text-base px-1 text-gray-50 bg-opacity-60 bg-green-500 font-rubik font-medium
+            className={ `absolute flex items-end justify-center h-12 md:h-[50px] w-[140px] left-[-40px] top-[-20px] text-sm md:text-base px-1 text-gray-50 bg-opacity-60 bg-green-500 font-rubik font-semibold
               -rotate-45
           `}
           >

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectWithMongo, { disconnectMongooseConnection } from "@/lib/mongoConnection/mongoConnect";
+import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import ProductsSchema from "@/lib/model/productSchema";
 import { ProductType } from "@/lib/types/productTyps";
 
@@ -65,8 +65,6 @@ export async function GET(req: NextRequest) {
             success: false,
             error: error.message,
         }, { status: 500 });
-    } finally {
-        await disconnectMongooseConnection();
     }
 };
 
@@ -170,7 +168,5 @@ export async function POST(req: NextRequest) {
             success: false,
             error: "Internal server error",
         }, { status: 500 });
-    } finally {
-        await disconnectMongooseConnection();
     }
 }

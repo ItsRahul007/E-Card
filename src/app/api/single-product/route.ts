@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectWithMongo, { disconnectMongooseConnection } from "@/lib/mongoConnection/mongoConnect";
+import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import ProductsSchema from "@/lib/model/productSchema";
 
 // //? for getting a single product
@@ -37,8 +37,6 @@ export async function GET(req: NextRequest) {
             success: false,
             error: error.message,
         }, { status: 500 });
-    } finally {
-        await disconnectMongooseConnection();
     }
 };
 

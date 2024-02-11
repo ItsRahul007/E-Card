@@ -22,8 +22,3 @@ export default async function connectWithMongo() {
         return { connected: false, message: "Something went wrong" };
     }
 }
-
-export async function disconnectMongooseConnection() {
-    await mongoose.disconnect();
-    isAlreadyConnected = false;
-};

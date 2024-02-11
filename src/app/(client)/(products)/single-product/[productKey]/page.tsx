@@ -121,20 +121,20 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                         <div className='lg:flex-1'>
                             {/* product name */ }
                             <div className="min-h-8 h-auto max-md:w-72 text-left text-2xl capitalize text-ellipsis sm:text-3xl">
-                                <h4 className={ `font-outfit` }>{ product_name }</h4>
+                                <h4 className={ `font-outfit font-medium` }>{ product_name }</h4>
                             </div>
 
                             {/* product rating */ }
                             <div className='mt-1 sm:mt-2 flex items-center select-none'>
                                 { generateStars() }
-                                <span className={ `ml-4 sm:text-sm text-xs text-slate-500 font-rubik` }>
+                                <span className={ `ml-4 sm:text-sm text-xs text-slate-500 font-rubik font-medium` }>
                                     { ratings.length > 0 ? `(${ratings.length} customer reviewed)` : "(no reviews)" }
                                 </span>
                             </div>
 
                             {/* product price */ }
                             <div className={ `mt-3 sm:mt-5 font-rubik font-medium flex gap-2 select-none` }>
-                                <span className='sm:text-2xl text-xl'>${ current_price }</span>
+                                <span className='sm:text-2xl text-xl font-semibold'>${ current_price }</span>
                                 <span className='sm:text-xl text-lg font-sans text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     ${ price }
                                 </span>

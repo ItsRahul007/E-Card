@@ -10,7 +10,7 @@ const Banner: React.FC = () => {
       <BannerGSAP />
       {/* the nav bar */ }
       <nav id='banner-nav' className="w-full h-[70px] flex justify-center items-center">
-        <div className={ `bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} font-poppins font-bold` }>
+        <div className={ `bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} font-poppins font-semibold` }>
           <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/products/all">Products</Link>

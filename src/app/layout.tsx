@@ -2,6 +2,17 @@ import type { Metadata } from 'next';
 import './globals.css';
 import 'remixicon/fonts/remixicon.css';
 import Provider from '@/lib/util/Provider';
+import {
+  inter,
+  rubik,
+  kanit,
+  nunito,
+  poppins,
+  roboto,
+  outfit,
+  ubuntu,
+  mukta,
+} from '@/lib/fonts/fonts';
 
 export const metadata: Metadata = {
   title: 'E-Card',
@@ -15,7 +26,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-inter">
+      <body
+        className={ `font-inter
+      ${inter.variable}
+      ${rubik.variable}
+      ${kanit.variable}
+      ${nunito.variable}
+      ${poppins.variable}
+      ${roboto.variable}
+      ${outfit.variable}
+      ${ubuntu.variable}
+      ${mukta.variable}
+      `}
+      >
         <Provider>{ children }</Provider>
       </body>
     </html>
