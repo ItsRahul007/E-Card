@@ -7,7 +7,7 @@ const Filter: React.FC<{ search: string | undefined }> = ({ search }) => {
   return (
     <div className='bg-[#F8F8F8] xl:w-64 w-48 h-full overflow-scroll lg:flex hidden flex-col'>
       <div className={ `h-1/5 w-full ${kanit.className}` }>
-        <h3 className='text-4xl ml-4 mt-6 font-bold'>Filters</h3>
+        <h3 className='text-4xl ml-4 mt-6 font-medium'>Filters</h3>
       </div>
       <div className='w-full flex-1 flex flex-col items-center gap-10'>
         {/* filter by price */ }

@@ -134,7 +134,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
                             {/* product price */ }
                             <div className={ `mt-3 sm:mt-5 font-rubik font-medium flex gap-2 select-none` }>
-                                <span className='sm:text-2xl text-xl font-semibold'>${ current_price }</span>
+                                <span className='sm:text-2xl text-xl'>${ current_price }</span>
                                 <span className='sm:text-xl text-lg font-sans text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     ${ price }
                                 </span>
