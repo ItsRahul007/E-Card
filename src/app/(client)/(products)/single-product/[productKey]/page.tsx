@@ -7,27 +7,15 @@ import ReviewStar from '@/app/(client)/components/ReviewStar';
 import Footer from '@/app/(client)/components/common/footer/Footer';
 import RelatedProducts from '../../../components/single-product-compos/RelatedProducts';
 import { reviewText } from './reviewText';
-import toast from 'react-hot-toast';
-import { ProductType } from '@/lib/types/productTyps';
 import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
+import ProductsSchema from "@/lib/model/productSchema";
+import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 
 interface I_SingleProductPage {
     params: { productKey: string };
     searchParams: { search: string };
-}
-
-async function getProductById(productId: string) {
-    const res = await fetch(`${process.env.SINGLE_PRODUCT_URL}${productId}`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN || "")
-        },
-    })
-
-    return res.json();
 };
 
 export async function generateMetadata({ params, searchParams }: I_SingleProductPage): Promise<Metadata> {
@@ -48,29 +36,28 @@ export async function generateMetadata({ params, searchParams }: I_SingleProduct
     }
 
     //? fetching product
-    const product = await getProductById(productId);
-    const description = product.success ? await getProductDescription(product.product.product_type, product.product.product_name) : "";
+    await connectWithMongo();
+    const product = await ProductsSchema.findById(productId).select("product_type product_name")
+    const description = await getProductDescription(product.product_type, product.product_name);
 
     return {
-        title: product.success ? "E-Card - " + capitalizeText(product.product.product_name) : product.error,
+        title: "E-Card - " + capitalizeText(product.product_name),
         description
     }
 };
 
 const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
+    //? reading route params
     const productId = params.productKey;
-    const isProduct = await getProductById(productId);
+    await connectWithMongo();
+    const product = await ProductsSchema.findById(productId).select("-updatedAt -createdAt -brand_name -__v");
 
-    if (!isProduct.success) {
-        toast.error(isProduct.error);
-        throw new Error(isProduct.error);
-    }
+    if (!product) {
+        throw new Error("Can't fine any product");
+    };
 
-    const product: ProductType = isProduct.product;
     const { ratings, primaryImgUrl, secondaryImgUrls, price, product_name, product_type, discount_percentage, current_price } = product;
     const ProductDescription = await getProductDescription(product_type, product_name);
-
-
 
     //? Function to generate star icons based on the rounded rating
     const generateStars = () => {

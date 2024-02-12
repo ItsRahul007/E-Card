@@ -17,14 +17,16 @@ export async function GET(req: NextRequest) {
 
         await connectWithMongo();
 
-        const product = await ProductsSchema.findById(productId);
+        const product = await ProductsSchema.findById(productId).select("-updatedAt -createdAt -brand_name -__v");
 
         if (!product) {
             return NextResponse.json({
                 success: false,
                 error: "Product not found"
-            });
+            }, { status: 400 });
         }
+
+        console.log(product);
 
         return NextResponse.json({
             success: true,

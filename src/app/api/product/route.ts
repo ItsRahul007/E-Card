@@ -15,14 +15,16 @@ export async function GET(req: NextRequest) {
         //? compares the first and second numbers and returns the biggest number
         const skipNumber = Math.max((pageNumber - 1) * itemNumber, 0);
 
+        const selectText = "product_name primaryImgUrl current_price ratings discount_percentage";
+
         //? finding products according to the search key and price
         const getProducts = async (): Promise<ProductType[]> => {
             if (!search && !price) {
-                return await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+                return await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
             else if ((search === "for men" || search === "for women") && !price) {
                 return await ProductsSchema.find({ product_category: search.includes("women") ? "women" : "men" })
-                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
             else if ((search === "for men" || search === "for women") && price) {
                 const numbers = price.match(/\d+/g);
@@ -31,24 +33,24 @@ export async function GET(req: NextRequest) {
                 return await ProductsSchema.find({
                     product_category: search.includes("women") ? "women" : "men",
                     current_price: { $gte: values?.[0], $lte: values?.[1] }
-                }).sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+                }).sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
             else if (!search && price) {
                 const numbers = price.match(/\d+/g);
                 const values = numbers?.map(Number);
 
                 return await ProductsSchema.find({ current_price: { $gte: values?.[0], $lte: values?.[1] } })
-                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
             else if (search && price) {
                 const numbers = price.match(/\d+/g);
                 const values = numbers?.map(Number);
 
                 return await ProductsSchema.find({ search_keys: { $in: [search] }, current_price: { $gte: values?.[0], $lte: values?.[1] } })
-                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+                    .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
             else {
-                return await ProductsSchema.find({ search_keys: { $in: [search] } }).sort({ _id: -1 }).skip(skipNumber).limit(itemNumber);
+                return await ProductsSchema.find({ search_keys: { $in: [search] } }).sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             };
         };
 
