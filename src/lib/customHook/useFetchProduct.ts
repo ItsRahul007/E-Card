@@ -1,15 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-
-type itemProps = {
-    imgUrl: string;
-    product_name: string;
-    product_category: string;
-    price: string | number;
-    product_type: string;
-    search_keys: string[] | string;
-    brand_name: string;
-};
+import { ProductType } from "../types/productTyps";
 
 type T_useFetchProducts = {
     query: string[];
@@ -53,7 +44,7 @@ export default function useFetchProducts({ query, searchKey, price }: T_useFetch
     });
 
     //? collecting all products array into one array
-    const allProducts: itemProps[] = data?.pages.reduce((acc, page) => {
+    const allProducts: ProductType[] = data?.pages.reduce((acc, page) => {
         if (page.success) return [...acc, ...page.products]
         else {
             toast.error(page.error);

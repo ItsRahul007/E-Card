@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import ItemCard from './ItemCard';
 import ProductSkeletonLoading from '../loading/Product-Skeleton-loading';
 import useFetchProducts from '@/lib/customHook/useFetchProduct';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import LoopItems from './LoopItems';
 
 interface I_Products {
   searchKey: string;
@@ -36,10 +36,6 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
     }
   }, [inView, entry, fetchNextPage, isLoading]);
 
-  useEffect(() => {
-    refetch();
-  }, [searchKey])
-
   return (
     <div className='bg-[#F8F8F8] flex-1'>
       <div className='h-full w-full overflow-scroll flex items-start justify-center'>
@@ -51,10 +47,7 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
             isLoading && Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={ index } />)
           }
 
-          {
-            //? looping products
-            !error && allProducts?.length > 0 && allProducts.map((item: any) => <ItemCard key={ item._id } { ...item } />)
-          }
+          { !error && allProducts?.length > 0 && <LoopItems allProducts={ allProducts } /> }
 
           {/* if their are no products */ }
           <div

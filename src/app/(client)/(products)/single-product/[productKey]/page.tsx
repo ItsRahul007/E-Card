@@ -12,6 +12,7 @@ import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
 import ProductsSchema from "@/lib/model/productSchema";
 import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
+import getBase64 from '@/lib/util/getBase64';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -90,6 +91,8 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
         return stars;
     };
 
+    const base64Url = await getBase64(primaryImgUrl);
+
     return (
         <div className='h-screen w-screen bg-slate-100 flex flex-col'>
             <AllProductNav />
@@ -102,6 +105,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                             primaryImgUrl={ primaryImgUrl }
                             product_type={ product_type }
                             secondaryImgUrls={ secondaryImgUrls }
+                            base64Url={ base64Url }
                         />
 
                         {/* text container */ }
