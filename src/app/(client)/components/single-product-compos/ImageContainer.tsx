@@ -9,13 +9,9 @@ interface I_ImageContainer {
     primaryImgUrl: string;
     product_type: string;
     secondaryImgUrls: string[];
-    base64Url: {
-        success: boolean;
-        src: string;
-    }
 }
 
-const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, secondaryImgUrls, base64Url }) => {
+const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, secondaryImgUrls }) => {
     const [currentImageUrl, setCurrentImageUrl] = useState<string>(primaryImgUrl);
     const allImages: string[] = [primaryImgUrl, ...secondaryImgUrls];
 
@@ -42,8 +38,6 @@ const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, sec
                         alt={ product_type }
                         fill
                         style={ { objectFit: 'contain', borderRadius: '10px' } }
-                        placeholder={ base64Url.success ? "blur" : "empty" }
-                        blurDataURL={ base64Url.src }
                     />
                     <IconButton
                         className='absolute top-3 right-3 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 bg-gray-400 cursor-pointer'
