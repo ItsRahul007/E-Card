@@ -17,8 +17,11 @@ const Cart: FC = () => {
 
                         {/* cart items */ }
                         <div className='flex-1 flex justify-center'>
-                            <div className='h-full w-[98%]'>
+                            <div className='h-full w-[98%] flex flex-col gap-2'>
                                 {/* single cart item */ }
+                                <SingleCartItem />
+                                <SingleCartItem />
+                                <SingleCartItem />
                                 <SingleCartItem />
                             </div>
                         </div>
