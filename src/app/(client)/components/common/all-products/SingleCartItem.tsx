@@ -26,8 +26,8 @@ const SingleCartItem: FC = () => {
             </div>
 
             {/* price quantity and fevourite, remove buttons */ }
-            <div className='w-full lg:w-3/5 h-20 lg:h-full flex items-start lg:justify-between justify-start'>
-                <div className='w-1/3 lg:w-1/2 flex gap-3'>
+            <div className='w-full lg:w-3/5 h-20 lg:h-full flex sm:flex-row flex-col gap-3 sm:gap-0 items-start lg:justify-between md:justify-start justify-between'>
+                <div className=' lg:w-1/2 md:w-1/3 w-full flex gap-3'>
                     <Dropdown />
                     <div className={ `font-rubik font-normal` }>
                         <div className='text-gray-800'>$200</div>

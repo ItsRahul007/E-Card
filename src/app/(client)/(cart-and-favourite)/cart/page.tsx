@@ -11,7 +11,7 @@ const Cart: FC = () => {
             <div className='w-full h-auto flex justify-center items-center mt-12'>
                 <div className='h-auto w-11/12 flex flex-col lg:flex-row gap-3 lg:gap-6'>
                     {/* left component */ }
-                    <div className='min-h-[24rem] h-auto w-full lg:w-9/12 bg-white border-2 rounded-xl flex flex-col overflow-hidden p-3'>
+                    <div className='min-h-[24rem] h-auto w-full lg:w-9/12 bg-white border-2 rounded-xl flex flex-col overflow-hidden p-3 pb-5 lg:mb-5'>
                         {/* heading */ }
                         <div className='h-14 flex items-center pt-3 pb-7'>
                             <h1 className="font-nunito ml-3 text-2xl text-gray-600 font-semibold">Your shopping cart</h1>
@@ -27,6 +27,18 @@ const Cart: FC = () => {
                                 <SingleCartItem />
                             </div>
                         </div>
+                        <div className='h-10 flex justify-center items-center'>
+                            <hr className='w-full' />
+                        </div>
+                        <div className='min-h-20 w-full flex flex-col gap-3'>
+                            <div className='text-lg text-zinc-500 flex items-center'>
+                                <span className='text-3xl pr-2'><i className="ri-truck-fill"></i></span>
+                                <span className='font-medium'>Free Delivery within 1-2 weeks</span>
+                            </div>
+                            <div className='text-zinc-400 h-auto'>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum esse optio sit sed, tenetur vero ipsam nisi facilis aliquam delectus modi, eius amet deserunt qui doloribus excepturi iure praesentium ut?
+                            </div>
+                        </div>
                     </div>
 
                     {/* right component */ }
@@ -34,12 +46,12 @@ const Cart: FC = () => {
                         {/* cupon component */ }
                         <div className='sm:w-full min-w-80 bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start h-28 gap-2'>
                             <h4 className='text-base font-normal text-stone-500'>Have coupon?</h4>
-                            <div className='flex'>
+                            <div className='flex w-full'>
                                 <InputCompo
                                     name='cupon_code'
                                     type='text'
                                     placeholder='Coupon code'
-                                    className='border px-2 py-1 rounded-l focus:border-blue-400'
+                                    className='border px-2 py-1 rounded-l focus:border-blue-400  w-full'
                                 />
                                 <Button
                                     text='Apply'
