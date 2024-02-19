@@ -39,12 +39,12 @@ const SingleCartItem: FC = () => {
                         icon={ <i className="ri-heart-fill font-thin"></i> }
                         type='button'
                         iconFirst
-                        className='border bg-[#f5f5f5] text-gray-400 px-3 py-1 text-lg rounded hover:bg-white hover:border-blue-500 hover:text-blue-500'
+                        className='border bg-stone-100 text-gray-400 px-3 py-1 text-lg rounded hover:bg-white hover:border-blue-500 hover:text-blue-500'
                     />
                     <Button
                         text='Remove'
                         type='button'
-                        className='uppercase border bg-[#f5f5f5] text-red-600 px-5 py-1 text-[12px] font-semibold rounded hover:bg-white hover:border-red-500'
+                        className='uppercase border bg-stone-100 text-red-600 px-5 py-1 text-[12px] font-semibold rounded hover:bg-white hover:border-red-500'
                     />
                 </div>
             </div>
