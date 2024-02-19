@@ -32,7 +32,7 @@ const Cart: FC = () => {
                     {/* right component */ }
                     <div className='flex-1 flex flex-col gap-4'>
                         {/* cupon component */ }
-                        <div className='w-80 bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start h-28 gap-2'>
+                        <div className='sm:w-full min-w-80 bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start h-28 gap-2'>
                             <h4 className='text-base font-normal text-stone-500'>Have coupon?</h4>
                             <div className='flex'>
                                 <InputCompo
@@ -50,7 +50,7 @@ const Cart: FC = () => {
                         </div>
 
                         {/* total price component */ }
-                        <div className='w-80 h-auto bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2'>
+                        <div className='sm:w-full w-80 h-auto bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2'>
                             {/* text */ }
                             <div className='w-full flex flex-col font-rubik text-base text-zinc-600'>
                                 <div className='flex justify-between h-9'>
@@ -85,9 +85,6 @@ const Cart: FC = () => {
                                     />
                                 </div>
                             </div>
-
-                            {/* buttons */ }
-                            <div></div>
                         </div>
                     </div>
                 </div>
