@@ -34,17 +34,11 @@ const SingleCartItem: FC = () => {
                         <div className='text-gray-400'>$100 / per item</div>
                     </div>
                 </div>
-                <div className='w-fit pr-5 flex gap-1'>
-                    <IconButton
-                        icon={ <i className="ri-heart-fill font-thin"></i> }
-                        type='button'
-                        iconFirst
-                        className='border bg-stone-100 text-gray-400 px-3 py-1 text-lg rounded hover:bg-white hover:border-blue-500 hover:text-blue-500'
-                    />
+                <div className='w-fit pr-5'>
                     <Button
                         text='Remove'
                         type='button'
-                        className='uppercase border bg-stone-100 text-red-600 px-5 py-1 text-[12px] font-semibold rounded hover:bg-white hover:border-red-500'
+                        className='uppercase border bg-stone-100 text-red-600 px-4 py-2 text-[12px] font-semibold rounded hover:bg-white hover:border-red-500'
                     />
                 </div>
             </div>

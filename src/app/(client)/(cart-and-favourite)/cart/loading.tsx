@@ -1,12 +1,12 @@
 "use client";
 
 import PageLoading from '@/app/(client)/components/common/loading/PageLoading';
-import React from 'react';
+import React, { FC } from 'react';
 
-const loading = () => {
+const Loading: FC = () => {
     return (
         <PageLoading />
     );
 };
 
-export default loading;
+export default Loading;

@@ -3,6 +3,7 @@ import Navbar from '../../components/common/all-products/Nav';
 import SingleCartItem from '../../components/common/all-products/SingleCartItem';
 import InputCompo from '../../components/common/InputCompo';
 import Button from '../../components/common/buttons/Button';
+import Footer from '../../components/common/footer/Footer';
 
 const Cart: FC = () => {
     return (
@@ -101,8 +102,9 @@ const Cart: FC = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </main>
-    )
-}
+    );
+};
 
 export default Cart;
