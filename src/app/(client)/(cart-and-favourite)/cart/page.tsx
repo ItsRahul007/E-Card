@@ -36,7 +36,7 @@ const Cart: FC = () => {
                                 <span className='text-3xl pr-2'><i className="ri-truck-fill"></i></span>
                                 <span className='font-medium'>Free Delivery within 1-2 weeks</span>
                             </div>
-                            <div className='text-zinc-400 h-auto'>
+                            <div className='text-zinc-400 h-auto text-xs sm:text-sm'>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum esse optio sit sed, tenetur vero ipsam nisi facilis aliquam delectus modi, eius amet deserunt qui doloribus excepturi iure praesentium ut?
                             </div>
                         </div>
