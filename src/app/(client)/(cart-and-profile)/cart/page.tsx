@@ -15,7 +15,7 @@ const Cart: FC = () => {
                     <div className='min-h-[24rem] h-auto w-full lg:w-9/12 bg-white border-2 rounded-xl flex flex-col overflow-hidden p-3 pb-5 lg:mb-5'>
                         {/* heading */ }
                         <div className='h-14 flex items-center pt-3 pb-7'>
-                            <h1 className="font-nunito ml-3 text-2xl text-gray-600 font-semibold">Your shopping cart</h1>
+                            <h1 className="!font-nunito ml-3 text-2xl text-gray-600 font-semibold">Your shopping cart</h1>
                         </div>
 
                         {/* cart items */ }

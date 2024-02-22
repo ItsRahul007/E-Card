@@ -28,15 +28,16 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={ `font-inter
-      ${inter.variable}
-      ${rubik.variable}
-      ${kanit.variable}
-      ${nunito.variable}
-      ${poppins.variable}
-      ${roboto.variable}
-      ${outfit.variable}
-      ${ubuntu.variable}
-      ${mukta.variable}
+        ${inter.variable}
+        ${rubik.variable}
+        ${kanit.variable}
+        ${nunito.variable}
+        ${poppins.variable}
+        ${roboto.variable}
+        ${outfit.variable}
+        ${ubuntu.variable}
+        ${mukta.variable}
+
       `}
       >
         <Provider>{ children }</Provider>
