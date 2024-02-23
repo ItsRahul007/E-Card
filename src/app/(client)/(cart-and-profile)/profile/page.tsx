@@ -26,18 +26,71 @@ const Profile: FC = () => {
                             </div>
                             <div className='flex-1 flex justify-center items-start flex-col '>
                                 <div className='text-xs'>Hello,</div>
-                                <div className='font-mediums'>E-Card Customer</div>
+                                <div className='font-medium truncate text-lg'>Rahul Ghosh</div>
                             </div>
                         </div>
                         <div className='flex-1 shadow-sm border flex flex-col bg-white'>
-                            <div className='py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer text-zinc-400'>
+                            {/* my orders */ }
+                            <div className='py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer text-zinc-500'>
                                 <span>
-                                    <i className="ri-shopping-bag-3-fill text-2xl text-blue-500 px-3"></i>
-                                    <span className='font-medium'>My Orders</span>
+                                    <i className="ri-shopping-bag-3-fill text-xl text-blue-500 px-3"></i>
+                                    <span className='font-medium text-base'>My Orders</span>
                                 </span>
                                 <span>
                                     <i className="ri-arrow-right-s-line font-medium text-2xl pr-3"></i>
                                 </span>
+                            </div>
+
+                            {/* account settings */ }
+                            <div className='h-auto w-full border-b'>
+                                <div>
+                                    <h3 className='uppercase  text-zinc-500 py-3 flex items-center'>
+                                        <span className='text-xl text-blue-500 px-3'>
+                                            <i className="ri-user-3-fill"></i>
+                                        </span>
+                                        <span className='font-medium text-base'>account settings</span>
+                                    </h3>
+                                </div>
+                                <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
+                                    <span className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full'>
+                                        <span className='pl-7'>profile information</span>
+                                    </span>
+                                    <span className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full'>
+                                        <span className='pl-7'>Manage Addresses</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* my stuff */ }
+                            <div className='h-auto w-full border-b'>
+                                <div>
+                                    <h3 className='uppercase  text-zinc-500 py-3 flex items-center'>
+                                        <span className='text-2xl text-blue-500 px-3'>
+                                            <i className="ri-folder-user-fill"></i>
+                                        </span>
+                                        <span className='font-medium'>my stuff</span>
+                                    </h3>
+                                </div>
+                                <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
+                                    <span className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full'>
+                                        <span className='pl-7'>My coupons</span>
+                                    </span>
+                                    <span className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full'>
+                                        <span className='pl-7'>My review & ratings</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* logout */ }
+                            <div className='h-auto w-full border-b cursor-pointer group'>
+                                {/* <div> */ }
+                                <h3 className='uppercase flex items-center text-zinc-500 py-3'>
+                                    <span className='text-xl text-blue-600 px-3'>
+                                        <i className="ri-shut-down-line"></i>
+                                    </span>
+                                    <span className='font-medium text-base group-hover:text-blue-600'>Logout</span>
+                                </h3>
+                                {/* </div> */ }
                             </div>
                         </div>
                     </div>

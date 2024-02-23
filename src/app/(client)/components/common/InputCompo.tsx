@@ -8,7 +8,7 @@ interface I_InputComponent {
     name: string;
     className?: string;
     isRequired?: boolean;
-    onChange?: (e: any) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value?: string | number;
     onEnter?: () => void;
 };
