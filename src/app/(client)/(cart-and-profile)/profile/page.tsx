@@ -1,11 +1,28 @@
 import React, { FC } from 'react';
-import Navbar from '../../components/common/all-products/Nav';
-import Image from 'next/image';
-import profileImage from "/public/images/profile-pic.png";
+import ProfileSingleCompo from '../../components/profile-single-copo/ProfileSingleCompo';
 
 const ProfileInformation: FC = () => {
     return (
-        <>hi</>
+        <section className='h-auto w-full flex flex-col gap-14'>
+            <ProfileSingleCompo
+                headingText='Personal information'
+                inputValue='Rahul Ghosh'
+                inputType='text'
+                placeholder='Enter your name'
+            />
+            <ProfileSingleCompo
+                headingText='Email Address'
+                inputValue='rahul@mile9.io'
+                inputType='email'
+                placeholder='Enter your email'
+            />
+            <ProfileSingleCompo
+                headingText='Mobile number'
+                inputValue={ 1234567890 }
+                inputType='number'
+                placeholder='Enter your mobile number'
+            />
+        </section>
     );
 };
 

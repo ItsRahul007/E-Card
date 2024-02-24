@@ -109,7 +109,7 @@ export default function Layout({
                     </div>
 
                     {/* right component */ }
-                    <div className='min-h-11/12 flex flex-col gap-2 border w-3/4 shadow-sm'>
+                    <div className='min-h-11/12 flex flex-col gap-2 border w-3/4 shadow-sm p-4 bg-white'>
                         { children }
                     </div>
                 </div>
