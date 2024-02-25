@@ -4,6 +4,8 @@ import Navbar from '../../components/common/all-products/Nav';
 import profileImage from "/public/images/profile-pic.png";
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { headers } from "next/headers";
+import { NextRequest } from 'next/server';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
@@ -37,7 +39,7 @@ export default function Layout({
                             </div>
                             <div className='flex-1 flex justify-center items-start flex-col '>
                                 <div className='text-xs'>Hello,</div>
-                                <div className='font-medium truncate text-lg'>Rahul Ghosh</div>
+                                <div className='font-semibold truncate text-base'>Rahul Ghosh</div>
                             </div>
                         </div>
 

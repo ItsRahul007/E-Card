@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import ProfileSingleCompo from '../../components/profile-single-copo/ProfileSingleCompo';
+import ProfileSingleCompo from '../../components/profile-compos/ProfileSingleCompo';
 
 const ProfileInformation: FC = () => {
     return (
