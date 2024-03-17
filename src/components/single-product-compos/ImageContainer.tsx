@@ -1,6 +1,6 @@
 "use client";
 
-import IconButton from '@/app/(client)/components/common/buttons/IconButton';
+import IconButton from '@/components/common/buttons/IconButton';
 import Image from 'next/image';
 import React, { FC, useState } from 'react'
 import SmallImageContainer from './SmallImageContainer';

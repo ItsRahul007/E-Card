@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import ProductSkeletonLoading from '../loading/Product-Skeleton-loading';
+import ProductSkeletonLoading from '../common/loading/Product-Skeleton-loading';
 import useFetchProducts from '@/lib/customHook/useFetchProduct';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';

@@ -1,6 +1,6 @@
 import React from 'react';
 import style from "@/app/style/style.module.css";
-import Button from '@/app/(client)/components/common/buttons/Button';
+import Button from '@/components/common/buttons/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 

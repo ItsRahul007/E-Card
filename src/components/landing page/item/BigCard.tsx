@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/app/(client)/components/common/buttons/Button';
+import Button from '@/components/common/buttons/Button';
 interface bigcard {
     url: string;
     headText: string;

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import Navbar from '@/app/(client)/components/common/all-products/Nav';
-import Products from '@/app/(client)/components/common/all-products/Products';
-import Filter from '@/app/(client)/components/filters/Filter';
+import Navbar from '@/components/all-products/Nav';
+import Products from '@/components/all-products/Products';
+import Filter from '@/components/filters/Filter';
 import { Metadata } from 'next';
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
 

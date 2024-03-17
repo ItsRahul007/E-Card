@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { FC } from 'react';
 import Dropdown from './DropDown';
-import IconButton from '../buttons/IconButton';
-import Button from '../buttons/Button';
+import IconButton from '../common/buttons/IconButton';
+import Button from '../common/buttons/Button';
 
 const SingleCartItem: FC = () => {
     return (

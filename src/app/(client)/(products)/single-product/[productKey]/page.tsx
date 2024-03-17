@@ -1,13 +1,13 @@
-import AllProductNav from '@/app/(client)/components/common/all-products/Nav';
+import AllProductNav from '@/components/all-products/Nav';
 import React, { FC } from 'react';
 import style from "@/app/style/style.module.css";
-import Button from '@/app/(client)/components/common/buttons/Button';
-import ReviewBox from '@/app/(client)/components/ReviewBox';
-import ReviewStar from '@/app/(client)/components/ReviewStar';
-import Footer from '@/app/(client)/components/common/footer/Footer';
+import Button from '@/components/common/buttons/Button';
+import ReviewBox from '@/components/ReviewBox';
+import ReviewStar from '@/components/ReviewStar';
+import Footer from '@/components/common/footer/Footer';
 import RelatedProducts from '../../../components/single-product-compos/RelatedProducts';
 import { reviewText } from './reviewText';
-import ImageContainer from '@/app/(client)/components/single-product-compos/ImageContainer';
+import ImageContainer from '@/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
 import ProductsSchema from "@/lib/model/productSchema";

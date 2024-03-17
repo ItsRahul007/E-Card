@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import Button from '@/app/(client)/components/common/buttons/Button';
+import Button from '@/components/common/buttons/Button';
 import Link from 'next/link';
 import style from "@/app/style/style.module.css";
-import InputCompo from '@/app/(client)/components/common/InputCompo';
+import InputCompo from '@/components/common/InputCompo';
 import toast from 'react-hot-toast';
 import { loginWithEmailPassword, signupWithEmailPassword } from './authFunctions';
 import { useRouter } from 'next/navigation';

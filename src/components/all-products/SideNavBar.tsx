@@ -1,11 +1,11 @@
 "use client";
 
 import React, { ChangeEvent, FC, useState } from 'react';
-import InputCompo from '../InputCompo';
-import IconButton from '../buttons/IconButton';
+import InputCompo from '../common/InputCompo';
+import IconButton from '../common/buttons/IconButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import FilterByPrice from '../../filters/FilterByPrice';
+import FilterByPrice from '../filters/FilterByPrice';
 
 interface I_ProductNav {
     filters?: boolean;

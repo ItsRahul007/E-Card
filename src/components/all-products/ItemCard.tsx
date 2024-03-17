@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import style from "@/app/style/style.module.css";
-import IconButton from '../buttons/IconButton';
+import IconButton from '../common/buttons/IconButton';
 
 interface I_ItemCard {
   primaryImgUrl: string;

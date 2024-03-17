@@ -1,5 +1,5 @@
-import IconButton from '@/app/(client)/components/common/buttons/IconButton';
-import AddressCompo from '@/app/(client)/components/profile-compos/addressCompo';
+import IconButton from '@/components/common/buttons/IconButton';
+import AddressCompo from '@/components/profile-compos/addressCompo';
 import React from 'react'
 
 const Addresses = async () => {
