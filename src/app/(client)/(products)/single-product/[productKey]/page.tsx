@@ -5,7 +5,7 @@ import Button from '@/components/common/buttons/Button';
 import ReviewBox from '@/components/ReviewBox';
 import ReviewStar from '@/components/ReviewStar';
 import Footer from '@/components/common/footer/Footer';
-import RelatedProducts from '../../../components/single-product-compos/RelatedProducts';
+import RelatedProducts from '@/components/single-product-compos/RelatedProducts';
 import { reviewText } from './reviewText';
 import ImageContainer from '@/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'

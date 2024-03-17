@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Navbar from '../../components/all-products/Nav';
+import Navbar from '@/components/all-products/Nav';
 import profileImage from "/public/images/profile-pic.png";
 import { ReactNode } from 'react';
 import Link from 'next/link';
