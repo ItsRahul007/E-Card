@@ -12,6 +12,7 @@ import {
   outfit,
   ubuntu,
   mukta,
+  noto_sans_khojki,
 } from '@/lib/fonts/fonts';
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function RootLayout({
         ${outfit.variable}
         ${ubuntu.variable}
         ${mukta.variable}
+        ${noto_sans_khojki.variable}
 
       `}
       >

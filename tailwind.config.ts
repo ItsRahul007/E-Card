@@ -23,6 +23,7 @@ const config: Config = {
         outfit: ['var(--font-outfit)'],
         rubik: ['var(--font-rubik)'],
         inter: ['var(--font-inter)'],
+        noto_sans_khojki: ['var(--font-noto_sans_khojki)'],
       }
     },
   },

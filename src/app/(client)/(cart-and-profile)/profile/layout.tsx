@@ -18,7 +18,7 @@ export default function Layout({
     children: ReactNode;
 }) {
     return (
-        <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100'>
+        <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-noto_sans_khojki'>
             <Navbar />
             <div className='flex-1 flex justify-center items-center'>
                 <div className='h-full w-full md:w-11/12 flex gap-3 justify-center p-2'>

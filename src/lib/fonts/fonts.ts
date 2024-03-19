@@ -1,4 +1,4 @@
-import { Inter, Kanit, Mukta, Nunito, Outfit, Poppins, Roboto, Rubik, Ubuntu } from "next/font/google";
+import { Inter, Kanit, Mukta, Nunito, Outfit, Poppins, Roboto, Rubik, Ubuntu, Noto_Sans_Khojki } from "next/font/google";
 
 const inter = Inter({ subsets: ['latin'], variable: "--font-inter" });
 
@@ -57,6 +57,13 @@ const mukta = Mukta({
     variable: "--font-mukta"
 });
 
+const noto_sans_khojki = Noto_Sans_Khojki({
+    weight: '400',
+    subsets: ['latin'],
+    style: "normal",
+    variable: "--font-noto_sans_khojki"
+});
+
 export {
     inter,
     rubik,
@@ -67,4 +74,5 @@ export {
     outfit,
     ubuntu,
     mukta,
+    noto_sans_khojki,
 };
