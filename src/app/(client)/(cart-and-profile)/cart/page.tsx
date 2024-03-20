@@ -52,12 +52,12 @@ const Cart: FC = () => {
                                     name='cupon_code'
                                     type='text'
                                     placeholder='Coupon code'
-                                    className='border px-2 py-1 rounded-l focus:border-blue-400  w-full'
+                                    className='border px-2 py-1 rounded-l focus:outline-blue-400  w-full'
                                 />
                                 <Button
                                     text='Apply'
                                     type='button'
-                                    className='uppercase border text-[12px] px-3 border-l-0 rounded-r font-medium bg-stone-100 hover:bg-stone-200 text-gray-500'
+                                    className='uppercase border text-xs px-3 border-l-0 rounded-r font-medium bg-stone-100 hover:bg-stone-200 text-gray-500'
                                 />
                             </div>
                         </div>

@@ -8,7 +8,7 @@ const AddNewAddress: FC = () => {
     const [isEditFormActive, setIsEditFormActive] = useState<boolean>(false);
 
     return (
-        <div className='h-auto w-full flex flex-col gap-5 p-2 sm:px-4 sm:py-3'>
+        <div className='h-auto w-full flex flex-col gap-5'>
             <h3 className='text-lg font-semibold'>Manage Addresses</h3>
             { !isEditFormActive ?
                 <IconButton

@@ -139,7 +139,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile }) => {
                         </div>
                     }
                     { profile &&
-                        <div className='w-full h-full mt-4 block lg:hidden'>
+                        <div className='w-full h-auto mt-4 block lg:hidden select-none'>
                             <div className='h-auto w-[95%] sm:w-3/4 flex flex-col gap-3 lg:hidden mx-auto'>
                                 {/* profile component */ }
                                 <div className='flex gap-2 w-full h-20 bg-slate-800 border rounded shadow-sm'>
