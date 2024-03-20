@@ -8,25 +8,23 @@ const AddNewAddress: FC = () => {
     const [isEditFormActive, setIsEditFormActive] = useState<boolean>(false);
 
     return (
-        <>
+        <div className='h-auto w-full flex flex-col gap-5 p-2 sm:px-4 sm:py-3'>
+            <h3 className='text-lg font-semibold'>Manage Addresses</h3>
             { !isEditFormActive ?
-                <div
-                    className='h-auto w-full flex flex-col gap-5 px-4 py-3'
+                <IconButton
+                    type='button'
+                    icon={ <span className='text-2xl'>+</span> }
+                    text='Add a new Address'
+                    iconFirst
+                    className='text-blue-500 py-3 border hover:border-blue-500 rounded-md w-full flex justify-start items-center gap-4 px-6 capitalize font-semibold'
                     onClick={ () => setIsEditFormActive(true) }
-                >
-                    <h3 className='text-lg font-semibold'>Manage Addresses</h3>
-                    <IconButton
-                        type='button'
-                        icon={ <span className='text-2xl'>+</span> }
-                        text='Add a new Address'
-                        iconFirst
-                        className='text-blue-500 py-3 border hover:border-blue-500 rounded-md w-full flex justify-start items-center gap-4 px-6 capitalize font-semibold'
-                    />
-                </div>
+                />
                 :
-                <EditAddressForm onCancle={ () => setIsEditFormActive(false) } />
+                <span className='border rounded w-full'>
+                    <EditAddressForm onCancle={ () => setIsEditFormActive(false) } />
+                </span>
             }
-        </>
+        </div>
     )
 }
 

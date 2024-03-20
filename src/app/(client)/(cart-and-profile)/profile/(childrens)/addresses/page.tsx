@@ -1,5 +1,5 @@
 import AddressCompo from '@/components/profile-compos/addressCompo';
-import React from 'react'
+import React from 'react';
 import AddNewAddress from './AddNewAddress';
 
 const Addresses = async () => {
@@ -9,7 +9,7 @@ const Addresses = async () => {
             <AddNewAddress />
 
             {/* address list */ }
-            <ul className='h-auto w-full flex flex-col gap-2 px-4 py-3 list-none'>
+            <ul className='h-auto w-full flex flex-col gap-2 sm:px-4 px-2 sm:py-3 py-1 list-none'>
                 <li className='h-auto w-full border rounded-md'>
                     <AddressCompo />
                 </li>

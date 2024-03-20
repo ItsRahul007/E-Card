@@ -32,9 +32,9 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
     }
 
     return (
-        <div className='h-auto w-full flex flex-col gap-6'>
+        <div className='h-auto w-full flex flex-col gap-3'>
             <div className='flex gap-6 items-end'>
-                <h3 className='text-xl font-medium capitalize'>{ headingText }</h3>
+                <h3 className='text-lg font-medium capitalize'>{ headingText }</h3>
                 <span className='text-blue-500 cursor-pointer font-medium select-none'
                     onClick={ () => setIsEditAble(!isEditAble) }
                 >

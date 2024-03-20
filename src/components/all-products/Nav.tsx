@@ -8,9 +8,10 @@ import SideNavBar from './SideNavBar';
 
 interface I_ProductNav {
   filters?: boolean;
+  profile?: boolean;
 }
 
-const Navbar: React.FC<I_ProductNav> = ({ filters }) => {
+const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const router = useRouter();
 
@@ -35,7 +36,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters }) => {
       </span>
 
       {/* side bar logo for small screens */ }
-      <SideNavBar filters={ filters } />
+      <SideNavBar filters={ filters } profile={ profile } />
 
       {/* search keys and cart favourite */ }
       <span className='h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white font-sans lg:text-lg text-base'>
@@ -48,7 +49,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters }) => {
       </span>
 
       {/* cart and favourite for small screens */ }
-      <span className='flex-1 sm:hidden flex justify-end items-center gap-8 mr-3'>
+      <span className='flex-1 sm:hidden flex justify-end items-center gap-4 mr-3 text-sm'>
         <Link href="/cart" className='cursor-pointer'>Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
         <Link href="/profile" className='cursor-pointer'>My Profile <i className="ri-user-3-fill"></i></Link>
       </span>

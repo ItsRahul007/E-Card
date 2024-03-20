@@ -30,7 +30,7 @@ const AddressCompo: FC = () => {
                     <div className='flex gap-3 text-base font-medium'>
                         <span>Rahul Ghosh</span><span>1234567890</span>
                     </div>
-                    <div>
+                    <div className='text-sm'>
                         Toralpur Tripally primari school, Toralpur, Memari II, Memari, West Bengal - 713146
                     </div>
                 </div>
