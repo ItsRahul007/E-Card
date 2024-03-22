@@ -9,14 +9,14 @@ const AddNewAddress: FC = () => {
 
     return (
         <div className='h-auto w-full flex flex-col gap-5'>
-            <h3 className='text-lg font-semibold'>Manage Addresses</h3>
+            <h3 className='text-lg font-semibold text-appTheme-600'>Manage Addresses</h3>
             { !isEditFormActive ?
                 <IconButton
                     type='button'
                     icon={ <span className='text-2xl'>+</span> }
                     text='Add a new Address'
                     iconFirst
-                    className='text-blue-500 py-3 border hover:border-blue-500 rounded-md w-full flex justify-start items-center gap-4 px-6 capitalize font-semibold'
+                    className='text-appTheme-600 py-3 border hover:border-appTheme-500 rounded-md w-full flex justify-start items-center gap-4 px-6 capitalize font-semibold'
                     onClick={ () => setIsEditFormActive(true) }
                 />
                 :

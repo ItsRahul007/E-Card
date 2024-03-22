@@ -16,7 +16,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
   const router = useRouter();
 
   return (
-    <nav className='w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-[#41B4CD] text-white flex'>
+    <nav className='w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-appTheme-500 text-white flex'>
       {/* search box and logo */ }
       <span className='h-full xl:w-[30rem] min-[1281px]:flex hidden justify-end items-center gap-8'>
         <span className={ `text-3xl font-ubuntu font-bold` }>E-Card</span>

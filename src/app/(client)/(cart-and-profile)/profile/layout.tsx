@@ -38,7 +38,7 @@ export default function Layout({
                             </div>
                             <div className='flex-1 flex justify-center items-start flex-col '>
                                 <div className='text-sm'>Hello,</div>
-                                <div className='font-semibold truncate text-base'>Rahul Ghosh</div>
+                                <div className='font-semibold truncate text-base text-appTheme-600'>Rahul Ghosh</div>
                             </div>
                         </div>
 
@@ -47,7 +47,7 @@ export default function Layout({
                             {/* my orders */ }
                             <Link href="/profile/orders" className='py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer text-zinc-500'>
                                 <span>
-                                    <i className="ri-shopping-bag-3-fill text-xl text-blue-500 px-3"></i>
+                                    <i className="ri-shopping-bag-3-fill text-xl text-appTheme-600 px-3"></i>
                                     <span className='font-medium text-base'>My Orders</span>
                                 </span>
                                 <span>
@@ -59,17 +59,17 @@ export default function Layout({
                             <div className='h-auto w-full border-b'>
                                 <div>
                                     <h3 className='uppercase  text-zinc-500 py-3 flex items-center'>
-                                        <span className='text-xl text-blue-500 px-3'>
+                                        <span className='text-xl text-appTheme-600 px-3'>
                                             <i className="ri-user-3-fill"></i>
                                         </span>
                                         <span className='font-medium text-base'>account settings</span>
                                     </h3>
                                 </div>
                                 <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
-                                    <Link href="/profile/" className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full text-sm'>
+                                    <Link href="/profile/" className='cursor-pointer py-2 hover:bg-appTheme-50 hover:text-appTheme-700 w-full text-sm'>
                                         <span className='pl-7'>profile information</span>
                                     </Link>
-                                    <Link href="/profile/addresses" className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full text-sm'>
+                                    <Link href="/profile/addresses" className='cursor-pointer py-2 hover:bg-appTheme-50 hover:text-appTheme-700 w-full text-sm'>
                                         <span className='pl-7'>Manage Addresses</span>
                                     </Link>
                                 </div>
@@ -79,18 +79,18 @@ export default function Layout({
                             <div className='h-auto w-full border-b'>
                                 <div>
                                     <h3 className='uppercase  text-zinc-500 py-3 flex items-center'>
-                                        <span className='text-2xl text-blue-500 px-3'>
+                                        <span className='text-2xl text-appTheme-600 px-3'>
                                             <i className="ri-folder-user-fill"></i>
                                         </span>
                                         <span className='font-medium'>my stuff</span>
                                     </h3>
                                 </div>
                                 <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
-                                    <Link href="/profile/coupons" className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full text-sm'>
+                                    <Link href="/profile/coupons" className='cursor-pointer py-2 hover:bg-appTheme-50 hover:text-appTheme-700 w-full text-sm'>
                                         <span className='pl-7'>My coupons</span>
                                     </Link>
-                                    <Link href="/profile/review" className='cursor-pointer py-2 hover:bg-blue-50 hover:text-blue-500 w-full text-sm'>
-                                        <span className='pl-7'>My review & ratings</span>
+                                    <Link href="/profile/review" className='cursor-pointer py-2 hover:bg-appTheme-50 hover:text-appTheme-700 w-full text-sm'>
+                                        <span className='pl-7'>My ratings & review</span>
                                     </Link>
                                 </div>
                             </div>
@@ -99,10 +99,10 @@ export default function Layout({
                             <div className='h-auto w-full border-b cursor-pointer group'>
                                 {/* <div> */ }
                                 <h3 className='uppercase flex items-center text-zinc-500 py-3'>
-                                    <span className='text-xl text-blue-600 px-3'>
-                                        <i className="ri-shut-down-line"></i>
+                                    <span className='text-xl text-appTheme-600 px-3'>
+                                        <i className="ri-login-circle-fill"></i>
                                     </span>
-                                    <span className='font-medium text-base group-hover:text-blue-600'>Logout</span>
+                                    <span className='font-medium text-base group-hover:text-appTheme-700'>Logout</span>
                                 </h3>
                                 {/* </div> */ }
                             </div>

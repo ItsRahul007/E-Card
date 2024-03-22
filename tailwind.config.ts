@@ -24,6 +24,19 @@ const config: Config = {
         rubik: ['var(--font-rubik)'],
         inter: ['var(--font-inter)'],
         noto_sans_khojki: ['var(--font-noto_sans_khojki)'],
+      },
+      colors: {
+        "appTheme-50": "#F0F9FF",
+        "appTheme-100": "#E5F6FF",
+        "appTheme-200": "#C7EAFF",
+        "appTheme-300": "#9ED0FF",
+        "appTheme-400": "#7BB8FF",
+        "appTheme-500": "#41B4CD",
+        "appTheme-600": "#2CA4C8",
+        "appTheme-700": "#1A8ABF",
+        "appTheme-800": "#0E6AA8",
+        "appTheme-900": "#0A498F",
+
       }
     },
   },
