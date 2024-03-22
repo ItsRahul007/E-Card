@@ -32,7 +32,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
     }
 
     return (
-        <div className='h-auto w-fit flex flex-col gap-3'>
+        <div className='h-auto w-full flex flex-col gap-3'>
             <div className='flex gap-6 items-end'>
                 <h3 className='text-base font-medium capitalize'>{ headingText }</h3>
                 <span className='text-appTheme-700 cursor-pointer text-base font-medium select-none'
@@ -41,7 +41,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
                     { !isEditAble ? "Edit" : "Cancle" }
                 </span>
             </div>
-            <div className='flex gap-3'>
+            <div className='flex gap-3 flex-col sm:flex-row'>
                 <InputCompo
                     name='name'
                     placeholder={ placeholder }
@@ -55,7 +55,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
                 { isEditAble && <Button
                     type='button'
                     text='Save'
-                    className='bg-appTheme-500 text-white py-3 px-10 rounded-sm font-semibold uppercase'
+                    className='bg-appTheme-500 text-white py-3 px-5 sm:py-3 sm:px-10 rounded-sm font-semibold uppercase max-sm:text-sm max-sm:w-fit'
                     onClick={ onButtonClick }
                 /> }
             </div>

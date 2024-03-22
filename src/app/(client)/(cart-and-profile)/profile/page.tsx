@@ -3,9 +3,9 @@ import ProfileSingleCompo from '@/components/profile-compos/ProfileSingleCompo';
 
 const ProfileInformation: FC = () => {
     return (
-        <section className='h-auto w-full flex flex-col gap-10 sm:px-4 px-2 sm:py-3 py-2'>
+        <section className='h-auto w-full flex flex-col gap-5 sm:gap-10 sm:px-4 px-2 sm:py-3 py-2'>
             <h3 className='text-lg font-semibold text-appTheme-600'>Personal information</h3>
-            <div className='h-auto w-fit sm:w-full flex flex-col gap-5 max-sm:mx-auto'>
+            <div className='h-auto w-full flex flex-col gap-5'>
                 <ProfileSingleCompo
                     headingText='Full Name'
                     inputValue='Rahul Ghosh'
