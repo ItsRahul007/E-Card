@@ -10,9 +10,10 @@ const userModel = new Schema({
         type: String,
         unique: true,
     },
+    mobileNumber: Number,
     password: String,
     socialUser: Boolean,
-    favourite: Array,
+    // favourite: Array,
     cart: Array,
     orders: Array,
 });

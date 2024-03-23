@@ -43,10 +43,14 @@ export async function POST(req: Request) {
         }
         const authToken = jwt.sign(data, JWT_SECRET);
 
-        return NextResponse.json({
+        const responce = NextResponse.json({
             success: true,
             authToken,
-        });
+        }, { status: 200 });
+
+        responce.cookies.set("authToken", authToken);
+
+        return responce;
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error: "Internal server error", problem: error, success: false }, { status: 500 });

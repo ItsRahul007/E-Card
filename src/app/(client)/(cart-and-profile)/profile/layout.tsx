@@ -4,17 +4,33 @@ import Navbar from '@/components/all-products/Nav';
 import profileImage from "/public/images/profile-pic.png";
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
+import User from '@/lib/model/usersSchema';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
     description: 'An E-Commerce web app where user can buy any product or they can add any product to their persional card and also they can list any of their fevorite item or product to their fevorite card.'
 }
 
-export default function Layout({
+type I_JwtVerifyDataType = {
+    user: {
+        id: String
+    },
+    iat: number | string
+}
+
+export default async function Layout({
     children,
 }: {
     children: ReactNode;
 }) {
+    const allCookies = cookies();
+    const authToken = allCookies.get('authToken');
+    const data = jwt.verify(authToken?.value!, process.env.JWT_SECRET!) as I_JwtVerifyDataType;
+
+    const { name } = await User.findById(data.user.id).select('name');
+
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-inter'>
             {/* nav bar */ }
@@ -38,7 +54,7 @@ export default function Layout({
                             </div>
                             <div className='flex-1 flex justify-center items-start flex-col '>
                                 <div className='text-sm'>Hello,</div>
-                                <div className='font-semibold truncate text-base text-appTheme-600'>Rahul Ghosh</div>
+                                <div className='font-semibold truncate text-base text-appTheme-600'>{ name }</div>
                             </div>
                         </div>
 

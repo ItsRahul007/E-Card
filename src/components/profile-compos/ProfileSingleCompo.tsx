@@ -25,11 +25,12 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
         onInputChange?.(e);
-    }
+    };
 
-    const onButtonClick = () => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         console.log("Submited");
-    }
+    };
 
     return (
         <div className='h-auto w-full flex flex-col gap-3'>
@@ -41,7 +42,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
                     { !isEditAble ? "Edit" : "Cancle" }
                 </span>
             </div>
-            <div className='flex gap-3 flex-col sm:flex-row'>
+            <form className='flex gap-3 flex-col sm:flex-row' onSubmit={ onSubmit }>
                 <InputCompo
                     name='name'
                     placeholder={ placeholder }
@@ -51,14 +52,14 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
                     isReadOnly={ !isEditAble }
                     onChange={ onChange }
                     min={ inputType === "number" ? 10 : undefined }
+                    isRequired
                 />
                 { isEditAble && <Button
-                    type='button'
+                    type='submit'
                     text='Save'
                     className='bg-appTheme-500 text-white py-3 px-5 sm:py-3 sm:px-10 rounded-sm font-semibold uppercase max-sm:text-sm max-sm:w-fit'
-                    onClick={ onButtonClick }
                 /> }
-            </div>
+            </form>
         </div>
     )
 }
