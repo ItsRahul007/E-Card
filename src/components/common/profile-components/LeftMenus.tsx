@@ -1,16 +1,19 @@
+"use client"
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import profileImage from "/public/images/profile-pic.png";
 import classNames from '@/lib/util/classNames';
+import SubLinks from './SubLinks';
 
 interface I_LeftMenus {
-    closeSlider: () => void;
+    closeSlider?: () => void;
     isSlider?: boolean;
     name?: string;
 };
 
-const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider, isSlider, name }) => {
+const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, name }) => {
     return (
         <div
             className={ classNames(
@@ -46,9 +49,21 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider, isSlider, name }) => {
             {/* //TODO: compare the below div classes with layout component's classes */ }
 
             {/* list component */ }
-            <div className='shadow-sm flex flex-col bg-slate-800'>
+            <div
+                className={ classNames(
+                    "flex flex-col shadow-sm",
+                    isSlider ? 'bg-slate-800'
+                        : 'flex-1 bg-white'
+                ) }
+            >
                 {/* my orders */ }
-                <Link onClick={ closeSlider } href="/profile/orders" className='py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer text-slate-100'>
+                <Link onClick={ closeSlider } href="/profile/orders"
+                    className={ classNames(
+                        "py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer",
+                        isSlider ? 'text-slate-100'
+                            : 'text-zinc-500'
+                    ) }
+                >
                     <span>
                         <i className="ri-shopping-bag-3-fill text-xl text-appTheme-500 px-3"></i>
                         <span className='font-medium text-base'>My Orders</span>
@@ -59,50 +74,52 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider, isSlider, name }) => {
                 </Link>
 
                 {/* account settings */ }
-                <div className='h-auto w-full border-b'>
-                    <div>
-                        <h3 className='uppercase  text-slate-100 py-3 flex items-center'>
-                            <span className='text-xl text-appTheme-500 px-3'>
-                                <i className="ri-user-3-fill"></i>
-                            </span>
-                            <span className='font-medium text-base'>account settings</span>
-                        </h3>
-                    </div>
-                    <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
-                        <Link onClick={ closeSlider } href="/profile/" className='cursor-pointer py-2 hover:text-appTheme-500 w-full text-sm'>
-                            <span className='pl-7'>profile information</span>
-                        </Link>
-                        <Link onClick={ closeSlider } href="/profile/addresses" className='cursor-pointer py-2 hover:text-appTheme-500 w-full text-sm'>
-                            <span className='pl-7'>Manage Addresses</span>
-                        </Link>
-                    </div>
-                </div>
+                <SubLinks
+                    headerIcon={ <i className="ri-user-3-fill"></i> }
+                    headerText='account settings'
+                    closeSlider={ closeSlider }
+                    isSlider={ isSlider }
+                    subLinks={ [
+                        {
+                            text: 'profile information',
+                            link: '/profile/'
+                        },
+                        {
+                            text: 'Manage Addresses',
+                            link: '/profile/addresses'
+                        }
+                    ] }
+                />
 
                 {/* my stuff */ }
-                <div className='h-auto w-full border-b'>
-                    <div>
-                        <h3 className='uppercase  text-slate-100 py-3 flex items-center'>
-                            <span className='text-2xl text-appTheme-500 px-3'>
-                                <i className="ri-folder-user-fill"></i>
-                            </span>
-                            <span className='font-medium'>my stuff</span>
-                        </h3>
-                    </div>
-                    <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
-                        <Link onClick={ closeSlider } href="/profile/coupons" className='cursor-pointer py-2 hover:text-appTheme-500 w-full text-sm'>
-                            <span className='pl-7'>My coupons</span>
-                        </Link>
-                        <Link onClick={ closeSlider } href="/profile/review" className='cursor-pointer py-2 hover:text-appTheme-500 w-full text-sm'>
-                            <span className='pl-7'>My review & ratings</span>
-                        </Link>
-                    </div>
-                </div>
+                <SubLinks
+                    headerText='my stuff'
+                    headerIcon={ <i className="ri-folder-user-fill"></i> }
+                    closeSlider={ closeSlider }
+                    isSlider={ isSlider }
+                    subLinks={ [
+                        {
+                            text: "My coupons",
+                            link: "/profile/coupons"
+                        },
+                        {
+                            text: "My review & ratings",
+                            link: "/profile/review"
+                        }
+                    ] }
+                />
 
                 {/* logout */ }
-                <div className='h-auto w-full cursor-pointer group'>
+                <div className={ `h-auto w-full cursor-pointer group ${!isSlider && 'border-b'}` }>
                     {/* <div> */ }
-                    <h3 className='uppercase flex items-center text-slate-100 py-3'>
-                        <span className='text-xl text-appTheme-500 px-3'>
+                    <h3
+                        className={ classNames(
+                            'uppercase flex items-center py-3',
+                            isSlider ? 'text-slate-100'
+                                : 'text-zinc-500'
+                        ) }
+                    >
+                        <span className='text-xl text-appTheme-600 px-3'>
                             <i className="ri-shut-down-line"></i>
                         </span>
                         <span className='font-medium text-base group-hover:text-appTheme-600'>Logout</span>
