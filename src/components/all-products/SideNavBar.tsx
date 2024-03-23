@@ -8,13 +8,15 @@ import { useRouter } from 'next/navigation';
 import FilterByPrice from '../filters/FilterByPrice';
 import Image from 'next/image';
 import profileImage from "/public/images/profile-pic.png";
+import LeftMenus from '../common/profile-components/LeftMenus';
 
 interface I_ProductNav {
     filters?: boolean;
     profile?: boolean;
+    name?: string;
 }
 
-const SideNavBar: FC<I_ProductNav> = ({ filters, profile }) => {
+const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name }) => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const router = useRouter();
@@ -140,92 +142,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile }) => {
                     }
                     { profile &&
                         <div className='w-full h-auto mt-4 block lg:hidden select-none'>
-                            <div className='h-auto w-[95%] sm:w-3/4 flex flex-col gap-3 lg:hidden mx-auto'>
-                                {/* profile component */ }
-                                <div className='flex gap-2 w-full h-20 bg-slate-800 border rounded shadow-sm'>
-                                    {/* image */ }
-                                    <div className='w-20 h-full flex items-center justify-center'>
-                                        <Image
-                                            src={ profileImage }
-                                            alt='profile'
-                                            width={ 50 }
-                                            height={ 50 }
-                                            placeholder='blur'
-                                            blurDataURL="/public/images/profile-pic.png"
-                                        />
-                                    </div>
-                                    <div className='flex-1 flex justify-center items-start flex-col '>
-                                        <div className='text-sm'>Hello,</div>
-                                        <div className='font-semibold truncate text-base'>Rahul Ghosh</div>
-                                    </div>
-                                </div>
-
-                                {/* list component */ }
-                                <div className='shadow-sm flex flex-col bg-slate-800'>
-                                    {/* my orders */ }
-                                    <Link onClick={ closeSlider } href="/profile/orders" className='py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer text-slate-100'>
-                                        <span>
-                                            <i className="ri-shopping-bag-3-fill text-xl text-blue-500 px-3"></i>
-                                            <span className='font-medium text-base'>My Orders</span>
-                                        </span>
-                                        <span>
-                                            <i className="ri-arrow-right-s-line font-medium text-2xl pr-3"></i>
-                                        </span>
-                                    </Link>
-
-                                    {/* account settings */ }
-                                    <div className='h-auto w-full border-b'>
-                                        <div>
-                                            <h3 className='uppercase  text-slate-100 py-3 flex items-center'>
-                                                <span className='text-xl text-blue-500 px-3'>
-                                                    <i className="ri-user-3-fill"></i>
-                                                </span>
-                                                <span className='font-medium text-base'>account settings</span>
-                                            </h3>
-                                        </div>
-                                        <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
-                                            <Link onClick={ closeSlider } href="/profile/" className='cursor-pointer py-2 hover:text-blue-500 w-full text-sm'>
-                                                <span className='pl-7'>profile information</span>
-                                            </Link>
-                                            <Link onClick={ closeSlider } href="/profile/addresses" className='cursor-pointer py-2 hover:text-blue-500 w-full text-sm'>
-                                                <span className='pl-7'>Manage Addresses</span>
-                                            </Link>
-                                        </div>
-                                    </div>
-
-                                    {/* my stuff */ }
-                                    <div className='h-auto w-full border-b'>
-                                        <div>
-                                            <h3 className='uppercase  text-slate-100 py-3 flex items-center'>
-                                                <span className='text-2xl text-blue-500 px-3'>
-                                                    <i className="ri-folder-user-fill"></i>
-                                                </span>
-                                                <span className='font-medium'>my stuff</span>
-                                            </h3>
-                                        </div>
-                                        <div className='h-auto w-full flex flex-col capitalize items-center pb-2'>
-                                            <Link onClick={ closeSlider } href="/profile/coupons" className='cursor-pointer py-2 hover:text-blue-500 w-full text-sm'>
-                                                <span className='pl-7'>My coupons</span>
-                                            </Link>
-                                            <Link onClick={ closeSlider } href="/profile/review" className='cursor-pointer py-2 hover:text-blue-500 w-full text-sm'>
-                                                <span className='pl-7'>My review & ratings</span>
-                                            </Link>
-                                        </div>
-                                    </div>
-
-                                    {/* logout */ }
-                                    <div className='h-auto w-full cursor-pointer group'>
-                                        {/* <div> */ }
-                                        <h3 className='uppercase flex items-center text-slate-100 py-3'>
-                                            <span className='text-xl text-blue-600 px-3'>
-                                                <i className="ri-shut-down-line"></i>
-                                            </span>
-                                            <span className='font-medium text-base group-hover:text-blue-600'>Logout</span>
-                                        </h3>
-                                        {/* </div> */ }
-                                    </div>
-                                </div>
-                            </div>
+                            <LeftMenus closeSlider={ closeSlider } isSlider name={ name } />
                         </div>
                     }
                 </div>

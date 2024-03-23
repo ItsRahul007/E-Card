@@ -3,19 +3,21 @@ import ProfileSingleCompo from '@/components/profile-compos/ProfileSingleCompo';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import User from '@/lib/model/usersSchema';
+import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 
 type I_JwtVerifyDataType = {
     user: {
         id: String
     },
     iat: number | string
-}
+};
 
 const ProfileInformation: FC = async () => {
     const allCookies = cookies();
     const authToken = allCookies.get('authToken');
     const data = jwt.verify(authToken?.value!, process.env.JWT_SECRET!) as I_JwtVerifyDataType;
 
+    await connectWithMongo();
     const { name, email, mobileNumber } = await User.findById(data.user.id).select('name email mobileNumber');
 
 

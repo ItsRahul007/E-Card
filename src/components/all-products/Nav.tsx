@@ -9,9 +9,10 @@ import SideNavBar from './SideNavBar';
 interface I_ProductNav {
   filters?: boolean;
   profile?: boolean;
+  name?: string;
 }
 
-const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
+const Navbar: React.FC<I_ProductNav> = ({ filters, profile, name }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const router = useRouter();
 
@@ -36,7 +37,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
       </span>
 
       {/* side bar logo for small screens */ }
-      <SideNavBar filters={ filters } profile={ profile } />
+      <SideNavBar filters={ filters } profile={ profile } name={ name } />
 
       {/* search keys and cart favourite */ }
       <span className='h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white font-sans lg:text-lg text-base'>

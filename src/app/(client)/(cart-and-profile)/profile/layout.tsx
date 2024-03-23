@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import User from '@/lib/model/usersSchema';
+import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
@@ -29,7 +30,9 @@ export default async function Layout({
     const authToken = allCookies.get('authToken');
     const data = jwt.verify(authToken?.value!, process.env.JWT_SECRET!) as I_JwtVerifyDataType;
 
+    await connectWithMongo();
     const { name } = await User.findById(data.user.id).select('name');
+    if (!name) throw new Error('Something went wrong please try again');
 
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-inter'>

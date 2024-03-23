@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 //! authenticating request
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
     // console.log(req.nextUrl.pathname.includes("/api/"));
     //? if it's an api request
     if (req.nextUrl.pathname.includes("/api/")) {
@@ -28,9 +28,8 @@ export async function middleware(req: NextRequest) {
     };
 
     //? if it's an private client side url request
-    if (req.nextUrl.pathname.includes("/profile") || req.nextUrl.pathname.includes("/cart")) {
-        //? check if the user have loggedin token in his cookies or not
-        //! if not then redirect him to login page otherwise don't redirect him
+    if (req.nextUrl.pathname.startsWith("/profile") || req.nextUrl.pathname.startsWith("/cart")) {
+        //! if not of loggedin token then redirect him to login page otherwise don't redirect him
         const authToken = req.cookies.get("authToken");
 
         if (!authToken) {
@@ -39,7 +38,8 @@ export async function middleware(req: NextRequest) {
     };
 
     //? if user is logged
-    if (req.nextUrl.pathname.includes("/login") || req.nextUrl.pathname.includes("/signup")) {
+    if (req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/signup")) {
+        //! if loggedin token then redirect him to home page otherwise don't redirect him
         const authToken = req.cookies.get("authToken");
 
         if (authToken) {
