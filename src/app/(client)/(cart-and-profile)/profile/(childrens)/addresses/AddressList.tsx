@@ -6,6 +6,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { ObjectId } from "mongodb";
 import PageLoading from '@/components/common/loading/PageLoading';
+import Image from 'next/image';
 
 type T_Addresses = {
     full_name: string;
@@ -47,7 +48,20 @@ const AddressList = () => {
                                 ))
                             }
                         </ul>
-                        : "No addresses found"
+                        :
+                        <div className='relative h-3/4 w-60 md:w-96 flex flex-col items-center justify-center gap-2 text-xl md:text-3xl text-[#00bf85] mx-auto'>
+                            <p className={ `text-center font-bold font-ubuntu` }>No addresses found</p>
+                            <span className='relative h-80 md:h-96 w-80 md:w-96'>
+                                <Image
+                                    src="/images/not-found.png"
+                                    alt='No addresses found'
+                                    fill
+                                    style={ {
+                                        objectFit: "contain"
+                                    } }
+                                />
+                            </span>
+                        </div>
 
             }
         </>
