@@ -2,10 +2,54 @@
 
 import IconButton from '@/components/common/buttons/IconButton';
 import EditAddressForm from '@/components/profile-compos/EditAddressForm';
-import React, { FC, useState } from 'react'
+import { useSetAddresses, useGetAddresses } from '@/lib/customHook/useAddresses';
+import { ErrorMessage, addressAddedSuccessMessage } from '@/lib/util/toastMessages';
+import React, { FC, useCallback, useState } from 'react'
+import toast from 'react-hot-toast';
+
+type T_InputValues = {
+    full_name: string;
+    phone_number: number | string;
+    address: string;
+}
 
 const AddNewAddress: FC = () => {
+    const initialValues: T_InputValues = {
+        full_name: '',
+        phone_number: "",
+        address: '',
+    };
+
     const [isEditFormActive, setIsEditFormActive] = useState<boolean>(false);
+    const [inputValues, setInputValues] = useState<T_InputValues>(initialValues);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setInputValues({ ...inputValues, [name]: value });
+    };
+
+    const { refetch } = useGetAddresses()
+    const setAddress = useSetAddresses();
+
+    const handleSubmit = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+
+            setAddress.mutate({ addresses: inputValues, method: "post" }, {
+                onSuccess: () => {
+                    refetch();
+                    toast.success(addressAddedSuccessMessage);
+                    setIsEditFormActive(false);
+                    setInputValues(initialValues);
+                },
+                onError: (error: any) => {
+                    console.log(error);
+                    toast.error(error.response.data.error || ErrorMessage);
+                },
+            });
+        },
+        [inputValues]
+    );
 
     return (
         <div className='h-auto w-full flex flex-col gap-5'>
@@ -21,7 +65,15 @@ const AddNewAddress: FC = () => {
                 />
                 :
                 <span className='border rounded w-full'>
-                    <EditAddressForm onCancle={ () => setIsEditFormActive(false) } />
+                    <EditAddressForm
+                        onCancle={ () => {
+                            setIsEditFormActive(false);
+                            setInputValues(initialValues);
+                        } }
+                        inputValues={ inputValues }
+                        onChange={ handleInputChange }
+                        onSubmit={ handleSubmit }
+                    />
                 </span>
             }
         </div>

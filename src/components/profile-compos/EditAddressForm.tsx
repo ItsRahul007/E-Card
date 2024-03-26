@@ -4,11 +4,22 @@ import React, { FC } from 'react';
 import InputCompo from '@/components/common/InputCompo';
 import Button from '@/components/common/buttons/Button';
 
-interface I_EditAddressForm {
-    onCancle: () => void;
+type T_InputValues = {
+    full_name: string;
+    phone_number: number | string;
+    address: string;
 }
 
-const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle }) => {
+interface I_EditAddressForm {
+    onCancle: () => void;
+    inputValues: T_InputValues;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChange, onSubmit }) => {
+    const { full_name, phone_number, address } = inputValues;
+
     return (
         <div className='min-h-[24rem] h-auto w-full bg-appTheme-50'>
             <div className='h-full w-full md:w-5/6 flex flex-col items-center justify-center self-start sm:py-3 sm:px-4 p-2'>
@@ -16,7 +27,10 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle }) => {
                     <p className='text-appTheme-600 font-semibold'>Edit Address</p>
                 </div>
                 {/* Form */ }
-                <form className='w-full flex flex-col items-start justify-start gap-4 text-zinc-800'>
+                <form
+                    className='w-full flex flex-col items-start justify-start gap-4 text-zinc-800'
+                    onSubmit={ onSubmit }
+                >
                     <div className='flex gap-5 sm:flex-row flex-col'>
                         <InputCompo
                             name='full_name'
@@ -24,19 +38,28 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle }) => {
                             isRequired
                             placeholder='Full name'
                             className='border py-2 px-4 focus:outline-appTheme-400 placeholder:text-zinc-400 rounded'
+                            onChange={ onChange }
+                            value={ full_name }
                         />
                         <InputCompo
                             name='phone_number'
-                            type='number'
+                            type='tel'
                             isRequired
                             placeholder='Phone number'
                             className='border py-2 px-4 focus:outline-appTheme-400  placeholder:text-zinc-400 rounded'
+                            onChange={ onChange }
+                            value={ phone_number }
+                            minLength={ 10 }
+                            autoComplete='off'
                         />
                     </div>
                     <textarea
                         name="address"
                         placeholder='Address'
                         className='p-2 border placeholder:text-zinc-400 focus:outline-appTheme-400 rounded w-full lg:w-3/4 h-40'
+                        onChange={ onChange }
+                        value={ address }
+                        required
                     />
                     <div className='flex sm:flex-row flex-col gap-3 sm:gap-5 mt-5'>
                         <Button

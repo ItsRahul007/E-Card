@@ -6,7 +6,6 @@ import { ProductType } from "@/lib/types/productTyps";
 //? for getting all products
 export async function GET(req: NextRequest) {
     try {
-        await connectWithMongo();
         const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
         const itemNumber = 10;
         const search = req.nextUrl.searchParams.get("search") || undefined;
@@ -17,6 +16,7 @@ export async function GET(req: NextRequest) {
 
         const selectText = "product_name primaryImgUrl current_price ratings discount_percentage";
 
+        await connectWithMongo();
         //? finding products according to the search key and price
         const getProducts = async (): Promise<ProductType[]> => {
             if (!search && !price) {

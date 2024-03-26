@@ -10,10 +10,19 @@ const userModel = new Schema({
         type: String,
         unique: true,
     },
+    userRole: {
+        type: String,
+        enum: ["user", "seller", "admin"],
+        default: "user",
+    },
+    addresses: [{
+        full_name: String,
+        phone_number: Number,
+        address: String
+    }],
     mobileNumber: Number,
     password: String,
     socialUser: Boolean,
-    // favourite: Array,
     cart: Array,
     orders: Array,
 });

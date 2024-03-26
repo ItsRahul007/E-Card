@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Navbar from '@/components/all-products/Nav';
-import profileImage from "/public/images/profile-pic.png";
 import { ReactNode } from 'react';
-import Link from 'next/link';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import User from '@/lib/model/usersSchema';

@@ -12,7 +12,8 @@ interface I_InputComponent {
     value?: string | number;
     onEnter?: () => void;
     isReadOnly?: boolean;
-    min?: number | undefined;
+    minLength?: number;
+    autoComplete?: "on" | "off";
 };
 
 const InputCompo: React.FC<I_InputComponent> = ({
@@ -25,7 +26,8 @@ const InputCompo: React.FC<I_InputComponent> = ({
     name,
     onEnter,
     isReadOnly,
-    min
+    minLength,
+    autoComplete = "on"
 }) => {
     return (
         <input
@@ -36,13 +38,14 @@ const InputCompo: React.FC<I_InputComponent> = ({
             value={ value }
             onChange={ onChange }
             required={ isRequired }
-            min={ min ? min : type === "number" ? 1 : undefined }
             onKeyUp={ (e) => {
                 if (onEnter && e.code?.toLowerCase() === "enter") {
                     onEnter();
                 }
             } }
             readOnly={ isReadOnly }
+            minLength={ minLength }
+            autoComplete={ autoComplete }
         />
     );
 };

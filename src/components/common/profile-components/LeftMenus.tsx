@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -45,8 +45,6 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                     <div className='font-semibold truncate text-base text-appTheme-600 max-w-full'>{ name }</div>
                 </div>
             </div>
-
-            {/* //TODO: compare the below div classes with layout component's classes */ }
 
             {/* list component */ }
             <div

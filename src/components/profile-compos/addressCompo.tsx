@@ -1,10 +1,68 @@
 "use client";
 
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import EditAddressForm from './EditAddressForm';
+import toast from 'react-hot-toast';
+import { useSetAddresses, useGetAddresses } from '@/lib/customHook/useAddresses';
+import { ErrorMessage, addressDeleteSuccessMessage, addressUpdateSuccessMessage } from '@/lib/util/toastMessages';
 
-const AddressCompo: FC = () => {
+interface T_AddressCompo {
+    full_name: string;
+    phone_number: number | string;
+    address: string;
+    _id: string;
+}
+
+const AddressCompo: FC<T_AddressCompo> = (props) => {
+    const initialValues: T_AddressCompo = {
+        full_name: '',
+        phone_number: "",
+        address: '',
+        _id: props._id
+    };
+
     const [isEditFormActive, setIsEditFormActive] = useState<boolean>(false);
+    const [inputValues, setInputValues] = useState<T_AddressCompo>(props);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setInputValues((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const { refetch } = useGetAddresses();
+    const setAddress = useSetAddresses();
+
+    const handleUpdate = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+
+            setAddress.mutate({ addresses: inputValues, method: "put" }, {
+                onSuccess: () => {
+                    refetch();
+                    toast.success(addressUpdateSuccessMessage);
+                    setIsEditFormActive(false);
+                    setInputValues(initialValues);
+                },
+                onError: (error: any) => {
+                    console.log(error);
+                    toast.error(error.response.data.error || ErrorMessage);
+                },
+            });
+        }, [inputValues]
+    );
+
+    const handleDelete = () => {
+        setAddress.mutate({ addresses: inputValues, method: "delete" }, {
+            onSuccess: () => {
+                refetch();
+                toast.success(addressDeleteSuccessMessage);
+            },
+            onError: (error: any) => {
+                console.log(error);
+                toast.error(error.response.data.error || ErrorMessage);
+            },
+        });
+    }
 
     return (
         <>
@@ -23,19 +81,30 @@ const AddressCompo: FC = () => {
                         >
                             Edit
                         </span>
-                        <span className='hover:text-blue-500 cursor-pointer'>Delete</span>
+                        <span
+                            className='hover:text-blue-500 cursor-pointer'
+                            onClick={ handleDelete }
+                        >
+                            Delete
+                        </span>
                     </div>
 
                     {/* address details */ }
                     <div className='flex gap-1.5 sm:gap-3 text-sm sm:text-base font-medium'>
-                        <span>Rahul Ghosh</span><span>1234567890</span>
+                        <span className='capitalize'>{ props.full_name }</span>
+                        <span>{ props.phone_number }</span>
                     </div>
-                    <div className='text-xs sm:text-sm'>
-                        Toralpur Tripally primari school, Toralpur, Memari II, Memari, West Bengal - 713146
+                    <div className='text-xs sm:text-sm capitalize'>
+                        { props.address }
                     </div>
                 </div>
                 :
-                <EditAddressForm onCancle={ () => setIsEditFormActive(false) } />
+                <EditAddressForm
+                    onCancle={ () => setIsEditFormActive(false) }
+                    inputValues={ inputValues }
+                    onChange={ handleInputChange }
+                    onSubmit={ handleUpdate }
+                />
             }
         </>
     );
