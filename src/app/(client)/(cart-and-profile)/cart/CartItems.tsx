@@ -3,8 +3,9 @@
 import SingleCartItem from '@/components/all-products/SingleCartItem'
 import PageLoading from '@/components/common/loading/PageLoading';
 import { useGetCartItems } from '@/lib/customHook/useCartItems';
+import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
 import Image from 'next/image';
-import React from 'react';
+import React, { use, useEffect } from 'react';
 
 type singleCartItemType = {
     product_name: string;
@@ -14,12 +15,18 @@ type singleCartItemType = {
 }
 
 const CartItems = () => {
+    const data = useGetFetchQuery(["get-cart-items"])
+
     const {
-        data,
         isError,
         isLoading,
         refetch
     } = useGetCartItems();
+
+    useEffect(() => {
+        if (!data) refetch();
+    }, []);
+
 
     if (!isLoading && !data.success && isError) {
         console.log(data.problem || '');

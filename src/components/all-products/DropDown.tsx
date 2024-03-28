@@ -2,17 +2,16 @@
 
 import React, { useState } from 'react';
 
-const Dropdown: React.FC = () => {
-    const [selectedOption, setSelectedOption] = useState<number>(1);
+interface I_Dropdown {
+    value: number;
+    handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
 
-    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(Number(event.target.value));
-    };
-
+const Dropdown: React.FC<I_Dropdown> = ({ handleSelectChange, value }) => {
     return (
         <div className='h-fit w-fit'>
             <select
-                value={ selectedOption }
+                value={ value }
                 onChange={ handleSelectChange }
                 className='py-2 pr-10 pl-2 rounded border duration-200 focus:outline-blue-500 cursor-pointer'
             >

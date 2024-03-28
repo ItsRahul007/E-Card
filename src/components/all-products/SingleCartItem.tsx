@@ -1,5 +1,7 @@
+"use client";
+
 import Image from 'next/image';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Dropdown from './DropDown';
 import Button from '../common/buttons/Button';
 import { useSetCartItems } from '@/lib/customHook/useCartItems';
@@ -15,7 +17,19 @@ type singleCartItemType = {
     refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, Error>>;
 }
 
-const SingleCartItem: FC<singleCartItemType> = ({ product_name, current_price, primaryImgUrl, _id, refetch }) => {
+const SingleCartItem: FC<singleCartItemType> = ({
+    product_name,
+    current_price,
+    primaryImgUrl,
+    _id,
+    refetch
+}) => {
+    const [dropDownValue, setDropDownValue] = useState<number>(1);
+
+    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setDropDownValue(Number(event.target.value));
+    };
+
     const removeCartMutation = useSetCartItems();
     function removeCartItem() {
         removeCartMutation.mutate({ productId: _id, method: "delete" }, {
@@ -53,9 +67,12 @@ const SingleCartItem: FC<singleCartItemType> = ({ product_name, current_price, p
             {/* price quantity and fevourite, remove buttons */ }
             <div className='w-full lg:w-3/5 h-20 lg:h-full flex sm:flex-row flex-col gap-3 sm:gap-0 items-start lg:justify-between md:justify-start justify-between'>
                 <div className=' lg:w-1/2 md:w-1/3 w-full flex gap-3'>
-                    <Dropdown />
+                    <Dropdown
+                        value={ dropDownValue }
+                        handleSelectChange={ handleSelectChange }
+                    />
                     <div className={ `font-rubik font-normal` }>
-                        <div className='text-gray-800'>$200</div>
+                        <div className='text-gray-800'>${ current_price * dropDownValue }</div>
                         <div className='text-gray-400'>${ current_price } / per item</div>
                     </div>
                 </div>

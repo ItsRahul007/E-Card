@@ -23,7 +23,10 @@ const userModel = new Schema({
     mobile_number: Number,
     password: String,
     socialUser: Boolean,
-    cart: Array,
+    cart: {
+        type: [String],
+        unique: [true, "Item is already in cart"], // Add this line to ensure unique values
+    },
     orders: Array,
 });
 

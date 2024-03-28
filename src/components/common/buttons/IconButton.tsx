@@ -7,11 +7,12 @@ interface I_button {
     text?: string;
     icon: React.ReactElement;
     iconFirst?: boolean;
+    disabled?: boolean;
 };
 
-const IconButton: FC<I_button> = ({ onClick, text, className, type, icon, iconFirst }) => {
+const IconButton: FC<I_button> = ({ onClick, text, className, type, icon, iconFirst, disabled = false }) => {
     return (
-        <button onClick={ onClick } className={ className } type={ type }>
+        <button onClick={ onClick } className={ className } type={ type } disabled={ disabled }>
             {
                 iconFirst ? (
                     <>

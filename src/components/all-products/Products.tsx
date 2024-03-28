@@ -6,13 +6,16 @@ import useFetchProducts from '@/lib/customHook/useFetchProduct';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import LoopItems from './LoopItems';
+import { useGetCartItems } from '@/lib/customHook/useCartItems';
+import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
 
 interface I_Products {
   searchKey: string;
   price?: string | undefined;
+  isUserLoggededIn: boolean;
 }
 
-const Products: React.FC<I_Products> = ({ searchKey, price }) => {
+const Products: React.FC<I_Products> = ({ searchKey, price, isUserLoggededIn }) => {
   const { ref: loadingRef, inView, entry } = useInView();
 
   const {
@@ -36,6 +39,15 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
     }
   }, [inView, entry, fetchNextPage, isLoading]);
 
+  const { refetch: refetchCartItems, isLoading: isFetchingCartItems } = useGetCartItems();
+  const allCartItems = isUserLoggededIn ? useGetFetchQuery(["get-cart-items"]) : { cartProducts: [] };
+
+  useEffect(() => {
+    if (isUserLoggededIn && !allCartItems) {
+      refetchCartItems();
+    }
+  }, []);
+
   return (
     <div className='bg-[#F8F8F8] flex-1'>
       <div className='h-full w-full overflow-scroll flex items-start justify-center'>
@@ -44,10 +56,10 @@ const Products: React.FC<I_Products> = ({ searchKey, price }) => {
         >
           {
             //? loading components
-            isLoading && Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={ index } />)
+            (isLoading || isFetchingCartItems) && Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={ index } />)
           }
 
-          { !error && allProducts?.length > 0 && <LoopItems allProducts={ allProducts } /> }
+          { !error && !isFetchingCartItems && allProducts?.length > 0 && <LoopItems allProducts={ allProducts } allCartItems={ allCartItems.cartProducts } isUserLoggededIn={ isUserLoggededIn } /> }
 
           {/* if their are no products */ }
           <div

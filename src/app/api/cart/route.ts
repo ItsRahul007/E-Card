@@ -67,14 +67,21 @@ export async function POST(req: NextRequest) {
         };
 
         await connectWithMongo();
-        const cart = await User.findByIdAndUpdate(verifiedToken.user.id, { $push: { cart: productId } }, { new: true })
-            .select("cart");
 
-        if (!cart) {
+        const allCartItems = await User.findById(verifiedToken.user.id).select("cart");
+        if (!allCartItems) {
             return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
         };
 
-        const cartProducts = await getProductById(cart.cart);
+        //! if the given product id is already exists
+        if (allCartItems.cart.includes(productId)) {
+            return NextResponse.json({ error: "Product already exists in cart", success: false }, { status: 400 });
+        };
+
+        const updatedCart = await User.findByIdAndUpdate(verifiedToken.user.id, { $push: { cart: productId } }, { new: true })
+            .select("cart");
+
+        const cartProducts = await getProductById(updatedCart.cart);
 
         return NextResponse.json({
             success: true,

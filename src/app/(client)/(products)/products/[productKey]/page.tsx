@@ -4,6 +4,7 @@ import Products from '@/components/all-products/Products';
 import Filter from '@/components/filters/Filter';
 import { Metadata } from 'next';
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
+import { cookies } from 'next/headers';
 
 interface I_AllProduct {
   params: { productKey: string };
@@ -36,12 +37,19 @@ export async function generateMetadata({ searchParams }: I_AllProduct): Promise<
 }
 
 const AllProduct: FC<I_AllProduct> = async ({ searchParams }) => {
+  const allCookies = cookies();
+  const authToken = allCookies.get('authToken')?.value;
+
   return (
     <div className='h-screen w-screen bg-[#EAEAEA] flex flex-col'>
       <Navbar filters={ true } />
       <div className='h-[92%] sm:h-[91%] lg:h-[87%] flex gap-3 lg:mt-3'>
         <Filter search={ searchParams.search?.toLowerCase() } />
-        <Products searchKey={ searchParams.search?.toLowerCase() || "" } price={ searchParams.price } />
+        <Products
+          searchKey={ searchParams.search?.toLowerCase() || "" }
+          price={ searchParams.price }
+          isUserLoggededIn={ authToken ? true : false }
+        />
       </div>
     </div>
   );

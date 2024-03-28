@@ -1,17 +1,14 @@
 import AllProductNav from '@/components/all-products/Nav';
 import React, { FC } from 'react';
 import style from "@/app/style/style.module.css";
-import Button from '@/components/common/buttons/Button';
-import ReviewBox from '@/components/ReviewBox';
-import ReviewStar from '@/components/ReviewStar';
 import Footer from '@/components/common/footer/Footer';
-import RelatedProducts from '@/components/single-product-compos/RelatedProducts';
-import { reviewText } from './reviewText';
 import ImageContainer from '@/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
 import ProductsSchema from "@/lib/model/productSchema";
 import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
+import BuyAndAddToCartButtons from './BuyAndAddToCartButtons';
+import ReviewSection from './ReviewSection';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -90,6 +87,8 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
         return stars;
     };
 
+    //TODO: check which one is client component and make a separate client component for it
+
     return (
         <div className='h-screen w-screen bg-slate-100 flex flex-col'>
             <AllProductNav />
@@ -136,61 +135,13 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                             </div>
 
                             {/* buy or add to cart button */ }
-                            <div className='mt-6 lg:w-full'>
-                                <Button
-                                    text='BUY NOW'
-                                    className='lg:px-16 sm:px-10 px-8 py-4 text-sm font-bold bg-[#35a3bc] mr-4 text-white rounded-lg mb-3'
-                                    type='button'
-                                />
-                                <Button
-                                    text='ADD TO CART'
-                                    className='lg:px-14 sm:px-7 px-5 py-4 text-sm font-bold bg-[#eb3c33] text-white rounded-lg'
-                                    type='button'
-                                />
-                            </div>
+                            <BuyAndAddToCartButtons _id={ productId } />
                         </div>
                     </div>
                 </section>
 
                 {/* second section (review) */ }
-                <section className='w-full flex justify-center items-center mt-2'>
-                    <div className='w-11/12 h-auto border-[3px] p-2 bg-white flex flex-col gap-4 rounded-lg'>
-                        {/* header */ }
-                        <div className='w-full text-2xl md:text-3xl mt-2'>
-                            <h1 className={ 'ml-5 font-rubik font-medium' }>Reviews</h1>
-                        </div>
-
-                        {/* reviews */ }
-                        <div className='w-full h-96 overflow-scroll flex flex-col gap-3 justify-start'>
-                            {/* review components */ }
-                            <ReviewBox rating={ 5 } reviewText={ reviewText } />
-                            <ReviewBox rating={ 4 } reviewText={ reviewText } />
-                            <ReviewBox rating={ 3 } reviewText={ reviewText } />
-                            <ReviewBox rating={ 2 } reviewText={ reviewText } />
-                            <ReviewBox rating={ 1 } reviewText={ reviewText } />
-                        </div>
-
-                        {/* add review */ }
-                        <div className='h-64 w-full flex flex-col'>
-                            {/* heading */ }
-                            <div className='h-[25%] w-full'>
-                                <h3 className={ 'text-base font-rubik font-medium' }>
-                                    Add your review and rating
-                                </h3>
-                                <div>
-                                    <ReviewStar />
-                                </div>
-                            </div>
-                            <textarea className='border-2 h-3/5 w-full outline-[#3090a5] p-1 rounded-md' />
-                            <div className='flex-1 flex items-center justify-end'>
-                                <Button
-                                    text='Submit'
-                                    className='bg-[#3090a5] hover:!bg-[#256371] text-white p-2 px-3 mt-2 rounded-md font-semibold mr-5 duration-300'
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <ReviewSection _id={ productId } />
 
                 {/* third section (related products) */ }
                 {/* <RelatedProducts /> */ }
