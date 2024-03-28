@@ -1,15 +1,15 @@
 import React, { FC } from 'react'
 import Navbar from '@/components/all-products/Nav';
-import SingleCartItem from '@/components/all-products/SingleCartItem';
 import InputCompo from '@/components/common/InputCompo';
 import Button from '@/components/common/buttons/Button';
 import Footer from '@/components/common/footer/Footer';
+import CartItems from './CartItems';
 
 const Cart: FC = () => {
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100'>
             <Navbar />
-            <div className='w-full h-auto flex justify-center items-center mt-12'>
+            <div className='w-full h-auto flex justify-center items-center my-6 md:my-12'>
                 <div className='h-auto w-11/12 flex flex-col lg:flex-row gap-3 lg:gap-6'>
                     {/* left component */ }
                     <div className='min-h-[24rem] h-auto w-full lg:w-9/12 bg-white border-2 rounded-xl flex flex-col overflow-hidden p-3 pb-5 lg:mb-5'>
@@ -19,15 +19,8 @@ const Cart: FC = () => {
                         </div>
 
                         {/* cart items */ }
-                        <div className='flex-1 flex justify-center'>
-                            <div className='h-full w-[98%] flex flex-col gap-2'>
-                                {/* single cart item */ }
-                                <SingleCartItem />
-                                <SingleCartItem />
-                                <SingleCartItem />
-                                <SingleCartItem />
-                            </div>
-                        </div>
+                        <CartItems />
+
                         <div className='h-10 flex justify-center items-center'>
                             <hr className='w-full' />
                         </div>

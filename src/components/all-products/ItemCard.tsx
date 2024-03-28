@@ -1,8 +1,13 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import style from "@/app/style/style.module.css";
 import IconButton from '../common/buttons/IconButton';
+import { useSetCartItems } from '@/lib/customHook/useCartItems';
+import toast from 'react-hot-toast';
+import { ErrorMessage, cartAddedSuccessMessage } from '@/lib/util/toastMessages';
 
 interface I_ItemCard {
   primaryImgUrl: string;
@@ -60,6 +65,18 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
     return stars;
   };
 
+  const cartMutation = useSetCartItems();
+
+  function addToCart() {
+    cartMutation.mutate({ productId: _id, method: 'post' }, {
+      onSuccess: () => toast.success(cartAddedSuccessMessage),
+      onError: (err) => {
+        console.log(err);
+        toast.error(ErrorMessage);
+      },
+    });
+  }
+
   return (
     <div
       className='border sm:h-72 min-[390px]:h-60 h-52 sm:w-52 min-[390px]:w-44 w-36 flex flex-col items-center gap-1 overflow-hidden rounded-md shadow bg-white cursor-pointer hover:translate-y-[-2px] col-span-1 duration-200'
@@ -85,19 +102,12 @@ const ItemCard: React.FC<I_ItemCard> = (props) => {
           </span>
         </Link>
 
-        {/* desktop hover component */ }
-        <span className='absolute text-slate-50 text-2xl bottom-0 group-hover:opacity-100 opacity-0 hidden xl:flex items-center justify-end w-full h-16 bg-gradient-to-t from-[#0000005e] to-transparent duration-300'>
-          <div className='w-20 flex gap-3 h-full items-center'>
-            <Link href="#"><i className="hover:text-white ri-shopping-cart-2-fill font-thin"></i></Link>
-            <Link href="#"><i className="hover:text-white ri-heart-fill font-thin"></i></Link>
-          </div>
-        </span>
-
-        {/* fevorite icon for mobile */ }
+        {/* fevorite icon */ }
         <IconButton
-          className='absolute top-1 right-1 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 bg-gray-400 cursor-pointer block xl:hidden'
-          icon={ <i className="ri-heart-line"></i> }
+          className='absolute top-1 right-1 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 bg-gray-400 cursor-pointer block xl:opacity-0 group-hover:opacity-100'
+          icon={ <i className="ri-shopping-cart-2-fill"></i> }
           type='button'
+          onClick={ addToCart }
         />
       </div>
       <div className='h-1/4 w-full flex flex-col items-center justify-start min-[390px]:gap-[2px]'>

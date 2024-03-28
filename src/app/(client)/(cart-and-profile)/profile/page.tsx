@@ -12,28 +12,28 @@ const ProfileInformation: FC = async () => {
     const data = jwt.verify(authToken?.value!, process.env.JWT_SECRET!) as T_JwtVerifyDataType;
 
     await connectWithMongo();
-    const { name, email, mobileNumber } = await User.findById(data.user.id).select('name email mobileNumber');
-
+    const { name, email, mobile_number } = await User.findById(data.user.id).select('name email mobile_number');
 
     return (
         <section className='h-auto w-full flex flex-col gap-5 sm:gap-10 sm:px-4 px-2 sm:py-3 py-2'>
             <h3 className='text-lg font-semibold text-appTheme-600'>Personal information</h3>
             <div className='h-auto w-full flex flex-col gap-5'>
+                <div className='flex flex-col gap-1'>
+                    <div className='text-sm text-zinc-400 font-medium'>Email</div>
+                    <div>{ email }</div>
+                </div>
+
                 <ProfileSingleCompo
-                    headingText='Full Name'
+                    headingText='Name'
+                    name='name'
                     inputValue={ name }
                     inputType='text'
                     placeholder='Enter your name'
                 />
                 <ProfileSingleCompo
-                    headingText='Email Address'
-                    inputValue={ email }
-                    inputType='email'
-                    placeholder='Enter your email'
-                />
-                <ProfileSingleCompo
                     headingText='Mobile number'
-                    inputValue={ mobileNumber ? mobileNumber : '' }
+                    name='mobile_number'
+                    inputValue={ mobile_number ? mobile_number : '' }
                     inputType='number'
                     placeholder='Enter your mobile number'
                 />

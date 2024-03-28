@@ -1,10 +1,35 @@
 import Image from 'next/image';
 import React, { FC } from 'react';
 import Dropdown from './DropDown';
-import IconButton from '../common/buttons/IconButton';
 import Button from '../common/buttons/Button';
+import { useSetCartItems } from '@/lib/customHook/useCartItems';
+import toast from 'react-hot-toast';
+import { ErrorMessage, cartRemoveSuccessMessage } from '@/lib/util/toastMessages';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
-const SingleCartItem: FC = () => {
+type singleCartItemType = {
+    product_name: string;
+    current_price: number;
+    primaryImgUrl: string;
+    _id: string;
+    refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, Error>>;
+}
+
+const SingleCartItem: FC<singleCartItemType> = ({ product_name, current_price, primaryImgUrl, _id, refetch }) => {
+    const removeCartMutation = useSetCartItems();
+    function removeCartItem() {
+        removeCartMutation.mutate({ productId: _id, method: "delete" }, {
+            onSuccess: () => {
+                refetch();
+                toast.success(cartRemoveSuccessMessage);
+            },
+            onError: (err) => {
+                console.log(err);
+                toast.error(ErrorMessage)
+            }
+        });
+    }
+
     return (
         <div className='h-60 lg:h-28 w-full flex flex-col lg:flex-row gap-3 lg:gap-6 items-center justify-start lg:justify-between'>
             {/* item image */ }
@@ -12,7 +37,7 @@ const SingleCartItem: FC = () => {
                 {/* image */ }
                 <div className='h-full w-28 relative border'>
                     <Image
-                        src={ "https://m.media-amazon.com/images/I/41ElF+XdP2L.jpg" }
+                        src={ primaryImgUrl }
                         alt='item'
                         fill
                         style={ { objectFit: "contain" } }
@@ -21,7 +46,7 @@ const SingleCartItem: FC = () => {
 
                 {/* details */ }
                 <div className='mt-3 flex-1 truncate'>
-                    Brand new shoe
+                    { product_name }
                 </div>
             </div>
 
@@ -31,7 +56,7 @@ const SingleCartItem: FC = () => {
                     <Dropdown />
                     <div className={ `font-rubik font-normal` }>
                         <div className='text-gray-800'>$200</div>
-                        <div className='text-gray-400'>$100 / per item</div>
+                        <div className='text-gray-400'>${ current_price } / per item</div>
                     </div>
                 </div>
                 <div className='w-fit pr-5'>
@@ -39,6 +64,7 @@ const SingleCartItem: FC = () => {
                         text='Remove'
                         type='button'
                         className='uppercase border bg-stone-100 text-red-600 px-4 py-2 text-[12px] font-semibold rounded hover:bg-white hover:border-red-500'
+                        onClick={ removeCartItem }
                     />
                 </div>
             </div>

@@ -39,11 +39,6 @@ const ImageContainer: FC<I_ImageContainer> = ({ primaryImgUrl, product_type, sec
                         fill
                         style={ { objectFit: 'contain', borderRadius: '10px' } }
                     />
-                    <IconButton
-                        className='absolute top-3 right-3 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 bg-gray-400 cursor-pointer'
-                        icon={ <i className="ri-heart-line opacity-100"></i> }
-                        type='button'
-                    />
                 </div>
             </div>
         </div>

@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
             authToken
         }, { status: 200 });
 
-        responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24, httpOnly: true })
+        responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5, httpOnly: true })
 
         return responce;
     } catch (error: any) {
@@ -62,14 +62,13 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     try {
-        const { userRole, name, mobileNumber, cart, orders } = await req.json();
+        const { userRole, name, mobile_number, orders } = await req.json();
         let updateObject: any = {};
 
         //! adding the given values in a object
         if (userRole) updateObject.userRole = userRole;
         if (name) updateObject.name = name;
-        if (mobileNumber) updateObject.mobileNumber = mobileNumber;
-        if (cart) updateObject.$push = { cart: cart };
+        if (mobile_number) updateObject.mobile_number = mobile_number;
         if (orders) updateObject.$push = { orders: orders };
 
         //! If didn't get anything from body
@@ -89,14 +88,27 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
         };
 
-        await connectWithMongo();
-        const user = await User.findByIdAndUpdate(verifiedToken.user.id, updateObject, { new: true });
+        let objectKeysStr = "";
+        Object.keys(updateObject).map(str => {
+            const objectKeys = objectKeysStr.length > 1 ?
+                objectKeysStr + " " + str
+                : objectKeysStr + str;
 
-        if (!user) {
+            objectKeysStr = objectKeys;
+        });
+
+        await connectWithMongo();
+        const updatedData = await User.findByIdAndUpdate(verifiedToken.user.id, updateObject, { new: true }).select(objectKeysStr);
+
+        if (!updatedData) {
             return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
         };
 
-        return NextResponse.json({ success: true, message: "Updated successfully" }, { status: 200 });
+        return NextResponse.json({
+            success: true,
+            message: "Updated successfully",
+            updatedData
+        }, { status: 200 });
 
 
     } catch (error: any) {

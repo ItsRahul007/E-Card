@@ -20,7 +20,7 @@ const userModel = new Schema({
         phone_number: Number,
         address: String
     }],
-    mobileNumber: Number,
+    mobile_number: Number,
     password: String,
     socialUser: Boolean,
     cart: Array,
