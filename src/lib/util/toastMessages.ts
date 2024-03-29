@@ -10,3 +10,5 @@ export const addressAddedSuccessMessage = 'Address added successfully!';
 export const cartRemoveSuccessMessage = 'Item removed from cart successfully!';
 export const cartAddedSuccessMessage = 'Item added to cart successfully!';
 
+//? review messages
+export const reviewAddesSuccessMessage = "Review added successfully";

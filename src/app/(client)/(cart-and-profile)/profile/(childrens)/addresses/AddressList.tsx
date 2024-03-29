@@ -16,7 +16,6 @@ type T_Addresses = {
 };
 
 const AddressList = () => {
-    //TODO: get addresses from backend using react query and use the new addresses route
     const {
         data,
         isLoading,

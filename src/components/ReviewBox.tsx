@@ -31,7 +31,8 @@ const ReviewBox: FC<I_ReviewBox> = ({ rating, reviewText }) => {
             {/* review text */ }
             <div>
                 <span>
-                    { !isFullText ? reviewText.slice(0, 300) + "..." : reviewText }<span
+                    { !isFullText && reviewText.length > 300 ? reviewText.slice(0, 300) + "..." : reviewText }
+                    <span
                         className='cursor-pointer text-blue-600 uppercase block text-xs font-semibold mt-1'
                         onClick={ () => setIsFullText(!isFullText) }
                     >

@@ -40,8 +40,18 @@ const productSchema = new Schema({
     //! not required fields
     brand_name: String,
     ratings: [{
-        ratingBy: String,
-        ratingNumber: Number,
+        ratingBy: {
+            type: String,
+            required: [true, "Please provide a reviewer id"]
+        },
+        ratingNumber: {
+            type: Number,
+            required: [true, "Please provide a rating between 1 and 5"]
+        },
+        comment: {
+            type: String,
+            required: [true, "Please a review comment"]
+        },
     }],
     discount_percentage: Number,
 }, { timestamps: true, get: (time: any) => time.toDateString() });

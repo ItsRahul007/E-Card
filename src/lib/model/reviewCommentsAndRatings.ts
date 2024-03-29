@@ -14,13 +14,13 @@ const reviewSchema = new Schema({
             type: Number,
             required: [true, "Please provide a rating between 1 and 5"]
         },
-        reviewComment: {
+        comment: {
             type: String,
             required: [true, "Please a review comment"]
         },
     }]
 });
 
-const reviews = models.reviews || model("reviews", reviewSchema);
+const Reviews = models.reviews || model("reviews", reviewSchema);
 
-export default reviews;
+export default Reviews;

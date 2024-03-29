@@ -162,13 +162,14 @@ export async function POST(req: NextRequest) {
             message: "Product added successfully",
             success: true,
             product
-        }, { status: 200 })
+        }, { status: 200 });
 
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         return NextResponse.json({
             success: false,
             error: "Internal server error",
+            problem: error.message,
         }, { status: 500 });
     }
 }

@@ -1,24 +1,30 @@
 import React, { FC } from 'react';
 import style from "@/app/style/style.module.css";
+import classNames from '@/lib/util/classNames';
 
-const ReviewStar: FC = () => {
+interface ReviewStarProps {
+    currentRating: number | undefined;
+    onRatingChange: (rating: number) => void;
+};
+
+const ReviewStar: FC<ReviewStarProps> = ({ currentRating, onRatingChange }) => {
     return (
         <div className='flex flex-row-reverse w-[82px]'>
-            <span className={ "text-xl text-gray-400 cursor-pointer " + style.review_star }>
-                &#9733;
-            </span>
-            <span className={ "text-xl text-gray-400 cursor-pointer " + style.review_star }>
-                &#9733;
-            </span>
-            <span className={ "text-xl text-gray-400 cursor-pointer " + style.review_star }>
-                &#9733;
-            </span>
-            <span className={ "text-xl text-gray-400 cursor-pointer " + style.review_star }>
-                &#9733;
-            </span>
-            <span className={ "text-xl text-gray-400 cursor-pointer " + style.review_star }>
-                &#9733;
-            </span>
+            {
+                Array.from({ length: 5 }).map((_, index) =>
+                    <span
+                        className={ classNames(
+                            "text-xl text-gray-400 cursor-pointer",
+                            style.review_star,
+                            currentRating && currentRating >= 5 - index ? "!text-[#35a3bc]" : ""
+                        ) }
+                        key={ index }
+                        onClick={ () => onRatingChange(5 - index) }
+                    >
+                        &#9733;
+                    </span>
+                )
+            }
         </div>
     )
 }

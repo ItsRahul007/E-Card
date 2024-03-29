@@ -91,8 +91,6 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
         return stars;
     };
 
-    //TODO: check which one is client component and make a separate client component for it
-
     return (
         <div className='h-screen w-screen bg-slate-100 flex flex-col'>
             <AllProductNav />
@@ -149,7 +147,10 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                 </section>
 
                 {/* second section (review) */ }
-                <ReviewSection _id={ productId } />
+                <ReviewSection
+                    _id={ productId }
+                    isUserLoggededIn={ isUserLoggededIn ? true : false }
+                />
 
                 {/* third section (related products) */ }
                 {/* <RelatedProducts /> */ }

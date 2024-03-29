@@ -3,14 +3,80 @@
 import ReviewBox from '@/components/ReviewBox';
 import ReviewStar from '@/components/ReviewStar';
 import Button from '@/components/common/buttons/Button';
-import React from 'react';
-import { reviewText } from './reviewText';
+import React, { FC, useCallback, useState } from 'react';
+import { useGetReviewAndComments, useSetReviewAndComments } from '@/lib/customHook/useReview&Comments';
+import PageLoading from '@/components/common/loading/PageLoading';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { ErrorMessage, reviewAddesSuccessMessage } from '@/lib/util/toastMessages';
 
-const ReviewSection = ({ _id }: { _id: string }) => {
+interface I_ReviewSection { _id: string; isUserLoggededIn: boolean; }
 
+type ratingAndCommentsState = {
+    comment: string,
+    rating: number | undefined;
+}
+
+const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
+    const router = useRouter();
+
+    const [ratingAndComments, setRatingAndComments] = useState<ratingAndCommentsState>({
+        comment: '',
+        rating: 0
+    });
+
+    const {
+        data,
+        isLoading,
+        refetch
+    } = useGetReviewAndComments(_id);
+
+    const reviewComments = data ? data.data : [];
+
+    const onRatingChange = (rating: number) => {
+        setRatingAndComments(prev => ({ ...prev, rating }));
+    };
+
+    const addReviewMutation = useSetReviewAndComments();
+    const onSubmitReview = useCallback(
+        () => {
+            if (!isUserLoggededIn) return router.push('/login');
+
+            if (!ratingAndComments.rating) {
+                toast.error("Please select a rating");
+                return;
+            };
+
+            if (!ratingAndComments.comment) {
+                toast.error("Please add a comment");
+                return;
+            };
+
+            addReviewMutation.mutate({
+                comment: ratingAndComments.comment,
+                ratingNumber: ratingAndComments.rating,
+                productId: _id,
+                method: 'post'
+            }, {
+                onSuccess: () => {
+                    setRatingAndComments({
+                        comment: '',
+                        rating: undefined
+                    });
+                    refetch();
+                    toast.success(reviewAddesSuccessMessage);
+                },
+                onError: (err: any) => {
+                    console.log(err);
+                    toast.error(err.response.data.error || ErrorMessage);
+                }
+            });
+
+        }, [ratingAndComments, isUserLoggededIn]
+    );
 
     return (
-        <section className='w-full flex justify-center items-center mt-2'>
+        <section className='w-full flex justify-center items-center mt-2 mb-5'>
             <div className='w-11/12 h-auto border-[3px] p-2 bg-white flex flex-col gap-4 rounded-lg'>
                 {/* header */ }
                 <div className='w-full text-2xl md:text-3xl mt-2'>
@@ -20,11 +86,11 @@ const ReviewSection = ({ _id }: { _id: string }) => {
                 {/* reviews */ }
                 <div className='w-full h-96 overflow-scroll flex flex-col gap-3 justify-start'>
                     {/* review components */ }
-                    <ReviewBox rating={ 5 } reviewText={ reviewText } />
-                    <ReviewBox rating={ 4 } reviewText={ reviewText } />
-                    <ReviewBox rating={ 3 } reviewText={ reviewText } />
-                    <ReviewBox rating={ 2 } reviewText={ reviewText } />
-                    <ReviewBox rating={ 1 } reviewText={ reviewText } />
+                    {
+                        isLoading ? <PageLoading /> : reviewComments.length > 0 ?
+                            reviewComments.map((reviewObj: any, i: number) => <ReviewBox key={ reviewObj._id || i } rating={ reviewObj.ratingNumber } reviewText={ reviewObj.comment || 'Settings rating' } />)
+                            : "No reviews yet"
+                    }
                 </div>
 
                 {/* add review */ }
@@ -35,14 +101,20 @@ const ReviewSection = ({ _id }: { _id: string }) => {
                             Add your review and rating
                         </h3>
                         <div>
-                            <ReviewStar />
+                            <ReviewStar onRatingChange={ onRatingChange } currentRating={ ratingAndComments.rating } />
                         </div>
                     </div>
-                    <textarea className='border-2 h-3/5 w-full outline-[#3090a5] p-1 rounded-md' />
+                    <textarea
+                        className='border-2 h-3/5 w-full outline-[#3090a5] p-1 rounded-md'
+                        placeholder='Write your review here...'
+                        value={ ratingAndComments.comment }
+                        onChange={ (e) => setRatingAndComments(prev => ({ ...prev, comment: e.target.value })) }
+                    />
                     <div className='flex-1 flex items-center justify-end'>
                         <Button
-                            text='Submit'
+                            text='button'
                             className='bg-[#3090a5] hover:!bg-[#256371] text-white p-2 px-3 mt-2 rounded-md font-semibold mr-5 duration-300'
+                            onClick={ onSubmitReview }
                         />
                     </div>
                 </div>
