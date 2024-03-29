@@ -8,6 +8,7 @@ import { useSetCartItems } from '@/lib/customHook/useCartItems';
 import toast from 'react-hot-toast';
 import { ErrorMessage, cartRemoveSuccessMessage } from '@/lib/util/toastMessages';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import Link from 'next/link';
 
 type singleCartItemType = {
     product_name: string;
@@ -49,19 +50,19 @@ const SingleCartItem: FC<singleCartItemType> = ({
             {/* item image */ }
             <div className='flex gap-2 h-28 lg:h-full w-full lg:w-2/5 items-start'>
                 {/* image */ }
-                <div className='h-full w-28 relative border'>
+                <Link href={ `/single-product/${_id}` } className='h-full w-28 relative border cursor-pointer'>
                     <Image
                         src={ primaryImgUrl }
                         alt='item'
                         fill
                         style={ { objectFit: "contain" } }
                     />
-                </div>
+                </Link>
 
                 {/* details */ }
-                <div className='mt-3 flex-1 truncate'>
+                <Link href={ `/single-product/${_id}` } className='mt-3 flex-1 truncate hover:text-blue-500 cursor-pointer duration-200'>
                     { product_name }
-                </div>
+                </Link>
             </div>
 
             {/* price quantity and fevourite, remove buttons */ }

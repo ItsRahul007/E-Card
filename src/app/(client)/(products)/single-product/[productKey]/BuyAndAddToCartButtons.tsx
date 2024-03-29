@@ -1,20 +1,56 @@
 "use client";
 
 import Button from '@/components/common/buttons/Button';
-import { useSetCartItems } from '@/lib/customHook/useCartItems';
+import { useGetCartItems, useSetCartItems } from '@/lib/customHook/useCartItems';
+import { useGetFetchedQuery } from '@/lib/customHook/useGetFetchedQuery';
 import { ErrorMessage, cartAddedSuccessMessage } from '@/lib/util/toastMessages';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { FC, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-const BuyAndAddToCartButtons = ({ _id }: { _id: string }) => {
+interface I_BuyAndAddToCartButtons {
+    _id: string;
+    isUserLoggededIn: boolean;
+};
+
+const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({ _id, isUserLoggededIn }) => {
+    const router = useRouter();
+
+    const redirect = (path: string) => {
+        router.push(path);
+    };
+
     const cartMutation = useSetCartItems();
+    const { refetch: refetchCartItems } = useGetCartItems();
+    const allCartItems = useGetFetchedQuery(["get-cart-items"]);
+    const isProductAddedToCart = isUserLoggededIn ? allCartItems?.cartProducts?.some((item: any) => item.productId === _id) : false;
+
+    useEffect(() => {
+        if (isUserLoggededIn && !allCartItems) {
+            refetchCartItems();
+        }
+    }, []);
 
     function addToCart() {
+        if (!isUserLoggededIn) {
+            toast.error('Please login to add items to cart');
+            redirect('/login');
+            return;
+        }
+
+        if (isProductAddedToCart) {
+            toast.success('Item is already added to cart');
+            return;
+        }
+
         cartMutation.mutate({ productId: _id, method: 'post' }, {
-            onSuccess: () => toast.success(cartAddedSuccessMessage),
-            onError: (err) => {
+            onSuccess: () => {
+                refetchCartItems();
+                toast.success(cartAddedSuccessMessage)
+            },
+            onError: (err: any) => {
                 console.log(err);
-                toast.error(ErrorMessage);
+                toast.error(err.response.data.error || ErrorMessage);
             },
         });
     };

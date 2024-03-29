@@ -8,7 +8,7 @@ import IconButton from '../common/buttons/IconButton';
 import { useGetCartItems, useSetCartItems } from '@/lib/customHook/useCartItems';
 import toast from 'react-hot-toast';
 import { ErrorMessage, cartAddedSuccessMessage } from '@/lib/util/toastMessages';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import classNames from '@/lib/util/classNames';
 
 interface I_ItemCard {
@@ -36,6 +36,11 @@ const ItemCard: React.FC<I_ItemCard> = ({
   isProductAddedToCart,
   isUserLoggededIn
 }) => {
+  const router = useRouter();
+
+  const redirect = (path: string) => {
+    router.push(path);
+  };
 
   //? getting the total rating number
   let totalRatingNumber: number = 0;
@@ -75,8 +80,9 @@ const ItemCard: React.FC<I_ItemCard> = ({
 
   function addToCart() {
     if (!isUserLoggededIn) {
-      toast.success('Please login to add items to cart');
-      return redirect('/login');
+      toast.error('Please login to add items to cart');
+      redirect('/login');
+      return;
     }
 
     if (isProductAddedToCart) {

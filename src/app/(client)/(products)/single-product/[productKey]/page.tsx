@@ -9,6 +9,7 @@ import ProductsSchema from "@/lib/model/productSchema";
 import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 import BuyAndAddToCartButtons from './BuyAndAddToCartButtons';
 import ReviewSection from './ReviewSection';
+import { cookies } from 'next/headers';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -44,6 +45,9 @@ export async function generateMetadata({ params, searchParams }: I_SingleProduct
 };
 
 const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
+    const allCookies = cookies();
+    const isUserLoggededIn = allCookies.get('authToken')?.value;
+
     //? reading route params
     const productId = params.productKey;
     await connectWithMongo();
@@ -139,7 +143,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                             </div>
 
                             {/* buy or add to cart button */ }
-                            <BuyAndAddToCartButtons _id={ productId } />
+                            <BuyAndAddToCartButtons _id={ productId } isUserLoggededIn={ isUserLoggededIn ? true : false } />
                         </div>
                     </div>
                 </section>
