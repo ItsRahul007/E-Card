@@ -7,7 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import LoopItems from './LoopItems';
 import { useGetCartItems } from '@/lib/customHook/useCartItems';
-import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
+import { useGetFetchedQuery } from '@/lib/customHook/useGetFetchedQuery';
 
 interface I_Products {
   searchKey: string;
@@ -39,8 +39,8 @@ const Products: React.FC<I_Products> = ({ searchKey, price, isUserLoggededIn }) 
     }
   }, [inView, entry, fetchNextPage, isLoading]);
 
-  const { refetch: refetchCartItems, isLoading: isFetchingCartItems } = useGetCartItems();
-  const allCartItems = isUserLoggededIn ? useGetFetchQuery(["get-cart-items"]) : { cartProducts: [] };
+  const { refetch: refetchCartItems } = useGetCartItems();
+  const allCartItems = useGetFetchedQuery(["get-cart-items"]);
 
   useEffect(() => {
     if (isUserLoggededIn && !allCartItems) {
@@ -56,10 +56,10 @@ const Products: React.FC<I_Products> = ({ searchKey, price, isUserLoggededIn }) 
         >
           {
             //? loading components
-            (isLoading || isFetchingCartItems) && Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={ index } />)
+            isLoading && Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={ index } />)
           }
 
-          { !error && !isFetchingCartItems && allProducts?.length > 0 && <LoopItems allProducts={ allProducts } allCartItems={ allCartItems.cartProducts } isUserLoggededIn={ isUserLoggededIn } /> }
+          { !error && allProducts?.length > 0 && <LoopItems allProducts={ allProducts } allCartItems={ allCartItems?.cartProducts || [] } isUserLoggededIn={ isUserLoggededIn } /> }
 
           {/* if their are no products */ }
           <div

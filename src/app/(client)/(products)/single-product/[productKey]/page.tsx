@@ -131,7 +131,11 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
                             {/* about the product */ }
                             <div className="font-medium text-sm text-gray-500 md:w-[90%] w-72 mt-4">
-                                { ProductDescription }
+                                {
+                                    ProductDescription ||
+                                    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quis minus quia adipisci perferendis! Distinctio illo officiis sapiente. Ex perferendis, quae rerum odit doloremque, accusantium blanditiis dolores est quos incidunt animi labore recusandae velit quaerat commodi laboriosam eaque eveniet, distinctio aperiam. Earum, ipsam. Illum pariatur laboriosam aliquid doloribus rerum, maxime assumenda soluta ut quidem sint reiciendis optio cupiditate nihil unde harum ipsa dolorem maiores repudiandae distinctio quia delectus possimus quasi non! Ex quasi suscipit, laboriosam quaerat maxime doloribus voluptas tenetur maiores illum eligendi provident, veniam, vitae expedita eveniet aperiam nemo quos commodi reiciendis culpa aspernatur eius. Quidem odio dolorum ipsa enim id beatae cum totam sapiente in quasi similique minus atque optio accusamus, exercitationem officia. Eligendi quasi ut optio sunt distinctio dolorem sapiente necessitatibus quod temporibus deserunt unde facilis quidem corrupti omnis delectus harum aliquam voluptatem corporis ducimus odio aut, et consequuntur neque dolores? Quod qui magnam laborum ad libero."
+                                }
+
                             </div>
 
                             {/* buy or add to cart button */ }

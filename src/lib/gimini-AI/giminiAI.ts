@@ -17,8 +17,13 @@ export async function getProductDescription(productKey: string, productName?: st
   For now the product type is ${productKey} ${productName ? "and product name is " + productName : ""}
   `;
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const text = response.text();
-  return text;
+  try {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    return text;
+  } catch (error) {
+    console.log("gimini error");
+    return undefined;
+  }
 }

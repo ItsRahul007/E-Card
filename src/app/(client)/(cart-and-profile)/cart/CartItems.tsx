@@ -3,7 +3,7 @@
 import SingleCartItem from '@/components/all-products/SingleCartItem'
 import PageLoading from '@/components/common/loading/PageLoading';
 import { useGetCartItems } from '@/lib/customHook/useCartItems';
-import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
+import { useGetFetchedQuery } from '@/lib/customHook/useGetFetchedQuery';
 import Image from 'next/image';
 import React, { use, useEffect } from 'react';
 
@@ -15,7 +15,7 @@ type singleCartItemType = {
 }
 
 const CartItems = () => {
-    const data = useGetFetchQuery(["get-cart-items"])
+    const data = useGetFetchedQuery(["get-cart-items"])
 
     const {
         isError,

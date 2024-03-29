@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetFetchQuery } from '@/lib/customHook/useGetFetchedQuery';
+import { useGetFetchedQuery } from '@/lib/customHook/useGetFetchedQuery';
 import { ProductType } from '@/lib/types/productTyps';
 import Link from 'next/link';
 import React, { FC } from 'react'
@@ -18,7 +18,7 @@ type productQuery = {
 const RelatedProducts: FC = () => {
     //! for now we are using that query
     //! have to create a new query witch will fetch related products
-    const data: productQuery | undefined = useGetFetchQuery(['products']);
+    const data: productQuery | undefined = useGetFetchedQuery(['products']);
     const relatedProductdata: ProductType[] | undefined = data?.pages.reduce((acc: any, page: any) => {
         if (page.success) return [...acc, ...page.products]
         else {
