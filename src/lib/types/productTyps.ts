@@ -19,6 +19,6 @@ export interface ProductType extends itemProps {
     }[];
     discount_percentage: number;
     current_price: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

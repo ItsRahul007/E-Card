@@ -1,15 +1,8 @@
-"use client";
-
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import style from "@/app/style/style.module.css";
-import IconButton from '../common/buttons/IconButton';
-import { useGetCartItems, useSetCartItems } from '@/lib/customHook/useCartItems';
-import toast from 'react-hot-toast';
-import { ErrorMessage, cartAddedSuccessMessage } from '@/lib/util/toastMessages';
-import { useRouter } from 'next/navigation';
-import classNames from '@/lib/util/classNames';
+import CartIconButton from './CartIconButton';
 
 interface I_ItemCard {
   primaryImgUrl: string;
@@ -22,8 +15,9 @@ interface I_ItemCard {
   _id: string;
   discount_percentage: number;
   current_price: number;
-  isProductAddedToCart: boolean;
+  isProductAddedToCart?: boolean;
   isUserLoggededIn?: boolean;
+  isCartIconFalse?: boolean;
 }
 
 const ItemCard: React.FC<I_ItemCard> = ({
@@ -34,20 +28,17 @@ const ItemCard: React.FC<I_ItemCard> = ({
   discount_percentage,
   current_price,
   isProductAddedToCart,
-  isUserLoggededIn
+  isUserLoggededIn,
+  isCartIconFalse
 }) => {
-  const router = useRouter();
-
-  const redirect = (path: string) => {
-    router.push(path);
-  };
 
   //? getting the total rating number
   let totalRatingNumber: number = 0;
-  ratings.map(obj => {
+  for (let i = 0; i < ratings.length; i++) {
+    const obj = ratings[i];
     const prevTotal = totalRatingNumber;
     totalRatingNumber = prevTotal + obj.ratingNumber;
-  })
+  }
 
   // Round the rating to the nearest half
   const rating: number = totalRatingNumber / ratings.length;
@@ -75,32 +66,6 @@ const ItemCard: React.FC<I_ItemCard> = ({
     return stars;
   };
 
-  const { refetch: refetchCartItems } = useGetCartItems();
-  const cartMutation = useSetCartItems();
-
-  function addToCart() {
-    if (!isUserLoggededIn) {
-      toast.error('Please login to add items to cart');
-      redirect('/login');
-      return;
-    }
-
-    if (isProductAddedToCart) {
-      toast.success('Item is already added to cart');
-      return;
-    }
-
-    cartMutation.mutate({ productId: _id, method: 'post' }, {
-      onSuccess: () => {
-        refetchCartItems();
-        toast.success(cartAddedSuccessMessage)
-      },
-      onError: (err: any) => {
-        console.log(err);
-        toast.error(err.response.data.error || ErrorMessage);
-      },
-    });
-  };
 
   return (
     <div
@@ -128,15 +93,13 @@ const ItemCard: React.FC<I_ItemCard> = ({
         </Link>
 
         {/* fevorite icon */ }
-        <IconButton
-          className={ classNames(
-            'absolute top-1 right-1 text-base p-1 px-2 rounded-full text-gray-50 bg-opacity-70 cursor-pointer block xl:opacity-0 group-hover:opacity-100',
-            isProductAddedToCart ? 'bg-green-400' : 'bg-gray-400'
-          ) }
-          icon={ <i className="ri-shopping-cart-2-fill"></i> }
-          type='button'
-          onClick={ addToCart }
-        />
+        { !isCartIconFalse &&
+          <CartIconButton
+            _id={ _id }
+            isProductAddedToCart={ isProductAddedToCart }
+            isUserLoggededIn={ isUserLoggededIn }
+          />
+        }
       </div>
       <div className='h-1/4 w-full flex flex-col items-center justify-start min-[390px]:gap-[2px]'>
         <div className='w-[96%] whitespace-nowrap overflow-hidden !text-ellipsis font-bold min-[390px]:mt-1 mt-[1px] min-[390px]:ml-6 ml-1 capitalize md:text-base text-sm'>

@@ -22,11 +22,17 @@ export async function GET(req: NextRequest) {
             if (!search && !price) {
                 return await ProductsSchema.find().sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
-            else if ((search === "for men" || search === "for women") && !price) {
-                return await ProductsSchema.find({ product_category: search.includes("women") ? "women" : "men" })
+            else if (search && (search.includes("for men") || search.includes("for women")) && !price) {
+                const otherSearchTerm = search.replace("for men", "").replace("for women", "").trim().toLowerCase();
+                const searchCategory = search.includes("women") ? "women" : "men";
+
+                return await ProductsSchema.find({
+                    product_category: searchCategory,
+                    search_keys: { $in: [otherSearchTerm] }
+                })
                     .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
-            else if ((search === "for men" || search === "for women") && price) {
+            else if (search && (search.includes("for men") || search.includes("for women")) && price) {
                 const numbers = price.match(/\d+/g);
                 const values = numbers?.map(Number);
 
@@ -39,7 +45,12 @@ export async function GET(req: NextRequest) {
                 const numbers = price.match(/\d+/g);
                 const values = numbers?.map(Number);
 
-                return await ProductsSchema.find({ current_price: { $gte: values?.[0], $lte: values?.[1] } })
+                return await ProductsSchema.find({
+                    current_price: {
+                        $gte: values?.[0],
+                        $lte: values?.[1]
+                    }
+                })
                     .sort({ _id: -1 }).skip(skipNumber).limit(itemNumber).select(selectText);
             }
             else if (search && price) {
@@ -65,7 +76,8 @@ export async function GET(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: error.message,
+            error: "Internal server error",
+            problem: error.message,
         }, { status: 500 });
     }
 };

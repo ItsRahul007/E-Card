@@ -37,10 +37,13 @@ const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
         setRatingAndComments(prev => ({ ...prev, rating }));
     };
 
-    const addReviewMutation = useSetReviewAndComments();
+    const addReviewMutation = useSetReviewAndComments(_id);
     const onSubmitReview = useCallback(
         () => {
-            if (!isUserLoggededIn) return router.push('/login');
+            if (!isUserLoggededIn) {
+                toast.error("Please login to add a review");
+                return router.push('/login');
+            };
 
             if (!ratingAndComments.rating) {
                 toast.error("Please select a rating");

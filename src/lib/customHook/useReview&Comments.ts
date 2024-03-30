@@ -21,7 +21,7 @@ export function useGetReviewAndComments(id: string) {
         error,
         isLoading,
     } = useQuery({
-        queryKey: ["review-and-comments"],
+        queryKey: ["review-and-comments-for-" + id],
         queryFn: getReviewAndComments,
     });
 
@@ -34,7 +34,7 @@ export function useGetReviewAndComments(id: string) {
     };
 }
 
-export function useSetReviewAndComments() {
+export function useSetReviewAndComments(id: string) {
     const updateAddress = async ({ productId, ratingNumber, comment, method }: I_useSetCartItems) => {
         const response = await axios({
             method,
@@ -46,7 +46,7 @@ export function useSetReviewAndComments() {
 
     const mutation = useMutation({
         mutationFn: updateAddress,
-        mutationKey: ["review-and-comments"]
+        mutationKey: ["review-and-comments-for-" + id]
     });
 
     return mutation;

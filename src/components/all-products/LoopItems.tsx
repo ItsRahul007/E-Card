@@ -4,11 +4,17 @@ import { ProductType } from '@/lib/types/productTyps';
 
 interface I_LoopItems {
     allProducts: ProductType[];
-    allCartItems: any;
-    isUserLoggededIn: boolean;
+    allCartItems?: any;
+    isUserLoggededIn?: boolean;
+    isCartIconFalse?: boolean;
 }
 
-const LoopItems: FC<I_LoopItems> = ({ allProducts, allCartItems, isUserLoggededIn }) => {
+const LoopItems: FC<I_LoopItems> = ({
+    allProducts,
+    allCartItems = [],
+    isUserLoggededIn = false,
+    isCartIconFalse = false
+}) => {
     return (
         <>
             {
@@ -17,6 +23,7 @@ const LoopItems: FC<I_LoopItems> = ({ allProducts, allCartItems, isUserLoggededI
                     key={ item._id }
                     isProductAddedToCart={ allCartItems.some((cartItem: any) => cartItem._id === item._id) }
                     isUserLoggededIn={ isUserLoggededIn }
+                    isCartIconFalse={ isCartIconFalse }
                     { ...item }
                 />
                 )

@@ -10,6 +10,7 @@ import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 import BuyAndAddToCartButtons from './BuyAndAddToCartButtons';
 import ReviewSection from './ReviewSection';
 import { cookies } from 'next/headers';
+import RelatedProducts from '@/components/single-product-compos/RelatedProducts';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -57,7 +58,18 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
         throw new Error("Can't fine any product");
     };
 
-    const { ratings, primaryImgUrl, secondaryImgUrls, price, product_name, product_type, discount_percentage, current_price } = product;
+    const {
+        ratings,
+        primaryImgUrl,
+        secondaryImgUrls,
+        price,
+        product_name,
+        product_type,
+        discount_percentage,
+        current_price,
+        product_category
+    } = product;
+
     const ProductDescription = await getProductDescription(product_type, product_name);
 
     //? Function to generate star icons based on the rounded rating
@@ -153,7 +165,11 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                 />
 
                 {/* third section (related products) */ }
-                {/* <RelatedProducts /> */ }
+                <RelatedProducts
+                    product_type={ product_type }
+                    product_category={ product_category }
+                    productId={ productId }
+                />
 
                 {/* footer */ }
                 <Footer />
