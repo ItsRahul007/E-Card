@@ -51,3 +51,30 @@ export function useSetReviewAndComments(id: string) {
 
     return mutation;
 };
+
+
+export function useGetMyReview() {
+    async function getReviewAndComments() {
+        const res = await axios.get("/api/users-reviews");
+        return res.data;
+    };
+
+    const {
+        data,
+        refetch,
+        isError,
+        error,
+        isLoading,
+    } = useQuery({
+        queryKey: ["my-reviews"],
+        queryFn: getReviewAndComments,
+    });
+
+    return {
+        data,
+        refetch,
+        isError,
+        error,
+        isLoading
+    };
+} 

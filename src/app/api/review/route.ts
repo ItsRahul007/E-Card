@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import Products from "@/lib/model/productSchema";
 import { checkAuth } from "@/lib/util/checkAuth";
-import { ApiErrorMessage, MissingRequiredFields, alreadyReviewed, invalidCriteria, productNotFoundById } from "@/lib/util/apiMessages";
+import { ApiErrorMessage, MissingRequiredFields, alreadyReviewed, invalidCriteria, noReviewsFound, productNotFoundById } from "@/lib/util/apiMessages";
 
 export async function GET(req: NextRequest) {
     try {
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
         if (!reviewes) {
             return NextResponse.json({
                 success: false,
-                error: "No reviews found for this product",
+                error: noReviewsFound,
             }, { status: 404 });
         }
 
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: "Internal server error",
+            error: ApiErrorMessage,
             problem: error.message,
         }, { status: 500 });
     }

@@ -50,3 +50,4 @@ export const reviewAdded = "Review added successfully";
 // export const reviewUpdated = "Review updated successfully";
 // export const reviewDeleted = "Review deleted successfully";
 export const alreadyReviewed = "You have already rated this product";
+export const noReviewsFound = "No reviews found for this product";

@@ -27,8 +27,6 @@ export async function GET(req: NextRequest) {
             }, { status: 400 });
         }
 
-        console.log(product);
-
         return NextResponse.json({
             success: true,
             product
