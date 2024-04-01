@@ -4,6 +4,7 @@ import Button from '@/components/common/buttons/Button';
 import { useGetCartItems, useSetCartItems } from '@/lib/customHook/useCartItems';
 import { useGetFetchedQuery } from '@/lib/customHook/useGetFetchedQuery';
 import { ErrorMessage, cartAddedSuccessMessage } from '@/lib/util/toastMessages';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { FC, useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -55,13 +56,16 @@ const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({ _id, isUserLogge
         });
     };
 
+    //! time to work on buy product
+
     return (
-        <div className='mt-6 lg:w-full'>
-            <Button
-                text='BUY NOW'
-                className='lg:px-16 sm:px-10 px-8 py-4 text-sm font-bold bg-[#35a3bc] mr-4 text-white rounded-lg mb-3'
-                type='button'
-            />
+        <div className='mt-6 lg:w-full space-y-5'>
+            <Link
+                href={ `/buy-products/${_id}` }
+                className='w-fit lg:px-16 sm:px-10 px-8 py-4 text-sm font-bold bg-appTheme-600 mr-4 text-white rounded-lg mb-3 inline'
+            >
+                BUY NOW
+            </Link>
             <Button
                 text='ADD TO CART'
                 className='lg:px-14 sm:px-7 px-5 py-4 text-sm font-bold bg-[#eb3c33] text-white rounded-lg'

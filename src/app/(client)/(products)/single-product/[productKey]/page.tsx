@@ -106,9 +106,9 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
     return (
         <div className='h-screen w-screen bg-slate-100 flex flex-col'>
             <AllProductNav />
-            <div className='overflow-scroll w-screen bg-slate-100 '>
+            <div className='overflow-scroll w-screen bg-slate-100 flex flex-col gap-3'>
                 {/* first section (product) */ }
-                <section className='w-full md:max-h-[35rem]'>
+                <section className='w-full md:max-h-[35rem] h-auto'>
                     <div className='h-full w-full lg:w-11/12 p-4 px-6 flex sm:flex-row flex-col lg:gap-2 max-[639.5px]:items-center gap-6'>
                         {/* images container */ }
                         <ImageContainer

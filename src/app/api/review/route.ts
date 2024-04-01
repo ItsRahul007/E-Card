@@ -1,8 +1,8 @@
-import { authTokenType } from "@/lib/types/authToken-type";
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import Products from "@/lib/model/productSchema";
+import { checkAuth } from "@/lib/util/checkAuth";
+import { ApiErrorMessage, MissingRequiredFields, alreadyReviewed, invalidCriteria, productNotFoundById } from "@/lib/util/apiMessages";
 
 export async function GET(req: NextRequest) {
     try {
@@ -36,20 +36,15 @@ export async function POST(req: NextRequest) {
     try {
         const { productId, ratingNumber, comment } = await req.json();
 
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", problem: "Not a valid auth token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         if (!productId || !ratingNumber || !comment) {
-            return NextResponse.json({ error: "Invalid request", problem: "Missing required fields", success: false }, { status: 400 });
+            return NextResponse.json({ error: invalidCriteria, problem: MissingRequiredFields, success: false }, { status: 400 });
         }
 
         await connectWithMongo();
@@ -59,20 +54,20 @@ export async function POST(req: NextRequest) {
         if (!isProductIdExists) {
             return NextResponse.json({
                 success: false,
-                error: "Given productId is not exists"
+                error: productNotFoundById
             }, { status: 400 });
         };
 
         //! if user already did any review comment
-        if (isProductIdExists.ratings.some((rating: any) => rating.ratingBy === verifiedToken.user.id)) {
+        if (isProductIdExists.ratings.some((rating: any) => rating.ratingBy === userId)) {
             return NextResponse.json({
                 success: false,
-                error: "You have already rated this product"
+                error: alreadyReviewed
             }, { status: 400 });
         };
 
         const newReviewObj = {
-            ratingBy: verifiedToken.user.id,
+            ratingBy: userId,
             ratingNumber,
             comment,
         }
@@ -93,7 +88,7 @@ export async function POST(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: "Internal server error",
+            error: ApiErrorMessage,
             problem: error.message,
         }, { status: 500 });
     }

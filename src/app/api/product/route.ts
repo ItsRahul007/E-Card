@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import ProductsSchema from "@/lib/model/productSchema";
 import { ProductType } from "@/lib/types/productTyps";
+import { ApiErrorMessage, emptyPrimaryImgUrl, invalidCriteria, primartAndSecondryUrlSame, productAdded, secondaryPrimaryImgUrl, threeImgsRequired } from "@/lib/util/apiMessages";
 
 //? for getting all products
 export async function GET(req: NextRequest) {
@@ -76,7 +77,7 @@ export async function GET(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: "Internal server error",
+            error: ApiErrorMessage,
             problem: error.message,
         }, { status: 500 });
     }
@@ -87,12 +88,12 @@ export async function POST(req: NextRequest) {
     //! if the primary image or secondry images are empty strings
     function checkIsImageUrlEmptyString(primaryImage: string, secondaryImage: string[]): { success: boolean, error?: string } {
         if (primaryImage.length === 0) {
-            return { success: false, error: "Primary image url is empty" };
+            return { success: false, error: emptyPrimaryImgUrl };
         } else {
             for (const str of secondaryImage) {
                 if (str === '') {
-                    return { success: false, error: "Secondary image url is empty" };
-                } else if (str === primaryImage) return { success: false, error: "Primary image url and secondry image url is same" };
+                    return { success: false, error: secondaryPrimaryImgUrl };
+                } else if (str === primaryImage) return { success: false, error: primartAndSecondryUrlSame };
             }
         }
         return { success: true };
@@ -124,14 +125,14 @@ export async function POST(req: NextRequest) {
         ) {
             return NextResponse.json({
                 success: false,
-                error: "Required field invalid",
+                error: invalidCriteria,
             }, { status: 404 });
         }
 
         //! if there is more than or less than three secondry images
         if (secondaryImgUrls.length > 3 || secondaryImgUrls.length < 3) {
             return NextResponse.json({
-                error: "Three secondry images required",
+                error: threeImgsRequired,
                 success: false,
             }, { status: 400 });
         }
@@ -171,7 +172,7 @@ export async function POST(req: NextRequest) {
         });
 
         return NextResponse.json({
-            message: "Product added successfully",
+            message: productAdded,
             success: true,
             product
         }, { status: 200 });
@@ -180,7 +181,7 @@ export async function POST(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: "Internal server error",
+            error: ApiErrorMessage,
             problem: error.message,
         }, { status: 500 });
     }

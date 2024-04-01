@@ -3,7 +3,8 @@ import type { NextRequest } from 'next/server';
 
 //! authenticating request
 export function middleware(req: NextRequest) {
-    // console.log(req.nextUrl.pathname.includes("/api/"));
+    const authToken = req.cookies.get("authToken");
+
     //? if it's an api request
     if (req.nextUrl.pathname.includes("/api/")) {
         //? getting the auth token from headers
@@ -30,7 +31,6 @@ export function middleware(req: NextRequest) {
     //? if it's an private client side url request
     if (req.nextUrl.pathname.startsWith("/profile") || req.nextUrl.pathname.startsWith("/cart")) {
         //! if not of loggedin token then redirect him to login page otherwise don't redirect him
-        const authToken = req.cookies.get("authToken");
 
         if (!authToken) {
             return NextResponse.redirect(new URL('/login', req.url));
@@ -40,7 +40,6 @@ export function middleware(req: NextRequest) {
     //? if user is logged
     if (req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/signup")) {
         //! if loggedin token then redirect him to home page otherwise don't redirect him
-        const authToken = req.cookies.get("authToken");
 
         if (authToken) {
             return NextResponse.redirect(new URL('/', req.url));

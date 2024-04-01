@@ -27,7 +27,6 @@ const userModel = new Schema({
         type: [String],
         unique: [true, "Item is already in cart"], // Add this line to ensure unique values
     },
-    orders: Array,
 });
 
 const User = models.users || model("users", userModel);

@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import isValidEmail from "@/lib/emailChecker";
 import User from "@/lib/model/usersSchema";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import { ApiErrorMessage, invalidCriteria, invalidEmail, userAlreadyExists } from "@/lib/util/apiMessages";
 
 export async function POST(req: Request) {
     try {
@@ -11,8 +12,8 @@ export async function POST(req: Request) {
 
         //! If not of name, email and password or it's an invalid email
         if (!name || !email || !password) {
-            return NextResponse.json({ error: "Invalid criteria" }, { status: 401 });
-        } else if (!isValidEmail(email)) return NextResponse.json({ error: "Invalid email" }, { status: 401 });
+            return NextResponse.json({ error: invalidCriteria }, { status: 401 });
+        } else if (!isValidEmail(email)) return NextResponse.json({ error: invalidEmail }, { status: 401 });
 
         //* First connect the mongo then create a new user and save it
         await connectWithMongo();
@@ -20,7 +21,7 @@ export async function POST(req: Request) {
         //! If the email already exists
         const isEmailAlreadyExist = await User.findOne({ email });
         if (isEmailAlreadyExist) {
-            return NextResponse.json({ error: "A user with this email already exists", success: false }, { status: 400 });
+            return NextResponse.json({ error: userAlreadyExists, success: false }, { status: 400 });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -37,11 +38,7 @@ export async function POST(req: Request) {
 
         const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
 
-        // Creating and sending an authentication token in responce
-        if (!JWT_SECRET) {
-            return NextResponse.json({ error: "Unable to finde JWT_SECRET", success: false }, { status: 500 });
-        }
-        const authToken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(data, JWT_SECRET!);
 
         const responce = NextResponse.json({
             success: true,
@@ -53,6 +50,6 @@ export async function POST(req: Request) {
         return responce;
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: "Internal server error", problem: error, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error, success: false }, { status: 500 });
     }
 };

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import ProductsSchema from "@/lib/model/productSchema";
+import { ApiErrorMessage, productNotFound } from "@/lib/util/apiMessages";
 
 // //? for getting a single product
 export async function GET(req: NextRequest) {
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest) {
         if (!product) {
             return NextResponse.json({
                 success: false,
-                error: "Product not found"
+                error: productNotFound
             }, { status: 400 });
         }
 
@@ -37,7 +38,8 @@ export async function GET(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: error.message,
+            error: ApiErrorMessage,
+            problem: error.message,
         }, { status: 500 });
     }
 };

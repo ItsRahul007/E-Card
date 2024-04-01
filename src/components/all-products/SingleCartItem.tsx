@@ -8,6 +8,7 @@ import { useSetCartItems } from '@/lib/customHook/useCartItems';
 import toast from 'react-hot-toast';
 import { ErrorMessage, cartRemoveSuccessMessage } from '@/lib/util/toastMessages';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import ConfirmationDialog from '../common/confirmation/ConfirmationDialog';
 import Link from 'next/link';
 
 type singleCartItemType = {
@@ -26,6 +27,7 @@ const SingleCartItem: FC<singleCartItemType> = ({
     refetch
 }) => {
     const [dropDownValue, setDropDownValue] = useState<number>(1);
+    const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setDropDownValue(Number(event.target.value));
@@ -33,6 +35,8 @@ const SingleCartItem: FC<singleCartItemType> = ({
 
     const removeCartMutation = useSetCartItems();
     function removeCartItem() {
+        setIsConfirmationOpen(false);
+
         removeCartMutation.mutate({ productId: _id, method: "delete" }, {
             onSuccess: () => {
                 refetch();
@@ -43,10 +47,22 @@ const SingleCartItem: FC<singleCartItemType> = ({
                 toast.error(ErrorMessage)
             }
         });
-    }
+    };
+
+    function handleRemoveClick() {
+        setIsConfirmationOpen(true);
+    };
+
 
     return (
         <div className='h-60 lg:h-28 w-full flex flex-col lg:flex-row gap-3 lg:gap-6 items-center justify-start lg:justify-between'>
+            { isConfirmationOpen &&
+                <ConfirmationDialog
+                    onCancel={ () => setIsConfirmationOpen(false) }
+                    onConfirm={ removeCartItem }
+                    text='Are you sure you want to remove this item from your cart?'
+                />
+            }
             {/* item image */ }
             <div className='flex gap-2 h-28 lg:h-full w-full lg:w-2/5 items-start'>
                 {/* image */ }
@@ -82,7 +98,7 @@ const SingleCartItem: FC<singleCartItemType> = ({
                         text='Remove'
                         type='button'
                         className='uppercase border bg-stone-100 text-red-600 px-4 py-2 text-[12px] font-semibold rounded hover:bg-white hover:border-red-500'
-                        onClick={ removeCartItem }
+                        onClick={ handleRemoveClick }
                     />
                 </div>
             </div>

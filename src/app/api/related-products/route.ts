@@ -1,5 +1,6 @@
 import Products from "@/lib/model/productSchema";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import { ApiErrorMessage, invalidCriteria } from "@/lib/util/apiMessages";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
 
         //! if not of required fields
         if (!product_type || !product_category) {
-            return NextResponse.json({ error: "Missing required fields", success: false }, { status: 400 });
+            return NextResponse.json({ error: invalidCriteria, success: false }, { status: 400 });
         }
 
         await connectWithMongo();
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
         console.log(error);
         return NextResponse.json({
             success: false,
-            error: "Internal server error",
+            error: ApiErrorMessage,
             problem: error.message,
         }, { status: 500 });
     }

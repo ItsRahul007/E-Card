@@ -1,28 +1,23 @@
 import User from "@/lib/model/usersSchema";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
-import { authTokenType } from "@/lib/types/authToken-type";
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { checkAuth } from "@/lib/util/checkAuth";
+import { ApiErrorMessage, addressAddedSuccessfully, addressDeletedSuccessfully, addressUpdatedSuccessfully, invalidAddress, invalidPhoneNumber, userNotFound } from "@/lib/util/apiMessages";
 
 export async function GET(req: NextRequest) {
     try {
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const { addresses } = await User.findById(verifiedToken.user.id).select("addresses");
+        const { addresses } = await User.findById(userId).select("addresses");
 
         if (!addresses) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         return NextResponse.json({ success: true, addresses }, { status: 200 });
@@ -30,7 +25,7 @@ export async function GET(req: NextRequest) {
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     };
 };
 
@@ -40,44 +35,39 @@ export async function POST(req: NextRequest) {
         let updateObject: any = {};
 
         if (!addresses || !(addresses.full_name && addresses.phone_number && addresses.address)) {
-            return NextResponse.json({ error: "Invalid address", success: false }, { status: 400 });
+            return NextResponse.json({ error: invalidAddress, success: false }, { status: 400 });
         }
         else if (addresses.phone_number.length < 10) {
-            return NextResponse.json({ error: "Invalid phone number", success: false }, { status: 400 })
+            return NextResponse.json({ error: invalidPhoneNumber, success: false }, { status: 400 })
         }
         else if (addresses && (addresses.full_name && addresses.phone_number && addresses.address)) {
             updateObject.$push = { addresses };
         }
 
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const responce = await User.findByIdAndUpdate(verifiedToken.user.id, updateObject, { new: true }).select("addresses");
+        const responce = await User.findByIdAndUpdate(userId, updateObject, { new: true }).select("addresses");
 
         if (!responce) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         return NextResponse.json({
             success: true,
             addresses: responce,
-            message: "Address added successfully"
+            message: addressAddedSuccessfully
         }, { status: 200 }
         );
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     };
 }
 
@@ -87,50 +77,45 @@ export async function PUT(req: NextRequest) {
         let updateObject: any = {};
 
         if (!addresses) {
-            return NextResponse.json({ error: "Invalid address", success: false }, { status: 400 });
+            return NextResponse.json({ error: invalidAddress, success: false }, { status: 400 });
         }
 
         const { full_name, phone_number, address } = addresses;
 
         if (!full_name || !phone_number || !address) {
-            return NextResponse.json({ error: "Invalid address", success: false }, { status: 400 });
+            return NextResponse.json({ error: invalidAddress, success: false }, { status: 400 });
         }
         else if (phone_number.length < 10) {
-            return NextResponse.json({ error: "Invalid phone number", success: false }, { status: 400 })
+            return NextResponse.json({ error: invalidPhoneNumber, success: false }, { status: 400 })
         }
         else if (addresses && (full_name && phone_number && address)) {
             updateObject.$set = { "addresses.$[elem]": { full_name, phone_number, address } };
         }
 
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const responce = await User.findByIdAndUpdate(verifiedToken.user.id, updateObject, { new: true, arrayFilters: [{ "elem._id": JSON.parse(addresses._id) }] }).select("addresses");
+        const responce = await User.findByIdAndUpdate(userId, updateObject, { new: true, arrayFilters: [{ "elem._id": JSON.parse(addresses._id) }] }).select("addresses");
 
         if (!responce) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         return NextResponse.json({
             success: true,
             addresses: responce,
-            message: "Address updated successfully"
+            message: addressUpdatedSuccessfully
         }, { status: 200 }
         );
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     };
 
 
@@ -141,37 +126,32 @@ export async function DELETE(req: NextRequest) {
         const { addresses } = await req.json();
 
         if (!addresses._id) {
-            return NextResponse.json({ error: "Invalid address", success: false }, { status: 400 });
+            return NextResponse.json({ error: invalidAddress, success: false }, { status: 400 });
         }
 
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const responce = await User.findByIdAndUpdate(verifiedToken.user.id, { $pull: { addresses: { _id: JSON.parse(addresses._id) } } }, { new: true }).select("addresses");
+        const responce = await User.findByIdAndUpdate(userId, { $pull: { addresses: { _id: JSON.parse(addresses._id) } } }, { new: true }).select("addresses");
 
         if (!responce) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         return NextResponse.json({
             success: true,
             addresses: responce,
-            message: "Address deleted successfully"
+            message: addressDeletedSuccessfully
         }, { status: 200 }
         );
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     }
 }

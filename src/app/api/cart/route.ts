@@ -1,9 +1,9 @@
-import { authTokenType } from "@/lib/types/authToken-type";
 import { NextRequest, NextResponse } from "next/server";
-import jwt from 'jsonwebtoken';
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import User from "@/lib/model/usersSchema";
 import Products from "@/lib/model/productSchema";
+import { checkAuth } from "@/lib/util/checkAuth";
+import { ApiErrorMessage, didNotGetProductId, invalidRequest, productAlreadyExistsInCart, userNotFound } from "@/lib/util/apiMessages";
 
 const getProductById = async (productIds: string[]) => {
     const products = await Promise.all(productIds.map(async (str: any) => {
@@ -16,23 +16,18 @@ const getProductById = async (productIds: string[]) => {
 
 export async function GET(req: NextRequest) {
     try {
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const cart = await User.findById(verifiedToken.user.id).select("cart");
+        const cart = await User.findById(userId).select("cart");
 
         if (!cart) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         const cartProducts = await getProductById(cart.cart);
@@ -44,7 +39,7 @@ export async function GET(req: NextRequest) {
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     };
 };
 
@@ -52,33 +47,28 @@ export async function POST(req: NextRequest) {
     try {
         const { productId } = await req.json();
 
-        if (!productId) return NextResponse.json({ error: "Invalid request", problem: "Didn't get product id", success: false }, { status: 401 });
+        if (!productId) return NextResponse.json({ error: invalidRequest, problem: didNotGetProductId, success: false }, { status: 401 });
 
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
 
-        const allCartItems = await User.findById(verifiedToken.user.id).select("cart");
+        const allCartItems = await User.findById(userId).select("cart");
         if (!allCartItems) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         //! if the given product id is already exists
         if (allCartItems.cart.includes(productId)) {
-            return NextResponse.json({ error: "Product already exists in cart", success: false }, { status: 400 });
+            return NextResponse.json({ error: productAlreadyExistsInCart, success: false }, { status: 400 });
         };
 
-        const updatedCart = await User.findByIdAndUpdate(verifiedToken.user.id, { $push: { cart: productId } }, { new: true })
+        const updatedCart = await User.findByIdAndUpdate(userId, { $push: { cart: productId } }, { new: true })
             .select("cart");
 
         const cartProducts = await getProductById(updatedCart.cart);
@@ -90,7 +80,7 @@ export async function POST(req: NextRequest) {
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     };
 };
 
@@ -98,26 +88,21 @@ export async function DELETE(req: NextRequest) {
     try {
         const { productId } = await req.json();
 
-        if (!productId) return NextResponse.json({ error: "Invalid request", problem: "Didn't get product id", success: false }, { status: 401 });
+        if (!productId) return NextResponse.json({ error: invalidRequest, problem: didNotGetProductId, success: false }, { status: 401 });
 
-        //! If no auth token found in cookies
-        const authToken = req.cookies.get("authToken");
-        if (!authToken) {
-            return NextResponse.json({ error: "Unauthenticated user", problem: "Didn't get auth token", success: false }, { status: 401 });
+        const isUserAuthenticated = checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
         };
 
-        //! verifying the auth token
-        const verifiedToken = jwt.verify(authToken.value, process.env.JWT_SECRET!) as authTokenType;
-        if (!verifiedToken) {
-            return NextResponse.json({ error: "Invalid token", success: false }, { status: 401 });
-        };
+        const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const cart = await User.findByIdAndUpdate(verifiedToken.user.id, { $pull: { cart: productId } }, { new: true })
+        const cart = await User.findByIdAndUpdate(userId, { $pull: { cart: productId } }, { new: true })
             .select("cart");
 
         if (!cart) {
-            return NextResponse.json({ error: "No user found with this id", success: false }, { status: 400 });
+            return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
         const cartProducts = await getProductById(cart.cart);
@@ -129,6 +114,6 @@ export async function DELETE(req: NextRequest) {
 
     } catch (error: any) {
         console.log(error);
-        return NextResponse.json({ error: "Internal server error", problem: error.message, success: false }, { status: 500 });
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
     };
 };

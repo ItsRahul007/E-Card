@@ -10,7 +10,7 @@ interface I_ProductNav {
   filters?: boolean;
   profile?: boolean;
   name?: string;
-}
+};
 
 const Navbar: React.FC<I_ProductNav> = ({ filters, profile, name }) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -46,7 +46,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile, name }) => {
         <Link href="/products/search-products?search=electronics" className='cursor-pointer'>Electronics</Link>
         <Link href="#" className='cursor-pointer'>Become a Seller</Link>
         <Link href="/cart" className='cursor-pointer'>Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
-        <Link href="/profile" className='cursor-pointer'>My Profile <i className="ri-user-3-fill"></i></Link>
+        <Link href="/profile" className='cursor-pointer' >My Profile <i className="ri-user-3-fill"></i></Link>
       </span>
 
       {/* cart and favourite for small screens */ }
