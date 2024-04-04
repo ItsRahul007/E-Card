@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
         const { userId } = isUserAuthenticated;
 
-        const productsWithUserReviews = await Products.find({ 'ratings.ratingBy': "65891965f70d27101da7f004" });
+        const productsWithUserReviews = await Products.find({ 'ratings.ratingBy': userId });
 
         if (!productsWithUserReviews) {
             return NextResponse.json({
@@ -22,9 +22,9 @@ export async function GET(req: NextRequest) {
         }
 
 
-        // Extract and return the reviews for the user
+        //? Extract and return the reviews for the user
         const userReviews = productsWithUserReviews.map(product => {
-            return product.ratings.filter((review: any) => review.ratingBy === "65891965f70d27101da7f004").map((review: any) => {
+            return product.ratings.filter((review: any) => review.ratingBy === userId).map((review: any) => {
                 return {
                     primaryImgUrl: product.primaryImgUrl,
                     productId: product._id,

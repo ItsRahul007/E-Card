@@ -3,7 +3,8 @@ import axios from "axios";
 
 interface I_useSetCartItems {
     productId: string,
-    method: "post" | "delete";
+    quantity?: number;
+    method: "post" | "put" | "delete";
 }
 
 export function useGetCartItems() {
@@ -33,11 +34,11 @@ export function useGetCartItems() {
 }
 
 export function useSetCartItems() {
-    const updateAddress = async ({ productId, method }: I_useSetCartItems) => {
+    const updateAddress = async ({ productId, quantity = 1, method }: I_useSetCartItems) => {
         const response = await axios({
             method,
             url: `/api/cart`,
-            data: { productId },
+            data: { productId, quantity },
         });
         return response.data;
     };

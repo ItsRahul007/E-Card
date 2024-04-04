@@ -13,7 +13,7 @@ const ReviewTR: FC<ReviewObj> = ({ comment, primaryImgUrl, productId, ratingNumb
     return (
         <tr className='hover:bg-appTheme-50 hover:text-appTheme-700'>
             <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem]">
-                <Link href={ `/single-product/${productId}` } className='mx-auto'>
+                <Link href={ `/single-product/${productId}` } className='mx-auto flex justify-center'>
                     <Image
                         src={ primaryImgUrl }
                         alt='Product Image'

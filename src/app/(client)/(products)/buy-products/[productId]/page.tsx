@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC } from 'react';
 
 interface I_SingleProductPage {
@@ -5,6 +7,8 @@ interface I_SingleProductPage {
 };
 
 const BuyProducts: FC<I_SingleProductPage> = ({ params }) => {
+
+
     return (
         <div>{ params.productId }</div>
     );
