@@ -4,6 +4,7 @@ import InputCompo from '@/components/common/InputCompo';
 import Button from '@/components/common/buttons/Button';
 import Footer from '@/components/common/footer/Footer';
 import CartItems from './CartItems';
+import TotalPeice from './TotalPeice';
 
 const Cart: FC = () => {
     return (
@@ -56,42 +57,7 @@ const Cart: FC = () => {
                         </div>
 
                         {/* total price component */ }
-                        <div className='sm:w-full w-80 h-auto bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2'>
-                            {/* text */ }
-                            <div className='w-full flex flex-col font-rubik text-base text-zinc-600'>
-                                <div className='flex justify-between h-9'>
-                                    <span>Total price:</span>
-                                    <span>$400</span>
-                                </div>
-                                <div className='flex justify-between h-9'>
-                                    <span>Discount:</span>
-                                    <span className='text-green-500'>12%</span>
-                                </div>
-                                <div className='flex justify-between h-9'>
-                                    <span>TAX:</span>
-                                    <span>$20</span>
-                                </div>
-                                <div className='flex justify-center items-center w-full h-9'>
-                                    <hr className='w-full border-t-2' />
-                                </div>
-                                <div className='flex justify-between h-9 font-medium'>
-                                    <span>Total price:</span>
-                                    <span>${ 400 - (400 * 12 / 100) + 20 }</span>
-                                </div>
-
-                                {/* buttons */ }
-                                <div className='w-full h-auto flex flex-col gap-3 mt-3'>
-                                    <Button
-                                        text='Make purchase'
-                                        className='uppercase bg-green-600 text-[11px] py-[6px] rounded-md text-white font-medium'
-                                    />
-                                    <Button
-                                        text='back to shop'
-                                        className='uppercase border-2 bg-stone-100 text-[11px] py-[6px] rounded-md text-stone-500 font-medium'
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <TotalPeice />
                     </div>
                 </div>
             </div>

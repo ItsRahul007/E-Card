@@ -16,15 +16,19 @@ const getProductById = async (cartArr: cartItems[]) => {
             product_name,
             current_price,
             primaryImgUrl,
-            _id
-        } = await Products.findById(productId).select("product_name current_price primaryImgUrl");
+            _id,
+            discount_percentage,
+            price
+        } = await Products.findById(productId).select("product_name current_price primaryImgUrl discount_percentage price");
 
         return {
             product_name,
             current_price,
             primaryImgUrl,
             quantity,
-            _id
+            _id,
+            discount_percentage,
+            price
         };
     }));
 

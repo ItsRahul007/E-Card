@@ -16,6 +16,7 @@ type singleCartItemType = {
     current_price: number;
     primaryImgUrl: string;
     _id: string;
+    quantity: number;
     refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, Error>>;
 }
 
@@ -24,20 +25,32 @@ const SingleCartItem: FC<singleCartItemType> = ({
     current_price,
     primaryImgUrl,
     _id,
+    quantity,
     refetch
 }) => {
-    const [dropDownValue, setDropDownValue] = useState<number>(1);
+    const [dropDownValue, setDropDownValue] = useState<number>(quantity);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
 
+    const cartMutation = useSetCartItems();
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setDropDownValue(Number(event.target.value));
+
+        cartMutation.mutate({ productId: _id, method: "put", quantity: Number(event.target.value) }, {
+            onSuccess: () => {
+                refetch();
+                // toast.success(cartRemoveSuccessMessage);
+            },
+            onError: (err) => {
+                console.log(err);
+                toast.error(ErrorMessage)
+            }
+        });
     };
 
-    const removeCartMutation = useSetCartItems();
     function removeCartItem() {
         setIsConfirmationOpen(false);
 
-        removeCartMutation.mutate({ productId: _id, method: "delete" }, {
+        cartMutation.mutate({ productId: _id, method: "delete" }, {
             onSuccess: () => {
                 refetch();
                 toast.success(cartRemoveSuccessMessage);

@@ -12,6 +12,7 @@ type singleCartItemType = {
     current_price: number;
     primaryImgUrl: string;
     _id: string;
+    quantity: number;
 }
 
 const CartItems = () => {
