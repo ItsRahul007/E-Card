@@ -26,8 +26,6 @@ const userModel = new Schema({
     cart: [{
         productId: {
             type: String,
-            unique: true,
-            require: true
         },
         quantity: {
             type: Number,

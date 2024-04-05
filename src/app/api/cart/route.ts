@@ -159,14 +159,18 @@ export async function DELETE(req: NextRequest) {
         const { userId } = isUserAuthenticated;
 
         await connectWithMongo();
-        const user = await User.findByIdAndUpdate(userId, { $pull: { cart: { productId } } }, { new: true })
-            .select("cart");
-
+        const user = await User.findById(userId).select("cart");
         if (!user) {
             return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
-        const cartProducts = await getProductById(user.cart);
+        const updatedCart = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { cart: { productId } } },
+            { new: true, isolation: 'serializable' }
+        ).select("cart")
+
+        const cartProducts = await getProductById(updatedCart.cart);
 
         return NextResponse.json({
             success: true,
