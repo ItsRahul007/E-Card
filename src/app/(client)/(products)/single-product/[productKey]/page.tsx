@@ -11,13 +11,13 @@ import BuyAndAddToCartButtons from './BuyAndAddToCartButtons';
 import ReviewSection from './ReviewSection';
 import { cookies } from 'next/headers';
 import RelatedProducts from '@/components/single-product-compos/RelatedProducts';
+import { sign } from "jsonwebtoken";
 
 interface I_SingleProductPage {
     params: { productKey: string };
-    searchParams: { search: string };
 };
 
-export async function generateMetadata({ params, searchParams }: I_SingleProductPage): Promise<Metadata> {
+export async function generateMetadata({ params }: I_SingleProductPage): Promise<Metadata> {
     //? reading route params
     const productId = params.productKey;
 
@@ -52,7 +52,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
     //? reading route params
     const productId = params.productKey;
     await connectWithMongo();
-    const product = await ProductsSchema.findById(productId).select("-updatedAt -createdAt -brand_name -__v");
+    const product = await ProductsSchema.findById(productId).select("-updatedAt -createdAt -brand_name -__v")
 
     if (!product) {
         throw new Error("Can't fine any product");
@@ -69,6 +69,8 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
         current_price,
         product_category
     } = product;
+
+    const encriptedProductId = sign(productId, process.env.JWT_SECRET!);
 
     const ProductDescription = await getProductDescription(product_type, product_name);
 
@@ -153,7 +155,11 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
                             </div>
 
                             {/* buy or add to cart button */ }
-                            <BuyAndAddToCartButtons _id={ productId } isUserLoggededIn={ isUserLoggededIn ? true : false } />
+                            <BuyAndAddToCartButtons
+                                _id={ productId }
+                                isUserLoggededIn={ isUserLoggededIn ? true : false }
+                                encriptedProductId={ encriptedProductId }
+                            />
                         </div>
                     </div>
                 </section>

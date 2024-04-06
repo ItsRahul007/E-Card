@@ -25,7 +25,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile, name }) => {
           type="text"
           name='navSearch'
           placeholder='Search products and brands'
-          className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans'
+          className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans border-0'
           onChange={ (e) => setInputValue(e.target.value) }
           value={ inputValue }
           onEnter={ () => {

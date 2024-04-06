@@ -15,18 +15,20 @@ interface I_Products {
   isUserLoggededIn: boolean;
 }
 
-const Products: React.FC<I_Products> = ({ searchKey, price, isUserLoggededIn }) => {
+const Products: React.FC<I_Products> = ({
+  searchKey,
+  price,
+  isUserLoggededIn
+}) => {
   const { ref: loadingRef, inView, entry } = useInView();
 
   const {
     allProducts,
     error,
     isLoading,
-    isFetching,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-    refetch
   } = useFetchProducts({
     query: searchKey ? ['products', price ? price : "", searchKey] : ['products', price ? price : ""],
     searchKey,
@@ -59,7 +61,13 @@ const Products: React.FC<I_Products> = ({ searchKey, price, isUserLoggededIn }) 
             isLoading && Array.from({ length: 10 }).map((_, index) => <ProductSkeletonLoading key={ index } />)
           }
 
-          { !error && allProducts?.length > 0 && <LoopItems allProducts={ allProducts } allCartItems={ allCartItems?.cartProducts || [] } isUserLoggededIn={ isUserLoggededIn } /> }
+          { !error && allProducts?.length > 0 &&
+            <LoopItems
+              allProducts={ allProducts }
+              allCartItems={ allCartItems?.cartProducts || [] }
+              isUserLoggededIn={ isUserLoggededIn }
+            />
+          }
 
           {/* if their are no products */ }
           <div

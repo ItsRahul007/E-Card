@@ -46,7 +46,7 @@ const Cart: FC = () => {
                                     name='cupon_code'
                                     type='text'
                                     placeholder='Coupon code'
-                                    className='border px-2 py-1 rounded-l focus:outline-blue-400  w-full'
+                                    className='border px-2 py-1 rounded-l focus:outline-blue-400 shadow-none w-full'
                                 />
                                 <Button
                                     text='Apply'

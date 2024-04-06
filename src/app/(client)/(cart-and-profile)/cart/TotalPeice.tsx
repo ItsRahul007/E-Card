@@ -44,24 +44,24 @@ const TotalPeice = () => {
         <>
             { !isLoading && data.cartProducts.length > 0 &&
                 <div className='sm:w-full w-80 h-auto bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2'>
-                    <div className='w-full flex flex-col font-rubik text-base text-zinc-600'>
+                    <div className='w-full flex flex-col font-rubik text-base text-zinc-600 text-sm'>
                         <div className='flex justify-between h-9'>
-                            <span>Main price:</span>
+                            <span>Subtotal</span>
                             <span>${ textState.mainPeice }</span>
                         </div>
-                        <div className='flex justify-between h-9'>
-                            <span>Discount:</span>
-                            <span className='text-green-500'>${ Math.round(textState.discount) }</span>
+                        <div className='flex justify-between h-9 text-green-500'>
+                            <span>Discount</span>
+                            <span>${ Math.round(textState.discount) }</span>
                         </div>
                         <div className='flex justify-between h-9'>
-                            <span>TAX:</span>
+                            <span>TAX</span>
                             <span>${ textState.tax }</span>
                         </div>
                         <div className='flex justify-center items-center w-full h-9'>
                             <hr className='w-full border-t-2' />
                         </div>
-                        <div className='flex justify-between h-9 font-medium'>
-                            <span>Total price:</span>
+                        <div className='flex justify-between h-9 font-medium text-base'>
+                            <span>Total</span>
                             <span>${ Math.round(textState.mainPeice - textState.discount + textState.tax) }</span>
                         </div>
 
@@ -69,9 +69,9 @@ const TotalPeice = () => {
                         <div className='w-full h-auto flex flex-col gap-3 mt-3'>
                             <Button
                                 text='Make purchase'
-                                className='uppercase bg-green-600 text-[11px] py-[6px] rounded-md text-white font-medium'
+                                className='uppercase bg-green-600 text-xs py-2 rounded-md text-white font-medium'
                             />
-                            <Link href="/products/all" className='uppercase border-2 bg-stone-100 text-[11px] py-[6px] rounded-md text-stone-500 font-medium inline text-center'>
+                            <Link href="/products/all" className='uppercase border-2 bg-stone-100 text-xs py-2 rounded-md text-stone-500 font-medium inline text-center'>
                                 back to shop
                             </Link>
                         </div>

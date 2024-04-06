@@ -29,7 +29,11 @@ export function middleware(req: NextRequest) {
     };
 
     //? if it's an private client side url request
-    if (req.nextUrl.pathname.startsWith("/profile") || req.nextUrl.pathname.startsWith("/cart")) {
+    if (
+        req.nextUrl.pathname.startsWith("/profile") ||
+        req.nextUrl.pathname.startsWith("/cart") ||
+        req.nextUrl.pathname.startsWith("/buy-products")
+    ) {
         //! if not of loggedin token then redirect him to login page otherwise don't redirect him
 
         if (!authToken) {
@@ -56,6 +60,7 @@ export const config = {
         '/api/product/:path*',
         '/api/single-product/:path*',
         '/profile/:path*',
+        '/buy-products/:path*',
         '/cart',
         '/login',
         '/signup',

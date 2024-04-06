@@ -13,7 +13,7 @@ const Dropdown: React.FC<I_Dropdown> = ({ handleSelectChange, value }) => {
             <select
                 value={ value }
                 onChange={ handleSelectChange }
-                className='py-2 pr-10 pl-2 rounded border duration-200 focus:outline-blue-500 cursor-pointer'
+                className='py-2 pr-10 pl-2 rounded border duration-200 cursor-pointer'
             >
                 <option value={ 1 }>1</option>
                 <option value={ 2 }>2</option>

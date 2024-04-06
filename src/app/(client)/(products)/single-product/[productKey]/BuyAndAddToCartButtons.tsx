@@ -12,9 +12,14 @@ import toast from 'react-hot-toast';
 interface I_BuyAndAddToCartButtons {
     _id: string;
     isUserLoggededIn: boolean;
+    encriptedProductId: string;
 };
 
-const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({ _id, isUserLoggededIn }) => {
+const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({
+    _id,
+    isUserLoggededIn,
+    encriptedProductId
+}) => {
     const router = useRouter();
 
     const redirect = (path: string) => {
@@ -61,8 +66,9 @@ const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({ _id, isUserLogge
     return (
         <div className='mt-6 lg:w-full space-y-5'>
             <Link
-                href={ `/buy-products/${_id}` }
+                href={ `/buy-products/${encriptedProductId}` }
                 className='w-fit lg:px-16 sm:px-10 px-8 py-4 text-sm font-bold bg-appTheme-600 mr-4 text-white rounded-lg mb-3 inline'
+                target="_blank"
             >
                 BUY NOW
             </Link>
