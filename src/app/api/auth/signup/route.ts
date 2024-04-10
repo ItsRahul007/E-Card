@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-import isValidEmail from "@/lib/emailChecker";
+import isValidEmail from "@/lib/util/emailChecker";
 import User from "@/lib/model/usersSchema";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import { ApiErrorMessage, invalidCriteria, invalidEmail, userAlreadyExists } from "@/lib/util/apiMessages";

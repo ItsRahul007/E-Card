@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-import isValidEmail from "@/lib/emailChecker";
+import isValidEmail from "@/lib/util/emailChecker";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import User from "@/lib/model/usersSchema";
 import { authTokenType } from "@/lib/types/authToken-type";

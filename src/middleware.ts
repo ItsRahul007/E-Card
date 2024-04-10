@@ -4,9 +4,10 @@ import type { NextRequest } from 'next/server';
 //! authenticating request
 export function middleware(req: NextRequest) {
     const authToken = req.cookies.get("authToken");
+    const { pathname } = req.nextUrl;
 
     //? if it's an api request
-    if (req.nextUrl.pathname.includes("/api/")) {
+    if (pathname.includes("/api/")) {
         //? getting the auth token from headers
         const requestHeaders = new Headers(req.headers);
         const AUTH_TOKEN = requestHeaders.get('AUTH_TOKEN');
@@ -30,9 +31,9 @@ export function middleware(req: NextRequest) {
 
     //? if it's an private client side url request
     if (
-        req.nextUrl.pathname.startsWith("/profile") ||
-        req.nextUrl.pathname.startsWith("/cart") ||
-        req.nextUrl.pathname.startsWith("/buy-products")
+        pathname.startsWith("/profile") ||
+        pathname.startsWith("/cart") ||
+        pathname.startsWith("/buy-products")
     ) {
         //! if not of loggedin token then redirect him to login page otherwise don't redirect him
 
@@ -42,7 +43,7 @@ export function middleware(req: NextRequest) {
     };
 
     //? if user is logged
-    if (req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/signup")) {
+    if (pathname.startsWith("/login") || pathname.startsWith("/signup")) {
         //! if loggedin token then redirect him to home page otherwise don't redirect him
 
         if (authToken) {

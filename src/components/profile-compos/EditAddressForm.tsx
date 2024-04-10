@@ -31,36 +31,52 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                     className='w-full flex flex-col items-start justify-start gap-4 text-zinc-800'
                     onSubmit={ onSubmit }
                 >
-                    <div className='flex gap-5 sm:flex-row flex-col'>
-                        <InputCompo
-                            name='full_name'
-                            type='text'
-                            isRequired
-                            placeholder='Full name'
-                            className='border py-2 px-4 focus:outline-appTheme-400 placeholder:text-zinc-400 rounded'
-                            onChange={ onChange }
-                            value={ full_name }
-                        />
-                        <InputCompo
-                            name='phone_number'
-                            type='tel'
-                            isRequired
-                            placeholder='Phone number'
-                            className='border py-2 px-4 focus:outline-appTheme-400  placeholder:text-zinc-400 rounded'
-                            onChange={ onChange }
-                            value={ phone_number }
-                            minLength={ 10 }
-                            autoComplete='off'
-                        />
+                    <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                        <div>
+                            <label htmlFor="full_name" className="block text-sm font-medium ">
+                                Full name
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    type="text"
+                                    id="full_name"
+                                    name="full_name"
+                                    autoComplete="given-name"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="phone_number" className="block text-sm font-medium ">
+                                Phone number
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    type="text"
+                                    id="phone_number"
+                                    name="phone_number"
+                                    autoComplete="family-name"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-2">
+                            <label htmlFor="address" className="block text-sm font-medium ">
+                                Address
+                            </label>
+                            <div className="mt-1">
+                                <textarea
+                                    name="address"
+                                    id="address"
+                                    autoComplete="street-address"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                            </div>
+                        </div>
+
                     </div>
-                    <textarea
-                        name="address"
-                        placeholder='Address'
-                        className='p-2 border placeholder:text-zinc-400 focus:outline-appTheme-400 rounded w-full lg:w-3/4 h-40'
-                        onChange={ onChange }
-                        value={ address }
-                        required
-                    />
                     <div className='flex sm:flex-row flex-col gap-3 sm:gap-5 mt-5'>
                         <Button
                             type='submit'

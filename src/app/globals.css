@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -10,13 +11,20 @@
   display: none;
 }
 
-html, body {
+html,
+body {
   color: black;
   background: white;
   height: 100%;
   width: 100%;
 }
 
-button, a {
+button,
+a {
   transition: all ease .5s;
+}
+
+input {
+  box-shadow: none !important;
+  outline: none !important;
 }
