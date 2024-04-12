@@ -1,7 +1,7 @@
 import Navbar from '@/components/all-products/Nav';
 import React, { FC } from 'react';
 import { decode } from 'jsonwebtoken';
-import Example from './TailwindTemplate';
+import Example from './OrderSummary';
 import { isValidObjectId } from 'mongoose';
 import axios from 'axios';
 import { hasSymbols } from '@/lib/util/emailChecker';
@@ -14,8 +14,10 @@ const BuyProducts: FC<I_SingleProductPage> = async ({ params }) => {
     const encriptedProductId = params.productId;
     const productId = decode(encriptedProductId);
 
+    //? checking if the id have symbol or not
     const isProductIdHaveSymbol = hasSymbols(productId?.toString());
 
+    //? checking if the id valid or not
     const isValidMongooDBId = productId && !isProductIdHaveSymbol && isValidObjectId(productId);
 
     const product = isValidMongooDBId ? await axios.get(`https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=${productId}`, {

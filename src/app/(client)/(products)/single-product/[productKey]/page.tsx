@@ -5,13 +5,12 @@ import Footer from '@/components/common/footer/Footer';
 import ImageContainer from '@/components/single-product-compos/ImageContainer';
 import type { Metadata } from 'next'
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
-import ProductsSchema from "@/lib/model/productSchema";
-import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 import BuyAndAddToCartButtons from './BuyAndAddToCartButtons';
 import ReviewSection from './ReviewSection';
 import { cookies } from 'next/headers';
 import RelatedProducts from '@/components/single-product-compos/RelatedProducts';
 import { sign } from "jsonwebtoken";
+import axios from 'axios';
 
 interface I_SingleProductPage {
     params: { productKey: string };
@@ -35,8 +34,14 @@ export async function generateMetadata({ params }: I_SingleProductPage): Promise
     }
 
     //? fetching product
-    await connectWithMongo();
-    const product = await ProductsSchema.findById(productId).select("product_type product_name")
+    const response = await axios.get(`https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=${productId}`, {
+        headers: {
+            AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN!)
+        }
+    })
+
+    const { product } = response.data;
+
     const description = await getProductDescription(product.product_type, product.product_name);
 
     return {
@@ -51,11 +56,15 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
     //? reading route params
     const productId = params.productKey;
-    await connectWithMongo();
-    const product = await ProductsSchema.findById(productId).select("-updatedAt -createdAt -brand_name -__v")
 
-    if (!product) {
-        throw new Error("Can't fine any product");
+    const product = await axios.get(`https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=${productId}`, {
+        headers: {
+            AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN!)
+        }
+    })
+
+    if (!product.data.success) {
+        throw new Error(product.data.error || "Can't fine any product");
     };
 
     const {
@@ -68,7 +77,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
         discount_percentage,
         current_price,
         product_category
-    } = product;
+    } = product.data.product;
 
     const encriptedProductId = sign(productId, process.env.JWT_SECRET!);
 
@@ -136,7 +145,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
                             {/* product price */ }
                             <div className={ `mt-3 sm:mt-5 font-rubik font-medium flex gap-2 select-none` }>
-                                <span className='sm:text-2xl text-xl'>${ current_price }</span>
+                                <span className='sm:text-2xl text-xl'>${ Math.round(current_price) }</span>
                                 <span className='sm:text-xl text-lg font-sans text-gray-700 mt-1 line-through decoration-gray-700 decoration-2'>
                                     ${ price }
                                 </span>

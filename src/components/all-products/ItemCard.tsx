@@ -106,7 +106,7 @@ const ItemCard: React.FC<I_ItemCard> = ({
           { product_name }
         </div>
         <div className='w-[90%] text-base text-gray-700 ml-1 font-semibold flex items-center justify-between'>
-          <span>${ current_price }</span>
+          <span>${ Math.round(current_price) }</span>
           <span>
             { ratings.length > 0 ? generateStars() : <span className='text-xs text-[#0000007b]'>No Ratings</span> }
           </span>
