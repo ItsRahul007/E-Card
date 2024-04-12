@@ -115,7 +115,7 @@ const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
                     />
                     <div className='flex-1 flex items-center justify-end'>
                         <Button
-                            text='button'
+                            text='Submit'
                             className='bg-[#3090a5] hover:!bg-[#256371] text-white p-2 px-3 mt-2 rounded-md font-semibold mr-5 duration-300'
                             onClick={ onSubmitReview }
                         />

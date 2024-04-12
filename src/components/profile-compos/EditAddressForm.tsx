@@ -43,6 +43,8 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                     name="full_name"
                                     autoComplete="given-name"
                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    onChange={ onChange }
+                                    value={ full_name }
                                 />
                             </div>
                         </div>
@@ -58,6 +60,8 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                     name="phone_number"
                                     autoComplete="family-name"
                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    onChange={ onChange }
+                                    value={ phone_number }
                                 />
                             </div>
                         </div>
@@ -72,6 +76,8 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                     id="address"
                                     autoComplete="street-address"
                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    onChange={ onChange }
+                                    value={ address }
                                 />
                             </div>
                         </div>

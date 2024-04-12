@@ -1,13 +1,12 @@
 "use client";
 
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import Button from '@/components/common/buttons/Button';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useGetCartItems } from '@/lib/customHook/useCartItems';
 import { useRouter } from 'next/navigation';
 import SingleItem from './SingleItem';
 import PageLoading from '@/components/common/loading/PageLoading';
+import ChooseAddress from './ChooseAddress';
 
 const paymentMethods = [
   { id: 'paypal', title: 'PayPal' },
@@ -34,16 +33,30 @@ type priceStateType = {
   tax: number;
 }
 
+type T_InputValues = {
+  full_name: string;
+  phone_number: number | string;
+  address: string;
+}
+
 const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
   const [products, setProducts] = useState<productType[] | []>(product);
   const [isCartProducts, setIsCartProducts] = useState<boolean>(false);
+  const [isChooseAddressOpen, setIsChooseAddressOpen] = useState(false);
   const [quantity, setQuantity] = useState<number>(1);
-
   const [price, setPrice] = useState<priceStateType>({
     subtotal: 0,
     discount: 0,
     tax: 0,
   });
+
+  const initialInputValues = {
+    full_name: '',
+    phone_number: '',
+    address: ''
+  };
+
+  const [inputValues, setInputValues] = useState<T_InputValues>(initialInputValues);
 
   const { push } = useRouter();
 
@@ -79,10 +92,28 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
     }
   }, [products, quantity]);
 
-  //TODO: product rate calculation and give a option to pick a shipping address that he already have
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInputValues((prev: any) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  };
+
+  const onAddressClick = (obj: T_InputValues) => {
+    setInputValues(obj);
+    setIsChooseAddressOpen(false);
+  };
+
+  //TODO: give a option to pick a shipping address that he already have
 
   return (
     <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+      { isChooseAddressOpen &&
+        <ChooseAddress
+          closeModel={ () => setIsChooseAddressOpen(false) }
+          onAddressClick={ onAddressClick }
+        />
+      }
       <div>
 
         <div className="border-gray-200">
@@ -100,6 +131,8 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   name="full_name"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={ inputValues.full_name }
+                  onChange={ handleChange }
                 />
               </div>
             </div>
@@ -115,6 +148,8 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   name="phone_number"
                   autoComplete="family-name"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={ inputValues.phone_number }
+                  onChange={ handleChange }
                 />
               </div>
             </div>
@@ -129,10 +164,22 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   id="address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={ inputValues.address }
+                  onChange={ handleChange }
                 />
               </div>
             </div>
 
+          </div>
+
+          <div className='w-full h-20 font-bold uppercase flex justify-center items-center'>OR</div>
+          <div className='w-full h-5 flex justify-center items-center text-sm'>
+            <span
+              className='cursor-pointer px-2 py-1 bg-indigo-100 lg:bg-indigo-50 lg:hover:bg-indigo-100 border border-indigo-500 text-indigo-500 rounded-full font-medium'
+              onClick={ () => setIsChooseAddressOpen(true) }
+            >
+              Choose one
+            </span>
           </div>
         </div>
 
@@ -175,49 +222,51 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
       <div className="mt-10 lg:mt-0">
         <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
 
-        <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
-          <ul role="list" className="divide-y divide-gray-200">
-            { products.length > 0 ?
-              products.map((product) => (
-                <SingleItem
-                  key={ product._id }
-                  productQuantity={ quantity }
-                  changeProductQuantity={ (e: React.ChangeEvent<HTMLSelectElement>) => setQuantity(Number(e.target.value)) }
-                  isCartProducts={ isCartProducts }
-                  { ...product }
-                />
-              ))
-              : isLoading ? <PageLoading /> : "No product founded"
-            }
-          </ul>
-          <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6 font-rubik">
-            <div className="flex items-center justify-between">
-              <dt className="text-sm">Subtotal</dt>
-              <dd className="text-sm font-medium text-gray-900">${ price.subtotal }</dd>
-            </div>
-            <div className="flex items-center justify-between text-green-500">
-              <dt className="text-sm">Discount</dt>
-              <dd className="text-sm font-medium">${ Math.round(price.discount) }</dd>
-            </div>
-            <div className="flex items-center justify-between">
-              <dt className="text-sm">Taxes</dt>
-              <dd className="text-sm font-medium text-gray-900">${ price.tax }</dd>
-            </div>
-            <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-              <dt className="text-base font-medium">Total</dt>
-              <dd className="text-base font-medium text-gray-900">${ Math.round(price.subtotal - price.discount + price.tax) }</dd>
-            </div>
-          </dl>
+        { products.length > 0 ?
+          <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
+            <ul role="list" className="divide-y divide-gray-200">
+              { products.length > 0 &&
+                products.map((product) => (
+                  <SingleItem
+                    key={ product._id }
+                    productQuantity={ quantity }
+                    changeProductQuantity={ (e: React.ChangeEvent<HTMLSelectElement>) => setQuantity(Number(e.target.value)) }
+                    isCartProducts={ isCartProducts }
+                    { ...product }
+                  />
+                ))
+              }
+            </ul>
+            <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6 font-rubik">
+              <div className="flex items-center justify-between">
+                <dt className="text-sm">Subtotal</dt>
+                <dd className="text-sm font-medium text-gray-900">${ price.subtotal }</dd>
+              </div>
+              <div className="flex items-center justify-between text-green-500">
+                <dt className="text-sm">Discount</dt>
+                <dd className="text-sm font-medium">${ Math.round(price.discount) }</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-sm">Taxes</dt>
+                <dd className="text-sm font-medium text-gray-900">${ price.tax }</dd>
+              </div>
+              <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+                <dt className="text-base font-medium">Total</dt>
+                <dd className="text-base font-medium text-gray-900">${ Math.round(price.subtotal - price.discount + price.tax) }</dd>
+              </div>
+            </dl>
 
-          <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-            <Button
-              type="submit"
-              className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-              text='Confirm order'
-              disabled={ isLoading }
-            />
+            <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+              <Button
+                type="submit"
+                className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                text='Confirm order'
+                disabled={ isLoading }
+              />
+            </div>
           </div>
-        </div>
+          : isLoading ? <PageLoading /> : "No product founded"
+        }
       </div>
     </form>
   )

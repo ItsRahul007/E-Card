@@ -11,6 +11,7 @@ interface T_AddressCompo {
     phone_number: number | string;
     address: string;
     _id: string;
+    noEditOption?: boolean;
 }
 
 const AddressCompo: FC<T_AddressCompo> = (props) => {
@@ -69,9 +70,11 @@ const AddressCompo: FC<T_AddressCompo> = (props) => {
             { !isEditFormActive ?
                 <div className='h-auto w-full flex flex-col gap-2 px-6 py-5 text-zinc-800 relative'>
                     {/* three dots*/ }
-                    <div className='absolute top-2 right-2 text-zinc-500 peer z-[1]'>
-                        <i className="ri-more-2-fill text-xl"></i>
-                    </div>
+                    { !props.noEditOption &&
+                        <div className='absolute top-2 right-2 text-zinc-500 peer z-[1]'>
+                            <i className="ri-more-2-fill text-xl"></i>
+                        </div>
+                    }
 
                     {/* options */ }
                     <div className='absolute top-2 right-2 p-3 peer-hover:!flex hover:!flex flex-col gap-2 rounded text-sm border shadow-md text-zinc-800 z-[2] hidden bg-white'>

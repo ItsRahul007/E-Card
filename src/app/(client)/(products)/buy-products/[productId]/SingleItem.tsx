@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 type productType = {
     _id: string;
@@ -24,8 +24,6 @@ const SingleItem: FC<productType> = ({
     productQuantity,
     changeProductQuantity
 }) => {
-    // const [quantity, setQuantity] = useState<number>(cartProductQuantity || 1);
-
     return (
         <li className="flex px-4 py-6 sm:px-6">
             <div className="flex-shrink-0 w-20 h-20 relative">
@@ -44,7 +42,7 @@ const SingleItem: FC<productType> = ({
                             <Link href={ '/single-product/' + _id } className="font-medium capitalize text-gray-700 hover:text-gray-800">
                                 { product_name }
                             </Link>
-                            <p className="mt-1 text-sm font-medium text-gray-900">${ price }</p>
+                            <p className="mt-1 text-sm font-medium text-gray-900">Price: ${ price }</p>
                             <p className="mt-1 text-sm font-medium text-gray-900">Quantity: { cartProductQuantity || productQuantity }</p>
                         </h4>
                     </div>
