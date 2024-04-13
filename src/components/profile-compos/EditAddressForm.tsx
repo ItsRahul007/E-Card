@@ -37,12 +37,12 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                 Full name
                             </label>
                             <div className="mt-1">
-                                <input
-                                    type="text"
-                                    id="full_name"
-                                    name="full_name"
-                                    autoComplete="given-name"
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                <InputCompo
+                                    name='full_name'
+                                    type='text'
+                                    isRequired
+                                    placeholder='Full name'
+                                    className='border py-2 px-4 focus:outline-appTheme-400 placeholder:text-zinc-400 rounded'
                                     onChange={ onChange }
                                     value={ full_name }
                                 />
@@ -54,14 +54,16 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                 Phone number
                             </label>
                             <div className="mt-1">
-                                <input
-                                    type="text"
-                                    id="phone_number"
-                                    name="phone_number"
-                                    autoComplete="family-name"
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                <InputCompo
+                                    name='phone_number'
+                                    type='number'
+                                    isRequired
+                                    placeholder='Phone number'
+                                    className='border py-2 px-4 focus:outline-appTheme-400  placeholder:text-zinc-400 rounded'
                                     onChange={ onChange }
                                     value={ phone_number }
+                                    minLength={ 10 }
+                                    autoComplete='off'
                                 />
                             </div>
                         </div>

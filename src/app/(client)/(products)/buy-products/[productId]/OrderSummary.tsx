@@ -104,8 +104,6 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
     setIsChooseAddressOpen(false);
   };
 
-  //TODO: give a option to pick a shipping address that he already have
-
   return (
     <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
       { isChooseAddressOpen &&
@@ -133,6 +131,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   value={ inputValues.full_name }
                   onChange={ handleChange }
+                  required
                 />
               </div>
             </div>
@@ -143,13 +142,14 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
               </label>
               <div className="mt-1">
                 <input
-                  type="text"
+                  type="tel"
                   id="phone_number"
                   name="phone_number"
                   autoComplete="family-name"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   value={ inputValues.phone_number }
                   onChange={ handleChange }
+                  required
                 />
               </div>
             </div>
@@ -166,6 +166,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   value={ inputValues.address }
                   onChange={ handleChange }
+                  required
                 />
               </div>
             </div>

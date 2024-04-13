@@ -9,18 +9,15 @@ import PageLoading from '@/components/common/loading/PageLoading';
 import Image from 'next/image';
 import classNames from '@/lib/util/classNames';
 
-type T_Addresses = {
-    full_name: string;
-    phone_number: number;
-    address: string;
-    _id: ObjectId;
-};
-
 type onAddressClickType = {
     full_name: string;
     phone_number: string | number;
     address: string;
 }
+
+interface T_Addresses extends onAddressClickType {
+    _id: ObjectId;
+};
 
 interface I_AddressListProps {
     onAddressClick?: ({
@@ -77,7 +74,7 @@ const AddressList: FC<I_AddressListProps> = ({ onAddressClick }) => {
                         </ul>
                         :
                         <div className='relative h-3/4 w-60 md:w-96 flex flex-col items-center justify-center gap-2 text-xl md:text-3xl text-[#00bf85] mx-auto'>
-                            <p className={ `text-center font-bold font-ubuntu` }>No addresses found</p>
+                            <p className="text-center font-bold font-ubuntu">No addresses found</p>
                             <span className='relative h-80 md:h-96 w-80 md:w-96'>
                                 <Image
                                     src="/images/not-found.png"
