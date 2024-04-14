@@ -5,11 +5,9 @@ import EditAddressForm from './EditAddressForm';
 import toast from 'react-hot-toast';
 import { useSetAddresses, useGetAddresses } from '@/lib/customHook/useAddresses';
 import { ErrorMessage, addressDeleteSuccessMessage, addressUpdateSuccessMessage } from '@/lib/util/toastMessages';
+import { addressTypeInputValues } from '@/lib/types/addressTypes';
 
-interface T_AddressCompo {
-    full_name: string;
-    phone_number: number | string;
-    address: string;
+interface T_AddressCompo extends addressTypeInputValues {
     _id: string;
     noEditOption?: boolean;
 }

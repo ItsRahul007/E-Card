@@ -8,14 +8,9 @@ import { ObjectId } from "mongodb";
 import PageLoading from '@/components/common/loading/PageLoading';
 import Image from 'next/image';
 import classNames from '@/lib/util/classNames';
+import { addressTypeInputValues } from '@/lib/types/addressTypes';
 
-type onAddressClickType = {
-    full_name: string;
-    phone_number: string | number;
-    address: string;
-}
-
-interface T_Addresses extends onAddressClickType {
+interface T_Addresses extends addressTypeInputValues {
     _id: ObjectId;
 };
 
@@ -24,7 +19,7 @@ interface I_AddressListProps {
         full_name,
         phone_number,
         address
-    }: onAddressClickType) => void;
+    }: addressTypeInputValues) => void;
 }
 
 const AddressList: FC<I_AddressListProps> = ({ onAddressClick }) => {

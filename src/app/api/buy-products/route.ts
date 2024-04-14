@@ -2,19 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkAuth } from "@/lib/util/checkAuth";
 import Orders from "@/lib/model/ordersSchema";
 import { ApiErrorMessage, MissingRequiredFields } from "@/lib/util/apiMessages";
-
-type T_orderObj = {
-    shipping_address: string,
-    products: string[],
-    total_price: number,
-    discount: number,
-    payment_type: string,
-    payment_status?: string,
-    customer_id: string,
-    discount_percentage?: number
-};
-
-//! work on this
+import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
 
 export async function POST(req: NextRequest) {
     try {
@@ -28,30 +16,49 @@ export async function POST(req: NextRequest) {
             shipping_address,
             products,
             total_price,
-            discount,
             payment_type,
-            payment_status,
-            discount_percentage
-        } = await req.json();
+            total_discount,
+            tax,
+            delivary_status
+        }: T_orderObj = await req.json();
 
-        if (!shipping_address || !products || products.length <= 0 || !total_price || !discount || !payment_type) {
+        if (!shipping_address || !products || products.length <= 0 || !total_price || !payment_type) {
             return NextResponse.json({
                 error: MissingRequiredFields,
                 success: false
             }, { status: 400 });
         };
 
-        const orderObj: T_orderObj = {
-            customer_id: userId!,
-            shipping_address,
-            products,
-            total_price,
-            discount,
-            payment_type
+        if (shipping_address.phone_number.toString().length !== 10) {
+            return NextResponse.json({
+                error: "Invalid phone number",
+                success: false
+            }, { status: 400 });
         };
 
-        if (payment_status) orderObj.payment_status = payment_status;
-        if (discount_percentage) orderObj.discount_percentage = discount_percentage;
+        const modifiedProducts: routeProduct[] = products.map(obj => {
+            const { _id, current_price, primaryImgUrl, product_name, quantity = 1 } = obj;
+
+            return {
+                product_id: _id,
+                primaryImgUrl,
+                product_name,
+                quantity,
+                product_price: current_price
+            };
+        });
+
+        const orderObj: Order = {
+            customer_id: userId!,
+            shipping_address,
+            products: modifiedProducts,
+            total_price,
+            total_discount,
+            payment_type,
+            tax
+        };
+
+        if (delivary_status) orderObj.delivary_status = delivary_status;
 
         const newOrder = await Orders.create(orderObj);
 

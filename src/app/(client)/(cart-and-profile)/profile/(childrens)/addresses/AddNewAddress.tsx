@@ -3,25 +3,20 @@
 import IconButton from '@/components/common/buttons/IconButton';
 import EditAddressForm from '@/components/profile-compos/EditAddressForm';
 import { useSetAddresses, useGetAddresses } from '@/lib/customHook/useAddresses';
+import { addressTypeInputValues } from '@/lib/types/addressTypes';
 import { ErrorMessage, addressAddedSuccessMessage } from '@/lib/util/toastMessages';
 import React, { FC, useCallback, useState } from 'react'
 import toast from 'react-hot-toast';
 
-type T_InputValues = {
-    full_name: string;
-    phone_number: number | string;
-    address: string;
-}
-
 const AddNewAddress: FC = () => {
-    const initialValues: T_InputValues = {
+    const initialValues: addressTypeInputValues = {
         full_name: '',
         phone_number: "",
         address: '',
     };
 
     const [isEditFormActive, setIsEditFormActive] = useState<boolean>(false);
-    const [inputValues, setInputValues] = useState<T_InputValues>(initialValues);
+    const [inputValues, setInputValues] = useState<addressTypeInputValues>(initialValues);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;

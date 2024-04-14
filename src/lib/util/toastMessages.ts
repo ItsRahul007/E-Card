@@ -12,3 +12,7 @@ export const cartAddedSuccessMessage = 'Item added to cart successfully!';
 
 //? review messages
 export const reviewAddesSuccessMessage = "Review added successfully";
+
+//? order messages
+export const placingOrder = 'Placing order...';
+export const orderSuccessMessage = 'Order placed successfully!';

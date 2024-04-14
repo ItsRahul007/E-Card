@@ -3,22 +3,28 @@
 import React, { FC } from 'react';
 import InputCompo from '@/components/common/InputCompo';
 import Button from '@/components/common/buttons/Button';
-
-type T_InputValues = {
-    full_name: string;
-    phone_number: number | string;
-    address: string;
-}
+import { addressTypeInputValues } from '@/lib/types/addressTypes';
+import toast from 'react-hot-toast';
 
 interface I_EditAddressForm {
     onCancle: () => void;
-    inputValues: T_InputValues;
+    inputValues: addressTypeInputValues;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChange, onSubmit }) => {
     const { full_name, phone_number, address } = inputValues;
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (isNaN(Number(inputValues.phone_number)) || inputValues.phone_number.toString().length !== 10) {
+            toast.error("Invalid phone number");
+            return;
+        };
+        onSubmit(e);
+    }
 
     return (
         <div className='min-h-[24rem] h-auto w-full bg-appTheme-50'>
@@ -29,7 +35,7 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                 {/* Form */ }
                 <form
                     className='w-full flex flex-col items-start justify-start gap-4 text-zinc-800'
-                    onSubmit={ onSubmit }
+                    onSubmit={ handleSubmit }
                 >
                     <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                         <div>
@@ -41,7 +47,6 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                     name='full_name'
                                     type='text'
                                     isRequired
-                                    placeholder='Full name'
                                     className='border py-2 px-4 focus:outline-appTheme-400 placeholder:text-zinc-400 rounded'
                                     onChange={ onChange }
                                     value={ full_name }
@@ -56,9 +61,8 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                             <div className="mt-1">
                                 <InputCompo
                                     name='phone_number'
-                                    type='number'
+                                    type='tel'
                                     isRequired
-                                    placeholder='Phone number'
                                     className='border py-2 px-4 focus:outline-appTheme-400  placeholder:text-zinc-400 rounded'
                                     onChange={ onChange }
                                     value={ phone_number }
@@ -80,6 +84,7 @@ const EditAddressForm: FC<I_EditAddressForm> = ({ onCancle, inputValues, onChang
                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     onChange={ onChange }
                                     value={ address }
+                                    required
                                 />
                             </div>
                         </div>

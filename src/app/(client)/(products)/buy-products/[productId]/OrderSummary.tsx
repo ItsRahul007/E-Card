@@ -1,62 +1,48 @@
 "use client";
 
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import Button from '@/components/common/buttons/Button';
 import { useGetCartItems } from '@/lib/customHook/useCartItems';
 import { useRouter } from 'next/navigation';
 import SingleItem from './SingleItem';
 import PageLoading from '@/components/common/loading/PageLoading';
 import ChooseAddress from './ChooseAddress';
+import { T_orderObj, orderPriceStateType, orderProductType } from '@/lib/types/orderTypes';
+import { addressTypeInputValues } from '@/lib/types/addressTypes';
+import InputCompo from '@/components/common/InputCompo';
+import toast from 'react-hot-toast';
+import ConfirmationDialog from '@/components/common/confirmation/ConfirmationDialog';
+import { useOrderMutation } from '@/lib/customHook/useBuyProducts';
+import { ErrorMessage, orderSuccessMessage, placingOrder } from '@/lib/util/toastMessages';
 
 const paymentMethods = [
   { id: 'paypal', title: 'PayPal' },
-  { id: 'cod', title: 'Cash On Delivery' },
-]
-
-type productType = {
-  _id: string;
-  product_name: string;
-  price: number;
-  current_price: number;
-  primaryImgUrl: string;
-  quantity?: number;
-  discount_percentage?: number;
-}
+  { id: 'cash-on-delivery', title: 'Cash On Delivery' },
+];
 
 interface I_OrderSummary {
-  product: productType[] | [];
-}
+  product: orderProductType[] | [];
+};
 
-type priceStateType = {
-  subtotal: number;
-  discount: number;
-  tax: number;
-}
-
-type T_InputValues = {
-  full_name: string;
-  phone_number: number | string;
-  address: string;
-}
+const initialShippingAddress: addressTypeInputValues = {
+  full_name: '',
+  phone_number: '',
+  address: ''
+};
 
 const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
-  const [products, setProducts] = useState<productType[] | []>(product);
+  const [products, setProducts] = useState<orderProductType[] | []>(product);
   const [isCartProducts, setIsCartProducts] = useState<boolean>(false);
-  const [isChooseAddressOpen, setIsChooseAddressOpen] = useState(false);
+  const [isChooseAddressOpen, setIsChooseAddressOpen] = useState<boolean>(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
+  const [paymentType, setPaymentType] = useState<string>("paypal");
   const [quantity, setQuantity] = useState<number>(1);
-  const [price, setPrice] = useState<priceStateType>({
+  const [price, setPrice] = useState<orderPriceStateType>({
     subtotal: 0,
     discount: 0,
     tax: 0,
   });
-
-  const initialInputValues = {
-    full_name: '',
-    phone_number: '',
-    address: ''
-  };
-
-  const [inputValues, setInputValues] = useState<T_InputValues>(initialInputValues);
+  const [shippingAddress, setShippingAddress] = useState<addressTypeInputValues>(initialShippingAddress);
 
   const { push } = useRouter();
 
@@ -93,25 +79,76 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
   }, [products, quantity]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setInputValues((prev: any) => ({
+    setShippingAddress((prev: any) => ({
       ...prev,
       [e.target.name]: e.target.value
     }))
   };
 
-  const onAddressClick = (obj: T_InputValues) => {
-    setInputValues(obj);
+  const onAddressClick = (obj: addressTypeInputValues) => {
+    setShippingAddress(obj);
     setIsChooseAddressOpen(false);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isNaN(Number(shippingAddress.phone_number)) || shippingAddress.phone_number.toString().length !== 10) {
+      toast.error("Invalid phone number");
+      return;
+    };
+
+    setIsConfirmationOpen(true);
+  };
+
+  const orderMutation = useOrderMutation();
+
+  const handleConfirmPlaceOrder = useCallback(() => {
+    toast.loading(placingOrder);
+
+    setIsConfirmationOpen(false);
+    const orderObject: T_orderObj = {
+      shipping_address: shippingAddress,
+      products,
+      total_price: Math.round(price.subtotal - price.discount + price.tax),
+      total_discount: price.discount,
+      tax: price.tax,
+      payment_type: paymentType,
+    };
+
+    orderMutation.mutate(orderObject, {
+      onSuccess: () => {
+        toast.dismiss();
+        toast.success(orderSuccessMessage);
+        push("/profile/orders");
+      },
+      onError: () => {
+        toast.dismiss();
+        toast.error(ErrorMessage);
+      },
+
+    });
+
+  }, [price, paymentType, shippingAddress, products, quantity])
+
   return (
-    <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+    <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16" onSubmit={ handleSubmit }>
       { isChooseAddressOpen &&
         <ChooseAddress
           closeModel={ () => setIsChooseAddressOpen(false) }
           onAddressClick={ onAddressClick }
         />
       }
+
+      {
+        isConfirmationOpen &&
+        <ConfirmationDialog
+          onCancel={ () => setIsConfirmationOpen(false) }
+          onConfirm={ handleConfirmPlaceOrder }
+          text='Are you sure you want to place this order?'
+        />
+      }
+
       <div>
 
         <div className="border-gray-200">
@@ -123,15 +160,13 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                 Full name
               </label>
               <div className="mt-1">
-                <input
-                  type="text"
-                  id="full_name"
-                  name="full_name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  value={ inputValues.full_name }
+                <InputCompo
+                  name='full_name'
+                  type='text'
+                  isRequired
+                  value={ shippingAddress.full_name }
                   onChange={ handleChange }
-                  required
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -141,15 +176,15 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                 Phone number
               </label>
               <div className="mt-1">
-                <input
-                  type="tel"
-                  id="phone_number"
-                  name="phone_number"
-                  autoComplete="family-name"
+                <InputCompo
+                  name='phone_number'
+                  type='tel'
+                  isRequired
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  value={ inputValues.phone_number }
                   onChange={ handleChange }
-                  required
+                  value={ shippingAddress.phone_number }
+                  minLength={ 10 }
+                  autoComplete='off'
                 />
               </div>
             </div>
@@ -164,7 +199,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   id="address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  value={ inputValues.address }
+                  value={ shippingAddress.address }
                   onChange={ handleChange }
                   required
                 />
@@ -198,18 +233,22 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                       name="payment-type"
                       type="radio"
                       defaultChecked
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                      onClick={ () => setPaymentType(paymentMethod.id) }
+                      checked={ paymentType === paymentMethod.id }
                     />
                   ) : (
                     <input
                       id={ paymentMethod.id }
                       name="payment-type"
                       type="radio"
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                      onClick={ () => setPaymentType(paymentMethod.id) }
+                      checked={ paymentType === paymentMethod.id }
                     />
                   ) }
 
-                  <label htmlFor={ paymentMethod.id } className="ml-3 block text-sm font-medium text-gray-700">
+                  <label htmlFor={ paymentMethod.id } className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                     { paymentMethod.title }
                   </label>
                 </div>

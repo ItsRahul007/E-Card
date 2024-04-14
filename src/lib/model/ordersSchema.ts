@@ -8,29 +8,54 @@ const ordersModel = new Schema({
     shipping_address: {
         full_name: {
             type: String,
-            require: true
+            require: [true, "Full name is required"]
         },
         phone_number: {
             type: Number,
-            require: true
+            require: [true, "Phone number is required"]
         },
         address: {
             type: String,
-            require: true
+            require: [true, "Address is required"]
         }
     },
     products: [{
-        type: Schema.Types.ObjectId,
-        ref: 'products'
+        product_id: {
+            type: Schema.Types.ObjectId,
+            require: [true, "Product id is required"]
+        },
+        primaryImgUrl: {
+            require: [true, "Primary image url is required"],
+            type: String
+        },
+        product_name: {
+            require: [true, "Product name is required"],
+            type: String
+        },
+        quantity: {
+            type: Number,
+            require: [true, "Product quantity is required"],
+            min: 1
+        },
+        product_price: {
+            type: Number,
+            require: [true, "Product price is required"],
+        },
     }],
     total_price: {
         type: Number,
-        require: true,
+        require: [true, "Total price is required"],
         min: 0
     },
-    discount_percentage: {
+    total_discount: {
         type: Number,
-        default: 0
+        default: 0,
+        require: [true, "Total discount is required"]
+    },
+    tax: {
+        type: Number,
+        default: 20,
+        require: [true, "Tax is required"]
     },
     delivary_status: {
         type: String,
@@ -39,7 +64,8 @@ const ordersModel = new Schema({
     },
     payment_type: {
         type: String,
-        enum: ["cash on delivery", "credit card", "debit card", "paypal"]
+        enum: ["cash-on-delivery", "paypal"],
+        require: [true, "Payment type is required"]
     },
     payment_status: {
         type: String,
