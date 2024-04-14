@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkAuth } from "@/lib/util/checkAuth";
 import Orders from "@/lib/model/ordersSchema";
-import { ApiErrorMessage, MissingRequiredFields } from "@/lib/util/apiMessages";
+import { ApiErrorMessage, MissingRequiredFields, alreadyPaid, didNotGetOrderid, invalidRequest, notValidId } from "@/lib/util/apiMessages";
 import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
 import { serverSideStripe } from "@/lib/util/stripe/stripe";
-import { sign } from "jsonwebtoken";
+import { decode, sign } from "jsonwebtoken";
+import { hasSymbols } from "@/lib/util/emailChecker";
+import { isValidObjectId } from "mongoose";
+import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 
 export async function POST(req: NextRequest) {
     try {
@@ -99,6 +102,63 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: true
         }, { status: 201 });
+
+    } catch (error: any) {
+        console.log(error);
+        return NextResponse.json({
+            error: ApiErrorMessage,
+            problem: error.message,
+            success: false
+        }, { status: 500 });
+    };
+};
+
+export async function PUT(req: NextRequest) {
+    try {
+        const { orderId, is_paid } = await req.json();
+
+        if (!orderId) {
+            return NextResponse.json({
+                success: false,
+                error: invalidRequest,
+                problem: didNotGetOrderid
+            }, { status: 400 });
+        };
+
+        const decodedProductId = decode(orderId);
+
+        //? checking if the id have symbol or not
+        const isProductIdHaveSymbol = hasSymbols(decodedProductId?.toString());
+
+        //? checking if the id valid or not
+        const isValidMongooDBId = !isProductIdHaveSymbol && isValidObjectId(decodedProductId);
+
+        if (!isValidMongooDBId) {
+            return NextResponse.json({
+                success: false,
+                error: invalidRequest,
+                problem: notValidId
+            }, { status: 400 });
+        };
+
+        await connectWithMongo();
+
+        const order = await Orders.findById(decodedProductId);
+
+        if (order.is_paid) {
+            return NextResponse.json({
+                success: false,
+                error: invalidRequest,
+                problem: alreadyPaid
+            }, { status: 400 });
+        }
+        order.is_paid = is_paid;
+        await order.save();
+
+        return NextResponse.json({
+            success: true
+        }, { status: 200 });
+
 
     } catch (error: any) {
         console.log(error);

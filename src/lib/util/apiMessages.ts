@@ -37,7 +37,9 @@ export const productUpdated = "Product updated successfully";
 export const productDeleted = "Product deleted successfully";
 
 //* buy product
-
+export const didNotGetOrderid = "Didn't get product id";
+export const notValidId = "Not a valid id";
+export const alreadyPaid = 'Already paid';
 
 //* related product
 
