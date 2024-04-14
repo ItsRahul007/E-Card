@@ -34,15 +34,16 @@ export interface Order {
     total_discount: number;
     tax: number;
     delivary_status?: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
-    payment_type: "cash-on-delivery" | "paypal" | string;
+    payment_type: "cash-on-delivery" | "stripe" | string;
     payment_status?: "pending" | "success" | "failed";
+    is_paid?: boolean;
 }
 
 export type T_orderObj = {
     shipping_address: addressTypeInputValues;
     products: orderProductType[];
     total_price: number;
-    payment_type: "cash-on-delivery" | "paypal" | string;
+    payment_type: "cash-on-delivery" | "stripe" | string;
     payment_status?: string;
     customer_id?: string;
     total_discount: number;

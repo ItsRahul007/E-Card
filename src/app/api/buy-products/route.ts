@@ -3,6 +3,8 @@ import { checkAuth } from "@/lib/util/checkAuth";
 import Orders from "@/lib/model/ordersSchema";
 import { ApiErrorMessage, MissingRequiredFields } from "@/lib/util/apiMessages";
 import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
+import { serverSideStripe } from "@/lib/util/stripe/stripe";
+import { sign } from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
     try {
@@ -55,17 +57,46 @@ export async function POST(req: NextRequest) {
             total_price,
             total_discount,
             payment_type,
-            tax
+            tax,
+            is_paid: false
         };
 
         if (delivary_status) orderObj.delivary_status = delivary_status;
 
         const newOrder = await Orders.create(orderObj);
 
-        console.log(newOrder);
+        const encriptedOrderId = sign(newOrder._id.toString(), process.env.JWT_SECRET!);
+
+        //? after saving the order we will redirect user to payment
+        if (payment_type === "stripe") {
+            const session = await serverSideStripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                mode: 'payment',
+                success_url: `${process.env.DOMAIN}/profile/orders?payment=success&orderId=` + encriptedOrderId,
+                line_items: products.map((obj) => {
+                    const { current_price, primaryImgUrl, product_name, quantity = 1 } = obj;
+
+                    return {
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: product_name,
+                                images: [primaryImgUrl]
+                            },
+                            unit_amount: current_price * 100,
+                        },
+                        quantity
+                    };
+                })
+            });
+
+            return NextResponse.json({
+                url: session.url,
+                success: true
+            }, { status: 201 });
+        };
 
         return NextResponse.json({
-            data: newOrder,
             success: true
         }, { status: 201 });
 

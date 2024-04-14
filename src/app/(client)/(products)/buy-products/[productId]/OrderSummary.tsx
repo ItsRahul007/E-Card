@@ -16,7 +16,7 @@ import { useOrderMutation } from '@/lib/customHook/useBuyProducts';
 import { ErrorMessage, orderSuccessMessage, placingOrder } from '@/lib/util/toastMessages';
 
 const paymentMethods = [
-  { id: 'paypal', title: 'PayPal' },
+  { id: 'stripe', title: 'Stripe' },
   { id: 'cash-on-delivery', title: 'Cash On Delivery' },
 ];
 
@@ -35,7 +35,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
   const [isCartProducts, setIsCartProducts] = useState<boolean>(false);
   const [isChooseAddressOpen, setIsChooseAddressOpen] = useState<boolean>(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<boolean>(false);
-  const [paymentType, setPaymentType] = useState<string>("paypal");
+  const [paymentType, setPaymentType] = useState<string>("cash-on-delivery");
   const [quantity, setQuantity] = useState<number>(1);
   const [price, setPrice] = useState<orderPriceStateType>({
     subtotal: 0,
@@ -103,7 +103,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
 
   const orderMutation = useOrderMutation();
 
-  const handleConfirmPlaceOrder = useCallback(() => {
+  const handleConfirmPlaceOrder = useCallback(async () => {
     toast.loading(placingOrder);
 
     setIsConfirmationOpen(false);
@@ -117,10 +117,11 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
     };
 
     orderMutation.mutate(orderObject, {
-      onSuccess: () => {
-        toast.dismiss();
-        toast.success(orderSuccessMessage);
-        push("/profile/orders");
+      onSuccess: (data) => {
+        toast.dismiss(); //! add a check if payment type is cod then they should be active
+        toast.success(orderSuccessMessage); //! add a check if payment type is cod then they should be active
+        console.log(data)
+        push(paymentType === 'stripe' ? data.url : '/profile/orders');
       },
       onError: () => {
         toast.dismiss();
@@ -232,9 +233,8 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                       id={ paymentMethod.id }
                       name="payment-type"
                       type="radio"
-                      defaultChecked
                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
-                      onClick={ () => setPaymentType(paymentMethod.id) }
+                      onChange={ () => setPaymentType(paymentMethod.id) }
                       checked={ paymentType === paymentMethod.id }
                     />
                   ) : (
@@ -243,7 +243,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                       name="payment-type"
                       type="radio"
                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
-                      onClick={ () => setPaymentType(paymentMethod.id) }
+                      onChange={ () => setPaymentType(paymentMethod.id) }
                       checked={ paymentType === paymentMethod.id }
                     />
                   ) }

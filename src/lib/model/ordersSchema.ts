@@ -64,13 +64,17 @@ const ordersModel = new Schema({
     },
     payment_type: {
         type: String,
-        enum: ["cash-on-delivery", "paypal"],
+        enum: ["cash-on-delivery", "stripe"],
         require: [true, "Payment type is required"]
     },
     payment_status: {
         type: String,
         enum: ["pending", "success", "failed"],
         default: "pending"
+    },
+    is_paid: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true, get: (time: any) => time.toDateString() });
 
