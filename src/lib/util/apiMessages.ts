@@ -40,6 +40,8 @@ export const productDeleted = "Product deleted successfully";
 export const didNotGetOrderid = "Didn't get product id";
 export const notValidId = "Not a valid id";
 export const alreadyPaid = 'Already paid';
+export const encryptedStringNotMatched = "Encrypted string not matched";
+export const orderObjectDidNotMatched = "Order object didn't matched";
 
 //* related product
 

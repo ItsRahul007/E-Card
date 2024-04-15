@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkAuth } from "@/lib/util/checkAuth";
 import Orders from "@/lib/model/ordersSchema";
-import { ApiErrorMessage, MissingRequiredFields, alreadyPaid, didNotGetOrderid, invalidRequest, notValidId } from "@/lib/util/apiMessages";
+import { ApiErrorMessage, MissingRequiredFields, alreadyPaid, didNotGetOrderid, encryptedStringNotMatched, invalidRequest, notValidId, orderObjectDidNotMatched } from "@/lib/util/apiMessages";
 import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
 import { serverSideStripe } from "@/lib/util/stripe/stripe";
 import { decode, sign } from "jsonwebtoken";
 import { hasSymbols } from "@/lib/util/emailChecker";
 import { isValidObjectId } from "mongoose";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+
+interface I_PUT_Req_JSON {
+    order: string;
+    payment_status: "pending" | "success" | "failed";
+};
 
 export async function POST(req: NextRequest) {
     try {
@@ -60,22 +65,24 @@ export async function POST(req: NextRequest) {
             total_price,
             total_discount,
             payment_type,
-            tax,
-            is_paid: false
+            tax
         };
 
         if (delivary_status) orderObj.delivary_status = delivary_status;
 
-        const newOrder = await Orders.create(orderObj);
-
-        const encriptedOrderId = sign(newOrder._id.toString(), process.env.JWT_SECRET!);
+        //* insted of saving the order first encrypt the order object and use that on url
+        //* after successfully redirect to the success url we can save it
+        //* and for secourity save the encrypted string in token and save the object as well in string format
+        await connectWithMongo();
 
         //? after saving the order we will redirect user to payment
         if (payment_type === "stripe") {
+            const encriptedOrder = sign(JSON.stringify(orderObj), process.env.JWT_SECRET!);
             const session = await serverSideStripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 mode: 'payment',
-                success_url: `${process.env.DOMAIN}/profile/orders?payment=success&orderId=` + encriptedOrderId,
+                success_url: `${process.env.DOMAIN}/profile/orders?payment=success&order=` + encriptedOrder,
+                cancel_url: `${process.env.DOMAIN}/profile/orders?payment=failed&order=` + encriptedOrder,
                 line_items: products.map((obj) => {
                     const { current_price, primaryImgUrl, product_name, quantity = 1 } = obj;
 
@@ -93,11 +100,18 @@ export async function POST(req: NextRequest) {
                 })
             });
 
-            return NextResponse.json({
+            const response = NextResponse.json({
                 url: session.url,
                 success: true
             }, { status: 201 });
+
+            response.cookies.set('orderObject', JSON.stringify(orderObj), { httpOnly: true, maxAge: 60 * 60 });
+            response.cookies.set('encriptedOrder', encriptedOrder, { httpOnly: true, maxAge: 60 * 60 });
+
+            return response;
         };
+
+        await Orders.create(orderObj);
 
         return NextResponse.json({
             success: true
@@ -115,9 +129,9 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     try {
-        const { orderId, is_paid } = await req.json();
+        const { order, payment_status }: I_PUT_Req_JSON = await req.json();
 
-        if (!orderId) {
+        if (!order || !payment_status) {
             return NextResponse.json({
                 success: false,
                 error: invalidRequest,
@@ -125,40 +139,42 @@ export async function PUT(req: NextRequest) {
             }, { status: 400 });
         };
 
-        const decodedProductId = decode(orderId);
+        const encriptedOrder = req.cookies.get("encriptedOrder")?.value || '';
+        const orderObjectInString = req.cookies.get("orderObject")?.value || '';
 
-        //? checking if the id have symbol or not
-        const isProductIdHaveSymbol = hasSymbols(decodedProductId?.toString());
-
-        //? checking if the id valid or not
-        const isValidMongooDBId = !isProductIdHaveSymbol && isValidObjectId(decodedProductId);
-
-        if (!isValidMongooDBId) {
+        if (encriptedOrder !== order) {
             return NextResponse.json({
                 success: false,
                 error: invalidRequest,
-                problem: notValidId
+                problem: encryptedStringNotMatched
             }, { status: 400 });
         };
 
-        await connectWithMongo();
+        const decodedOrderObject = decode(order) as Order;
 
-        const order = await Orders.findById(decodedProductId);
-
-        if (order.is_paid) {
+        if (JSON.stringify(decodedOrderObject) !== orderObjectInString) {
             return NextResponse.json({
                 success: false,
                 error: invalidRequest,
-                problem: alreadyPaid
+                problem: orderObjectDidNotMatched
             }, { status: 400 });
-        }
-        order.is_paid = is_paid;
-        await order.save();
+        };
 
-        return NextResponse.json({
-            success: true
+        decodedOrderObject.payment_status = payment_status;
+
+        await connectWithMongo();
+        const newOrder = await Orders.create(decodedOrderObject);
+        console.log(newOrder);
+
+        const response = NextResponse.json({
+            success: true,
+            data: newOrder
         }, { status: 200 });
 
+        response.cookies.set('orderObject', '', { httpOnly: true });
+        response.cookies.set('encriptedOrder', '', { httpOnly: true });
+
+        return response;
 
     } catch (error: any) {
         console.log(error);

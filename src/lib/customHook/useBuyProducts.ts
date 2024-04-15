@@ -16,9 +16,14 @@ export function useOrderMutation() {
     return mutation;
 };
 
+type PropsType = {
+    order: string,
+    payment_status: string
+};
+
 export function useSetIsPaid() {
-    const setIsPaid = async (orderId: string) => {
-        const response = await axios.put(`/api/buy-products`, { is_paid: true, orderId });
+    const setIsPaid = async ({ order, payment_status }: PropsType) => {
+        const response = await axios.put(`/api/buy-products`, { order, payment_status });
         return response.data;
     };
 

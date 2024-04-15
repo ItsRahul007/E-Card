@@ -4,18 +4,17 @@ import SetIsPaid from './IsPaid';
 interface I_Orders {
     searchParams: {
         payment: string;
-        orderId: string;
+        order: string;
     };
 };
 
 const Orders: FC<I_Orders> = ({ searchParams }) => {
-    console.log(searchParams);
-    const orderId = searchParams.orderId || '';
+    const order = searchParams.order || '';
     const payment = searchParams.payment || '';
 
     return (
         <>
-            { orderId.length && payment.length && <SetIsPaid orderId={ orderId } /> }
+            { order.length && payment.length && <SetIsPaid order={ order } payment={ payment } /> }
             hello ji
         </>
     )

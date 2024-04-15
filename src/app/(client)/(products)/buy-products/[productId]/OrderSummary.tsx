@@ -118,9 +118,10 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
 
     orderMutation.mutate(orderObject, {
       onSuccess: (data) => {
-        toast.dismiss(); //! add a check if payment type is cod then they should be active
-        toast.success(orderSuccessMessage); //! add a check if payment type is cod then they should be active
-        console.log(data)
+        if (paymentType === 'cash-on-delivery') {
+          toast.dismiss();
+          toast.success(orderSuccessMessage);
+        };
         push(paymentType === 'stripe' ? data.url : '/profile/orders');
       },
       onError: () => {

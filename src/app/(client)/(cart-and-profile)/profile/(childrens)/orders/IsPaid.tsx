@@ -3,20 +3,19 @@
 import React, { FC, useEffect } from 'react';
 import { useSetIsPaid } from '@/lib/customHook/useBuyProducts';
 
-// http://localhost:3000/profile/orders?payment=success&orderId=eyJhbGciOiJIUzI1NiJ9.NjYxYmYzMzgyMDFkODQzYTk3OGQ0Yzdl.JAH_hpR2IrmXMrasBxaNBNT27LM9tBW1Zmbz7eCtpWU
-
 interface I_SetIsPaid {
-    orderId: string;
-}
+    order: string;
+    payment: string;
+};
 
-const IsPaid: FC<I_SetIsPaid> = ({ orderId }) => {
+const IsPaid: FC<I_SetIsPaid> = ({ order, payment }) => {
     const isPaidMutation = useSetIsPaid();
 
     useEffect(() => {
-        if (orderId.length) {
-            isPaidMutation.mutate(orderId);
+        if (order.length) {
+            isPaidMutation.mutate({ order, payment_status: payment });
         }
-    }, [orderId]);
+    }, []);
 
 
     return (

@@ -72,10 +72,6 @@ const ordersModel = new Schema({
         enum: ["pending", "success", "failed"],
         default: "pending"
     },
-    is_paid: {
-        type: Boolean,
-        default: false
-    }
 }, { timestamps: true, get: (time: any) => time.toDateString() });
 
 const Orders = models.orders || model("orders", ordersModel);
