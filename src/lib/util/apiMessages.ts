@@ -42,8 +42,8 @@ export const notValidId = "Not a valid id";
 export const alreadyPaid = 'Already paid';
 export const encryptedStringNotMatched = "Encrypted string not matched";
 export const orderObjectDidNotMatched = "Order object didn't matched";
-
-//* related product
+export const orderPlacied = "Order placed successfully";
+export const paymentFailed = "Payment failed please try again";
 
 
 //* single product

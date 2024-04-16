@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkAuth } from "@/lib/util/checkAuth";
 import Orders from "@/lib/model/ordersSchema";
-import { ApiErrorMessage, MissingRequiredFields, alreadyPaid, didNotGetOrderid, encryptedStringNotMatched, invalidRequest, notValidId, orderObjectDidNotMatched } from "@/lib/util/apiMessages";
+import { ApiErrorMessage, MissingRequiredFields, alreadyPaid, didNotGetOrderid, encryptedStringNotMatched, invalidRequest, notValidId, orderObjectDidNotMatched, orderPlacied, paymentFailed } from "@/lib/util/apiMessages";
 import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
 import { serverSideStripe } from "@/lib/util/stripe/stripe";
 import { decode, sign } from "jsonwebtoken";
@@ -70,12 +70,8 @@ export async function POST(req: NextRequest) {
 
         if (delivary_status) orderObj.delivary_status = delivary_status;
 
-        //* insted of saving the order first encrypt the order object and use that on url
-        //* after successfully redirect to the success url we can save it
-        //* and for secourity save the encrypted string in token and save the object as well in string format
         await connectWithMongo();
 
-        //? after saving the order we will redirect user to payment
         if (payment_type === "stripe") {
             const encriptedOrder = sign(JSON.stringify(orderObj), process.env.JWT_SECRET!);
             const session = await serverSideStripe.checkout.sessions.create({
@@ -160,14 +156,26 @@ export async function PUT(req: NextRequest) {
             }, { status: 400 });
         };
 
+        if (payment_status === "failed") {
+            const response = NextResponse.json({
+                success: true,
+                message: paymentFailed
+            }, { status: 200 });
+
+            response.cookies.set('orderObject', '', { httpOnly: true });
+            response.cookies.set('encriptedOrder', '', { httpOnly: true });
+
+            return response;
+        };
+
         decodedOrderObject.payment_status = payment_status;
 
         await connectWithMongo();
         const newOrder = await Orders.create(decodedOrderObject);
-        console.log(newOrder);
 
         const response = NextResponse.json({
             success: true,
+            message: orderPlacied,
             data: newOrder
         }, { status: 200 });
 
