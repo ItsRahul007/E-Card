@@ -16,7 +16,7 @@ interface I_PUT_Req_JSON {
 
 export async function POST(req: NextRequest) {
     try {
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };

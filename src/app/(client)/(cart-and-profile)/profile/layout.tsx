@@ -1,22 +1,19 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/all-products/Nav';
 import { ReactNode } from 'react';
-import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
-import User from '@/lib/model/usersSchema';
-import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 import LeftMenus from '@/components/common/profile-components/LeftMenus';
+import axios from 'axios';
+import { ErrorMessage } from '@/lib/util/toastMessages';
+import toast from 'react-hot-toast';
+import User from '@/lib/model/usersSchema';
+import { T_JwtVerifyDataType } from '@/lib/types/authToken-type';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { decode } from 'jsonwebtoken';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
     description: 'An E-Commerce web app where user can buy any product or they can add any product to their persional card and also they can list any of their fevorite item or product to their fevorite card.'
-}
-
-type I_JwtVerifyDataType = {
-    user: {
-        id: String
-    },
-    iat: number | string
 }
 
 export default async function Layout({
@@ -24,13 +21,14 @@ export default async function Layout({
 }: {
     children: ReactNode;
 }) {
-    const allCookies = cookies();
-    const authToken = allCookies.get('authToken');
-    const data = jwt.verify(authToken?.value!, process.env.JWT_SECRET!) as I_JwtVerifyDataType;
+    const authToken = cookies().get('authToken')?.value || '';
+    if (authToken.length <= 0) redirect('/login');
 
-    await connectWithMongo();
-    const { name } = await User.findById(data.user.id).select('name');
-    if (!name) throw new Error('Something went wrong please try again');
+    const decodedAuthToken = await decode(authToken) as T_JwtVerifyDataType;
+
+    const user = await User.findById(decodedAuthToken.user.id).select('name');
+
+    const { name } = user;
 
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-inter'>

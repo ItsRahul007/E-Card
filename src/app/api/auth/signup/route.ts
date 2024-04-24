@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import isValidEmail from "@/lib/util/emailChecker";
 import User from "@/lib/model/usersSchema";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
         const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
 
-        const authToken = jwt.sign(data, JWT_SECRET!);
+        const authToken = sign(data, JWT_SECRET!);
 
         const responce = NextResponse.json({
             success: true,

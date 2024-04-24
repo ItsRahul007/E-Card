@@ -6,6 +6,7 @@ import React from 'react';
 import profileImage from "/public/images/profile-pic.png";
 import classNames from '@/lib/util/classNames';
 import SubLinks from './SubLinks';
+import { useRouter } from 'next/navigation';
 
 interface I_LeftMenus {
     closeSlider?: () => void;
@@ -14,6 +15,8 @@ interface I_LeftMenus {
 };
 
 const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, name }) => {
+    const router = useRouter();
+
     return (
         <div
             className={ classNames(
@@ -108,8 +111,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                 />
 
                 {/* logout */ }
-                <Link href='/logout' className={ `h-auto w-full cursor-pointer group ${!isSlider && 'border-b'}` }>
-                    {/* <div> */ }
+                <div className={ `h-auto w-full cursor-pointer group ${!isSlider && 'border-b'}` } onClick={ () => router.push('/logout') }>
                     <h3
                         className={ classNames(
                             'uppercase flex items-center py-3',
@@ -122,8 +124,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                         </span>
                         <span className='font-medium text-base group-hover:text-appTheme-600'>Logout</span>
                     </h3>
-                    {/* </div> */ }
-                </Link>
+                </div>
             </div>
         </div>
     )

@@ -40,7 +40,7 @@ const CartItems = () => {
                 {/* single cart item */ }
                 {
                     isLoading ? <PageLoading /> :
-                        data.cartProducts.length > 0 ? data.cartProducts.map((item: singleCartItemType) =>
+                        data.cartProducts && data.cartProducts.length > 0 ? data.cartProducts.map((item: singleCartItemType) =>
                             <SingleCartItem
                                 key={ item._id }
                                 refetch={ refetch }

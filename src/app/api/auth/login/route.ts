@@ -1,12 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import isValidEmail from "@/lib/util/emailChecker";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import User from "@/lib/model/usersSchema";
-import { authTokenType } from "@/lib/types/authToken-type";
 import { ApiErrorMessage, MissingRequiredFields, addressUpdatedSuccessfully, invalidCriteria, invalidEmail, userNotFound, wrongPassword } from "@/lib/util/apiMessages";
 import { checkAuth } from "@/lib/util/checkAuth";
+
+export async function GET(req: NextRequest) {
+    try {
+        const isUserAuthenticated = await checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
+        }
+
+        await connectWithMongo();
+        const response = await User.findById(isUserAuthenticated.userId).select('-password');
+
+        return NextResponse.json({ success: true, user: response }, { status: 200 });
+
+    } catch (error: any) {
+        console.log(error);
+        return NextResponse.json({ error: ApiErrorMessage, problem: error.message, success: false }, { status: 500 });
+    }
+};
 
 export async function POST(req: NextRequest) {
     try {
@@ -42,7 +59,7 @@ export async function POST(req: NextRequest) {
 
         const JWT_SECRET = process.env.JWT_SECRET;
 
-        const authToken = jwt.sign(data, JWT_SECRET!);
+        const authToken = sign(data, JWT_SECRET!);
 
         const responce = NextResponse.json({
             success: true,
@@ -74,7 +91,7 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: MissingRequiredFields, success: false }, { status: 400 });
         };
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };

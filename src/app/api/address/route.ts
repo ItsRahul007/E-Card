@@ -6,7 +6,7 @@ import { ApiErrorMessage, addressAddedSuccessfully, addressDeletedSuccessfully, 
 
 export async function GET(req: NextRequest) {
     try {
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
             updateObject.$push = { addresses };
         }
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };
@@ -92,7 +92,7 @@ export async function PUT(req: NextRequest) {
             updateObject.$set = { "addresses.$[elem]": { full_name, phone_number, address } };
         }
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };
@@ -129,7 +129,7 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: invalidAddress, success: false }, { status: 400 });
         }
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };

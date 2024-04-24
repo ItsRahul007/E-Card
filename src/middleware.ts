@@ -53,10 +53,9 @@ export function middleware(req: NextRequest) {
 
     if (pathname.startsWith('/logout')) {
         const response = NextResponse.redirect(new URL('/login', req.url));
-        response.cookies.delete("authToken");
+        response.cookies.set("authToken", '', { httpOnly: true, maxAge: 60 * 60 });
         return response;
     }
-
 
     return NextResponse.next();
 }

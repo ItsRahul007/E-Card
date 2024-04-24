@@ -28,7 +28,7 @@ const TotalPeice = () => {
                 tax: 0
             });
 
-            data.cartProducts.map((obj: any) => {
+            data.cartProducts && data.cartProducts.map((obj: any) => {
                 setPrice((prev: any) => ({
                     subtotal: prev.subtotal + (obj.price * obj.quantity),
                     discount: prev.discount + ((obj.price - obj.current_price) * obj.quantity),
@@ -41,7 +41,7 @@ const TotalPeice = () => {
 
     return (
         <>
-            { !isLoading && data.cartProducts.length > 0 &&
+            { !isLoading && data.cartProducts && data.cartProducts.length > 0 &&
                 <div className='sm:w-full w-80 h-auto bg-white border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2'>
                     <div className='w-full flex flex-col font-rubik text-zinc-600 text-sm'>
                         <div className='flex justify-between h-9'>

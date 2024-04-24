@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     try {
         const { productId, ratingNumber, comment } = await req.json();
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };

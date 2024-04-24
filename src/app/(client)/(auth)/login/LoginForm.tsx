@@ -34,7 +34,6 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
         toast.dismiss();
 
         //* If success then saving the authToken to localStorage
-        localStorage.setItem("authToken", response.data.authToken);
         toast.success("Welcome to E-Card");
         router.back();
 
@@ -53,7 +52,6 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
         toast.dismiss();
 
         //* If success then saving the authToken to localStorage
-        localStorage.setItem("authToken", response.data.authToken);
         toast.success("Welcome to E-Card");
         router.back();
 

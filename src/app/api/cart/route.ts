@@ -37,7 +37,7 @@ const getProductById = async (cartArr: cartItems[]) => {
 
 export async function GET(req: NextRequest) {
     try {
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 
         if (!productId) return NextResponse.json({ error: invalidRequest, problem: didNotGetProductId, success: false }, { status: 401 });
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };
@@ -111,7 +111,7 @@ export async function PUT(req: NextRequest) {
 
         if (!productId) return NextResponse.json({ error: invalidRequest, problem: didNotGetProductId, success: false }, { status: 401 });
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };
@@ -151,7 +151,7 @@ export async function DELETE(req: NextRequest) {
 
         if (!productId) return NextResponse.json({ error: invalidRequest, problem: didNotGetProductId, success: false }, { status: 401 });
 
-        const isUserAuthenticated = checkAuth(req);
+        const isUserAuthenticated = await checkAuth(req);
         if (!isUserAuthenticated.success) {
             return isUserAuthenticated.response;
         };

@@ -19,6 +19,6 @@ export default async function connectWithMongo() {
     } catch (error) {
         isAlreadyConnected = false;
         console.log(error);
-        return { connected: false, message: "Something went wrong" };
+        process.exit(1)
     }
 }

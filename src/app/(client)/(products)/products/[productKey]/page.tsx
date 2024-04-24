@@ -5,7 +5,6 @@ import Filter from '@/components/filters/Filter';
 import { Metadata } from 'next';
 import { getProductDescription } from '@/lib/gimini-AI/giminiAI';
 import { cookies } from 'next/headers';
-import { sign } from 'jsonwebtoken';
 
 interface I_AllProduct {
   params: { productKey: string };

@@ -4,10 +4,8 @@ import Button from '@/components/common/buttons/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 import { cookies } from 'next/headers';
-import NavOptions from './NavOptions';
 
 const Banner: React.FC = () => {
-  const isUserLoggedIn = cookies().get('authToken') ? true : false;
 
   return (
     <header className={ `${style.banner} text-white` } id="banner_component">
@@ -28,7 +26,12 @@ const Banner: React.FC = () => {
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/">Become a seller</Link>
             </li>
-            <NavOptions isUserLoggedIn={ isUserLoggedIn ? true : false } />
+            <li className='cursor-pointer list-none hover:text-[#f26522]'>
+              <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
+            </li>
+            <li className='cursor-pointer list-none hover:text-[#f26522]'>
+              <Link href="/profile">Profile <i className="ri-user-3-fill"></i></Link>
+            </li>
           </ul>
         </div>
       </nav>
