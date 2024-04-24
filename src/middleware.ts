@@ -51,6 +51,12 @@ export function middleware(req: NextRequest) {
         };
     }
 
+    if (pathname.startsWith('/logout')) {
+        const response = NextResponse.redirect(new URL('/login', req.url));
+        response.cookies.delete("authToken");
+        return response;
+    }
+
 
     return NextResponse.next();
 }
@@ -64,6 +70,7 @@ export const config = {
         '/buy-products/:path*',
         '/cart',
         '/login',
+        '/logout',
         '/signup',
     ],
 }

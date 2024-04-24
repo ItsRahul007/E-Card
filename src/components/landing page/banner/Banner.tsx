@@ -3,8 +3,12 @@ import style from "@/app/style/style.module.css";
 import Button from '@/components/common/buttons/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
+import { cookies } from 'next/headers';
+import NavOptions from './NavOptions';
 
 const Banner: React.FC = () => {
+  const isUserLoggedIn = cookies().get('authToken') ? true : false;
+
   return (
     <header className={ `${style.banner} text-white` } id="banner_component">
       <BannerGSAP />
@@ -13,29 +17,18 @@ const Banner: React.FC = () => {
         <div className={ `bg-[#2b2a29] w-[70%] h-full relative ${style.nav_child} font-poppins font-semibold` }>
           <ul className='h-full w-full flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/products/all">Products</Link>
+              <Link href="/products/all">All Products</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Accessories</Link>
-            </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Jewellery</Link>
+              <Link href="/">Best Sales</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/">New Release</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Customer Service</Link>
+              <Link href="/">Become a seller</Link>
             </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
-            </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/favourite">Favourite <i className="ri-heart-fill font-thin"></i></Link>
-            </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/login">Login <i className="ri-login-box-fill font-thin"></i></Link>
-            </li>
+            <NavOptions isUserLoggedIn={ isUserLoggedIn ? true : false } />
           </ul>
         </div>
       </nav>

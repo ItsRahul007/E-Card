@@ -108,7 +108,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                 />
 
                 {/* logout */ }
-                <div className={ `h-auto w-full cursor-pointer group ${!isSlider && 'border-b'}` }>
+                <Link href='/logout' className={ `h-auto w-full cursor-pointer group ${!isSlider && 'border-b'}` }>
                     {/* <div> */ }
                     <h3
                         className={ classNames(
@@ -123,7 +123,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                         <span className='font-medium text-base group-hover:text-appTheme-600'>Logout</span>
                     </h3>
                     {/* </div> */ }
-                </div>
+                </Link>
             </div>
         </div>
     )
