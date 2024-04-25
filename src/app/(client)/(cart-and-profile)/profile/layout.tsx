@@ -2,9 +2,7 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/all-products/Nav';
 import { ReactNode } from 'react';
 import LeftMenus from '@/components/common/profile-components/LeftMenus';
-import User from '@/lib/model/usersSchema';
 import { cookies } from 'next/headers';
-import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',

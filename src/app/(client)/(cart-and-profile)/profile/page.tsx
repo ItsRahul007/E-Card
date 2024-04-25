@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { decode } from 'jsonwebtoken';
 import { T_JwtVerifyDataType } from '@/lib/types/authToken-type';
+import axios from 'axios';
+import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 
 const ProfileInformation: FC = async () => {
     const authToken = cookies().get('authToken')?.value || '';
@@ -12,6 +14,7 @@ const ProfileInformation: FC = async () => {
 
     const decodedAuthToken = await decode(authToken) as T_JwtVerifyDataType;
 
+    await connectWithMongo();
     const user = await User.findById(decodedAuthToken.user.id).select('name email mobile_number');
 
     const { name, email, mobile_number } = user;
