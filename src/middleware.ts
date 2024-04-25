@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 //! authenticating request
 export function middleware(req: NextRequest) {
-    const authToken = req.cookies.get("authToken");
+    const authToken = req.cookies.get("authToken")?.value || false;
     const { pathname } = req.nextUrl;
 
     //? if it's an api request

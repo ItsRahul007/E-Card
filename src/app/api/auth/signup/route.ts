@@ -46,6 +46,7 @@ export async function POST(req: Request) {
         }, { status: 200 });
 
         responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
+        responce.cookies.set("userName", user.name, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
 
         return responce;
     } catch (error) {

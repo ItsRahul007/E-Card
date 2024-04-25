@@ -2,14 +2,9 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/all-products/Nav';
 import { ReactNode } from 'react';
 import LeftMenus from '@/components/common/profile-components/LeftMenus';
-import axios from 'axios';
-import { ErrorMessage } from '@/lib/util/toastMessages';
-import toast from 'react-hot-toast';
 import User from '@/lib/model/usersSchema';
-import { T_JwtVerifyDataType } from '@/lib/types/authToken-type';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { decode } from 'jsonwebtoken';
+import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
@@ -21,14 +16,7 @@ export default async function Layout({
 }: {
     children: ReactNode;
 }) {
-    const authToken = cookies().get('authToken')?.value || '';
-    if (authToken.length <= 0) redirect('/login');
-
-    const decodedAuthToken = await decode(authToken) as T_JwtVerifyDataType;
-
-    const user = await User.findById(decodedAuthToken.user.id).select('name');
-
-    const { name } = user;
+    const name = cookies().get('userName')?.value || 'Ecard user';
 
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-inter'>
