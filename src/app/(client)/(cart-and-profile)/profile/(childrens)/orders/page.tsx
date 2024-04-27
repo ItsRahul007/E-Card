@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import SetIsPaid from './IsPaid';
+import OrderTableBody from './OrderTableBody';
 
 interface I_Orders {
     searchParams: {
@@ -14,8 +15,8 @@ const Orders: FC<I_Orders> = ({ searchParams }) => {
 
     return (
         <>
-            { order.length && payment.length && <SetIsPaid order={ order } payment={ payment } /> }
-            hello ji
+            <span className='hidden'>{ (order.length && payment.length) && (<SetIsPaid order={ order } payment={ payment } />) }</span>
+            <OrderTableBody />
         </>
     )
 }

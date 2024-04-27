@@ -1,6 +1,32 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { T_orderObj } from "../types/orderTypes";
+
+export function useGetOrders() {
+    async function getOrders() {
+        const res = await axios.get("/api/buy-products");
+        return res.data;
+    };
+
+    const {
+        data,
+        refetch,
+        isError,
+        error,
+        isLoading,
+    } = useQuery({
+        queryKey: ["orders"],
+        queryFn: getOrders,
+    });
+
+    return {
+        data,
+        refetch,
+        isError,
+        error,
+        isLoading
+    };
+}
 
 export function useOrderMutation() {
     const setOrder = async (orderObject: T_orderObj) => {
@@ -10,7 +36,7 @@ export function useOrderMutation() {
 
     const mutation = useMutation({
         mutationFn: setOrder,
-        mutationKey: ["place-order"]
+        mutationKey: ["orders"]
     });
 
     return mutation;
@@ -29,7 +55,7 @@ export function useSetIsPaid() {
 
     const mutation = useMutation({
         mutationFn: setIsPaid,
-        mutationKey: ["place-order"]
+        mutationKey: ["orders"]
     });
 
     return mutation;

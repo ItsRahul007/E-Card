@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import profileImage from "/public/images/profile-pic.png";
 import classNames from '@/lib/util/classNames';
 import SubLinks from './SubLinks';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface I_LeftMenus {
     closeSlider?: () => void;
@@ -14,8 +14,13 @@ interface I_LeftMenus {
     name?: string;
 };
 
+type T_CurrentTab = '/profile' | '/profile/addresses' | '/profile/orders' | '/profile/coupons' | '/profile/review';
+
 const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, name }) => {
     const router = useRouter();
+    const pathName = usePathname() as T_CurrentTab;
+
+    const [currentTab, setCurrentTab] = useState<T_CurrentTab>(pathName);
 
     return (
         <div
@@ -58,11 +63,17 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                 ) }
             >
                 {/* my orders */ }
-                <Link onClick={ closeSlider } href="/profile/orders"
+                <Link
+                    onClick={ () => {
+                        closeSlider();
+                        setCurrentTab('/profile/orders')
+                    } }
+                    href="/profile/orders"
                     className={ classNames(
                         "py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer",
-                        isSlider ? 'text-slate-100'
-                            : 'text-zinc-500'
+                        isSlider ? 'text-slate-100 bg-opacity-5'
+                            : 'text-zinc-500',
+                        currentTab === '/profile/orders' ? 'bg-appTheme-50 !text-appTheme-600' : ''
                     ) }
                 >
                     <span>
@@ -80,10 +91,12 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                     headerText='account settings'
                     closeSlider={ closeSlider }
                     isSlider={ isSlider }
+                    setCurrentTab={ (tab: T_CurrentTab) => setCurrentTab(tab) }
+                    currentTab={ currentTab }
                     subLinks={ [
                         {
                             text: 'profile information',
-                            link: '/profile/'
+                            link: '/profile'
                         },
                         {
                             text: 'Manage Addresses',
@@ -98,6 +111,8 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                     headerIcon={ <i className="ri-folder-user-fill"></i> }
                     closeSlider={ closeSlider }
                     isSlider={ isSlider }
+                    setCurrentTab={ (tab: T_CurrentTab) => setCurrentTab(tab) }
+                    currentTab={ currentTab }
                     subLinks={ [
                         {
                             text: "My coupons",

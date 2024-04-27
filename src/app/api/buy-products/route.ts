@@ -14,6 +14,34 @@ interface I_PUT_Req_JSON {
     payment_status: "pending" | "success" | "failed";
 };
 
+export async function GET(req: NextRequest) {
+    try {
+        const isUserAuthenticated = await checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
+        };
+        const { userId } = isUserAuthenticated;
+
+        await connectWithMongo();
+
+        const orders = await Orders.find({ customer_id: userId }).select('-customer_id -__v -createdAt -updatedAt');
+
+        return NextResponse.json({
+            success: true,
+            data: orders ? orders : []
+        }, { status: 200 });
+
+
+    } catch (error: any) {
+        console.log(error);
+        return NextResponse.json({
+            error: ApiErrorMessage,
+            problem: error.message,
+            success: false
+        }, { status: 500 });
+    };
+}
+
 export async function POST(req: NextRequest) {
     try {
         const isUserAuthenticated = await checkAuth(req);
