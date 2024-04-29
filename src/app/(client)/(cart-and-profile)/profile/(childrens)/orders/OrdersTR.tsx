@@ -8,11 +8,20 @@ interface I_OrdersTR {
     payment_status: string;
     delivary_status: string;
     total_price: number | string;
+    totalProducts: number;
     handleOnDelete?: () => void;
     _id: string;
 };
 
-const OrdersTR: React.FC<I_OrdersTR> = ({ primaryImgUrl, payment_status, delivary_status, total_price, _id, handleOnDelete }) => {
+const OrdersTR: React.FC<I_OrdersTR> = ({
+    totalProducts,
+    primaryImgUrl,
+    payment_status,
+    delivary_status,
+    total_price,
+    _id,
+    handleOnDelete
+}) => {
     return (
         <tr className='hover:bg-appTheme-50 hover:text-appTheme-700 group font-normal'>
             <td className="border px-4 py-1 truncate max-w-[18rem] sm:max-w-[24rem]">
@@ -26,6 +35,7 @@ const OrdersTR: React.FC<I_OrdersTR> = ({ primaryImgUrl, payment_status, delivar
                             objectFit: "contain"
                         } }
                     />
+                    <div className='h-full text-center my-auto font-normal'>{ totalProducts > 1 && '+ ' + (totalProducts - 1) }</div>
                 </div>
             </td>
             <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem]">{ payment_status }</td>
@@ -38,7 +48,7 @@ const OrdersTR: React.FC<I_OrdersTR> = ({ primaryImgUrl, payment_status, delivar
                     type='button'
                     onClick={ handleOnDelete }
                 />
-                <Link href={ `/orders/${_id}` } target='_blank' className='px-2 py-1 rounded-full hover:text-blue-600 group-hover:text-blue-600'>
+                <Link href={ `/profile/orders/${_id}` } target='_blank' className='px-2 py-1 rounded-full hover:text-blue-600 group-hover:text-blue-600'>
                     <i className="ri-share-circle-fill"></i>
                 </Link>
             </td>

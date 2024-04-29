@@ -59,4 +59,22 @@ export function useSetIsPaid() {
     });
 
     return mutation;
+};
+
+export function useCancleOrder() {
+    const deleteOrder = async (_id: string) => {
+        const response = await axios({
+            method: 'delete',
+            url: `/api/buy-products`,
+            data: { _id },
+        });
+        return response.data;
+    };
+
+    const mutation = useMutation({
+        mutationFn: deleteOrder,
+        mutationKey: ["orders"]
+    });
+
+    return mutation;
 }

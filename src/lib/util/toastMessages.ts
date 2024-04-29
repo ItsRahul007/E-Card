@@ -16,3 +16,6 @@ export const reviewAddesSuccessMessage = "Review added successfully";
 //? order messages
 export const placingOrder = 'Placing order...';
 export const orderSuccessMessage = 'Order placed successfully!';
+export const canclingOrder = 'Cancling order...';
+export const orderCancelled = 'Order cancelled successfully!';
+// export const orderUpdated = 'Order updated successfully!';

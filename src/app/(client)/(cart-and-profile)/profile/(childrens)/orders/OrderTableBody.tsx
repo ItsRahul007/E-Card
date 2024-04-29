@@ -1,24 +1,58 @@
 'use client';
 
 import PageLoading from '@/components/common/loading/PageLoading';
-import { useGetOrders } from '@/lib/customHook/useBuyProducts';
-import React, { useState } from 'react'
+import { useCancleOrder, useGetOrders } from '@/lib/customHook/useBuyProducts';
+import React, { useCallback, useState } from 'react'
 import OrdersTR from './OrdersTR';
 import ConfirmationDialog from '@/components/common/confirmation/ConfirmationDialog';
+import toast from 'react-hot-toast';
+import { ErrorMessage, canclingOrder, orderCancelled } from '@/lib/util/toastMessages';
 
 const OrderTableBody = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [orderId, setOrderId] = useState<string>('');
+
     const {
         data,
         isLoading,
+        refetch
     } = useGetOrders();
+
+    const cancleOrderMutation = useCancleOrder();
+
+    const cancleOrder = () => {
+        setIsOpen(false);
+        toast.loading(canclingOrder)
+        cancleOrderMutation.mutate(orderId, {
+            onSuccess: () => {
+                setIsOpen(false);
+                refetch();
+                setOrderId('');
+                toast.dismiss();
+                toast.success(orderCancelled)
+            },
+            onError: (err) => {
+                setIsOpen(false);
+                setOrderId('');
+                toast.dismiss();
+                toast.error(ErrorMessage);
+                console.log(err);
+            },
+        })
+    }
 
     return (
         <div className='h-auto w-full overflow-x-auto text-zinc-800'>
             { isOpen &&
                 <ConfirmationDialog
-                    onCancel={ () => setIsOpen(false) }
-                    onConfirm={ () => setIsOpen(false) }
+                    onCancel={ () => {
+                        setIsOpen(false);
+                        setOrderId('');
+                    } }
+                    onConfirm={ () => {
+                        setIsOpen(false);
+                        cancleOrder();
+                    } }
                     text='Are you sure you want to cancle this order?'
                 />
             }
@@ -40,11 +74,15 @@ const OrderTableBody = () => {
                             return <OrdersTR
                                 _id={ _id }
                                 key={ _id }
-                                delivary_status={ payment_status }
-                                payment_status={ delivary_status }
+                                delivary_status={ delivary_status }
+                                payment_status={ payment_status }
                                 total_price={ total_price }
                                 primaryImgUrl={ products[0].primaryImgUrl }
-                                handleOnDelete={ () => setIsOpen(true) }
+                                totalProducts={ products.length }
+                                handleOnDelete={ () => {
+                                    setIsOpen(true);
+                                    setOrderId(_id);
+                                } }
                             />
                         })
                     }

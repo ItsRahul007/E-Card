@@ -220,4 +220,48 @@ export async function PUT(req: NextRequest) {
             success: false
         }, { status: 500 });
     };
-}
+};
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const isUserAuthenticated = await checkAuth(req);
+        if (!isUserAuthenticated.success) {
+            return isUserAuthenticated.response;
+        };
+
+        const { _id } = await req.json();
+
+        if (!_id) {
+            return NextResponse.json({
+                success: false,
+                error: "Didn't get order id"
+            }, { status: 400 });
+        };
+
+        await connectWithMongo();
+        const deletedOrder = await Orders.findByIdAndDelete(_id);
+
+        console.log(deletedOrder);
+
+        if (!deletedOrder) {
+            return NextResponse.json({
+                success: false,
+                error: "Order not found"
+            }, { status: 404 });
+        };
+
+        return NextResponse.json({
+            success: true,
+            message: "Order deleted successfully",
+            data: deletedOrder
+        }, { status: 200 });
+
+    } catch (error: any) {
+        console.log(error);
+        return NextResponse.json({
+            error: ApiErrorMessage,
+            problem: error.message,
+            success: false
+        }, { status: 500 });
+    }
+};
