@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import profileImage from "/public/images/profile-pic.png";
 import classNames from '@/lib/util/classNames';
 import SubLinks from './SubLinks';
@@ -21,6 +21,11 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
     const pathName = usePathname() as T_CurrentTab;
 
     const [currentTab, setCurrentTab] = useState<T_CurrentTab>(pathName);
+
+    useEffect(() => {
+        setCurrentTab(pathName);
+    }, [pathName]);
+
 
     return (
         <div
@@ -73,7 +78,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                         "py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer",
                         isSlider ? 'text-slate-100 bg-opacity-5'
                             : 'text-zinc-500',
-                        currentTab === '/profile/orders' ? 'bg-appTheme-50 !text-appTheme-600' : ''
+                        currentTab.startsWith('/profile/orders') ? 'bg-appTheme-50 !text-appTheme-600' : ''
                     ) }
                 >
                     <span>
@@ -91,7 +96,6 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                     headerText='account settings'
                     closeSlider={ closeSlider }
                     isSlider={ isSlider }
-                    setCurrentTab={ (tab: T_CurrentTab) => setCurrentTab(tab) }
                     currentTab={ currentTab }
                     subLinks={ [
                         {
@@ -111,7 +115,6 @@ const LeftMenus: React.FC<I_LeftMenus> = ({ closeSlider = () => { }, isSlider, n
                     headerIcon={ <i className="ri-folder-user-fill"></i> }
                     closeSlider={ closeSlider }
                     isSlider={ isSlider }
-                    setCurrentTab={ (tab: T_CurrentTab) => setCurrentTab(tab) }
                     currentTab={ currentTab }
                     subLinks={ [
                         {

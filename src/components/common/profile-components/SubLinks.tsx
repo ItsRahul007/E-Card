@@ -13,11 +13,10 @@ interface I_SubLinks {
         link: T_CurrentTab;
     }[];
     isSlider?: boolean;
-    setCurrentTab?: (tab: T_CurrentTab) => void;
     currentTab?: T_CurrentTab;
 };
 
-const SubLinks: FC<I_SubLinks> = ({ closeSlider, headerText, headerIcon, subLinks, isSlider, currentTab, setCurrentTab }) => {
+const SubLinks: FC<I_SubLinks> = ({ closeSlider, headerText, headerIcon, subLinks, isSlider, currentTab }) => {
     return (
         <div className='h-auto w-full border-b'>
             <div>
@@ -36,10 +35,7 @@ const SubLinks: FC<I_SubLinks> = ({ closeSlider, headerText, headerIcon, subLink
                 { subLinks.map(obj =>
                     <Link
                         key={ obj.link }
-                        onClick={ () => {
-                            closeSlider();
-                            setCurrentTab && setCurrentTab(obj.link);
-                        } }
+                        onClick={ () => closeSlider() }
                         href={ obj.link }
                         className={ classNames(
                             'cursor-pointer py-2 w-full text-sm duration-150 mb-1',
