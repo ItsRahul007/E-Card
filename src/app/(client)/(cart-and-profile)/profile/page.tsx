@@ -17,7 +17,7 @@ const ProfileInformation: FC = async () => {
     await connectWithMongo();
     const user = await User.findById(decodedAuthToken.user.id).select('name email mobile_number');
 
-    const { name, email, mobile_number } = user;
+    const { name, email } = user;
 
     return (
         <section className='h-auto w-full flex flex-col gap-5 sm:gap-10 sm:px-4 px-2 sm:py-3 py-2'>
@@ -38,7 +38,7 @@ const ProfileInformation: FC = async () => {
                 <ProfileSingleCompo
                     headingText='Mobile number'
                     name='mobile_number'
-                    inputValue={ mobile_number ? mobile_number : '' }
+                    inputValue={ user.mobile_number ? user.mobile_number : '' }
                     inputType='number'
                     placeholder='Enter your mobile number'
                 />

@@ -46,6 +46,12 @@
   justify-content: center;
 }
 
+@media only screen and (max-width: 640px) {
+  .login_image {
+    background-image: url("/images/auth-bg-for-sm.png");
+  }
+}
+
 .parent_glass {
   height: 100%;
   width: 100%;
@@ -54,13 +60,9 @@
 }
 
 .glass {
-  min-height: 30rem;
-  width: 25.5rem;
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 0 20px #000;
-  position: absolute;
-  z-index: inherit;
 }
 
 .half_star {

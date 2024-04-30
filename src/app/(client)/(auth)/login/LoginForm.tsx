@@ -64,9 +64,12 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
   };
 
   return (
-    <form className={ style.glass + ` ${signup && "px-1"}` } onSubmit={ onSubmit } >
-      <div className="h-[20%] w-full flex flex-col gap-2 items-center justify-center text-white mt-2">
-        <h4 className={ "text-4xl font-poppins" }>{ signup ? signup : "Login" }</h4>
+    <form
+      className={ style.glass + ` ${signup && "px-1"} min-h-[30rem] sm:w-[25.5rem] w-80 rounded-[20px] absolute py-2` }
+      onSubmit={ onSubmit }
+    >
+      <div className="h-[20%] w-full flex flex-col gap-2 items-center justify-center text-white">
+        <h4 className={ "text-4xl font-poppins font-bold" }>{ signup ? signup : "Login" }</h4>
         <p className={ "text-white font-roboto" }>{ signup ? signup : "Login" } to continue shopping</p>
       </div>
       <div className="w-full h-[60%] flex flex-col items-center gap-3 mt-4">
@@ -74,7 +77,7 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
           <InputCompo
             type="text"
             name="name"
-            placeholder="Enter your name"
+            placeholder="Enter your full Name"
             isRequired={ true }
             value={ inputValue.name }
             onChange={ onInputChange }
