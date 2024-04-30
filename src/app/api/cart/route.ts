@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
         };
 
         //! if the given product id is already exists
-        if (user.cart.includes({ productId })) {
+        if (user.cart.some((item: any) => item.productId === productId)) {
             return NextResponse.json({ error: productAlreadyExistsInCart, success: false }, { status: 400 });
         };
 

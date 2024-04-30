@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetCartItems, useSetCartItems } from '@/lib/customHook/useCartItems';
-import { ErrorMessage, cartAddedSuccessMessage } from '@/lib/util/toastMessages';
+import { ErrorMessage, cartAddedSuccessMessage, cartItemRemovedSuccess, productAddingToCart, removingItemFromCart } from '@/lib/util/toastMessages';
 import { useRouter } from 'next/navigation';
 import React, { FC } from 'react';
 import toast from 'react-hot-toast';
@@ -36,16 +36,31 @@ const CartIconButton: FC<I_CartIconButton> = ({
         }
 
         if (isProductAddedToCart) {
-            toast.success('Item is already added to cart');
+            toast.loading(removingItemFromCart);
+            cartMutation.mutate({ productId: _id, method: 'delete' }, {
+                onSuccess: () => {
+                    toast.dismiss()
+                    refetchCartItems();
+                    toast.success(cartItemRemovedSuccess)
+                },
+                onError: (err: any) => {
+                    toast.dismiss()
+                    console.log(err);
+                    toast.error(err.response.data.error || ErrorMessage);
+                },
+            });
             return;
         }
 
+        toast.loading(productAddingToCart);
         cartMutation.mutate({ productId: _id, method: 'post' }, {
             onSuccess: () => {
+                toast.dismiss()
                 refetchCartItems();
                 toast.success(cartAddedSuccessMessage)
             },
             onError: (err: any) => {
+                toast.dismiss()
                 console.log(err);
                 toast.error(err.response.data.error || ErrorMessage);
             },

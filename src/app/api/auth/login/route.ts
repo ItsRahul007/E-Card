@@ -66,8 +66,8 @@ export async function POST(req: NextRequest) {
             authToken
         }, { status: 200 });
 
-        responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
         responce.cookies.set("userName", user.name, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
+        responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
 
         return responce;
     } catch (error: any) {
@@ -115,11 +115,15 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: userNotFound, success: false }, { status: 400 });
         };
 
-        return NextResponse.json({
+        const response = NextResponse.json({
             success: true,
             message: addressUpdatedSuccessfully,
             updatedData
         }, { status: 200 });
+
+        response.cookies.set('userName', updatedData.name, { maxAge: 60 * 60 * 24 * 5, });
+
+        return response;
 
 
     } catch (error: any) {

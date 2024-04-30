@@ -43,7 +43,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
             try {
                 toast.loading("Sending request");
                 const response = await axios.put("/api/auth/login", { [name]: inputValue });
-                console.log(response.data);
+                setIsEditAble(false);
                 toast.dismiss();
                 toast.success(response.data.message);
             } catch (error: any) {

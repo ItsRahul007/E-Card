@@ -2,7 +2,7 @@
 
 import PageLoading from '@/components/common/loading/PageLoading';
 import { useCancleOrder, useGetOrders } from '@/lib/customHook/useBuyProducts';
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react';
 import OrdersTR from './OrdersTR';
 import ConfirmationDialog from '@/components/common/confirmation/ConfirmationDialog';
 import toast from 'react-hot-toast';
