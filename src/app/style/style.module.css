@@ -14,6 +14,12 @@
   background-size: cover;
 }
 
+@media only screen and (max-width: 768px) {
+  .banner {
+    background-image: url("/images/banner-bg-for-md.png");
+  }
+}
+
 .nav_child::before {
   content: "";
   position: absolute;
