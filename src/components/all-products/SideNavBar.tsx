@@ -1,42 +1,59 @@
 "use client";
 
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import InputCompo from '../common/InputCompo';
 import IconButton from '../common/buttons/IconButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import FilterByPrice from '../filters/FilterByPrice';
-import Image from 'next/image';
-import profileImage from "/public/images/profile-pic.png";
 import LeftMenus from '../common/profile-components/LeftMenus';
 
 interface I_ProductNav {
     filters?: boolean;
     profile?: boolean;
     name?: string;
+    stopScrolling?: boolean;
 }
 
-const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name }) => {
+const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling }) => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const router = useRouter();
 
-    const closeSlider = () => {
-        setIsNavOpen(false)
+    const toggleScrolling = (enableScrolling: boolean) => {
+        document.body.style.overflow = !enableScrolling ? 'auto' : 'hidden';
     }
+
+    const closeSlider = () => {
+        setIsNavOpen(false);
+        stopScrolling && toggleScrolling(false);
+    };
+
+    useEffect(() => {
+        if (isNavOpen && stopScrolling) {
+            window.scroll({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }, [isNavOpen]);
+
 
     return (
         <>
             {/* sub nav icon */ }
             <span
                 className='h-full w-10 text-2xl min-[1281px]:hidden flex justify-start items-center ml-3 cursor-pointer'
-                onClick={ () => setIsNavOpen(true) }
+                onClick={ () => {
+                    setIsNavOpen(true);
+                    stopScrolling && toggleScrolling(true);
+                } }
             >
                 <i className="ri-menu-2-line"></i>
             </span>
 
             {/* side bar component */ }
-            <div className={ `h-screen w-screen absolute top-0 z-10 overflow-scroll flex 
+            <div className={ `h-screen w-screen absolute top-0 bottom-0 z-10 overflow-scroll flex 
                     ${isNavOpen ? "left-0 opacity-100" : "-left-[110vw] opacity-0"} ease-out duration-300
                 `}
             >

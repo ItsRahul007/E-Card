@@ -11,7 +11,7 @@ const Banner: React.FC = () => {
     <section className={ `${style.banner} text-white relative` } id="banner_component">
       <BannerGSAP />
       {/* the nav bar */ }
-      <nav id='banner-nav' className="w-full md:h-[70px] h-16 flex justify-center items-center relative z-10">
+      <nav id='banner-nav' className="w-full md:h-[70px] h-16 flex justify-center items-center relative z-50">
         <div className={ `bg-[#2b2a29] w-full md:w-4/5 lg:w-[70%] h-full relative ${style.nav_child} font-poppins font-semibold max-md:before:!content-none max-md:after:!content-none` }>
           <ul className='h-full w-full hidden md:flex justify-center items-center gap-6 text-base'>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
@@ -35,8 +35,7 @@ const Banner: React.FC = () => {
           </ul>
           <div className='flex md:hidden text-base h-full w-full items-center justify-between px-5'>
             <div>
-              {/* <i className="ri-menu-2-fill text-2xl"></i> */ }
-              <SideNavBar />
+              <SideNavBar stopScrolling />
             </div>
             <div className='flex gap-4'>
               <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>

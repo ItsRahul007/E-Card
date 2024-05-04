@@ -5,11 +5,11 @@ import FeatureProduct from "@/components/landing page/item/FeatureProduct";
 
 export default function Home() {
   return (
-    <>
+    <div className="bg-[#f5f7f9] relative">
       <Banner />
-      <BannerCard />
+      {/* <BannerCard /> */ }
       <FeatureProduct />
       <Footer />
-    </>
+    </div>
   );
 };
