@@ -1,14 +1,14 @@
 import Footer from "@/components/common/footer/Footer";
 import Banner from "@/components/landing page/banner/Banner";
-import BannerCard from "@/components/landing page/item/BannerCard";
-import FeatureProduct from "@/components/landing page/item/FeatureProduct";
+import FeatureProduct from "@/components/landing page/feature/FeatureProduct";
+import NewRelease from "@/components/landing page/new-release/NewRelease";
 
 export default function Home() {
   return (
-    <div className="bg-[#f5f7f9] relative">
+    <div className="bg-zinc-50 relative">
       <Banner />
-      {/* <BannerCard /> */ }
       <FeatureProduct />
+      <NewRelease />
       <Footer />
     </div>
   );

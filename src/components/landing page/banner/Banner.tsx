@@ -18,10 +18,10 @@ const Banner: React.FC = () => {
               <Link href="/products/all">All Products</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Best Sales</Link>
+              <Link href="#best-sales">Best Sales</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">New Release</Link>
+              <Link href="#new-release">New Release</Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/">Become a seller</Link>
@@ -55,7 +55,12 @@ const Banner: React.FC = () => {
           <div id='h-text-2'>YOUR FAVOURITE SHOPING</div>
         </h1>
         <div id='banner-btn'>
-          <Button className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg' />
+          <Link
+            href="/products/all"
+            className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg uppercase inline-block'
+          >
+            Shop now
+          </Link>
         </div>
       </div>
     </section>

@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className='!scroll-smooth'>
       <body
         className={ `font-inter
         ${inter.variable}
@@ -39,7 +39,6 @@ export default function RootLayout({
         ${ubuntu.variable}
         ${mukta.variable}
         ${noto_sans_khojki.variable}
-
       `}
       >
         <Provider>{ children }</Provider>
