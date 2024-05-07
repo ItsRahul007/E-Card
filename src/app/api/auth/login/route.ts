@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
         const data = {
             user: {
-                id: user.id
+                id: user._id
             }
         };
 

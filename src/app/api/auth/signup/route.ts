@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
         const data = {
             user: {
-                id: user.id
+                id: user._id
             }
         };
 

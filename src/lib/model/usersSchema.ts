@@ -10,6 +10,9 @@ const userModel = new Schema({
         type: String,
         unique: true,
     },
+    avatar: {
+        type: String,
+    },
     userRole: {
         type: String,
         enum: ["user", "seller", "admin"],
@@ -22,7 +25,10 @@ const userModel = new Schema({
     }],
     mobile_number: Number,
     password: String,
-    socialUser: Boolean,
+    socialUser: {
+        type: Boolean,
+        default: false
+    },
     cart: [{
         productId: {
             type: String,

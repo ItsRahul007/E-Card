@@ -8,6 +8,9 @@ import InputCompo from '@/components/common/InputCompo';
 import toast from 'react-hot-toast';
 import { loginWithEmailPassword, signupWithEmailPassword } from './authFunctions';
 import { useRouter } from 'next/navigation';
+import IconButton from '@/components/common/buttons/IconButton';
+import { signIn } from '@/app/api/auth/[...nextauth]/options';
+import SingInWithGoogle from '../google/SingInWithGoogle';
 
 interface I_LoginForm {
   signup?: string;
@@ -65,7 +68,6 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
 
   return (
     <form
-      className={ style.glass + ` ${signup && "px-1"} min-h-[30rem] sm:w-[25.5rem] w-80 rounded-[20px] absolute py-2` }
       onSubmit={ onSubmit }
     >
       <div className="h-[20%] w-full flex flex-col gap-2 items-center justify-center text-white">
@@ -115,11 +117,6 @@ const LoginForm: React.FC<I_LoginForm> = ({ signup }) => {
           className="p-2 px-4 bg-[#0d0827cc] mt-3 rounded-xl text-lg text-[#ffffffde] hover:text-cyan-400 hover:bg-[#060507cc] font-medium"
         />
         <p className="text-white">{ signup ? "Already" : "Don't" } have an account? <Link href={ `/${signup ? "login" : "signup"}` } className="text-blue-600 hover:decoration-blue-800 hover:underline font-semibold">{ signup ? "Login" : "Signup" }</Link></p>
-        <div className="w-full flex justify-center items-start gap-5 text-2xl text-slate-100 mt-3">
-          <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-google-fill" style={ { transition: "all ease .4s" } }></i></Link>
-          <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-facebook-fill" style={ { transition: "all ease .4s" } }></i></Link>
-          <Link href="/" className="p-2 px-3 rounded-full bg-[#0d0827cc] hover:text-cyan-400 hover:bg-black"><i className="ri-linkedin-fill" style={ { transition: "all ease .4s" } }></i></Link>
-        </div>
       </div>
     </form>
   )
