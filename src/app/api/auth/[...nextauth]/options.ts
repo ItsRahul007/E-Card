@@ -53,7 +53,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             },
         })
     ],
-    theme: {
-        colorScheme: "light",
-    },
 });

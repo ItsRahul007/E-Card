@@ -16,7 +16,7 @@ const SingInWithGoogle = async () => {
             className='w-11/12'
             action={ async () => {
                 "use server"
-                await signIn();
+                await signIn('google');
             } }
         >
             <button className='w-11/12 px-4 py-2 bg-[#0d0827cc] flex justify-center gap-4 items-center text-base rounded-lg' type='submit'>
