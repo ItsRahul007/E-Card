@@ -29,7 +29,7 @@ const CartItems = () => {
     }, []);
 
 
-    if (!isLoading && !data.success && isError) {
+    if (!isLoading && data && !data.success && isError) {
         console.log(data.problem || '');
         throw new Error(data.error);
     };

@@ -4,9 +4,28 @@ import Button from '@/components/common/buttons/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 import SideNavBar from '@/components/all-products/SideNavBar';
+import { T_SearchKeys } from '@/lib/types/productTyps';
+
+const searchKeys: T_SearchKeys[] = [
+  {
+    label: "All Products",
+    link: "/products/all"
+  },
+  {
+    label: "New Release",
+    link: "#new-release"
+  },
+  {
+    label: "Best Sales",
+    link: "#best-sales"
+  },
+  {
+    label: "Become a seller",
+    link: "#"
+  }
+];
 
 const Banner: React.FC = () => {
-
   return (
     <section className={ `${style.banner} text-white relative` } id="banner_component">
       <BannerGSAP />
@@ -14,18 +33,13 @@ const Banner: React.FC = () => {
       <nav id='banner-nav' className="w-full md:h-[70px] h-16 flex justify-center items-center relative z-50">
         <div className={ `bg-[#2b2a29] w-full md:w-4/5 lg:w-[70%] h-full relative ${style.nav_child} font-poppins font-semibold max-md:before:!content-none max-md:after:!content-none` }>
           <ul className='h-full w-full hidden md:flex justify-center items-center gap-6 text-base'>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/products/all">All Products</Link>
-            </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="#best-sales">Best Sales</Link>
-            </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="#new-release">New Release</Link>
-            </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/">Become a seller</Link>
-            </li>
+            {
+              searchKeys.map(({ label, link }) => (
+                <li className='cursor-pointer list-none hover:text-[#f26522]'>
+                  <Link href={ link }>{ label }</Link>
+                </li>
+              ))
+            }
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
             </li>
@@ -33,9 +47,9 @@ const Banner: React.FC = () => {
               <Link href="/profile">Profile <i className="ri-user-3-fill"></i></Link>
             </li>
           </ul>
-          <div className='flex md:hidden text-base h-full w-full items-center justify-between px-5'>
+          <div className='flex md:hidden text-base h-full w-full items-center justify-between px-2'>
             <div>
-              <SideNavBar stopScrolling />
+              <SideNavBar stopScrolling searchKeys={ searchKeys } />
             </div>
             <div className='flex gap-4'>
               <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>

@@ -7,15 +7,17 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import FilterByPrice from '../filters/FilterByPrice';
 import LeftMenus from '../common/profile-components/LeftMenus';
+import { T_SearchKeys } from '@/lib/types/productTyps';
 
 interface I_ProductNav {
     filters?: boolean;
     profile?: boolean;
     name?: string;
     stopScrolling?: boolean;
+    searchKeys?: T_SearchKeys[];
 }
 
-const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling }) => {
+const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, searchKeys }) => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const router = useRouter();
@@ -98,22 +100,38 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling })
                     {/* search keys */ }
                     <div className={ `w-full ${profile && "!hidden"}` }>
                         <div className='ml-3 flex flex-col gap-2'>
-                            <Link href="/products/search-products?search=shoes" onClick={ closeSlider }
-                            >
-                                Shoes
-                            </Link>
-                            <Link href="/products/search-products?search=eyeware" onClick={ closeSlider }
-                            >
-                                Eyeware
-                            </Link>
-                            <Link href="/products/search-products?search=electronics" onClick={ closeSlider }
-                            >
-                                Electronics
-                            </Link>
-                            <Link href="#" onClick={ closeSlider }
-                            >
-                                Become a Seller
-                            </Link>
+                            {
+                                !searchKeys ?
+                                    (
+                                        <>
+                                            <Link href="/products/search-products?search=shoes" onClick={ closeSlider }
+                                            >
+                                                Shoes
+                                            </Link>
+                                            <Link href="/products/search-products?search=eyeware" onClick={ closeSlider }
+                                            >
+                                                Eyeware
+                                            </Link>
+                                            <Link href="/products/search-products?search=electronics" onClick={ closeSlider }
+                                            >
+                                                Electronics
+                                            </Link>
+                                            <Link href="#" onClick={ closeSlider }
+                                            >
+                                                Become a Seller
+                                            </Link>
+                                        </>
+                                    ) :
+                                    searchKeys.map(({ label, link }) => (
+                                        <Link
+                                            href={ link }
+                                            onClick={ closeSlider }
+                                            className='capitalize'
+                                        >
+                                            { label }
+                                        </Link>
+                                    ))
+                            }
                         </div>
                     </div>
 

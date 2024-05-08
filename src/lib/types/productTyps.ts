@@ -22,3 +22,8 @@ export interface ProductType extends itemProps {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+export type T_SearchKeys = {
+    label: string;
+    link: string;
+}
