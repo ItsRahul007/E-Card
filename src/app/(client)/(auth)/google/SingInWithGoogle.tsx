@@ -1,13 +1,5 @@
-import { signIn, auth } from '@/app/api/auth/[...nextauth]/options';
-import IconButton from '@/components/common/buttons/IconButton';
+import { signIn } from '@/app/api/auth/[...nextauth]/options';
 import React from 'react';
-import { cookies } from 'next/headers';
-import User from '@/lib/model/usersSchema';
-import connectWithMongo from '@/lib/mongoConnection/mongoConnect';
-import { sign } from 'jsonwebtoken';
-import toast from 'react-hot-toast';
-import { ErrorMessage } from '@/lib/util/toastMessages';
-import { redirect } from 'next/navigation';
 import Image from 'next/image';
 
 const SingInWithGoogle = async () => {
