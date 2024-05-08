@@ -20,6 +20,12 @@
   }
 }
 
+@media only screen and (max-width: 450px) {
+  .banner {
+    background-image: url("/images/banner-bg-for-mobile.png");
+  }
+}
+
 .nav_child::before {
   content: "";
   position: absolute;
