@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -52,8 +53,12 @@ export function middleware(req: NextRequest) {
     }
 
     if (pathname.startsWith('/logout')) {
+        console.log('middleware ', pathname);
         const response = NextResponse.redirect(new URL('/login', req.url));
-        response.cookies.set("authToken", '', { httpOnly: true, maxAge: 60 * 60 });
+        const allCookies = cookies().getAll();
+        allCookies.forEach((cookie) => {
+            response.cookies.delete(cookie.name);
+        });
         return response;
     }
 
