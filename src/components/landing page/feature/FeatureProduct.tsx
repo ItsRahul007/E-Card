@@ -1,7 +1,4 @@
 import React from 'react';
-import itemInfo from "@/app/item/itemInfo";
-import style from "@/app/style/style.module.css";
-import Image from 'next/image';
 import FeatireItems from './FeatireItems';
 
 const FeatureProduct = () => {
@@ -15,15 +12,30 @@ const FeatureProduct = () => {
             </div>
             <div className='h-auto w-full md:w-[786px] md:mx-auto flex flex-col gap-5 md:px-10 px-3 py-5 mt-10 relative'>
                 <div className='h-36 w-full flex items-center justify-between gap-1'>
-                    <FeatireItems />
-                    <FeatireItems />
+                    <FeatireItems
+                        imgUrl='https://m.media-amazon.com/images/I/61D9VT4w7uL._SL1500_.jpg'
+                        productId='65b9d06c4cf38f6c039698a9'
+                    />
+                    <FeatireItems
+                        imgUrl='https://m.media-amazon.com/images/I/61Or89ndGjL._SL1200_.jpg'
+                        productId='65bc6ec90d36aefa2a6e0c3c'
+                    />
                 </div>
                 <div className='h-36 w-full flex items-center justify-center z-10'>
-                    <FeatireItems />
+                    <FeatireItems
+                        imgUrl='https://m.media-amazon.com/images/I/416sy3XUkdL.jpg'
+                        productId='65bd0808113944ceed6560cb'
+                    />
                 </div>
                 <div className='h-36 w-full flex items-center justify-between gap-1'>
-                    <FeatireItems />
-                    <FeatireItems />
+                    <FeatireItems
+                        imgUrl='https://m.media-amazon.com/images/I/71hYQ0wiHDL._SX522_.jpg'
+                        productId='65bc731107c274aa1f70a034'
+                    />
+                    <FeatireItems
+                        imgUrl='https://m.media-amazon.com/images/I/61MnrUAKACL._SX679_.jpg'
+                        productId='65bd0463113944ceed65609d'
+                    />
                 </div>
             </div>
         </div>

@@ -27,3 +27,10 @@ export type T_SearchKeys = {
     label: string;
     link: string;
 }
+
+export interface I_BestSalesSingleItem {
+    _id: string;
+    product_name: string;
+    primaryImgUrl: string;
+    current_price: number;
+}

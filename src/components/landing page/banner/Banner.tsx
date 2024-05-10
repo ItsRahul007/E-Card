@@ -35,7 +35,7 @@ const Banner: React.FC = () => {
           <ul className='h-full w-full hidden md:flex justify-center items-center gap-6 text-base'>
             {
               searchKeys.map(({ label, link }) => (
-                <li className='cursor-pointer list-none hover:text-[#f26522]'>
+                <li key={ link } className='cursor-pointer list-none hover:text-[#f26522]'>
                   <Link href={ link }>{ label }</Link>
                 </li>
               ))

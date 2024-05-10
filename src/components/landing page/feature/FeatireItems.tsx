@@ -1,16 +1,22 @@
 import Image from 'next/image';
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 
-const FeatireItems = () => {
+interface I_FeatireItems {
+    productId: string;
+    imgUrl: string;
+}
+
+const FeatireItems: React.FC<I_FeatireItems> = ({ imgUrl, productId }) => {
     return (
-        <div className='h-full sm:h-60 w-60 cursor-pointer relative'>
+        <Link href={ '/single-product/' + productId } className='h-full sm:h-60 w-60 cursor-pointer relative' target='_blank'>
             <Image
-                src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2021/03/sports-shoe3.jpg"
+                src={ imgUrl }
                 alt="item"
                 fill
                 className='object-contain md:shadow-md cursor-pointer'
             />
-        </div>
+        </Link>
     );
 };
 

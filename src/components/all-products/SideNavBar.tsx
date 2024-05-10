@@ -124,6 +124,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, s
                                     ) :
                                     searchKeys.map(({ label, link }) => (
                                         <Link
+                                            key={ link + '-SideNavBar' }
                                             href={ link }
                                             onClick={ closeSlider }
                                             className='capitalize'
