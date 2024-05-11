@@ -3,6 +3,7 @@ import SingleNewReleaseItem from './SingleNewReleaseItem';
 import Image from 'next/image';
 import Products from '@/lib/model/productSchema';
 import Link from 'next/link';
+import NewReleaseGsap from './NewReleaseGsap';
 
 const NewRelease = async () => {
     const getNewReleaseProducts = async () => {
@@ -20,7 +21,8 @@ const NewRelease = async () => {
     return (
         <section className='w-screen max-w-[1540px] mt-10 mx-auto h-auto min-h-[28rem] py-7 px-3 md:py-10 md:px-5 space-y-5 font-rubik' id='new-release'>
             <div className='h-20 w-fit mx-auto capitalize font-semibold text-4xl'>New Release</div>
-            <div className='w-full h-auto flex flex-col md:flex-row gap-4'>
+            <NewReleaseGsap />
+            <div className='w-full h-auto flex flex-col md:flex-row gap-4' id='new-release-items'>
                 <div className='h-96 md:h-[28rem] w-full md:w-2/4 flex flex-col lg:flex-row gap-2 items-center bg-slate-100 md:py-0 py-3'>
                     <Link href={ '/single-product/' + newReleaseProducts[0]._id } target='_blank' className='w-3/5 h-full relative'>
                         <Image

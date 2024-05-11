@@ -5,11 +5,12 @@ import React from 'react';
 interface I_FeatireItems {
     productId: string;
     imgUrl: string;
+    componentId?: string;
 }
 
-const FeatireItems: React.FC<I_FeatireItems> = ({ imgUrl, productId }) => {
+const FeatireItems: React.FC<I_FeatireItems> = ({ imgUrl, productId, componentId }) => {
     return (
-        <Link href={ '/single-product/' + productId } className='h-full sm:h-60 w-60 cursor-pointer relative' target='_blank'>
+        <Link href={ '/single-product/' + productId } className='h-full sm:h-60 w-60 cursor-pointer relative' target='_blank' id={ componentId }>
             <Image
                 src={ imgUrl }
                 alt="item"
