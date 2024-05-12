@@ -3,6 +3,8 @@ import Navbar from '@/components/all-products/Nav';
 import { ReactNode } from 'react';
 import LeftMenus from '@/components/common/profile-components/LeftMenus';
 import { cookies } from 'next/headers';
+import { decode, verify } from 'jsonwebtoken';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
@@ -14,7 +16,20 @@ export default async function Layout({
 }: {
     children: ReactNode;
 }) {
-    const name = cookies().get('userName')?.value || 'Ecard user';
+    const authToken = cookies().get('authToken')?.value || '';
+
+    const decodedAuthToken = decode(authToken) as {
+        user: {
+            id: string;
+            name: string;
+        }
+    };
+
+    if (!decodedAuthToken || !decodedAuthToken.user.name || !decodedAuthToken.user.id) {
+        redirect('/logout');
+    };
+
+    const name = decodedAuthToken?.user?.name || 'Ecard user';
 
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-inter'>

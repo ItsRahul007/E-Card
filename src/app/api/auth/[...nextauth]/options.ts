@@ -15,7 +15,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 function generateAndSaveAuthToken(id: string, name: string) {
                     const data = {
                         user: {
-                            id
+                            id,
+                            name
                         }
                     };
                     const JWT_SECRET: string = process.env.JWT_SECRET!;
@@ -23,7 +24,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     const setCookies = cookies().set;
 
                     setCookies('authToken', authToken, { httpOnly: true, maxAge: 60 * 60 * 24 * 5 });
-                    setCookies("userName", name, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
                 }
 
                 if (profile) {

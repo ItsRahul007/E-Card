@@ -53,7 +53,8 @@ export async function POST(req: NextRequest) {
 
         const data = {
             user: {
-                id: user._id
+                id: user._id,
+                name: user.name
             }
         };
 
@@ -66,7 +67,6 @@ export async function POST(req: NextRequest) {
             authToken
         }, { status: 200 });
 
-        responce.cookies.set("userName", user.name, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
         responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
 
         return responce;
@@ -121,7 +121,18 @@ export async function PUT(req: NextRequest) {
             updatedData
         }, { status: 200 });
 
-        response.cookies.set('userName', updatedData.name, { maxAge: 60 * 60 * 24 * 5, });
+        const data = {
+            user: {
+                id: updatedData._id,
+                name: updatedData.name
+            }
+        };
+
+        const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
+
+        const authToken = sign(data, JWT_SECRET!);
+
+        response.cookies.set('authToken', authToken, { maxAge: 60 * 60 * 24 * 5, });
 
         return response;
 

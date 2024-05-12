@@ -7,6 +7,7 @@ import OrdersTR from './OrdersTR';
 import ConfirmationDialog from '@/components/common/confirmation/ConfirmationDialog';
 import toast from 'react-hot-toast';
 import { ErrorMessage, canclingOrder, orderCancelled } from '@/lib/util/toastMessages';
+import NotFound from '@/components/common/NotFound';
 
 const OrderTableBody = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -92,6 +93,11 @@ const OrderTableBody = () => {
                 <div className='w-full h-20'>
                     <PageLoading />
                 </div>
+            }
+            {
+                data && data.data.length <= 0 && (
+                    <NotFound header="You don't have any order yet" />
+                )
             }
         </div>
     )

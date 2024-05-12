@@ -13,6 +13,9 @@ const ProfileInformation: FC = async () => {
     if (authToken.length <= 0) redirect('/login');
 
     const decodedAuthToken = await decode(authToken) as T_JwtVerifyDataType;
+    if (!decodedAuthToken || !decodedAuthToken.user.name || !decodedAuthToken.user.id) {
+        redirect('/logout');
+    };
 
     await connectWithMongo();
     const user = await User.findById(decodedAuthToken.user.id).select('name email mobile_number');

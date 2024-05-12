@@ -9,6 +9,7 @@ import PageLoading from '@/components/common/loading/PageLoading';
 import Image from 'next/image';
 import classNames from '@/lib/util/classNames';
 import { addressTypeInputValues } from '@/lib/types/addressTypes';
+import NotFound from '@/components/common/NotFound';
 
 interface T_Addresses extends addressTypeInputValues {
     _id: ObjectId;
@@ -68,19 +69,7 @@ const AddressList: FC<I_AddressListProps> = ({ onAddressClick }) => {
                             }
                         </ul>
                         :
-                        <div className='relative h-3/4 w-60 md:w-96 flex flex-col items-center justify-center gap-2 text-xl md:text-3xl text-[#00bf85] mx-auto'>
-                            <p className="text-center font-bold font-ubuntu">No addresses found</p>
-                            <span className='relative h-80 md:h-96 w-80 md:w-96'>
-                                <Image
-                                    src="/images/not-found.png"
-                                    alt='No addresses found'
-                                    fill
-                                    style={ {
-                                        objectFit: "contain"
-                                    } }
-                                />
-                            </span>
-                        </div>
+                        <NotFound header='No addresses found' />
 
             }
         </>

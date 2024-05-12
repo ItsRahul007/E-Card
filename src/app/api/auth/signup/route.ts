@@ -32,7 +32,8 @@ export async function POST(req: Request) {
 
         const data = {
             user: {
-                id: user._id
+                id: user._id,
+                name: user.name
             }
         };
 
@@ -46,7 +47,6 @@ export async function POST(req: Request) {
         }, { status: 200 });
 
         responce.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
-        responce.cookies.set("userName", user.name, { maxAge: 60 * 60 * 24 * 5, httpOnly: true });
 
         return responce;
     } catch (error) {
