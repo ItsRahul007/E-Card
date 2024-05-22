@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC, useEffect, useState } from 'react';
-import InputCompo from '../common/InputCompo';
+import InputCompo from '../common/inputs/InputCompo';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 

@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
-import InputCompo from '../common/InputCompo';
+import InputCompo from '../common/inputs/InputCompo';
 import { useRouter } from 'next/navigation';
 import SideNavBar from './SideNavBar';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import style from "@/app/style/style.module.css";
-import Button from '@/components/common/buttons/Button';
 import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 import SideNavBar from '@/components/all-products/SideNavBar';
@@ -20,8 +19,8 @@ const searchKeys: T_SearchKeys[] = [
     link: "#best-sales"
   },
   {
-    label: "Become a seller",
-    link: "#"
+    label: "Become a Seller",
+    link: "/seller/become-a-seller"
   }
 ];
 

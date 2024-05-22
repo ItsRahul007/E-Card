@@ -1,4 +1,5 @@
 export const ErrorMessage = 'Something went wrong. Please try again later.';
+export const invalidContactNo = 'Invalid contact number';
 
 //? address messages
 export const addressUpdateSuccessMessage = 'Address updated successfully!';

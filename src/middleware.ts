@@ -33,6 +33,7 @@ export function middleware(req: NextRequest) {
     //? if it's an private client side url request
     if (
         pathname.startsWith("/profile") ||
+        pathname.startsWith("/seller") ||
         pathname.startsWith("/cart") ||
         pathname.startsWith("/buy-products")
     ) {
@@ -71,6 +72,7 @@ export const config = {
         '/api/product/:path*',
         '/api/single-product/:path*',
         '/profile/:path*',
+        '/seller/:path*',
         '/buy-products/:path*',
         '/cart',
         '/login',

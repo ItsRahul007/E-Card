@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC } from 'react';
-import InputCompo from '@/components/common/InputCompo';
+import InputCompo from '@/components/common/inputs/InputCompo';
 import Button from '@/components/common/buttons/Button';
 import { addressTypeInputValues } from '@/lib/types/addressTypes';
 import toast from 'react-hot-toast';

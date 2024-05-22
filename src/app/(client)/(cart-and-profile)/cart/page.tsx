@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import Navbar from '@/components/all-products/Nav';
-import InputCompo from '@/components/common/InputCompo';
+import InputCompo from '@/components/common/inputs/InputCompo';
 import Button from '@/components/common/buttons/Button';
 import Footer from '@/components/common/footer/Footer';
 import CartItems from './CartItems';

@@ -9,7 +9,7 @@ import PageLoading from '@/components/common/loading/PageLoading';
 import ChooseAddress from './ChooseAddress';
 import { T_orderObj, orderPriceStateType, orderProductType } from '@/lib/types/orderTypes';
 import { addressTypeInputValues } from '@/lib/types/addressTypes';
-import InputCompo from '@/components/common/InputCompo';
+import InputCompo from '@/components/common/inputs/InputCompo';
 import toast from 'react-hot-toast';
 import ConfirmationDialog from '@/components/common/confirmation/ConfirmationDialog';
 import { useOrderMutation } from '@/lib/customHook/useBuyProducts';

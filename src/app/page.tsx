@@ -9,7 +9,7 @@ export default async function Home() {
   await connectWithMongo();
 
   return (
-    <div className="bg-zinc-50 relative">
+    <div className="relative">
       <Banner />
       <FeatureProduct />
       <NewRelease />

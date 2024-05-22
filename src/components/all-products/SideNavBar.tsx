@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import InputCompo from '../common/InputCompo';
+import InputCompo from '../common/inputs/InputCompo';
 import IconButton from '../common/buttons/IconButton';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

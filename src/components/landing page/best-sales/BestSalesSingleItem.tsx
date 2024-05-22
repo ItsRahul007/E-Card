@@ -6,8 +6,8 @@ import BestSalesGsap from './BestSalesGsap';
 
 const BestSalesSingleItem: React.FC<I_BestSalesSingleItem> = ({ _id, current_price, primaryImgUrl, product_name }) => {
     return (
-        <div className='h-auto min-h-[20rem] w-full flex flex-col gap-2 bg-slate-100 items-center justify-center py-3 col-span-1 row-span-1' id={ 'best-sales-item' + _id }>
-            <BestSalesGsap id={ _id } />
+        <div className='h-auto min-h-[20rem] w-full flex flex-col gap-2 bg-slate-100 items-center justify-center py-3 col-span-1 row-span-1' id={ 'best-sales-item' + String(_id) }>
+            <BestSalesGsap id={ String(_id) } />
             <Link href={ '/single-product/' + _id } target='_blank' className='md:h-56 h-44 md:w-56 w-full relative'>
                 <Image
                     src={ primaryImgUrl }

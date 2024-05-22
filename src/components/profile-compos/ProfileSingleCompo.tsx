@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useState } from 'react'
-import InputCompo from '../common/InputCompo';
+import InputCompo from '../common/inputs/InputCompo';
 import Button from '../common/buttons/Button';
 import toast from 'react-hot-toast';
 import axios from 'axios';
