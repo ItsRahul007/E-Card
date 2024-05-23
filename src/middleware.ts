@@ -1,6 +1,8 @@
+import { decode } from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { T_JwtVerifyDataType } from './lib/types/authToken-type';
 
 //! authenticating request
 export function middleware(req: NextRequest) {
@@ -33,7 +35,6 @@ export function middleware(req: NextRequest) {
     //? if it's an private client side url request
     if (
         pathname.startsWith("/profile") ||
-        pathname.startsWith("/seller") ||
         pathname.startsWith("/cart") ||
         pathname.startsWith("/buy-products")
     ) {
@@ -42,6 +43,32 @@ export function middleware(req: NextRequest) {
         if (!authToken) {
             return NextResponse.redirect(new URL('/login', req.url));
         };
+    };
+
+    //? if someone try to become a seller even after his role is not user
+    if (pathname.startsWith("/seller/become-a-seller")) {
+        if (!authToken) {
+            return NextResponse.redirect(new URL('/login', req.url));
+        };
+
+        const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
+        const userRole = decodedAuthToken.user.userRole || 'user';
+        if (userRole === 'seller') {
+            return NextResponse.redirect(new URL('/seller/dashboard', req.url));
+        }
+    };
+
+    //? if it's a seller url request
+    if (pathname.startsWith("/seller") && pathname !== '/seller/become-a-seller') {
+        if (!authToken) {
+            return NextResponse.redirect(new URL('/login', req.url));
+        };
+
+        const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
+        const userRole = decodedAuthToken.user.userRole || 'user';
+        if (userRole === 'user') {
+            return NextResponse.redirect(new URL('/profile', req.url));
+        }
     };
 
     //? if user is logged

@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
         const data = {
             user: {
                 id: user._id,
-                name: user.name
+                name: user.name,
+                userRole: user.userRole
             }
         };
 
@@ -124,7 +125,8 @@ export async function PUT(req: NextRequest) {
         const data = {
             user: {
                 id: updatedData._id,
-                name: updatedData.name
+                name: updatedData.name,
+                userRole: updatedData.userRole
             }
         };
 

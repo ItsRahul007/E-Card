@@ -38,6 +38,18 @@ const userModel = new Schema({
             default: 1,
         },
     }],
+    brandName: {
+        type: String,
+        unique: [true, "Brand name already exists."]
+    },
+    contactEmail: {
+        type: String,
+        unique: [true, "Contact email already exists."]
+    },
+    contactNumber: {
+        type: Number,
+        unique: [true, "Contact number already exists."]
+    },
 });
 
 const User = models.users || model("users", userModel);

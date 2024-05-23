@@ -4,6 +4,10 @@ import Link from 'next/link';
 import BannerGSAP from './bannerGSAP';
 import SideNavBar from '@/components/all-products/SideNavBar';
 import { T_SearchKeys } from '@/lib/types/productTyps';
+import { cookies } from 'next/headers';
+import { decode } from 'jsonwebtoken';
+import { T_JwtVerifyDataType } from '@/lib/types/authToken-type';
+import SellerOption from './SellerOption';
 
 const searchKeys: T_SearchKeys[] = [
   {
@@ -17,14 +21,17 @@ const searchKeys: T_SearchKeys[] = [
   {
     label: "Best Sales",
     link: "#best-sales"
-  },
-  {
-    label: "Become a Seller",
-    link: "/seller/become-a-seller"
   }
 ];
 
 const Banner: React.FC = () => {
+  const authToken = cookies().get('authToken')?.value || '';
+  let userRole;
+  if (authToken) {
+    const decodedToken = decode(authToken) as T_JwtVerifyDataType;
+    userRole = decodedToken.user.userRole || 'user';
+  };
+
   return (
     <section className={ `${style.banner} text-white relative` } id="banner_component">
       <BannerGSAP />
@@ -40,6 +47,9 @@ const Banner: React.FC = () => {
               ))
             }
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
+              <SellerOption userRole={ userRole } />
+            </li>
+            <li className='cursor-pointer list-none hover:text-[#f26522]'>
               <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
             </li>
             <li className='cursor-pointer list-none hover:text-[#f26522]'>
@@ -48,7 +58,7 @@ const Banner: React.FC = () => {
           </ul>
           <div className='flex md:hidden text-base h-full w-full items-center justify-between px-2'>
             <div>
-              <SideNavBar stopScrolling searchKeys={ searchKeys } />
+              <SideNavBar stopScrolling searchKeys={ searchKeys } sellerOption={ <SellerOption userRole={ userRole } /> } />
             </div>
             <div className='flex gap-4'>
               <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>

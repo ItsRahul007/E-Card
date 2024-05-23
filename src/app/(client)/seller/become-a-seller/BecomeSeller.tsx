@@ -4,7 +4,8 @@ import Button from '@/components/common/buttons/Button';
 import InputWithLable from '@/components/common/inputs/InputWithLable';
 import { invalidEmail } from '@/lib/util/apiMessages';
 import isValidEmail from '@/lib/util/emailChecker';
-import { invalidContactNo } from '@/lib/util/toastMessages';
+import { ErrorMessage, invalidContactNo } from '@/lib/util/toastMessages';
+import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -13,8 +14,9 @@ const BecomeSeller: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [contactNumber, setContactNumber] = useState<string | number>('');
     const [agreed, setAgreed] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         //* Perform form validation
@@ -28,8 +30,25 @@ const BecomeSeller: React.FC = () => {
                 return;
             };
 
-            // Handle form submission
-            console.log({ brandName, email, contactNumber });
+            try {
+                toast.loading("Sending request...");
+                setIsLoading(true);
+
+                const response = await axios.post('/api/seller/become-a-seller', {
+                    brandName,
+                    contactEmail: email,
+                    contactNumber,
+                });
+
+                toast.dismiss();
+                toast.success(response.data.message);
+                setIsLoading(false);
+            } catch (error: any) {
+                const apiErrMessage = error.response.data.error;
+                toast.dismiss();
+                toast.error(apiErrMessage || ErrorMessage);
+                setIsLoading(false);
+            }
         }
     };
 
@@ -46,7 +65,7 @@ const BecomeSeller: React.FC = () => {
                 />
                 <InputWithLable
                     name='email'
-                    lable='Official Email'
+                    lable='Contact Email'
                     value={ email }
                     onChange={ (e) => setEmail(e.target.value) }
                     required
@@ -60,17 +79,17 @@ const BecomeSeller: React.FC = () => {
                     inputType='number'
                 />
                 <div className="mb-4">
-                    <label className="inline-flex items-center">
+                    <label className="inline-flex items-center cursor-pointer">
                         <input
                             type="checkbox"
                             checked={ agreed }
                             onChange={ (e) => setAgreed(e.target.checked) }
-                            className="form-checkbox h-5 w-5 text-indigo-600"
+                            className="form-checkbox h-5 w-5 text-indigo-600 cursor-pointer"
                             required
                         />
                         <span className="ml-2 text-sm text-gray-700">
                             I agree to the{ ' ' }
-                            <span className="text-indigo-600 underline cursor-pointer">
+                            <span className="text-indigo-600 underline">
                                 terms and conditions
                             </span>
                         </span>
@@ -81,7 +100,7 @@ const BecomeSeller: React.FC = () => {
                         type="submit"
                         className="w-full py-2 px-4 bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         text='Submit'
-                        disabled={ !agreed }
+                        disabled={ !agreed || isLoading }
                     />
                 </div>
             </form>

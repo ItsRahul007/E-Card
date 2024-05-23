@@ -33,7 +33,8 @@ export async function POST(req: Request) {
         const data = {
             user: {
                 id: user._id,
-                name: user.name
+                name: user.name,
+                userRole: user.userRole
             }
         };
 

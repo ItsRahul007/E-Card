@@ -5,6 +5,7 @@ import LeftMenus from '@/components/common/profile-components/LeftMenus';
 import { cookies } from 'next/headers';
 import { decode, verify } from 'jsonwebtoken';
 import { redirect } from 'next/navigation';
+import { T_JwtVerifyDataType } from '@/lib/types/authToken-type'
 
 export const metadata: Metadata = {
     title: 'E-Card - Profile',
@@ -18,12 +19,7 @@ export default async function Layout({
 }) {
     const authToken = cookies().get('authToken')?.value || '';
 
-    const decodedAuthToken = decode(authToken) as {
-        user: {
-            id: string;
-            name: string;
-        }
-    };
+    const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
 
     if (!decodedAuthToken || !decodedAuthToken.user.name || !decodedAuthToken.user.id) {
         redirect('/logout');
@@ -34,7 +30,7 @@ export default async function Layout({
     return (
         <main className='h-screen w-screen flex flex-col overflow-y-scroll bg-gray-100 font-inter'>
             {/* nav bar */ }
-            <Navbar profile name={ name } />
+            <Navbar profile />
             <div className='flex-1 flex justify-center items-center'>
                 <div className='h-full w-full md:w-11/12 flex gap-3 justify-center p-2'>
                     {/* left component */ }

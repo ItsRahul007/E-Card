@@ -6,8 +6,9 @@ export type authTokenType = {
 
 export type T_JwtVerifyDataType = {
     user: {
-        id: String;
-        name: String;
+        id: string;
+        name: string;
+        userRole?: 'seller' | 'user' | 'admin';
     },
     iat: number | string
 };

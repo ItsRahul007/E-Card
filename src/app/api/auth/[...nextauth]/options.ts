@@ -12,11 +12,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             clientId: process.env.AUTH_GOOGLE_ID,
             clientSecret: process.env.AUTH_GOOGLE_SECRET,
             async profile(profile) {
-                function generateAndSaveAuthToken(id: string, name: string) {
+                function generateAndSaveAuthToken(id: string, name: string, userRole: string) {
                     const data = {
                         user: {
                             id,
-                            name
+                            name,
+                            userRole
                         }
                     };
                     const JWT_SECRET: string = process.env.JWT_SECRET!;
@@ -39,10 +40,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                                 socialUser: true
                             });
 
-                            generateAndSaveAuthToken(newUser._id, newUser.name);
+                            generateAndSaveAuthToken(newUser._id, newUser.name, newUser.userRole);
                         };
 
-                        generateAndSaveAuthToken(user._id, user.name)
+                        generateAndSaveAuthToken(user._id, user.name, user.userRole)
 
                     } catch (error: any) {
                         console.log(error.message)

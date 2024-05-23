@@ -4,11 +4,11 @@ import React from 'react';
 
 interface I_InputWithLable {
     lable: string;
-    value: string | number;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    required?: boolean;
     name: string;
+    value?: string | number;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     inputType?: string;
+    required?: boolean;
 }
 
 const InputWithLable: React.FC<I_InputWithLable> = ({

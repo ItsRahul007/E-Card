@@ -1,50 +1,45 @@
-"use client";
-
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import InputCompo from '../common/inputs/InputCompo';
-import { useRouter } from 'next/navigation';
 import SideNavBar from './SideNavBar';
+import SearchBoxAndLogoForNav from './SearchBoxAndLogoForNav';
+import { T_JwtVerifyDataType } from '@/lib/types/authToken-type';
+import { cookies } from 'next/headers';
+import { decode } from 'jsonwebtoken';
+import SellerOption from '../landing page/banner/SellerOption';
 
 interface I_ProductNav {
   filters?: boolean;
   profile?: boolean;
-  name?: string;
 };
 
-const Navbar: React.FC<I_ProductNav> = ({ filters, profile, name }) => {
-  const [inputValue, setInputValue] = useState<string>("");
-  const router = useRouter();
+const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
+  const authToken = cookies().get('authToken')?.value || '';
+  let userObj: any = {
+    name: 'E-Card user',
+    userRole: 'user'
+  };
+
+  if (authToken) {
+    const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
+    userObj = decodedAuthToken.user;
+  }
+
+  const sellerOption = <SellerOption userRole={ userObj.userRole } />;
 
   return (
     <nav className='w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-appTheme-500 text-white flex'>
       {/* search box and logo */ }
-      <span className='h-full xl:w-[30rem] min-[1281px]:flex hidden justify-end items-center gap-8'>
-        <span className={ `text-3xl font-ubuntu font-bold` }>E-Card</span>
-        <InputCompo
-          type="text"
-          name='navSearch'
-          placeholder='Search products and brands'
-          className='p-3 rounded-md text-sm outline-none text-[#222222] w-64 placeholder:font-sans font-sans border-0'
-          onChange={ (e) => setInputValue(e.target.value) }
-          value={ inputValue }
-          onEnter={ () => {
-            if (inputValue.length) {
-              router.push("/products/search-products?search=" + inputValue.toLowerCase());
-            }
-          } }
-        />
-      </span>
+      <SearchBoxAndLogoForNav />
 
       {/* side bar logo for small screens */ }
-      <SideNavBar filters={ filters } profile={ profile } name={ name } />
+      <SideNavBar filters={ filters } profile={ profile } name={ userObj.name } sellerOption={ sellerOption } />
 
       {/* search keys and cart favourite */ }
-      <span className='h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white font-sans lg:text-lg text-base'>
+      <span className='h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white font-sans text-base font-medium'>
         <Link href="/products/search-products" className='cursor-pointer'>All Products</Link>
         <Link href="/products/search-products?search=shoes" className='cursor-pointer'>Shoes</Link>
         <Link href="/products/search-products?search=electronics" className='cursor-pointer'>Electronics</Link>
-        <Link href="#" className='cursor-pointer'>Become a Seller</Link>
+        { sellerOption }
         <Link href="/cart" className='cursor-pointer'>Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
         <Link href="/profile" className='cursor-pointer' >My Profile <i className="ri-user-3-fill"></i></Link>
       </span>

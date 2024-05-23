@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import FilterByPrice from '../filters/FilterByPrice';
 import LeftMenus from '../common/profile-components/LeftMenus';
 import { T_SearchKeys } from '@/lib/types/productTyps';
+import SellerOption from '../landing page/banner/SellerOption';
 
 interface I_ProductNav {
     filters?: boolean;
@@ -15,9 +16,10 @@ interface I_ProductNav {
     name?: string;
     stopScrolling?: boolean;
     searchKeys?: T_SearchKeys[];
+    sellerOption?: React.JSX.Element;
 }
 
-const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, searchKeys }) => {
+const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, searchKeys, sellerOption }) => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const router = useRouter();
@@ -116,10 +118,6 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, s
                                             >
                                                 Electronics
                                             </Link>
-                                            <Link href="#" onClick={ closeSlider }
-                                            >
-                                                Become a Seller
-                                            </Link>
                                         </>
                                     ) :
                                     searchKeys.map(({ label, link }) => (
@@ -133,6 +131,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, s
                                         </Link>
                                     ))
                             }
+                            { sellerOption }
                         </div>
                     </div>
 

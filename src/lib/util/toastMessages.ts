@@ -1,4 +1,4 @@
-export const ErrorMessage = 'Something went wrong. Please try again later.';
+export const ErrorMessage = 'Something went wrong. Please try again.';
 export const invalidContactNo = 'Invalid contact number';
 
 //? address messages
