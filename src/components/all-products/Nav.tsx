@@ -45,7 +45,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
       </span>
 
       {/* cart and favourite for small screens */ }
-      <span className='flex-1 sm:hidden flex justify-end items-center gap-4 mr-3 text-sm'>
+      <span className='flex-1 sm:hidden flex justify-end items-center gap-4 mr-3 text-sm font-medium'>
         <Link href="/cart" className='cursor-pointer'>Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
         <Link href="/profile" className='cursor-pointer'>My Profile <i className="ri-user-3-fill"></i></Link>
       </span>
