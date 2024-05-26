@@ -12,8 +12,6 @@ interface I_StatusCard {
 
 
 const StatusCard: React.FC<I_StatusCard> = ({ number, title, iconColorAndIconBg, icon, isOnLoss, profitOrLossPercentage }) => {
-    console.log(iconColorAndIconBg)
-
     return (
         <div className='md:w-56 md:h-32 h-28 w-44 bg-white shadow rounded-md flex justify-between p-4 col-span-1 row-span-1'>
             <div className='font-medium text-gray-800 flex flex-col justify-between'>

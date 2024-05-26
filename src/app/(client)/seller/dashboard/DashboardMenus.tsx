@@ -24,6 +24,7 @@ const DashboardMenus = () => {
                 dashboardOptions.map(option => (
                     <Link
                         href={ option.url }
+                        key={ option.url + 'dashboard-menus' }
                         className={ classNames(
                             'flex gap-3 px-4 py-3 font-medium capitalize items-center justify-between rounded-md shadow',
                             currentTab === option.url ? 'bg-emerald-500 text-white' : 'hover:text-white hover:bg-emerald-500 text-gray-500'
