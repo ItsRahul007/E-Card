@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className='!scroll-smooth'>
       <body
-        className={ `font-inter bg-zinc-50 
+        className={ `font-inter bg-zinc-100 
         ${inter.variable}
         ${rubik.variable}
         ${kanit.variable}

@@ -17,9 +17,10 @@ interface I_ProductNav {
     stopScrolling?: boolean;
     searchKeys?: T_SearchKeys[];
     sellerOption?: React.JSX.Element;
+    searchBarFalse?: boolean;
 }
 
-const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, searchKeys, sellerOption }) => {
+const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, searchKeys, sellerOption, searchBarFalse }) => {
     const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>("");
     const router = useRouter();
@@ -58,7 +59,7 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, s
 
             {/* side bar component */ }
             <div className={ `h-screen w-screen absolute top-0 bottom-0 z-10 overflow-scroll flex 
-                    ${isNavOpen ? "left-0 opacity-100" : "-left-[110vw] opacity-0"} ease-out duration-300
+                    ${isNavOpen ? "left-0 opacity-100" : "-left-[110vw] opacity-0"} ease-out duration-300 text-white text-base
                 `}
             >
                 {/* main div that contains everything */ }
@@ -77,27 +78,29 @@ const SideNavBar: FC<I_ProductNav> = ({ filters, profile, name, stopScrolling, s
                     </div>
 
                     {/* search box */ }
-                    <div className={ `h-20 w-full flex gap-3 items-center ${profile && "!hidden"}` }>
-                        <InputCompo
-                            type='text'
-                            name='navSearch'
-                            placeholder='Search products and brands'
-                            className='h-10 rounded-md text-sm outline-none text-[#222222] w-60  placeholder:font-sans font-sans bg-slate-100 px-2 ml-3'
-                            onChange={ (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value) }
-                            value={ inputValue }
-                        />
-                        <IconButton
-                            icon={ <i className="ri-search-line"></i> }
-                            className='h-6 w-6 p-4 border-2 border-white flex justify-center items-center rounded-md text-lg'
-                            type='button'
-                            onClick={ () => {
-                                if (inputValue.length) {
-                                    router.push("/products/search-products?search=" + inputValue);
-                                    closeSlider();
-                                }
-                            } }
-                        />
-                    </div>
+                    { !searchBarFalse &&
+                        <div className={ `h-20 w-full flex gap-3 items-center ${profile && "!hidden"}` }>
+                            <InputCompo
+                                type='text'
+                                name='navSearch'
+                                placeholder='Search products and brands'
+                                className='h-10 rounded-md text-sm outline-none text-[#222222] w-60  placeholder:font-sans font-sans bg-slate-100 px-2 ml-3'
+                                onChange={ (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value) }
+                                value={ inputValue }
+                            />
+                            <IconButton
+                                icon={ <i className="ri-search-line"></i> }
+                                className='h-6 w-6 p-4 border-2 border-white flex justify-center items-center rounded-md text-lg'
+                                type='button'
+                                onClick={ () => {
+                                    if (inputValue.length) {
+                                        router.push("/products/search-products?search=" + inputValue);
+                                        closeSlider();
+                                    }
+                                } }
+                            />
+                        </div>
+                    }
 
                     {/* search keys */ }
                     <div className={ `w-full ${profile && "!hidden"}` }>
