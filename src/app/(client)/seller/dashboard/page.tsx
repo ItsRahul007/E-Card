@@ -42,7 +42,7 @@ const Dashboard = () => {
     return (
         <div className='h-auto w-full md:mt-3'>
             {/* cards */ }
-            <div className='grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit mx-auto max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full max-[381px]:mx-0'>
+            <div className='grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:w-full'>
                 <StatusCard
                     number={ 500 }
                     title='todays sales'
