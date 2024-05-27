@@ -32,9 +32,9 @@ const layout = async ({
   const userAvatar = getUserAvatar.avatar || '/images/profile-pic.png';
 
   return (
-    <main className='min-h-screen h-auto w-screen max-w-[1540px] mx-auto bg-zinc-100 font-poppins md:p-4 px-2 py-3'>
+    <main className='min-h-screen h-auto w-screen max-w-[1540px] mx-auto bg-zinc-100 font-poppins md:p-4'>
       {/* sile options */ }
-      <div>
+      <div className='h-full w-full flex flex-col'>
         <nav className='w-full h-16 flex justify-between items-center bg-white shadow-sm px-3'>
           <div className='flex items-center w-auto gap-5 md:gap-32 text-lg md:text-2xl text-zinc-900'>
             {/* logo */ }
@@ -57,12 +57,12 @@ const layout = async ({
             <UserProfile userAvatar={ userAvatar } />
           </div>
         </nav>
-        <div className='flex gap-3'>
-          <div className='h-screen w-72 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md'>
+        <div className='flex gap-3 flex-1'>
+          <div className='min-h-screen h-full w-72 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md'>
             <DashboardMenus />
           </div>
 
-          <div className='flex-1 p-2'>
+          <div className='flex-1 p-2 h-full'>
             { children }
           </div>
         </div>

@@ -37,48 +37,45 @@ const Dashboard = () => {
             },
         ]
     };
-    {/* <Line data={ data } /> */ }
 
     return (
         <div className='h-auto w-full md:mt-3'>
             {/* cards */ }
-            <div className='grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:w-full'>
+            <div className='grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:mx-auto'>
                 <StatusCard
-                    number={ 500 }
-                    title='todays sales'
+                    number={ 5 }
+                    title="today's sales"
                     icon={ <i className="ri-bar-chart-box-fill"></i> }
                     iconColorAndIconBg='bg-green-100 text-green-500'
                     profitOrLossPercentage={ 10 }
                     isOnLoss
                 />
                 <StatusCard
-                    number={ 500 }
-                    title='todays sales'
+                    number={ 21 }
+                    title='last 7 days sales'
                     icon={ <i className="ri-bar-chart-box-fill"></i> }
-                    iconColorAndIconBg='bg-green-100 text-green-500'
-                    profitOrLossPercentage={ 10 }
-                    isOnLoss
+                    iconColorAndIconBg='bg-blue-100 text-blue-500'
+                    profitOrLossPercentage={ 5 }
+                />
+                <StatusCard
+                    number={ 122 }
+                    title='total sales'
+                    icon={ <i className="ri-bar-chart-box-fill"></i> }
+                    iconColorAndIconBg='bg-rose-100 text-rose-500'
                 />
                 <StatusCard
                     number={ 500 }
-                    title='todays sales'
-                    icon={ <i className="ri-bar-chart-box-fill"></i> }
-                    iconColorAndIconBg='bg-green-100 text-green-500'
-                    profitOrLossPercentage={ 10 }
-                    isOnLoss
-                />
-                <StatusCard
-                    number={ 500 }
-                    title='todays sales'
-                    icon={ <i className="ri-bar-chart-box-fill"></i> }
-                    iconColorAndIconBg='bg-green-100 text-green-500'
-                    profitOrLossPercentage={ 10 }
-                    isOnLoss
+                    title='orders'
+                    icon={ <i className="ri-file-list-2-fill"></i> }
+                    iconColorAndIconBg='bg-purple-200 text-purple-700'
                 />
             </div>
 
-
-            <div></div>
+            <div className='w-full xl:w-11/12 xl:mx-auto mt-3 bg-white md:px-4 px-2 h-[28rem]'>
+                <div className='mx-auto max-h-full h-auto flex justify-center items-center'>
+                    <Line data={ data } />
+                </div>
+            </div>
         </div>
     )
 }

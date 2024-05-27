@@ -19,12 +19,12 @@ export const dashboardOptions: DashboardOptions[] = [
     {
         label: 'Help',
         icon: <i className="ri-question-fill"></i>,
-        url: '/seller/dashboard/help'
+        url: '/help'
     },
     {
         label: 'Support',
         icon: <i className="ri-hand-heart-fill"></i>,
-        url: '/seller/dashboard/support'
+        url: '/support'
     },
     {
         label: 'Settings',
