@@ -35,7 +35,7 @@ const layout = async ({
     <main className='min-h-screen h-auto w-screen max-w-[1540px] mx-auto bg-zinc-100 font-poppins md:p-4'>
       {/* sile options */ }
       <div className='h-full w-full flex flex-col'>
-        <nav className='w-full h-16 flex justify-between items-center bg-white shadow-sm px-3'>
+        <nav className='w-full h-16 flex justify-between items-center bg-white shadow-sm px-3 md:rounded-t md:rounded-r'>
           <div className='flex items-center w-auto gap-5 md:gap-32 text-lg md:text-2xl text-zinc-900'>
             {/* logo */ }
             <div className='hidden md:flex gap-2 h-full w-40'>
@@ -58,11 +58,11 @@ const layout = async ({
           </div>
         </nav>
         <div className='flex gap-3 flex-1'>
-          <div className='min-h-screen h-full w-72 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md'>
+          <div className='min-h-full w-72 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md rounded-b'>
             <DashboardMenus />
           </div>
 
-          <div className='flex-1 p-2 h-full'>
+          <div className='flex-1 p-2 h-full max-w-[100vw] overflow-hidden'>
             { children }
           </div>
         </div>

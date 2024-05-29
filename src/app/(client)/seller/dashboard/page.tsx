@@ -1,31 +1,10 @@
-'use client';
-
 import React from 'react';
-import { Line } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
 import { dayHours, last30Days, last7Days } from '@/lib/util/lineChartDatas';
 import StatusCard from '@/components/dashboard/StatusCard';
+import Top5Table from '@/components/dashboard/Top5Table';
+import LineTable from '@/components/dashboard/LineTable';
 
 const Dashboard = () => {
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-    );
-
     const data = {
         labels: dayHours,
         datasets: [
@@ -41,7 +20,7 @@ const Dashboard = () => {
     return (
         <div className='h-auto w-full md:mt-3'>
             {/* cards */ }
-            <div className='grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:mx-auto'>
+            <section className='grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit xl:w-full max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:mx-auto'>
                 <StatusCard
                     number={ 5 }
                     title="today's sales"
@@ -67,15 +46,25 @@ const Dashboard = () => {
                     number={ 500 }
                     title='orders'
                     icon={ <i className="ri-file-list-2-fill"></i> }
-                    iconColorAndIconBg='bg-purple-200 text-purple-700'
+                    iconColorAndIconBg='bg-purple-100 text-purple-700'
                 />
-            </div>
+            </section>
 
-            <div className='w-full xl:w-11/12 xl:mx-auto mt-3 bg-white md:px-4 px-2 h-[28rem]'>
+            <section className='w-full mt-3 bg-white md:px-4 px-2 sm:h-[28rem] h-80 rounded-md shadow md:shadow-md'>
                 <div className='mx-auto max-h-full h-auto flex justify-center items-center'>
-                    <Line data={ data } />
+                    <LineTable data={ data } />
                 </div>
-            </div>
+            </section>
+
+            {/* top 5 best selling */ }
+            <section className='w-full overflow-hidden h-auto mt-3 bg-white md:px-4 py-2 px-2 rounded-md shadow md:shadow-md'>
+                <div className='w-full h-10 text-xl md:text-2xl font-semibold capitalize md:mt-2 md:ml-2'>
+                    <h4>top 5 best selling</h4>
+                </div>
+                <div className='w-full mt-2 h-auto overflow-x-auto'>
+                    <Top5Table />
+                </div>
+            </section>
         </div>
     )
 }
