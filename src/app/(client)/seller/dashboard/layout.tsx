@@ -52,7 +52,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
             <div className="md:hidden">
               <SideNavBar searchBarFalse />
             </div>
-            <span className="font-bold">
+            <span className="font-bold select-none">
               <span className="opacity-50 font-medium">Hello,</span>{" "}
               {decodedToken.user.name}!
             </span>

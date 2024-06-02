@@ -2,9 +2,30 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["websitedemos.net", "images.pexels.com", "m.media-amazon.com", "tailwindui.com", "authjs.dev"],
+    remotePatterns: [
+      {
+        hostname: "websitedemos.net",
+        protocol: "https",
+      },
+      {
+        hostname: "images.pexels.com",
+        protocol: "https",
+      },
+      {
+        hostname: "m.media-amazon.com",
+        protocol: "https",
+      },
+      {
+        hostname: "tailwindui.com",
+        protocol: "https",
+      },
+      {
+        hostname: "authjs.dev",
+        protocol: "https",
+      },
+    ],
     loader: "default",
-  }
+  },
 };
 
 module.exports = nextConfig;

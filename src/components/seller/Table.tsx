@@ -6,12 +6,18 @@ interface I_Table {
   headers: string[];
   bodyData: any[];
   tableScreenName: string;
+  isEditOption?: boolean;
 }
 
-const Table: React.FC<I_Table> = ({ headers, tableScreenName, bodyData }) => {
+const Table: React.FC<I_Table> = ({
+  headers,
+  tableScreenName,
+  bodyData,
+  isEditOption = false,
+}) => {
   return (
     <div className="px-4 sm:px-6 lg:px-8 max-w-full h-auto">
-      <div className="md:mt-8 mt-3 flow-root">
+      <div className="mt-3 flow-root overflow-y-hidden">
         <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <table className="min-w-full divide-y divide-gray-300 h-auto">
@@ -24,7 +30,7 @@ const Table: React.FC<I_Table> = ({ headers, tableScreenName, bodyData }) => {
                       className={classNames(
                         i === 0
                           ? "py-3.5 pl-4 pr-3 text-left sm:pl-0"
-                          : headers.length - 1 === i
+                          : headers.length - 1 === i && !isEditOption
                           ? "py-3.5 pl-3 pr-4 sm:pr-0"
                           : "px-3 py-3.5 text-left"
                       )}
@@ -32,6 +38,14 @@ const Table: React.FC<I_Table> = ({ headers, tableScreenName, bodyData }) => {
                       {header}
                     </th>
                   ))}
+                  {isEditOption && (
+                    <th
+                      scope="col"
+                      className="relative py-3.5 pl-3 pr-4 sm:pr-0"
+                    >
+                      <span className="sr-only">Edit</span>
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -55,7 +69,7 @@ const Table: React.FC<I_Table> = ({ headers, tableScreenName, bodyData }) => {
                             "whitespace-nowrap py-4",
                             i === 0
                               ? " pl-4 pr-3 sm:pl-0"
-                              : allKeys.length - 1 === i
+                              : allKeys.length - 1 === i && !isEditOption
                               ? " pl-3 pr-4 sm:pr-0 text-center"
                               : "px-3"
                           )}
@@ -66,6 +80,16 @@ const Table: React.FC<I_Table> = ({ headers, tableScreenName, bodyData }) => {
                           {object[key]}
                         </td>
                       ))}
+                      {isEditOption && (
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <Link
+                            href="#"
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            Edit
+                          </Link>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
