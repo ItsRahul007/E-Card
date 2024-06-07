@@ -50,15 +50,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
             <div className="md:hidden">
-              <SideNavBar
-                searchBarFalse
-                customComponent={
-                  <div className="mt-5 px-3 sm:px-8 flex flex-col gap-3">
-                    <DashboardMenus isForNav />
-                  </div>
-                }
-                noSearchKeys
-              />
+              <SideNavBar searchBarFalse dashboardNav noSearchKeys />
             </div>
             <span className="font-bold select-none">
               <span className="opacity-50 font-medium">Hello,</span>{" "}

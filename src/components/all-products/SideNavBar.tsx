@@ -9,6 +9,7 @@ import FilterByPrice from "../filters/FilterByPrice";
 import LeftMenus from "../common/profile-components/LeftMenus";
 import { T_SearchKeys } from "@/lib/types/productTyps";
 import SellerOption from "../landing page/banner/SellerOption";
+import DashboardMenus from "@/app/(client)/seller/dashboard/DashboardMenus";
 
 interface I_ProductNav {
   filters?: boolean;
@@ -19,7 +20,7 @@ interface I_ProductNav {
   sellerOption?: React.JSX.Element;
   searchBarFalse?: boolean;
   noSearchKeys?: boolean;
-  customComponent?: React.JSX.Element;
+  dashboardNav?: boolean;
 }
 
 const SideNavBar: FC<I_ProductNav> = ({
@@ -31,7 +32,7 @@ const SideNavBar: FC<I_ProductNav> = ({
   sellerOption,
   searchBarFalse,
   noSearchKeys = false,
-  customComponent = <></>,
+  dashboardNav = false,
 }) => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
@@ -84,14 +85,18 @@ const SideNavBar: FC<I_ProductNav> = ({
           <div className="w-full h-14 flex items-center justify-between">
             <h2 className={`text-3xl ml-3 font-bold font-ubuntu`}>E-Card</h2>
             <span
-              className="h-6 w-6 border-2 border-white mr-3 flex justify-center items-center rounded-md text-xl"
+              className="h-6 w-6 border-2 border-white mr-3 flex justify-center items-center rounded-md text-xl cursor-pointer"
               onClick={closeSlider}
             >
               <i className="ri-close-fill"></i>
             </span>
           </div>
 
-          {customComponent}
+          {dashboardNav && (
+            <div className="mt-5 px-3 sm:px-8 flex flex-col gap-3">
+              <DashboardMenus isForNav closeSlider={closeSlider} />
+            </div>
+          )}
 
           {/* search box */}
           {!searchBarFalse && (

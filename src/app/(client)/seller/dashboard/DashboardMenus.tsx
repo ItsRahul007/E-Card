@@ -17,9 +17,13 @@ type T_CurrentTab =
 
 interface I_DashboardMenus {
   isForNav?: boolean;
+  closeSlider?: () => void;
 }
 
-const DashboardMenus: React.FC<I_DashboardMenus> = ({ isForNav = false }) => {
+const DashboardMenus: React.FC<I_DashboardMenus> = ({
+  isForNav = false,
+  closeSlider,
+}) => {
   const pathName = usePathname() as T_CurrentTab;
 
   const [currentTab, setCurrentTab] = useState<T_CurrentTab>(pathName);
@@ -34,8 +38,9 @@ const DashboardMenus: React.FC<I_DashboardMenus> = ({ isForNav = false }) => {
         <Link
           href={option.url}
           key={option.url + "dashboard-menus"}
+          onClick={closeSlider}
           className={classNames(
-            "flex gap-3 px-4 py-3 font-medium capitalize items-center justify-between rounded-md shadow max-md:shadow-gray-700",
+            "flex gap-3 px-4 py-3 font-medium capitalize items-center justify-between rounded-md shadow max-md:shadow-gray-700 md:hover:scale-105",
             currentTab === option.url
               ? "bg-emerald-500 text-white md:scale-105 md:shadow-md"
               : !isForNav
