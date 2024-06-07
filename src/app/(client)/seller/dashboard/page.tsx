@@ -18,20 +18,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="h-auto w-full md:mt-3">
+    <div className="h-auto w-full">
       {/* cards */}
       <section className="grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit xl:w-full max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:mx-auto">
         <StatusCard
-          number={5}
-          title="today's sales"
-          icon={<i className="ri-bar-chart-box-fill"></i>}
-          iconColorAndIconBg="bg-green-100 text-green-500"
-          profitOrLossPercentage={10}
-          isOnLoss
-        />
-        <StatusCard
           number={21}
-          title="last 7 days sales"
+          title="last 30 days sales"
           icon={<i className="ri-bar-chart-box-fill"></i>}
           iconColorAndIconBg="bg-blue-100 text-blue-500"
           profitOrLossPercentage={5}
@@ -43,9 +35,15 @@ const Dashboard = () => {
           iconColorAndIconBg="bg-rose-100 text-rose-500"
         />
         <StatusCard
+          number={45}
+          title="products"
+          icon={<i className="ri-shopping-bag-2-fill"></i>}
+          iconColorAndIconBg="bg-orange-100 text-orange-500"
+        />
+        <StatusCard
           number={500}
           title="orders"
-          icon={<i className="ri-file-list-2-fill"></i>}
+          icon={<i className="ri-shopping-cart-2-fill"></i>}
           iconColorAndIconBg="bg-purple-100 text-purple-700"
         />
       </section>
