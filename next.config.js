@@ -23,6 +23,10 @@ const nextConfig = {
         hostname: "authjs.dev",
         protocol: "https",
       },
+      {
+        hostname: "utfs.io",
+        protocol: "https",
+      },
     ],
     loader: "default",
   },

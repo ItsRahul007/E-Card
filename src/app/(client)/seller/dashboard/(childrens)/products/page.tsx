@@ -12,8 +12,6 @@ const SellerProducts = () => {
     "Primary Image",
   ];
 
-  // https://m.media-amazon.com/images/I/51gT4n52pmL._SX679_.jpg
-
   const products = Array.from({ length: 4 }).map((_, i) => ({
     name: "Product " + i,
     price: 13 * i,
