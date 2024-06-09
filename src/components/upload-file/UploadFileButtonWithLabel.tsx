@@ -51,14 +51,11 @@ const UploadFileButtonWithLabel: React.FC<I_UploadFileButtonWithLabel> = ({
           <UploadButton
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
-              // Do something with the response
-              console.log("Files: ", res);
               setImageUrl(res[0].url);
               setImageKey(res[0].key);
               toast.success("Upload Completed");
             }}
             onUploadError={(error: Error) => {
-              // Do something with the error.
               toast.error(ErrorMessage);
               console.log(`ERROR! ${error.message}`);
             }}

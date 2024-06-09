@@ -1,60 +1,63 @@
 import { Schema, model, models } from "mongoose";
 
-const productSchema = new Schema({
+const productSchema = new Schema(
+  {
     //! required fields
     product_name: {
-        required: true,
-        type: String,
+      required: true,
+      type: String,
     },
     primaryImgUrl: {
-        required: true,
-        type: String,
-        unique: true,
+      required: true,
+      type: String,
     },
     secondaryImgUrls: {
-        required: true,
-        type: [String],
-        unique: true,
+      required: true,
+      type: [String],
     },
     price: {
-        required: true,
-        type: Number,
+      required: true,
+      type: Number,
     },
     product_type: {
-        required: true,
-        type: String,
+      required: true,
+      type: String,
     },
     product_category: {
-        required: true,
-        type: String,
-    },
-    search_keys: {
-        required: true,
-        type: [String],
+      required: true,
+      type: String,
     },
     current_price: {
-        required: true,
-        type: Number,
+      required: true,
+      type: Number,
+    },
+    product_description: {
+      required: true,
+      type: String,
     },
 
     //! not required fields
     brand_name: String,
-    ratings: [{
+    ratings: [
+      {
         ratingBy: {
-            type: String,
-            required: [true, "Please provide a reviewer id"]
+          type: String,
+          required: [true, "Please provide a reviewer id"],
         },
         ratingNumber: {
-            type: Number,
-            required: [true, "Please provide a rating between 1 and 5"]
+          type: Number,
+          required: [true, "Please provide a rating between 1 and 5"],
         },
         comment: {
-            type: String,
-            required: [true, "Please a review comment"]
+          type: String,
+          required: [true, "Please a review comment"],
         },
-    }],
+      },
+    ],
     discount_percentage: Number,
-}, { timestamps: true, get: (time: any) => time.toDateString() });
+  },
+  { timestamps: true, get: (time: any) => time.toDateString() }
+);
 
 const Products = models.products || model("products", productSchema);
 export default Products;
