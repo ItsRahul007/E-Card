@@ -62,7 +62,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
           </div>
         </nav>
         <div className="flex gap-3 flex-1">
-          <div className="min-h-full w-72 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md rounded-b">
+          <div className="min-h-full xl:w-72 w-64 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md rounded-b">
             <DashboardMenus />
           </div>
 

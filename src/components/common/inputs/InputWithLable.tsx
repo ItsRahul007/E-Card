@@ -10,6 +10,7 @@ interface I_InputWithLable {
   inputType?: string;
   required?: boolean;
   max?: number;
+  placeholder?: string;
 }
 
 const InputWithLable: React.FC<I_InputWithLable> = ({
@@ -20,6 +21,7 @@ const InputWithLable: React.FC<I_InputWithLable> = ({
   name,
   inputType = "text",
   max,
+  placeholder,
 }) => {
   return (
     <div className="mb-4 col-span-1 row-span-1">
@@ -35,6 +37,7 @@ const InputWithLable: React.FC<I_InputWithLable> = ({
         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         required={required}
         max={max}
+        placeholder={placeholder}
       />
     </div>
   );

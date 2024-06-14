@@ -10,12 +10,17 @@ import IconButton from "../common/buttons/IconButton";
 
 interface I_UploadFileButtonWithLabel {
   label: string;
+  name: string;
+  handleStoreImages: (name: string, url: string) => void;
+  imgUrl: string;
 }
 
 const UploadFileButtonWithLabel: React.FC<I_UploadFileButtonWithLabel> = ({
   label,
+  name,
+  handleStoreImages,
+  imgUrl,
 }) => {
-  const [imageUrl, setImageUrl] = useState<string>("");
   const [imageKey, setImageKey] = useState<string>("");
 
   const removeImage = async () => {
@@ -24,7 +29,7 @@ const UploadFileButtonWithLabel: React.FC<I_UploadFileButtonWithLabel> = ({
     toast.dismiss();
     if (success) {
       toast.success(message);
-      setImageUrl("");
+      handleStoreImages(name, "");
       setImageKey("");
     } else {
       toast.error(message);
@@ -36,9 +41,9 @@ const UploadFileButtonWithLabel: React.FC<I_UploadFileButtonWithLabel> = ({
       <label className="block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
-      {imageUrl.length > 0 ? (
+      {imgUrl.length > 0 ? (
         <div className="self-start flex flex-col gap-2">
-          <Image src={imageUrl} alt="Image" height={200} width={200} />
+          <Image src={imgUrl} alt="Image" height={200} width={200} />
           <IconButton
             icon={<i className="ri-delete-bin-fill"></i>}
             className="text-lg w-fit p-2 hover:text-red-500"
@@ -51,13 +56,14 @@ const UploadFileButtonWithLabel: React.FC<I_UploadFileButtonWithLabel> = ({
           <UploadButton
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
-              setImageUrl(res[0].url);
               setImageKey(res[0].key);
+              handleStoreImages(name, res[0].url);
               toast.success("Upload Completed");
             }}
             onUploadError={(error: Error) => {
               toast.error(ErrorMessage);
               console.log(`ERROR! ${error.message}`);
+              handleStoreImages(name, "");
             }}
           />
         </div>
