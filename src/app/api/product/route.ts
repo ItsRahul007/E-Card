@@ -8,11 +8,30 @@ import {
   invalidCriteria,
   primartAndSecondryUrlSame,
   productAdded,
+  productUpdated,
   secondaryPrimaryImgUrl,
   threeImgsRequired,
 } from "@/lib/util/apiMessages";
 import { checkAuth } from "@/lib/util/checkAuth";
 import User from "@/lib/model/usersSchema";
+
+//! if the primary image or secondry images are empty strings
+function checkIsImageUrlEmptyString(
+  primaryImage: string,
+  secondaryImages: string[]
+): { success: boolean; error?: string } {
+  if (primaryImage.length === 0) {
+    return { success: false, error: emptyPrimaryImgUrl };
+  } else {
+    for (const str of secondaryImages) {
+      if (str === "") {
+        return { success: false, error: secondaryPrimaryImgUrl };
+      } else if (str === primaryImage)
+        return { success: false, error: primartAndSecondryUrlSame };
+    }
+  }
+  return { success: true };
+}
 
 //? for getting all products
 export async function GET(req: NextRequest) {
@@ -129,26 +148,7 @@ export async function GET(req: NextRequest) {
 
 //? for adding a new product
 export async function POST(req: NextRequest) {
-  //! if the primary image or secondry images are empty strings
-  function checkIsImageUrlEmptyString(
-    primaryImage: string,
-    secondaryImages: string[]
-  ): { success: boolean; error?: string } {
-    if (primaryImage.length === 0) {
-      return { success: false, error: emptyPrimaryImgUrl };
-    } else {
-      for (const str of secondaryImages) {
-        if (str === "") {
-          return { success: false, error: secondaryPrimaryImgUrl };
-        } else if (str === primaryImage)
-          return { success: false, error: primartAndSecondryUrlSame };
-      }
-    }
-    return { success: true };
-  }
   try {
-    const reqBody = await req.json();
-    console.log(reqBody);
     const {
       product_name,
       primaryImgUrl,
@@ -157,9 +157,8 @@ export async function POST(req: NextRequest) {
       product_type,
       discount_percentage,
       product_category,
-      search_keys,
       product_description,
-    } = reqBody;
+    } = await req.json();
 
     //! if there is any required field data is missing
     if (
@@ -257,6 +256,126 @@ export async function POST(req: NextRequest) {
         message: productAdded,
         success: true,
         product,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: ApiErrorMessage,
+        problem: error.message,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const {
+      product_name,
+      primaryImgUrl,
+      secondaryImgUrls,
+      price,
+      product_type,
+      discount_percentage,
+      product_category,
+      product_description,
+      productId,
+    } = await req.json();
+
+    //! if there is any required field data is missing
+    if (
+      !product_name ||
+      !primaryImgUrl ||
+      !secondaryImgUrls ||
+      !price ||
+      !product_type ||
+      !product_category ||
+      !product_description ||
+      !productId ||
+      !discount_percentage
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: invalidCriteria,
+        },
+        { status: 404 }
+      );
+    }
+
+    //! if there is more than or less than three secondry images
+    if (secondaryImgUrls.length !== 3) {
+      return NextResponse.json(
+        {
+          error: threeImgsRequired,
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
+
+    const urlCkeck = checkIsImageUrlEmptyString(
+      primaryImgUrl,
+      secondaryImgUrls
+    );
+    if (!urlCkeck.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: urlCkeck.error,
+        },
+        { status: 400 }
+      );
+    }
+
+    const isUserAuthenticated = await checkAuth(req);
+    if (!isUserAuthenticated.success) {
+      return isUserAuthenticated.response;
+    }
+    const { userId } = isUserAuthenticated;
+
+    //* get the user here and attach his brand name to the product
+    await connectWithMongo();
+
+    const user = await User.findById(userId).select("brandName");
+    if (!user || !user.brandName) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "User not found",
+        },
+        { status: 400 }
+      );
+    }
+
+    //? adding new product
+    const productObject = {
+      product_name,
+      primaryImgUrl,
+      secondaryImgUrls,
+      price,
+      product_type,
+      product_category,
+      brand_name: user.brandName,
+      product_description,
+      discount_percentage,
+      current_price: Math.round(price - (price * discount_percentage) / 100),
+    };
+
+    const updatedProduct = await ProductsSchema.findByIdAndUpdate(
+      productId,
+      productObject,
+      { new: true }
+    );
+
+    return NextResponse.json(
+      {
+        success: true,
+        product: updatedProduct,
       },
       { status: 200 }
     );

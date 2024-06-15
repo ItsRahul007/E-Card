@@ -2,7 +2,10 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GIMINI_AI_API_KEY || "");
 
-export async function getProductDescription(productKey: string, productName?: string) {
+export async function getProductDescription(
+  productKey: string,
+  productName?: string
+) {
   // For text-only input, use the gemini-pro model
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -14,7 +17,9 @@ export async function getProductDescription(productKey: string, productName?: st
   
   Don't give anything like "[your brand name]" or anything like I have to manually change, if I want then I will provide you the brand name
 
-  For now the product type is ${productKey} ${productName ? "and product name is " + productName : ""}
+  For now, the product type is ${productKey} ${
+    productName ? "and the product name is " + productName : ""
+  }
   `;
 
   try {

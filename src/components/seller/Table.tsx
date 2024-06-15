@@ -1,4 +1,5 @@
 import classNames from "@/lib/util/classNames";
+import { sign } from "jsonwebtoken";
 import Link from "next/link";
 import React from "react";
 
@@ -15,6 +16,11 @@ const Table: React.FC<I_Table> = ({
   bodyData,
   isEditOption = false,
 }) => {
+  const getEncodedId = (id: string) => {
+    const encodedId = sign(id, process.env.NEXT_PUBLIC_AUTH_TOKEN!);
+    return encodedId;
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 max-w-full h-auto">
       <div className="mt-3 flow-root overflow-y-hidden">
@@ -57,6 +63,8 @@ const Table: React.FC<I_Table> = ({
                     return string;
                   });
 
+                  const encodedId = getEncodedId(JSON.stringify(object.id));
+
                   return (
                     <tr
                       key={object.id + tableScreenName}
@@ -66,7 +74,7 @@ const Table: React.FC<I_Table> = ({
                         <td
                           key={i + key}
                           className={classNames(
-                            "whitespace-nowrap py-4",
+                            "whitespace-nowrap py-4 max-w-[200px] truncate",
                             i === 0
                               ? " pl-4 pr-3 sm:pl-0"
                               : allKeys.length - 1 === i && !isEditOption
@@ -83,7 +91,7 @@ const Table: React.FC<I_Table> = ({
                       {isEditOption && (
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                           <Link
-                            href="#"
+                            href={`/seller/dashboard/add-products?id=${encodedId}`}
                             className="text-indigo-600 hover:text-indigo-700"
                           >
                             Edit

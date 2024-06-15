@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@/components/common/buttons/Button";
 import InputWithLable from "@/components/common/inputs/InputWithLable";
 import UploadFileButtonWithLabel from "@/components/upload-file/UploadFileButtonWithLabel";
@@ -10,7 +10,9 @@ import axios from "axios";
 import {
   ErrorMessage,
   productAddedSuccessMessage,
+  productUpdatedSuccessMessage,
 } from "@/lib/util/toastMessages";
+import { revalidateUrl } from "@/lib/util/revalidate";
 
 const formDataInitialValues: T_FormVariables = {
   product_name: "",
@@ -25,10 +27,34 @@ const formDataInitialValues: T_FormVariables = {
   product_description: "",
 };
 
-const AddProductForm = () => {
+interface I_AddProductForm {
+  product_name?: string;
+  price?: string;
+  product_type?: string;
+  product_category?: string;
+  discount_percentage?: string;
+  primary_image?: string;
+  secondry_image_1?: string;
+  secondry_image_2?: string;
+  secondry_image_3?: string;
+  product_description?: string;
+  forUpdate?: boolean;
+  productId?: string;
+}
+
+const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
   const [formVariables, setFormVariables] = useState<T_FormVariables>(
     formDataInitialValues
   );
+
+  useEffect(() => {
+    if (productObj) {
+      setFormVariables((prev) => ({
+        ...prev,
+        ...productObj,
+      }));
+    }
+  }, [productObj]);
 
   const handleOnChange = (
     e: React.ChangeEvent<
@@ -52,7 +78,7 @@ const AddProductForm = () => {
       return;
     }
 
-    const mutationVariables = {
+    const mutationVariables: any = {
       ...formVariables,
       primaryImgUrl: formVariables.primary_image,
       secondaryImgUrls: [
@@ -62,19 +88,54 @@ const AddProductForm = () => {
       ],
     };
 
-    console.log(mutationVariables);
-    toast.loading("Adding Product");
+    //? if we are updating then setting the productId to the productObj
+    productObj.forUpdate &&
+      productObj.productId &&
+      (mutationVariables.productId = JSON.parse(productObj.productId));
+
+    toast.loading(productObj.forUpdate ? "Updating Product" : "Adding Product");
     try {
-      const response = await axios.post("/api/product", mutationVariables, {
-        headers: {
-          "Content-Type": "application/json",
-          AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN || ""),
-        },
-      });
-      console.log(response.data);
+      productObj.forUpdate
+        ? //? for updating the product
+          await axios.put("/api/product", mutationVariables, {
+            headers: {
+              "Content-Type": "application/json",
+              AUTH_TOKEN: JSON.stringify(
+                process.env.NEXT_PUBLIC_AUTH_TOKEN || ""
+              ),
+            },
+          })
+        : //? for adding a new product
+          await axios.post("/api/product", mutationVariables, {
+            headers: {
+              "Content-Type": "application/json",
+              AUTH_TOKEN: JSON.stringify(
+                process.env.NEXT_PUBLIC_AUTH_TOKEN || ""
+              ),
+            },
+          });
+
       toast.dismiss();
-      toast.success(productAddedSuccessMessage);
-      setFormVariables(formDataInitialValues);
+      toast.success(
+        productObj.forUpdate
+          ? productUpdatedSuccessMessage
+          : productAddedSuccessMessage
+      );
+
+      //? if we are not updating then setting the form variables to initial values
+      !productObj.forUpdate && setFormVariables(formDataInitialValues);
+
+      revalidateUrl({
+        revalidatePathUrl: "/seller/dashboard/products",
+        revalidateLayout: "page",
+      });
+
+      //? if we are updating then revalidating the page
+      productObj.forUpdate &&
+        revalidateUrl({
+          revalidatePathUrl: "/seller/dashboard/add-products",
+          revalidateLayout: "page",
+        });
     } catch (error: any) {
       console.log(error);
       toast.dismiss();

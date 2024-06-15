@@ -2,28 +2,34 @@ import Table from "@/components/seller/Table";
 import React from "react";
 import PrimaryImg from "./PrimaryImg";
 import classNames from "@/lib/util/classNames";
+import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import { cookies } from "next/headers";
+import { decode } from "jsonwebtoken";
+import { T_JwtVerifyDataType } from "@/lib/types/authToken-type";
+import { getProducts } from "@/lib/server-side-actions/seller-side";
 
-const SellerProducts = () => {
+const SellerProducts = async () => {
   const headers: string[] = [
     "Name",
     "Price",
-    "Quantity",
+    "discount percentage",
     "Status",
     "Primary Image",
   ];
 
-  const products = Array.from({ length: 4 }).map((_, i) => ({
-    name: "Product " + i,
-    price: 13 * i,
-    quantity: i,
+  await connectWithMongo();
+  const authToken = cookies().get("authToken")?.value || "";
+
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+  const usersProducts = await getProducts(userDataObject.id);
+
+  const products = usersProducts.map((obj) => ({
+    name: obj.product_name,
+    price: obj.price,
+    discount: obj.discount_percentage,
     status: <span className={classNames("text-green-500")}>Active</span>,
-    primaryImage: (
-      <PrimaryImg
-        alt="testing"
-        src="https://m.media-amazon.com/images/I/51gT4n52pmL._SX679_.jpg"
-      />
-    ),
-    id: i,
+    primaryImage: <PrimaryImg alt="testing" src={obj.primaryImgUrl} />,
+    id: obj._id,
   }));
 
   return (
