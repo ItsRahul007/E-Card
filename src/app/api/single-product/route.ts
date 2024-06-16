@@ -5,42 +5,52 @@ import { ApiErrorMessage, productNotFound } from "@/lib/util/apiMessages";
 
 // //? for getting a single product
 export async function GET(req: NextRequest) {
-    try {
-        const productId = String(req.nextUrl.searchParams.get("productId"));
+  try {
+    const productId = String(req.nextUrl.searchParams.get("productId"));
 
-        //! if not of productId
-        if (!productId) {
-            return NextResponse.json({
-                success: false,
-                error: "Product id not found"
-            }, { status: 400 });
-        };
-
-        await connectWithMongo();
-
-        const product = await ProductsSchema.findById(productId).select("-updatedAt -createdAt -brand_name -__v");
-
-        if (!product) {
-            return NextResponse.json({
-                success: false,
-                error: productNotFound
-            }, { status: 400 });
-        }
-
-        return NextResponse.json({
-            success: true,
-            product
-        });
-
-    } catch (error: any) {
-        console.log(error);
-        return NextResponse.json({
-            success: false,
-            error: ApiErrorMessage,
-            problem: error.message,
-        }, { status: 500 });
+    //! if not of productId
+    if (!productId) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Product id not found",
+        },
+        { status: 400 }
+      );
     }
-};
+
+    await connectWithMongo();
+
+    const product = await ProductsSchema.findById(productId).select(
+      "-updatedAt -createdAt -__v"
+    );
+
+    if (!product) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: productNotFound,
+        },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      product,
+    });
+  } catch (error: any) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: ApiErrorMessage,
+        problem: error.message,
+      },
+      { status: 500 }
+    );
+  }
+}
 
 // export async function POST() {
 //     try {
