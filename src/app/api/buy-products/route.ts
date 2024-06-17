@@ -131,8 +131,6 @@ export async function POST(req: NextRequest) {
       tax,
     };
 
-    console.log(orderObj);
-
     if (delivary_status) orderObj.delivary_status = delivary_status;
 
     await connectWithMongo();

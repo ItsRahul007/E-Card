@@ -47,6 +47,10 @@ const ordersModel = new Schema(
           type: String,
           require: [true, "Brand name is required"],
         },
+        order_status: {
+          type: String,
+          enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
+        },
       },
     ],
     total_price: {

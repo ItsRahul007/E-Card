@@ -3,9 +3,6 @@ import React from "react";
 import PrimaryImg from "./PrimaryImg";
 import classNames from "@/lib/util/classNames";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
-import { cookies } from "next/headers";
-import { decode } from "jsonwebtoken";
-import { T_JwtVerifyDataType } from "@/lib/types/authToken-type";
 import { getProducts } from "@/lib/server-side-actions/seller-side";
 
 const SellerProducts = async () => {
@@ -18,10 +15,7 @@ const SellerProducts = async () => {
   ];
 
   await connectWithMongo();
-  const authToken = cookies().get("authToken")?.value || "";
-
-  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
-  const usersProducts = await getProducts(userDataObject.id);
+  const usersProducts = await getProducts();
 
   const products = usersProducts.map((obj) => ({
     name: obj.product_name,

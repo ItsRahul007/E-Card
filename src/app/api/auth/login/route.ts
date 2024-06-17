@@ -83,6 +83,7 @@ export async function POST(req: NextRequest) {
         id: user._id,
         name: user.name,
         userRole: user.userRole,
+        brandName: user.brandName || "",
       },
     };
 
@@ -165,6 +166,7 @@ export async function PUT(req: NextRequest) {
         id: updatedData._id,
         name: updatedData.name,
         userRole: updatedData.userRole,
+        brandName: updatedData.brandName || "",
       },
     };
 

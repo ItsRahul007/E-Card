@@ -1,37 +1,23 @@
 import Table from "@/components/seller/Table";
 import React from "react";
 import StatusDropdown from "./StatusDropdown";
+import { getOrders } from "@/lib/server-side-actions/seller-side";
 
-const SellerOrders = () => {
-  const orders: any = [
-    {
-      id: 1,
-      productName: "Product 1",
-      quantity: 2,
-      price: 200,
-      status: <StatusDropdown status="Shipped" />,
-    },
-    {
-      id: 2,
-      productName: "Product 2",
-      quantity: 1,
-      price: 150,
-      status: <StatusDropdown status="Processing" />,
-    },
-    {
-      id: 3,
-      productName: "Product 3",
-      quantity: 4,
-      price: 800,
-      status: <StatusDropdown status="Delivered" />,
-      options: {
-        isEditable: true,
-        onClick: () => {},
-      },
-    },
-  ];
-
+const SellerOrders = async () => {
   const headers: string[] = ["product", "quantity", "price", "status"];
+  const orders = await getOrders();
+
+  const ordersArr = orders.map((order) => ({
+    id: order._id,
+    productName: order.product_name,
+    quantity: order.quantity,
+    price: order.product_price,
+    status: (
+      <StatusDropdown
+        status={order.order_status ? order.order_status : "Pending"}
+      />
+    ),
+  }));
 
   return (
     <div className="h-auto w-full">
@@ -43,7 +29,7 @@ const SellerOrders = () => {
           <Table
             headers={headers}
             tableScreenName="seller-orders"
-            bodyData={orders}
+            bodyData={ordersArr}
           />
         </div>
       </div>

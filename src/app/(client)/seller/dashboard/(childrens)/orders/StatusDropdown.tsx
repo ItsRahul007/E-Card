@@ -9,6 +9,7 @@ interface I_StatusDropdown {
 
 const StatusDropdown: React.FC<I_StatusDropdown> = ({ status }) => {
   const [selectValue, setSelectValue] = useState(status);
+  //! use server side to change the status (form action)
 
   return (
     <div>
@@ -16,6 +17,7 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({ status }) => {
         className="text-gray-700 rounded-md cursor-pointer"
         value={selectValue}
         onChange={(e) => setSelectValue(e.target.value)}
+        defaultValue={status}
       >
         <option className="py-2" disabled>
           Select a status
