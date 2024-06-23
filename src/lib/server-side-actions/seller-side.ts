@@ -1,9 +1,12 @@
+"use server";
+
 import { cookies } from "next/headers";
 import Orders from "../model/ordersSchema";
 import Products from "../model/productSchema";
 import connectWithMongo from "../mongoConnection/mongoConnect";
 import { decode } from "jsonwebtoken";
 import { T_JwtVerifyDataType } from "../types/authToken-type";
+import { T_Orders, T_myOrders } from "../types/orderTypes";
 
 const authToken = cookies().get("authToken")?.value || "";
 
@@ -37,33 +40,9 @@ export const getProductById = async (productId: string) => {
   }
 };
 
-type orderProduct = {
-  product_id: string;
-  primaryImgUrl: string;
-  product_name: string;
-  quantity: number;
-  product_price: number;
-  brand_name: string;
-  _id: string;
-  order_status?:
-    | "Pending"
-    | "Processing"
-    | "Shipped"
-    | "Delivered"
-    | "Cancelled";
-};
-
-interface T_myOrders extends orderProduct {
-  orderId: string;
-}
-
-type T_Orders = {
-  products: orderProduct[];
-  _id: string;
-};
-
 export const getOrders = async () => {
   try {
+    await connectWithMongo();
     const orders: T_Orders[] = await Orders.find({
       "products.brand_name": userDataObject.brandName,
     }).select("products");
@@ -104,5 +83,38 @@ export const getOrders = async () => {
   } catch (error: any) {
     console.log(error.message);
     throw new Error("Failed to get orders, please try again!");
+  }
+};
+
+export const updateOrderStatus = async (
+  status: string,
+  orderId: string,
+  productArrId: string
+) => {
+  try {
+    //* get the order id and order-product-id and status and update it
+    await connectWithMongo();
+    await Orders.findByIdAndUpdate(
+      orderId,
+      {
+        $set: {
+          "products.$[product].order_status": status,
+        },
+      },
+      {
+        arrayFilters: [{ "product._id": productArrId }],
+      }
+    );
+
+    return {
+      success: true,
+      message: "Order status updated!",
+    };
+  } catch (error: any) {
+    console.log(error.message);
+    return {
+      success: false,
+      message: "Failed update order status, please try again!",
+    };
   }
 };

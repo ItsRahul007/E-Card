@@ -14,7 +14,9 @@ const SellerOrders = async () => {
     price: order.product_price,
     status: (
       <StatusDropdown
-        status={order.order_status ? order.order_status : "Pending"}
+        status={order.order_status ? order.order_status : "pending"}
+        orderId={order.orderId}
+        productArrId={order._id}
       />
     ),
   }));

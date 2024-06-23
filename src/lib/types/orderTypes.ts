@@ -61,3 +61,28 @@ export type T_orderObj = {
     | "delivered"
     | "cancelled";
 };
+
+export type orderProduct = {
+  product_id: string;
+  primaryImgUrl: string;
+  product_name: string;
+  quantity: number;
+  product_price: number;
+  brand_name: string;
+  _id: string;
+  order_status?:
+    | "pending"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "cancelled";
+};
+
+export interface T_myOrders extends orderProduct {
+  orderId: string;
+}
+
+export type T_Orders = {
+  products: orderProduct[];
+  _id: string;
+};
