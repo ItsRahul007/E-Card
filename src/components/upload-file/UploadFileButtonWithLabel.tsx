@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UploadButton } from "@/lib/util/uploadthing";
 import toast from "react-hot-toast";
 import Image from "next/image";
@@ -22,6 +22,13 @@ const UploadFileButtonWithLabel: React.FC<I_UploadFileButtonWithLabel> = ({
   imgUrl,
 }) => {
   const [imageKey, setImageKey] = useState<string>("");
+
+  useEffect(() => {
+    if (imgUrl.startsWith("https://utfs.io/f/")) {
+      const imgKey = imgUrl.replace("https://utfs.io/f/", "");
+      setImageKey(imgKey);
+    }
+  }, [imgUrl]);
 
   const removeImage = async () => {
     toast.loading("Removing Image");

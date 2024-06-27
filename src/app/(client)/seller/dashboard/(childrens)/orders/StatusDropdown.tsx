@@ -2,6 +2,7 @@
 
 import { updateOrderStatus } from "@/lib/server-side-actions/seller-side";
 import { statusOptions } from "@/lib/util/SomeStaticDatas";
+import { revalidateUrl } from "@/lib/util/revalidate";
 import React from "react";
 import toast from "react-hot-toast";
 
@@ -25,8 +26,13 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({
       orderId,
       productArrId
     );
-    if (response.success) toast.success(response.message);
-    else toast.error(response.message);
+    if (response.success) {
+      toast.success(response.message);
+      revalidateUrl({
+        revalidatePathUrl: "/seller/dashboard/orders",
+        revalidateLayout: "page",
+      });
+    } else toast.error(response.message);
   };
 
   return (
@@ -35,6 +41,10 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({
         className="text-gray-700 rounded-md cursor-pointer"
         defaultValue={status}
         onChange={handleChange}
+        disabled={
+          status.toLowerCase() === "delivered" ||
+          status.toLowerCase() === "cancelled"
+        }
       >
         <option className="py-2" disabled>
           Select a status

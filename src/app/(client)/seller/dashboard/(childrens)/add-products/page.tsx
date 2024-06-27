@@ -14,7 +14,6 @@ const AddProducts: React.FC<I_AddProducts> = async ({ searchParams }) => {
   const productId = decode(encodedProductId) as string;
   const product =
     productId !== null ? await getProductById(JSON.parse(productId)) : false;
-  console.log(product);
 
   return (
     <div className="w-full h-full mx-auto p-6 bg-white rounded-lg shadow-md">

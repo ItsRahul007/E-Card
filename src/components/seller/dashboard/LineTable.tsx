@@ -1,32 +1,43 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Line } from 'react-chartjs-2';
+import React from "react";
+import { Bar } from "react-chartjs-2";
 import {
-    Chart as ChartJS,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+} from "chart.js";
+
+const LineTable = ({ data }: { data: any }) => {
+  ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
-    LineElement,
     Title,
     Tooltip,
     Legend,
-} from 'chart.js';
+    BarElement
+  );
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+        display: false,
+      },
+      title: {
+        display: true,
+        text: "Last Seven Days Sales",
+      },
+    },
+  };
 
-const LineTable = ({ data }: { data: any }) => {
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-    );
+  return <Bar data={data} options={options} />;
+};
 
-    return (
-        <Line data={ data } />
-    )
-}
-
-export default LineTable
+export default LineTable;

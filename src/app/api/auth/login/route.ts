@@ -87,9 +87,11 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_SECRET = process.env.JWT_SECRET!;
 
-    const authToken = sign(data, JWT_SECRET!);
+    const authToken = sign(data, JWT_SECRET, {
+      expiresIn: 60 * 60 * 24 * 5,
+    });
 
     const responce = NextResponse.json(
       {
@@ -170,9 +172,11 @@ export async function PUT(req: NextRequest) {
       },
     };
 
-    const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
+    const JWT_SECRET: string | undefined = process.env.JWT_SECRET!;
 
-    const authToken = sign(data, JWT_SECRET!);
+    const authToken = sign(data, JWT_SECRET, {
+      expiresIn: 60 * 60 * 24 * 5,
+    });
 
     response.cookies.set("authToken", authToken, { maxAge: 60 * 60 * 24 * 5 });
 

@@ -26,10 +26,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             },
           };
           const JWT_SECRET: string = process.env.JWT_SECRET!;
-          const authToken = sign(data, JWT_SECRET!);
-          const setCookies = cookies().set;
+          const authToken = sign(data, JWT_SECRET, {
+            expiresIn: 60 * 60 * 24 * 5,
+          });
 
-          setCookies("authToken", authToken, {
+          cookies().set("authToken", authToken, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 5,
           });

@@ -79,7 +79,9 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    const authToken = sign(data, process.env.JWT_SECRET!);
+    const authToken = sign(data, process.env.JWT_SECRET!, {
+      expiresIn: 60 * 60 * 24 * 5,
+    });
 
     const response = NextResponse.json(
       {

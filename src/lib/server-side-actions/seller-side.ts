@@ -45,7 +45,9 @@ export const getOrders = async () => {
     await connectWithMongo();
     const orders: T_Orders[] = await Orders.find({
       "products.brand_name": userDataObject.brandName,
-    }).select("products");
+    })
+      .select("products")
+      .sort({ createdAt: -1 });
 
     const myOrders: T_myOrders[] = orders
       .flatMap((order) => {
@@ -116,5 +118,67 @@ export const updateOrderStatus = async (
       success: false,
       message: "Failed update order status, please try again!",
     };
+  }
+};
+
+//* figureout the diffrence between orders and sales then create a function who will return the total-sales number and last-7-day-sales number
+
+export const getSales = async () => {
+  try {
+    await connectWithMongo();
+    const orders = await Orders.find({
+      "products.brand_name": userDataObject.brandName,
+      delivary_status: "delivered",
+    })
+      .select("products createdAt")
+      .sort({ createdAt: -1 });
+
+    const myOrders = orders
+      .flatMap((order) => {
+        return order.products.map((product: any) => {
+          if (product.brand_name === userDataObject.brandName) {
+            //* spread operator is not working fine thats why I'm doing that
+            const {
+              product_id,
+              primaryImgUrl,
+              product_name,
+              quantity,
+              product_price,
+              _id,
+              order_status,
+            } = product;
+
+            return {
+              product_id,
+              primaryImgUrl,
+              product_name,
+              quantity,
+              product_price,
+              _id,
+              order_status,
+              createdAt: order.createdAt,
+            };
+          } else {
+            return null;
+          }
+        });
+      })
+      .filter((product) => product !== null); // Filter out nulls
+
+    const lastSevenDaysSales = myOrders.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 7);
+
+      return orderDate >= currentDate;
+    });
+
+    return {
+      totalSales: myOrders.length,
+      lastSevenDaysSales: lastSevenDaysSales.length,
+    };
+  } catch (error: any) {
+    console.log(error.message);
+    throw new Error("Failed to get sales, please try again!");
   }
 };
