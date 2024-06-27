@@ -17,8 +17,6 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({
   orderId,
   productArrId,
 }) => {
-  //! use server side to change the status (form action)
-
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     // setSelectValue(e.target.value);
     const response = await updateOrderStatus(

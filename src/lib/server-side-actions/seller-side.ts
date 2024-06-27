@@ -8,11 +8,10 @@ import { decode } from "jsonwebtoken";
 import { T_JwtVerifyDataType } from "../types/authToken-type";
 import { T_Orders, T_myOrders } from "../types/orderTypes";
 
-const authToken = cookies().get("authToken")?.value || "";
-
-const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
-
 export const getProducts = async () => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
   try {
     await connectWithMongo();
     const usersProducts = await Products.find({
@@ -41,6 +40,9 @@ export const getProductById = async (productId: string) => {
 };
 
 export const getOrders = async () => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
   try {
     await connectWithMongo();
     const orders: T_Orders[] = await Orders.find({
@@ -121,9 +123,10 @@ export const updateOrderStatus = async (
   }
 };
 
-//* figureout the diffrence between orders and sales then create a function who will return the total-sales number and last-7-day-sales number
-
 export const getSales = async () => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
   try {
     await connectWithMongo();
     const orders = await Orders.find({
