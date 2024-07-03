@@ -33,15 +33,13 @@ const BuyProducts: FC<I_SingleProductPage> = async ({ params }) => {
     : { data: {} };
 
   return (
-    <div className="h-screen w-screen flex flex-col gap-2">
+    <div className="h-auto w-screen flex flex-col gap-2 bg-lightBg text-rootColor">
       <Navbar />
 
-      <div className="bg-gray-50">
-        <div className="mx-auto max-w-2xl px-4 md:pb-24 md:pt-16 pb-12 pt-6 sm:px-6 lg:max-w-7xl lg:px-8">
-          <OrderSummary
-            product={product.data?.success ? [product.data.product] : []}
-          />
-        </div>
+      <div className="mx-auto max-w-2xl px-4 md:pb-24 md:pt-16 pb-12 pt-6 sm:px-6 lg:max-w-7xl lg:px-8 bg-lightBg">
+        <OrderSummary
+          product={product.data?.success ? [product.data.product] : []}
+        />
       </div>
     </div>
   );

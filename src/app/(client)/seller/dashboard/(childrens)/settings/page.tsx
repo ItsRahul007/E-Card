@@ -1,11 +1,10 @@
-import InputWithLable from "@/components/common/inputs/InputWithLable";
 import NonEditableField from "@/components/common/inputs/NonEditableField";
 import ToggleInput from "@/components/common/inputs/ToggleInput";
 import React from "react";
 
 const SellerSettings = () => {
   return (
-    <div className="bg-white w-full h-auto md:shadow-md rounded-md p-2 pb-4">
+    <div className="bg-rootBg w-full h-auto md:shadow-md rounded-md p-2 pb-4">
       <div className="sm:w-full w-fit mx-auto h-10 text-xl md:text-2xl font-semibold capitalize md:mt-4 mt-2 md:ml-6">
         <h4>settings</h4>
       </div>

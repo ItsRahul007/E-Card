@@ -44,7 +44,7 @@ const DashboardMenus: React.FC<I_DashboardMenus> = ({
             currentTab === option.url
               ? "bg-emerald-500 text-white md:scale-105 md:shadow-md"
               : !isForNav
-              ? "hover:text-white hover:bg-emerald-500 text-gray-500"
+              ? "hover:text-white hover:bg-emerald-500 text-lightColor"
               : "hover:text-white hover:bg-emerald-500 text-gray-200"
           )}
         >

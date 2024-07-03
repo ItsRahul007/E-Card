@@ -8,16 +8,19 @@ import {
   getProducts,
   getSales,
 } from "@/lib/server-side-actions/seller-side";
+import { ChartData } from "chart.js";
+import style from "@/app/style/style.module.css";
 
 const Dashboard = async () => {
-  const data = {
+  console.log(style.barColor);
+  const data: ChartData<"bar"> = {
     labels: last7Days,
     datasets: [
       {
         label: "Sales",
         data: [5, 4, 1, 3, 4, 1, 8, 10],
-        borderColor: "rgba(53, 162, 235, 0.5)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: `rgb(53, 162, 235)`,
       },
     ],
   };
@@ -57,14 +60,14 @@ const Dashboard = async () => {
         />
       </section>
 
-      <section className="w-full mt-3 bg-white md:px-4 px-2 sm:h-[28rem] h-80 rounded-md shadow md:shadow-md">
+      <section className="w-full mt-3 bg-rootBg md:px-4 px-2 sm:h-[28rem] h-80 rounded-md shadow md:shadow-md">
         <div className="mx-auto max-h-full h-auto flex justify-center items-center xl:py-1">
           <LineTable data={data} />
         </div>
       </section>
 
       {/* top 5 best selling */}
-      <section className="w-full overflow-x-hidden h-auto mt-3 bg-white md:px-4 py-2 px-2 rounded-md shadow md:shadow-md">
+      <section className="w-full overflow-x-hidden h-auto mt-3 bg-rootBg md:px-4 py-2 px-2 rounded-md shadow md:shadow-md">
         <div className="sm:w-full w-fit mx-auto h-10 text-xl md:text-2xl font-semibold capitalize md:mt-2 md:ml-2">
           <h4>top 5 best selling</h4>
         </div>

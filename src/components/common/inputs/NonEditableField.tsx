@@ -8,8 +8,8 @@ interface I_NonEditableField {
 const NonEditableField: React.FC<I_NonEditableField> = ({ label, value }) => {
   return (
     <div className="col-span-1 row-span-1 text-sm truncate">
-      <label className="font-medium capitalize text-gray-700">{label}</label>
-      <div className="text-gray-500">{value}</div>
+      <label className="font-medium capitalize text-rootColor">{label}</label>
+      <div className="text-lightColor">{value}</div>
     </div>
   );
 };

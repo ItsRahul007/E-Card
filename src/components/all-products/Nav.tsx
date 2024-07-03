@@ -27,7 +27,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
   const sellerOption = <SellerOption userRole={userObj.userRole} />;
 
   return (
-    <nav className="w-screen min-h-[8%] sm:min-h-[9%] lg:min-h-[11%] bg-appTheme-500 text-white flex">
+    <nav className="w-screen min-h-[50px] sm:min-h-[58px] lg:min-h-[72px] bg-appTheme-500 text-white flex justify-center items-center">
       {/* search box and logo */}
       <SearchBoxAndLogoForNav />
 

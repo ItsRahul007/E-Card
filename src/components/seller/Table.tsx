@@ -26,9 +26,9 @@ const Table: React.FC<I_Table> = ({
       <div className="mt-3 flow-root overflow-y-hidden">
         <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <table className="min-w-full divide-y divide-gray-300 h-auto">
+            <table className="min-w-full divide-y divide-lightColor h-auto">
               <thead>
-                <tr className="uppercase font-semibold text-gray-900 text-sm">
+                <tr className="uppercase font-semibold text-rootColor text-sm">
                   {headers.map((header, i) => (
                     <th
                       key={tableScreenName + header}
@@ -54,7 +54,7 @@ const Table: React.FC<I_Table> = ({
                   )}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-lightColor">
                 {bodyData.map((object) => {
                   const allKeys = Object.keys(object).filter((string) => {
                     const lowerString = string.toLowerCase();
@@ -68,7 +68,7 @@ const Table: React.FC<I_Table> = ({
                   return (
                     <tr
                       key={object.id + tableScreenName}
-                      className="text-sm font-medium text-gray-500"
+                      className="text-sm font-medium text-lightColor"
                     >
                       {allKeys.map((key, i) => (
                         <td

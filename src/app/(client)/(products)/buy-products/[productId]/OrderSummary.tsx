@@ -172,8 +172,8 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
       )}
 
       <div>
-        <div className="border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">
+        <div className="border-lightColor">
+          <h2 className="text-lg font-medium text-rootColor">
             Shipping information
           </h2>
 
@@ -181,7 +181,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
             <div>
               <label
                 htmlFor="full_name"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-lightColor"
               >
                 Full name
               </label>
@@ -192,7 +192,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   isRequired
                   value={shippingAddress.full_name}
                   onChange={handleChange}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="block w-full rounded-md border-lightColor bg-rootBg text-rootColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -200,7 +200,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
             <div>
               <label
                 htmlFor="phone_number"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-lightColor"
               >
                 Phone number
               </label>
@@ -209,7 +209,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   name="phone_number"
                   type="tel"
                   isRequired
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="block w-full rounded-md border-lightColor bg-rootBg text-rootColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   onChange={handleChange}
                   value={shippingAddress.phone_number}
                   minLength={10}
@@ -221,7 +221,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
             <div className="sm:col-span-2">
               <label
                 htmlFor="address"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-lightColor"
               >
                 Address
               </label>
@@ -230,7 +230,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   name="address"
                   id="address"
                   autoComplete="street-address"
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="block w-full rounded-md border-lightColor bg-rootBg text-rootColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   value={shippingAddress.address}
                   onChange={handleChange}
                   required
@@ -244,7 +244,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
           </div>
           <div className="w-full h-5 flex justify-center items-center text-sm">
             <span
-              className="cursor-pointer px-2 py-1 bg-indigo-100 lg:bg-indigo-50 lg:hover:bg-indigo-100 border border-indigo-500 text-indigo-500 rounded-full font-medium"
+              className="cursor-pointer px-2 py-1 bg-lightBg border border-indigo-500 text-indigo-500 rounded-full font-medium"
               onClick={() => setIsChooseAddressOpen(true)}
             >
               Choose one
@@ -253,8 +253,8 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
         </div>
 
         {/* Payment */}
-        <div className="mt-10 border-t border-gray-200 pt-10">
-          <h2 className="text-lg font-medium text-gray-900">Payment</h2>
+        <div className="mt-10 border-t border-lightColor pt-10">
+          <h2 className="text-lg font-medium text-rootColor">Payment</h2>
 
           <fieldset className="mt-4">
             <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
@@ -282,7 +282,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
 
                   <label
                     htmlFor={paymentMethod.id}
-                    className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer"
+                    className="ml-3 block text-sm font-medium text-lightColor cursor-pointer"
                   >
                     {paymentMethod.title}
                   </label>
@@ -295,11 +295,11 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
 
       {/* Order summary */}
       <div className="mt-10 lg:mt-0">
-        <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
+        <h2 className="text-lg font-medium text-rootColor">Order summary</h2>
 
         {products.length > 0 ? (
-          <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
-            <ul role="list" className="divide-y divide-gray-200">
+          <div className="mt-4 rounded-lg border border-lightColor bg-rootBg shadow-sm">
+            <ul role="list" className="divide-y divide-lightColor">
               {products.length > 0 &&
                 products.map((product) => (
                   <SingleItem
@@ -313,10 +313,10 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   />
                 ))}
             </ul>
-            <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6 font-rubik">
+            <dl className="space-y-6 border-t border-lightColor px-4 py-6 sm:px-6 font-rubik">
               <div className="flex items-center justify-between">
                 <dt className="text-sm">Subtotal</dt>
-                <dd className="text-sm font-medium text-gray-900">
+                <dd className="text-sm font-medium text-rootColor">
                   ${price.subtotal}
                 </dd>
               </div>
@@ -328,19 +328,19 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-sm">Taxes</dt>
-                <dd className="text-sm font-medium text-gray-900">
+                <dd className="text-sm font-medium text-rootColor">
                   ${price.tax}
                 </dd>
               </div>
-              <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+              <div className="flex items-center justify-between border-t border-lightColor pt-6">
                 <dt className="text-base font-medium">Total</dt>
-                <dd className="text-base font-medium text-gray-900">
+                <dd className="text-base font-medium text-rootColor">
                   ${Math.round(price.subtotal - price.discount + price.tax)}
                 </dd>
               </div>
             </dl>
 
-            <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+            <div className="border-t border-lightColor px-4 py-6 sm:px-6">
               <Button
                 type="submit"
                 className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"

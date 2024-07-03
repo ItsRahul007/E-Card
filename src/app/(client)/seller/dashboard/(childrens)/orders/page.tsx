@@ -23,7 +23,7 @@ const SellerOrders = async () => {
 
   return (
     <div className="h-auto w-full">
-      <div className="overflow-x-auto w-full h-auto bg-white shadow md:shadow-md rounded-md">
+      <div className="overflow-x-auto w-full h-auto bg-rootBg shadow md:shadow-md rounded-md">
         <div className="sm:w-full w-fit mx-auto h-10 text-xl md:text-2xl font-semibold capitalize md:mt-4 mt-2 md:ml-6">
           <h4>orders</h4>
         </div>

@@ -16,7 +16,7 @@ const AddProducts: React.FC<I_AddProducts> = async ({ searchParams }) => {
     productId !== null ? await getProductById(JSON.parse(productId)) : false;
 
   return (
-    <div className="w-full h-full mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="w-full h-full mx-auto p-6 bg-rootBg rounded-lg shadow-md">
       <div className="mb-4">
         <h2 className="text-2xl font-bold">Add Product</h2>
         <p className="mt-1 text-sm opacity-75">

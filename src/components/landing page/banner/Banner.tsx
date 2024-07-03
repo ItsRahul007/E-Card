@@ -1,86 +1,112 @@
-import React from 'react';
+import React from "react";
 import style from "@/app/style/style.module.css";
-import Link from 'next/link';
-import BannerGSAP from './bannerGSAP';
-import SideNavBar from '@/components/all-products/SideNavBar';
-import { T_SearchKeys } from '@/lib/types/productTyps';
-import { cookies } from 'next/headers';
-import { decode } from 'jsonwebtoken';
-import { T_JwtVerifyDataType } from '@/lib/types/authToken-type';
-import SellerOption from './SellerOption';
+import Link from "next/link";
+import BannerGSAP from "./bannerGSAP";
+import SideNavBar from "@/components/all-products/SideNavBar";
+import { T_SearchKeys } from "@/lib/types/productTyps";
+import { cookies } from "next/headers";
+import { decode } from "jsonwebtoken";
+import { T_JwtVerifyDataType } from "@/lib/types/authToken-type";
+import SellerOption from "./SellerOption";
 
 const searchKeys: T_SearchKeys[] = [
   {
     label: "All Products",
-    link: "/products/all"
+    link: "/products/all",
   },
   {
     label: "New Release",
-    link: "#new-release"
+    link: "#new-release",
   },
   {
     label: "Best Sales",
-    link: "#best-sales"
-  }
+    link: "#best-sales",
+  },
 ];
 
 const Banner: React.FC = () => {
-  const authToken = cookies().get('authToken')?.value || '';
+  const authToken = cookies().get("authToken")?.value || "";
   let userRole;
   if (authToken) {
     const decodedToken = decode(authToken) as T_JwtVerifyDataType;
-    userRole = decodedToken.user.userRole || 'user';
-  };
+    userRole = decodedToken.user.userRole || "user";
+  }
 
   return (
-    <section className={ `${style.banner} text-white relative` } id="banner_component">
+    <section
+      className={`${style.banner} text-white relative`}
+      id="banner_component"
+    >
       <BannerGSAP />
-      {/* the nav bar */ }
-      <nav id='banner-nav' className="w-full md:h-[70px] h-16 flex justify-center items-center relative z-50">
-        <div className={ `bg-[#2b2a29] w-full md:w-4/5 lg:w-[70%] h-full relative ${style.nav_child} font-poppins font-semibold max-md:before:!content-none max-md:after:!content-none` }>
-          <ul className='h-full w-full hidden md:flex justify-center items-center gap-6 text-base'>
-            {
-              searchKeys.map(({ label, link }) => (
-                <li key={ link } className='cursor-pointer list-none hover:text-[#f26522]'>
-                  <Link href={ link }>{ label }</Link>
-                </li>
-              ))
-            }
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <SellerOption userRole={ userRole } />
+      {/* the nav bar */}
+      <nav
+        id="banner-nav"
+        className="w-full md:h-[70px] h-16 flex justify-center items-center relative z-50"
+      >
+        <div
+          className={`bg-[#2b2a29] w-full md:w-4/5 lg:w-[70%] h-full relative ${style.nav_child} font-poppins font-semibold max-md:before:!content-none max-md:after:!content-none`}
+        >
+          <ul className="h-full w-full hidden md:flex justify-center items-center gap-6 text-base">
+            {searchKeys.map(({ label, link }) => (
+              <li
+                key={link}
+                className="cursor-pointer list-none hover:text-[#f26522]"
+              >
+                <Link href={link}>{label}</Link>
+              </li>
+            ))}
+            <li className="cursor-pointer list-none hover:text-[#f26522]">
+              <SellerOption userRole={userRole} />
             </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
+            <li className="cursor-pointer list-none hover:text-[#f26522]">
+              <Link href="/cart">
+                Cart <i className="ri-shopping-cart-2-fill font-thin"></i>
+              </Link>
             </li>
-            <li className='cursor-pointer list-none hover:text-[#f26522]'>
-              <Link href="/profile">Profile <i className="ri-user-3-fill"></i></Link>
+            <li className="cursor-pointer list-none hover:text-[#f26522]">
+              <Link href="/profile">
+                Profile <i className="ri-user-3-fill"></i>
+              </Link>
             </li>
           </ul>
-          <div className='flex md:hidden text-base h-full w-full items-center justify-between px-2'>
+          <div className="flex md:hidden text-base h-full w-full items-center justify-between px-2">
             <div>
-              <SideNavBar stopScrolling searchKeys={ searchKeys } sellerOption={ <SellerOption userRole={ userRole } /> } />
+              <SideNavBar
+                stopScrolling
+                searchKeys={searchKeys}
+                sellerOption={<SellerOption userRole={userRole} />}
+              />
             </div>
-            <div className='flex gap-4'>
-              <Link href="/cart">Cart <i className="ri-shopping-cart-2-fill font-thin"></i></Link>
-              <Link href="/profile">Profile <i className="ri-user-3-fill"></i></Link>
+            <div className="flex gap-4">
+              <Link href="/cart">
+                Cart <i className="ri-shopping-cart-2-fill font-thin"></i>
+              </Link>
+              <Link href="/profile">
+                Profile <i className="ri-user-3-fill"></i>
+              </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* icon */ }
-      <div className="md:text-[40px] text-3xl text-center font-bold mt-9 font-ubuntu" id='logo'>E-Card</div>
+      {/* icon */}
+      <div
+        className="md:text-[40px] text-3xl text-center font-bold mt-9 font-ubuntu"
+        id="logo"
+      >
+        E-Card
+      </div>
 
-      {/* head lines */ }
-      <div className='text-center mt-12 flex gap-5 md:gap-10 flex-col relative z-0'>
-        <h1 className='lg:text-[70px] md:text-6xl text-3xl font-bold font-roboto lg:space-y-16 md:space-y-10'>
-          <div id='h-text-1'>GET START</div>
-          <div id='h-text-2'>YOUR FAVOURITE SHOPING</div>
+      {/* head lines */}
+      <div className="text-center mt-12 flex gap-5 md:gap-10 flex-col relative z-0">
+        <h1 className="lg:text-[70px] md:text-6xl text-3xl font-bold font-roboto lg:space-y-16 md:space-y-10">
+          <div id="h-text-1">GET START</div>
+          <div id="h-text-2">YOUR FAVOURITE SHOPING</div>
         </h1>
-        <div id='banner-btn'>
+        <div id="banner-btn">
           <Link
             href="/products/all"
-            className='text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg uppercase inline-block'
+            className="text-white text-2xl bg-black p-5 px-6 mt-10 font-semibold hover:bg-[#f26522] rounded-lg uppercase inline-block"
           >
             Shop now
           </Link>

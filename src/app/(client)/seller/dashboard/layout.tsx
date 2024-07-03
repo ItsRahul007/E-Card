@@ -31,11 +31,11 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   const userAvatar = getUserAvatar.avatar || "/images/profile-pic.png";
 
   return (
-    <main className="min-h-screen h-auto w-screen max-w-[1540px] mx-auto bg-zinc-100 font-poppins md:p-4">
+    <main className="min-h-screen h-auto w-screen max-w-[1540px] mx-auto bg-lightBg font-poppins md:p-4">
       {/* sile options */}
       <div className="h-full w-full flex flex-col">
-        <nav className="w-full h-16 flex justify-between items-center bg-white shadow-sm px-3 md:rounded-t md:rounded-r">
-          <div className="flex items-center w-auto gap-5 md:gap-32 text-lg md:text-2xl text-zinc-900">
+        <nav className="w-full h-16 flex justify-between items-center bg-rootBg shadow-sm px-3 md:rounded-t md:rounded-r">
+          <div className="flex items-center w-auto gap-5 md:gap-32 text-lg md:text-2xl text-rootColor">
             {/* logo */}
             <div className="hidden md:flex gap-2 h-full w-40">
               <Image
@@ -43,7 +43,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
                 alt="logo"
                 height={40}
                 width={40}
-                className="object-contain bg-white"
+                className="object-contain bg-rootBg"
               />
               <div className="text-emerald-500 font-bold font-ubuntu">
                 E-Card
@@ -62,7 +62,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
           </div>
         </nav>
         <div className="flex gap-3 flex-1">
-          <div className="min-h-full xl:w-72 w-64 bg-white md:flex hidden flex-col gap-2 px-3 py-5 shadow-md rounded-b">
+          <div className="min-h-full xl:w-72 w-64 bg-rootBg md:flex hidden flex-col gap-2 px-3 py-5 shadow-md rounded-b">
             <DashboardMenus />
           </div>
 

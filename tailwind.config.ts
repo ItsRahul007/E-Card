@@ -37,9 +37,16 @@ const config: Config = withUt({
         "appTheme-700": "#1A8ABF",
         "appTheme-800": "#0E6AA8",
         "appTheme-900": "#0A498F",
+        rootBg: "rgb(var(--root-background))",
+        rootColor: "rgb(var(--root-color))",
+        lightBg: "rgb(var(--light-background))",
+        lightColor: "rgb(var(--light-color))",
+        addToCartBtnBg: "rgb(var(--add-to-cart-btn-bg))",
+        // barTableBg: "rgb(var(--bar-table-bg))",
       },
     },
   },
+  darkMode: "selector",
   plugins: [require("@tailwindcss/forms")],
 });
 export default config;

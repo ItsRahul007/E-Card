@@ -12,7 +12,7 @@ const BestSalesSingleItem: React.FC<I_BestSalesSingleItem> = ({
 }) => {
   return (
     <div
-      className="h-fit sm:min-h-[20rem] w-full flex flex-col gap-2 bg-slate-100 items-center justify-center py-3 px-2 col-span-1 row-span-1"
+      className="h-fit sm:min-h-[20rem] w-full flex flex-col gap-2 bg-lightBg items-center justify-center py-3 px-2 col-span-1 row-span-1"
       id={"best-sales-item" + String(_id)}
     >
       <BestSalesGsap id={String(_id)} />
@@ -29,10 +29,10 @@ const BestSalesSingleItem: React.FC<I_BestSalesSingleItem> = ({
         />
       </Link>
       <div className="flex flex-col gap-1 text-center max-w-full md:w-auto truncate overflow-hidden text-ellipsis xl:px-5">
-        <span className="w-full truncate overflow-hidden font-medium text-zinc-700">
+        <span className="w-full truncate overflow-hidden font-medium text-lightColor">
           {product_name}
         </span>
-        <span className="text-zinc-400 text-sm font-medium">
+        <span className="text-lightColor text-sm font-medium">
           ${current_price}
         </span>
       </div>

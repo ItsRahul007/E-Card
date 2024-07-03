@@ -36,7 +36,7 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({
   return (
     <div>
       <select
-        className="text-gray-700 rounded-md cursor-pointer disabled:cursor-not-allowed"
+        className="text-rootColor bg-lightBg rounded-md cursor-pointer disabled:cursor-not-allowed"
         defaultValue={status}
         onChange={handleChange}
         disabled={

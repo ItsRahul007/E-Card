@@ -224,7 +224,7 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
             name="product_description"
             value={formVariables.product_description}
             onChange={handleOnChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-lightColor bg-rootBg rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
             rows={5}
           />

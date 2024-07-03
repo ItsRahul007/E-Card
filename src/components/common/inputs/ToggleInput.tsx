@@ -14,12 +14,12 @@ const ToggleInput: React.FC<I_ToggleInput> = ({ label, value }) => {
 
   return (
     <div className="col-span-1 row-span-1 text-sm flex flex-col gap-y-3">
-      <label className="font-medium capitalize text-gray-700">{label}</label>
+      <label className="font-medium capitalize text-rootColor">{label}</label>
       <Switch
         checked={enabled}
         onChange={setEnabled}
         className={classNames(
-          enabled ? "bg-indigo-600" : "bg-gray-200",
+          enabled ? "bg-indigo-600" : "bg-lightColor",
           "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
         )}
       >

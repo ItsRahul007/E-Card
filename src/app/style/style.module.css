@@ -7,7 +7,7 @@
 }
 
 .banner {
-  height: 95Vh;
+  height: 95vh;
   width: 100%;
   background-image: url("/images/banner-bg.png");
   background-repeat: no-repeat;
@@ -78,14 +78,14 @@
 }
 
 .half_star {
-  background: linear-gradient(to right, #35a3bc 52%, #A0AEC0 48%);
+  background: linear-gradient(to right, #35a3bc 52%, #a0aec0 48%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .review_star:hover,
-.review_star:hover~.review_star {
+.review_star:hover ~ .review_star {
   color: #35a3bc;
 }
 
