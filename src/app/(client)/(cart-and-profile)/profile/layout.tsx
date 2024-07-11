@@ -15,9 +15,11 @@ export const metadata: Metadata = {
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const authToken = cookies().get("authToken")?.value || "";
+  if (!authToken) {
+    redirect("/logout");
+  }
 
   const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
-
   if (
     !decodedAuthToken ||
     !decodedAuthToken.user.name ||
