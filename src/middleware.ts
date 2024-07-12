@@ -96,12 +96,9 @@ export function middleware(req: NextRequest) {
   }
 
   if (pathname.startsWith("/logout")) {
-    const response = NextResponse.redirect(new URL("/login", req.url));
-    const allCookies = cookies().getAll();
-    allCookies.forEach((cookie) => {
-      response.cookies.delete(cookie.name);
-    });
-    return response;
+    if (!authToken) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   return NextResponse.next();

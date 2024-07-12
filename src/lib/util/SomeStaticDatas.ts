@@ -5,3 +5,9 @@ export const statusOptions = [
   { label: "Delivered", value: "delivered" },
   { label: "Cancelled", value: "cancelled" },
 ];
+
+export const userNavigation = [
+  { name: "Your Profile", href: "/profile" },
+  { name: "Settings", href: "/seller/dashboard/settings" },
+  { name: "Sign out", href: "/logout" },
+];

@@ -9,10 +9,8 @@ import {
   getSales,
 } from "@/lib/server-side-actions/seller-side";
 import { ChartData } from "chart.js";
-import style from "@/app/style/style.module.css";
 
 const Dashboard = async () => {
-  console.log(style.barColor);
   const data: ChartData<"bar"> = {
     labels: last7Days,
     datasets: [

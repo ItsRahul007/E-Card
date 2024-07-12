@@ -13,7 +13,7 @@ const TotalPeice = () => {
     tax: 0,
   });
   const data = useGetFetchedQuery(["get-cart-items"]);
-  const { isError, isLoading, refetch } = useGetCartItems();
+  const { isLoading, refetch } = useGetCartItems();
 
   useEffect(() => {
     if (!data) refetch();
@@ -34,7 +34,7 @@ const TotalPeice = () => {
           }));
         });
     }
-  }, [data]);
+  }, [data, refetch]);
 
   return (
     <>

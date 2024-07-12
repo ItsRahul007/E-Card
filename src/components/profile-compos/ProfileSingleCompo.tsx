@@ -60,7 +60,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
         toast.error(error.response?.data?.error || ErrorMessage);
       }
     },
-    [inputValue]
+    [inputValue, givenInputValue, name]
   );
 
   return (

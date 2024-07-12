@@ -68,7 +68,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
       //! if user try to reach but products url without having any products in his cart then redirecting him
       else if (data.cartProducts.length <= 0) push("/products/all");
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, product.length, push]);
 
   useEffect(() => {
     if (products && products.length > 0) {
@@ -91,7 +91,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
         }));
       });
     }
-  }, [products, quantity]);
+  }, [products, quantity, isCartProducts]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -149,7 +149,15 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
         toast.error(ErrorMessage);
       },
     });
-  }, [price, paymentType, shippingAddress, products, quantity]);
+  }, [
+    price,
+    paymentType,
+    shippingAddress,
+    products,
+    quantity,
+    orderMutation,
+    push,
+  ]);
 
   return (
     <form

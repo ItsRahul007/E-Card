@@ -189,3 +189,22 @@ export async function PUT(req: NextRequest) {
     );
   }
 }
+
+export async function DELETE() {
+  try {
+    const response = NextResponse.json({ success: true }, { status: 200 });
+
+    response.cookies.set("authToken", "", {
+      expires: new Date(0),
+      httpOnly: true,
+    });
+
+    return response;
+  } catch (error: any) {
+    console.log(error);
+    return NextResponse.json(
+      { error: ApiErrorMessage, problem: error.message, success: false },
+      { status: 500 }
+    );
+  }
+}
