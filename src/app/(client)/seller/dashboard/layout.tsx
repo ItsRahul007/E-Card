@@ -53,8 +53,8 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
               <SideNavBar searchBarFalse dashboardNav noSearchKeys />
             </div>
             <span className="font-bold select-none">
-              <span className="opacity-50 font-medium">Hello,</span>
-              {decodedToken.user.name}!
+              <span className="opacity-50 font-medium mr-1">Hello,</span>
+              <span>{decodedToken.user.name}!</span>
             </span>
           </div>
           <div>

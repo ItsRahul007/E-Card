@@ -3,7 +3,6 @@
 import React from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
-import IconButton from "@/components/common/buttons/IconButton";
 import Image from "next/image";
 import { userNavigation } from "@/lib/util/SomeStaticDatas";
 
@@ -14,19 +13,13 @@ interface I_UserProfile {
 const UserProfile: React.FC<I_UserProfile> = ({ userAvatar }) => {
   return (
     <Menu as="div" className="relative ml-3">
-      <Menu.Button>
-        <IconButton
-          className="relative flex rounded-full bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
-          icon={
-            <Image
-              className="rounded-full"
-              src={userAvatar}
-              alt="user-avatar"
-              width={32}
-              height={32}
-            />
-          }
-          type="button"
+      <Menu.Button className="relative flex rounded-full bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
+        <Image
+          className="rounded-full"
+          src={userAvatar}
+          alt="user-avatar"
+          width={32}
+          height={32}
         />
       </Menu.Button>
       <Transition
