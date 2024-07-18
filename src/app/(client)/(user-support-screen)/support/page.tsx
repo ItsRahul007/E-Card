@@ -24,9 +24,9 @@ const Support = async () => {
             </div>
             <div className="flex flex-col gap-4 mt-3 text-lightColor">
               <p>
-                We'd love to hear from you! Whether you have questions about our
-                products, need assistance with an order, or just want to share
-                your feedback, our team is here to help.
+                We&apos;d love to hear from you! Whether you have questions
+                about our products, need assistance with an order, or just want
+                to share your feedback, our team is here to help.
               </p>
               <p>
                 You can also reach out to us through our social media channels
