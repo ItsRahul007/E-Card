@@ -50,7 +50,7 @@ const ordersModel = new Schema(
         order_status: {
           type: String,
           enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
-          default: "Pending",
+          default: "pending",
         },
       },
     ],

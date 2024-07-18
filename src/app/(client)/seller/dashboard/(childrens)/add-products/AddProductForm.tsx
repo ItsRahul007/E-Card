@@ -215,7 +215,7 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
         <div className="mb-4">
           <label
             htmlFor="productDescription"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-rootColor"
           >
             Product Description
           </label>

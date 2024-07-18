@@ -30,7 +30,10 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({
         revalidatePathUrl: "/seller/dashboard/orders",
         revalidateLayout: "page",
       });
-    } else toast.error(response.message);
+    } else {
+      toast.error(response.message);
+      console.log(response.problem);
+    }
   };
 
   return (

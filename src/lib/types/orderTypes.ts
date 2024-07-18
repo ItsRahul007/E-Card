@@ -85,4 +85,5 @@ export interface T_myOrders extends orderProduct {
 export type T_Orders = {
   products: orderProduct[];
   _id: string;
+  customer_id?: string;
 };

@@ -28,3 +28,7 @@ export const orderCancelled = "Order cancelled successfully!";
 export const productAddedSuccessMessage = "Product added successfully!";
 export const productUpdatedSuccessMessage = "Product updated successfully!";
 export const productDeletedSuccessMessage = "Product deleted successfully!";
+
+//? email
+export const emailSentSuccessFully = "Email sent successfully!";
+export const failedToSendEmail = "Failed to send email, please try again!";

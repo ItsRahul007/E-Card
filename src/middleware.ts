@@ -43,6 +43,7 @@ export function middleware(req: NextRequest) {
   if (
     pathname.startsWith("/profile") ||
     pathname.startsWith("/cart") ||
+    pathname.startsWith("/support") ||
     pathname.startsWith("/buy-products")
   ) {
     //! if not of loggedin token then redirect him to login page otherwise don't redirect him

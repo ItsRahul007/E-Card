@@ -7,6 +7,9 @@ import connectWithMongo from "../mongoConnection/mongoConnect";
 import { decode } from "jsonwebtoken";
 import { T_JwtVerifyDataType } from "../types/authToken-type";
 import { T_Orders, T_myOrders } from "../types/orderTypes";
+import { sendEmail } from "./nodemailer";
+import User from "../model/usersSchema";
+import { ObjectId } from "mongodb";
 
 export const getProducts = async () => {
   const authToken = cookies().get("authToken")?.value || "";
@@ -98,17 +101,64 @@ export const updateOrderStatus = async (
   try {
     //* get the order id and order-product-id and status and update it
     await connectWithMongo();
-    await Orders.findByIdAndUpdate(
-      orderId,
+
+    //? updating the order status inside product array
+    const allProducts = (await Orders.findByIdAndUpdate(
+      JSON.parse(orderId),
       {
         $set: {
           "products.$[product].order_status": status,
         },
       },
       {
-        arrayFilters: [{ "product._id": productArrId }],
+        arrayFilters: [{ "product._id": JSON.parse(productArrId) }],
       }
+    ).select("products customer_id")) as T_Orders;
+
+    //? checking if all the product's order status is delivered or not
+    const isAllDelivered = allProducts.products.every((product) => {
+      const isNewlyUpdatesIsDelivered =
+        JSON.stringify(product._id) === productArrId && status === "delivered";
+
+      return product.order_status === "delivered"
+        ? true
+        : isNewlyUpdatesIsDelivered;
+    });
+
+    //? collecting the product names
+    const allProductNames = allProducts.products.map(
+      (product) => `<li>${product.product_name}</li>`
     );
+
+    //? if all products are delivered then changing the delivary status and payment status
+    if (isAllDelivered) {
+      await Orders.findByIdAndUpdate(JSON.parse(orderId), {
+        $set: {
+          delivary_status: "delivered",
+          payment_status: "success",
+        },
+      });
+
+      //? sending email to the customer
+      const user = await User.findById(allProducts.customer_id);
+
+      const { success, problem } = await sendEmail({
+        subject: "Order Delivered",
+        html: `
+        <h1>Your given order on E-Card is delivered</h1> <br>
+        <strong>Products:</strong>
+        <ul>${allProductNames.join("")}</ul>
+        `,
+        to: user?.email,
+      });
+      if (!success) {
+        return {
+          success: false,
+          message: "Failed update order status, please try again!",
+          problem,
+        };
+      }
+    }
 
     return {
       success: true,

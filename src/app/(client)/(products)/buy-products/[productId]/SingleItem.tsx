@@ -45,10 +45,10 @@ const SingleItem: FC<productType> = ({
               >
                 {product_name}
               </Link>
-              <p className="mt-1 text-sm font-medium text-gray-900">
+              <p className="mt-1 text-sm font-medium text-rootColor">
                 Price: ${price}
               </p>
-              <p className="mt-1 text-sm font-medium text-gray-900">
+              <p className="mt-1 text-sm font-medium text-rootColor">
                 Quantity: {cartProductQuantity || productQuantity}
               </p>
             </h4>
