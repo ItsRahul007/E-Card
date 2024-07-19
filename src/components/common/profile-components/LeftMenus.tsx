@@ -87,7 +87,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({
             "py-5 border-b text-base uppercase flex justify-between items-center cursor-pointer",
             isSlider ? "text-slate-100 bg-opacity-5" : "text-lightColor",
             currentTab.startsWith("/profile/orders")
-              ? "bg-appTheme-50 !text-appTheme-600"
+              ? "bg-appTheme-50 dark:bg-zinc-800 !text-appTheme-600"
               : ""
           )}
         >

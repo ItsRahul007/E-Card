@@ -5,7 +5,7 @@ import PageLoading from "@/components/common/loading/PageLoading";
 import { useGetCartItems } from "@/lib/customHook/useCartItems";
 import { useGetFetchedQuery } from "@/lib/customHook/useGetFetchedQuery";
 import Image from "next/image";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 
 type singleCartItemType = {
   product_name: string;

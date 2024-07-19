@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Button from "@/components/common/buttons/Button";
 import Link from "next/link";
-import style from "@/app/style/style.module.css";
 import InputCompo from "@/components/common/inputs/InputCompo";
 import toast from "react-hot-toast";
 import {
@@ -11,9 +10,6 @@ import {
   signupWithEmailPassword,
 } from "./authFunctions";
 import { useRouter } from "next/navigation";
-import IconButton from "@/components/common/buttons/IconButton";
-import { signIn } from "@/app/api/auth/[...nextauth]/options";
-import SingInWithGoogle from "../google/SingInWithGoogle";
 import { revalidateUrl } from "@/lib/util/revalidate";
 import { ErrorMessage } from "@/lib/util/toastMessages";
 

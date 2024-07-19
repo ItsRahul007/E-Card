@@ -11,15 +11,18 @@ import {
   ErrorMessage,
   addressAddedSuccessMessage,
 } from "@/lib/util/toastMessages";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 const AddNewAddress: FC = () => {
-  const initialValues: addressTypeInputValues = {
-    full_name: "",
-    phone_number: "",
-    address: "",
-  };
+  const initialValues = useMemo(
+    () => ({
+      full_name: "",
+      phone_number: "",
+      address: "",
+    }),
+    []
+  );
 
   const [isEditFormActive, setIsEditFormActive] = useState<boolean>(false);
   const [inputValues, setInputValues] =

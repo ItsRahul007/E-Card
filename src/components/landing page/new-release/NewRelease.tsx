@@ -4,8 +4,13 @@ import Image from "next/image";
 import Products from "@/lib/model/productSchema";
 import Link from "next/link";
 import NewReleaseGsap from "./NewReleaseGsap";
+import AddToCartButton from "./AddToCartButton";
+import { cookies } from "next/headers";
 
 const NewRelease = async () => {
+  const authToken = cookies().get("authToken")?.value;
+  const isUserLoggededIn = authToken && authToken.length > 0 ? true : false;
+
   const getNewReleaseProducts = async () => {
     try {
       const newReleaseProducts = await Products.find()
@@ -54,9 +59,10 @@ const NewRelease = async () => {
             <span className="text-rootColor text-sm font-medium">
               ${newReleaseProducts[0].current_price}
             </span>
-            <button className="capitalize py-2 px-4 bg-addToCartBtnBg text-rootBg w-fit font-semibold">
-              add to cart
-            </button>
+            <AddToCartButton
+              _id={JSON.stringify(newReleaseProducts[0]._id)}
+              isUserLoggededIn={isUserLoggededIn}
+            />
           </div>
         </div>
         <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-4">

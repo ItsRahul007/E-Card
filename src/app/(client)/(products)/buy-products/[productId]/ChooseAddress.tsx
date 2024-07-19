@@ -10,11 +10,7 @@ type onAddressClickType = {
 
 interface I_ChooseAddress {
   closeModel: () => void;
-  onAddressClick: ({
-    full_name,
-    phone_number,
-    address,
-  }: onAddressClickType) => void;
+  onAddressClick: (props: onAddressClickType) => void;
 }
 
 const ChooseAddress: FC<I_ChooseAddress> = ({ closeModel, onAddressClick }) => {

@@ -82,7 +82,7 @@ const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
         },
       }
     );
-  }, [ratingAndComments, isUserLoggededIn]);
+  }, [ratingAndComments, isUserLoggededIn, addReviewMutation, _id]);
 
   return (
     <section className="w-full flex justify-center items-center mt-2 mb-5">

@@ -149,15 +149,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
         toast.error(ErrorMessage);
       },
     });
-  }, [
-    price,
-    paymentType,
-    shippingAddress,
-    products,
-    quantity,
-    orderMutation,
-    push,
-  ]);
+  }, [price, paymentType, shippingAddress, products, orderMutation, push]);
 
   return (
     <form

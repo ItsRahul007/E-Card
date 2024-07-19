@@ -9,7 +9,13 @@ import { T_JwtVerifyDataType } from "../types/authToken-type";
 import { T_Orders, T_myOrders } from "../types/orderTypes";
 import { sendEmail } from "./nodemailer";
 import User from "../model/usersSchema";
-import { ObjectId } from "mongodb";
+import {
+  failedToGetOrder,
+  failedToGetProducts,
+  failedToGetSales,
+  failedToUpdateOrderStatus,
+  orderUpdated,
+} from "../util/toastMessages";
 
 export const getProducts = async () => {
   const authToken = cookies().get("authToken")?.value || "";
@@ -24,7 +30,7 @@ export const getProducts = async () => {
     return usersProducts;
   } catch (error: any) {
     console.log(error.message);
-    throw new Error("Failed to get products, please try again!");
+    throw new Error(failedToGetProducts);
   }
 };
 
@@ -38,7 +44,7 @@ export const getProductById = async (productId: string) => {
     return product;
   } catch (error: any) {
     console.log(error.message);
-    throw new Error("Failed to get product, please try again!");
+    throw new Error(failedToGetProducts);
   }
 };
 
@@ -89,7 +95,7 @@ export const getOrders = async () => {
     return myOrders;
   } catch (error: any) {
     console.log(error.message);
-    throw new Error("Failed to get orders, please try again!");
+    throw new Error(failedToGetOrder);
   }
 };
 
@@ -154,7 +160,7 @@ export const updateOrderStatus = async (
       if (!success) {
         return {
           success: false,
-          message: "Failed update order status, please try again!",
+          message: failedToUpdateOrderStatus,
           problem,
         };
       }
@@ -162,13 +168,13 @@ export const updateOrderStatus = async (
 
     return {
       success: true,
-      message: "Order status updated!",
+      message: orderUpdated,
     };
   } catch (error: any) {
     console.log(error.message);
     return {
       success: false,
-      message: "Failed update order status, please try again!",
+      message: failedToUpdateOrderStatus,
     };
   }
 };
@@ -232,6 +238,6 @@ export const getSales = async () => {
     };
   } catch (error: any) {
     console.log(error.message);
-    throw new Error("Failed to get sales, please try again!");
+    throw new Error(failedToGetSales);
   }
 };

@@ -41,7 +41,7 @@ const Products: React.FC<I_Products> = ({
     if (inView && !isLoading && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, entry, fetchNextPage, isLoading]);
+  }, [inView, entry, fetchNextPage, isLoading, hasNextPage]);
 
   const { refetch: refetchCartItems } = useGetCartItems();
   const allCartItems = useGetFetchedQuery(["get-cart-items"]);
@@ -50,7 +50,7 @@ const Products: React.FC<I_Products> = ({
     if (isUserLoggededIn && !allCartItems) {
       refetchCartItems();
     }
-  }, []);
+  }, [isUserLoggededIn, allCartItems, refetchCartItems]);
 
   return (
     <div className="bg-lightBg flex-1">

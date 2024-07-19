@@ -6,7 +6,6 @@ import React, { FC } from "react";
 import toast from "react-hot-toast";
 import { ObjectId } from "mongodb";
 import PageLoading from "@/components/common/loading/PageLoading";
-import Image from "next/image";
 import classNames from "@/lib/util/classNames";
 import { addressTypeInputValues } from "@/lib/types/addressTypes";
 import NotFound from "@/components/common/NotFound";
@@ -16,11 +15,7 @@ interface T_Addresses extends addressTypeInputValues {
 }
 
 interface I_AddressListProps {
-  onAddressClick?: ({
-    full_name,
-    phone_number,
-    address,
-  }: addressTypeInputValues) => void;
+  onAddressClick?: (props: addressTypeInputValues) => void;
 }
 
 const AddressList: FC<I_AddressListProps> = ({ onAddressClick }) => {

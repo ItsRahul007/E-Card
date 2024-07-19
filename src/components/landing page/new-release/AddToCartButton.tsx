@@ -1,40 +1,33 @@
 "use client";
-
-import Button from "@/components/common/buttons/Button";
 import {
   useGetCartItems,
   useSetCartItems,
 } from "@/lib/customHook/useCartItems";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { useGetFetchedQuery } from "@/lib/customHook/useGetFetchedQuery";
 import {
-  ErrorMessage,
   cartAddedSuccessMessage,
+  ErrorMessage,
   itemAlreadyExistsInCart,
   pleaseLoginToAddCartItem,
+  productAddingToCart,
 } from "@/lib/util/toastMessages";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { FC, useEffect } from "react";
-import toast from "react-hot-toast";
+import Button from "@/components/common/buttons/Button";
 
-interface I_BuyAndAddToCartButtons {
+interface I_AddToCartButton {
   _id: string;
   isUserLoggededIn: boolean;
-  encriptedProductId: string;
 }
 
-const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({
+const AddToCartButton: React.FC<I_AddToCartButton> = ({
   _id,
   isUserLoggededIn,
-  encriptedProductId,
 }) => {
+  const cartMutation = useSetCartItems();
   const router = useRouter();
 
-  const redirect = (path: string) => {
-    router.push(path);
-  };
-
-  const cartMutation = useSetCartItems();
   const { refetch: refetchCartItems } = useGetCartItems();
   const allCartItems = useGetFetchedQuery(["get-cart-items"]);
   const isProductAddedToCart = isUserLoggededIn
@@ -50,7 +43,7 @@ const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({
   function addToCart() {
     if (!isUserLoggededIn) {
       toast.error(pleaseLoginToAddCartItem);
-      redirect("/login");
+      router.push("/login");
       return;
     }
 
@@ -59,40 +52,32 @@ const BuyAndAddToCartButtons: FC<I_BuyAndAddToCartButtons> = ({
       return;
     }
 
+    toast.loading(productAddingToCart);
     cartMutation.mutate(
-      { productId: _id, method: "post" },
+      { productId: JSON.parse(_id), method: "post" },
       {
         onSuccess: () => {
           refetchCartItems();
+          toast.dismiss();
           toast.success(cartAddedSuccessMessage);
         },
         onError: (err: any) => {
           console.log(err);
+          toast.dismiss();
           toast.error(err.response.data.error || ErrorMessage);
         },
       }
     );
   }
 
-  //! time to work on buy product
-
   return (
-    <div className="mt-6 lg:w-full space-y-5">
-      <Link
-        href={`/buy-products/${encriptedProductId}`}
-        className="w-fit lg:px-16 sm:px-10 px-8 py-4 text-sm font-bold bg-appTheme-600 mr-4 text-white rounded-lg mb-3 inline"
-        target="_blank"
-      >
-        BUY NOW
-      </Link>
-      <Button
-        text="ADD TO CART"
-        className="lg:px-14 sm:px-7 px-5 py-4 text-sm font-bold bg-[#eb3c33] text-white rounded-lg"
-        type="button"
-        onClick={addToCart}
-      />
-    </div>
+    <Button
+      className="capitalize py-2 px-4 bg-addToCartBtnBg text-rootBg w-fit font-semibold"
+      onClick={addToCart}
+      text="add to cart"
+      type="button"
+    />
   );
 };
 
-export default BuyAndAddToCartButtons;
+export default AddToCartButton;
