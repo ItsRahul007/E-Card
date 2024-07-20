@@ -32,17 +32,17 @@ const Dashboard = async () => {
       {/* cards */}
       <section className="grid grid-cols-2 grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 gap-4 w-fit xl:w-full max-[381px]:grid-cols-1 max-[381px]:grid-rows-4 max-[381px]:gap-2 max-[381px]:w-full xl:mx-auto">
         <StatusCard
+          number={sales.totalSales}
+          title="total sales"
+          icon={<i className="ri-bar-chart-box-fill"></i>}
+          iconColorAndIconBg="bg-rose-100 text-rose-500"
+        />
+        <StatusCard
           number={sales.lastSevenDaysSales}
           title="last seven days sales"
           icon={<i className="ri-bar-chart-box-fill"></i>}
           iconColorAndIconBg="bg-blue-100 text-blue-500"
           profitOrLossPercentage={5}
-        />
-        <StatusCard
-          number={sales.totalSales}
-          title="total sales"
-          icon={<i className="ri-bar-chart-box-fill"></i>}
-          iconColorAndIconBg="bg-rose-100 text-rose-500"
         />
         <StatusCard
           number={myProducts.length}

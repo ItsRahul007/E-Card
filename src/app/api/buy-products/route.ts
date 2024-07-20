@@ -4,22 +4,22 @@ import Orders from "@/lib/model/ordersSchema";
 import {
   ApiErrorMessage,
   MissingRequiredFields,
-  alreadyPaid,
   didNotGetOrderid,
   encryptedStringNotMatched,
   invalidRequest,
-  notValidId,
   orderObjectDidNotMatched,
   orderPlacied,
   paymentFailed,
+  userNotFound,
 } from "@/lib/util/apiMessages";
 import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
 import { serverSideStripe } from "@/lib/util/stripe/stripe";
 import { decode, sign } from "jsonwebtoken";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import User from "@/lib/model/usersSchema";
 
 interface I_PUT_Req_JSON {
-  order: string;
+  orderId: string;
   payment_status: "pending" | "success" | "failed";
 }
 
@@ -133,11 +133,44 @@ export async function POST(req: NextRequest) {
 
     if (delivary_status) orderObj.delivary_status = delivary_status;
 
+    const isAddressInArray = (addresses: any[], address: any) => {
+      return addresses.some((existingAddress) => {
+        return (
+          existingAddress.full_name === address.full_name &&
+          existingAddress.phone_number === address.phone_number &&
+          existingAddress.address === address.address
+        );
+      });
+    };
+
     await connectWithMongo();
+    const user = await User.findById(userId).select("addresses");
+    const isAddressAlreadyExists = isAddressInArray(
+      user.addresses,
+      shipping_address
+    );
+    if (!isAddressAlreadyExists) {
+      const responce = await User.findByIdAndUpdate(
+        userId,
+        { $push: { addresses: shipping_address } },
+        {
+          new: true,
+        }
+      );
+
+      if (!responce) {
+        return NextResponse.json(
+          { error: userNotFound, success: false },
+          { status: 400 }
+        );
+      }
+    }
+
+    const newOrder = await Orders.create(orderObj);
 
     if (payment_type === "stripe") {
-      const encriptedOrder = sign(
-        JSON.stringify(orderObj),
+      const encriptedOrderId = sign(
+        JSON.stringify(newOrder._id),
         process.env.JWT_SECRET!
       );
       const session = await serverSideStripe.checkout.sessions.create({
@@ -145,10 +178,10 @@ export async function POST(req: NextRequest) {
         mode: "payment",
         success_url:
           `${process.env.DOMAIN}/profile/orders?payment=success&order=` +
-          encriptedOrder,
+          encriptedOrderId,
         cancel_url:
           `${process.env.DOMAIN}/profile/orders?payment=failed&order=` +
-          encriptedOrder,
+          encriptedOrderId,
         line_items: products.map((obj) => {
           const {
             current_price,
@@ -179,19 +212,13 @@ export async function POST(req: NextRequest) {
         { status: 201 }
       );
 
-      response.cookies.set("orderObject", JSON.stringify(orderObj), {
-        httpOnly: true,
-        maxAge: 60 * 60,
-      });
-      response.cookies.set("encriptedOrder", encriptedOrder, {
+      response.cookies.set("encriptedOrderId", encriptedOrderId, {
         httpOnly: true,
         maxAge: 60 * 60,
       });
 
       return response;
     }
-
-    await Orders.create(orderObj);
 
     return NextResponse.json(
       {
@@ -214,9 +241,9 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const { order, payment_status }: I_PUT_Req_JSON = await req.json();
+    const { orderId, payment_status }: I_PUT_Req_JSON = await req.json();
 
-    if (!order || !payment_status) {
+    if (!orderId || !payment_status) {
       return NextResponse.json(
         {
           success: false,
@@ -227,10 +254,9 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const encriptedOrder = req.cookies.get("encriptedOrder")?.value || "";
-    const orderObjectInString = req.cookies.get("orderObject")?.value || "";
+    const encriptedOrderId = req.cookies.get("encriptedOrderId")?.value || "";
 
-    if (encriptedOrder !== order) {
+    if (encriptedOrderId !== orderId) {
       return NextResponse.json(
         {
           success: false,
@@ -241,18 +267,7 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const decodedOrderObject = decode(order) as Order;
-
-    if (JSON.stringify(decodedOrderObject) !== orderObjectInString) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: invalidRequest,
-          problem: orderObjectDidNotMatched,
-        },
-        { status: 400 }
-      );
-    }
+    const decodedOrderId = decode(orderId) as String;
 
     if (payment_status === "failed") {
       const response = NextResponse.json(
@@ -262,17 +277,24 @@ export async function PUT(req: NextRequest) {
         },
         { status: 200 }
       );
-
-      response.cookies.set("orderObject", "", { httpOnly: true });
-      response.cookies.set("encriptedOrder", "", { httpOnly: true });
+      response.cookies.set("encriptedOrderId", "", {
+        httpOnly: true,
+        expires: 0,
+      });
 
       return response;
     }
 
-    decodedOrderObject.payment_status = payment_status;
-
     await connectWithMongo();
-    const newOrder = await Orders.create(decodedOrderObject);
+    const newOrder = await Orders.findByIdAndUpdate(
+      decodedOrderId,
+      {
+        $set: {
+          payment_status,
+        },
+      },
+      { new: true }
+    );
 
     const response = NextResponse.json(
       {
@@ -283,8 +305,10 @@ export async function PUT(req: NextRequest) {
       { status: 200 }
     );
 
-    response.cookies.set("orderObject", "", { httpOnly: true });
-    response.cookies.set("encriptedOrder", "", { httpOnly: true });
+    response.cookies.set("encriptedOrderId", "", {
+      httpOnly: true,
+      expires: 0,
+    });
 
     return response;
   } catch (error: any) {
@@ -320,9 +344,18 @@ export async function DELETE(req: NextRequest) {
     }
 
     await connectWithMongo();
-    const deletedOrder = await Orders.findByIdAndDelete(_id);
+    const orderToDelete = await Orders.findById(_id).select("delivary_status");
+    if (orderToDelete.delivary_status === "delivered") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Order already delivered",
+        },
+        { status: 400 }
+      );
+    }
 
-    console.log(deletedOrder);
+    const deletedOrder = await Orders.findByIdAndDelete(_id);
 
     if (!deletedOrder) {
       return NextResponse.json(

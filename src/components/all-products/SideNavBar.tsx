@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import FilterByPrice from "../filters/FilterByPrice";
 import LeftMenus from "../common/profile-components/LeftMenus";
 import { T_SearchKeys } from "@/lib/types/productTyps";
-import SellerOption from "../landing page/banner/SellerOption";
 import DashboardMenus from "@/app/(client)/seller/dashboard/DashboardMenus";
 
 interface I_ProductNav {
@@ -72,12 +71,10 @@ const SideNavBar: FC<I_ProductNav> = ({
       {/* side bar component */}
       <div
         className={`h-screen w-screen absolute top-0 bottom-0 z-10 overflow-scroll flex 
-                    ${
-                      isNavOpen
-                        ? "left-0 opacity-100"
-                        : "-left-[110vw] opacity-0"
-                    } ease-out duration-300 text-white text-base
-                `}
+            ${
+              isNavOpen ? "left-0 opacity-100" : "-left-[110vw] opacity-0"
+            } ease-out duration-300 text-white text-base
+        `}
       >
         {/* main div that contains everything */}
         <div className="bg-slate-800 h-full w-full min-[426px]:w-[64%] overflow-y-scroll">
@@ -109,7 +106,7 @@ const SideNavBar: FC<I_ProductNav> = ({
                 type="text"
                 name="navSearch"
                 placeholder="Search products and brands"
-                className="h-10 rounded-md text-sm outline-none text-[#222222] w-60  placeholder:font-sans font-sans bg-slate-100 px-2 ml-3"
+                className="h-10 rounded-md text-sm outline-none text-[#222222] w-60  placeholder:font-sans font-sans !bg-slate-100 px-2 ml-3"
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setInputValue(e.target.value)
                 }
@@ -174,6 +171,7 @@ const SideNavBar: FC<I_ProductNav> = ({
           {/* filters */}
           {filters && (
             <div className="w-full h-full mt-4 block lg:hidden">
+              <div className="border-b border-slate-300 w-[96%] mx-auto my-5" />
               <div className="w-11/12 ml-3 flex flex-col gap-2">
                 <div className={`h-10 w-full font-medium font-kanit`}>
                   <h3 className="text-4xl">Filters</h3>
@@ -183,7 +181,8 @@ const SideNavBar: FC<I_ProductNav> = ({
                 <FilterByPrice />
 
                 {/* categories */}
-                <div className="w-full mt-3">
+                <div className="border-b border-slate-300 w-full mx-auto my-5" />
+                <div className="w-full">
                   <h5 className={"text-2xl mb-2 font-nunito"}>Categories</h5>
                   <ul className="list-none text-base flex flex-col gap-3">
                     <li>

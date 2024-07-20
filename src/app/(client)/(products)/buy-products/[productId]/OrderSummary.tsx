@@ -230,7 +230,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   name="address"
                   id="address"
                   autoComplete="street-address"
-                  className="block w-full rounded-md border-lightColor bg-rootBg text-rootColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="block w-full rounded-md border-lightColor text-rootColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-transparent"
                   value={shippingAddress.address}
                   onChange={handleChange}
                   required

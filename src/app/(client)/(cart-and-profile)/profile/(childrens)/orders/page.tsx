@@ -1,24 +1,34 @@
-import React, { FC } from 'react';
-import SetIsPaid from './IsPaid';
-import OrderTableBody from './OrderTableBody';
+import React, { FC } from "react";
+import OrderTableBody from "./OrderTableBody";
+import { updateOrderStatus } from "@/lib/server-side-actions/client-side";
+import { redirect } from "next/navigation";
 
 interface I_Orders {
-    searchParams: {
-        payment: string;
-        order: string;
-    };
-};
-
-const Orders: FC<I_Orders> = ({ searchParams }) => {
-    const order = searchParams.order || '';
-    const payment = searchParams.payment || '';
-
-    return (
-        <>
-            <span className='hidden'>{ (order.length && payment.length) && (<SetIsPaid order={ order } payment={ payment } />) }</span>
-            <OrderTableBody />
-        </>
-    )
+  searchParams: {
+    payment: string;
+    order: string;
+  };
 }
+
+const Orders: FC<I_Orders> = async ({ searchParams }) => {
+  const orderId = searchParams.order || "";
+  const payment = searchParams.payment || "";
+  const InitialVal = {
+    success: false,
+    message: "",
+  };
+
+  const { success, message } =
+    orderId.length > 0 && payment.length > 0
+      ? await updateOrderStatus({
+          orderId,
+          payment_status: payment,
+        })
+      : InitialVal;
+
+  success && message.length && redirect("/profile/orders");
+
+  return <OrderTableBody />;
+};
 
 export default Orders;

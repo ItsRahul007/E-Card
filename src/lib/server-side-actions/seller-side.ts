@@ -56,6 +56,7 @@ export const getOrders = async () => {
     await connectWithMongo();
     const orders: T_Orders[] = await Orders.find({
       "products.brand_name": userDataObject.brandName,
+      delivary_status: { $ne: "delivered" }, //? $ne means "not equal to"
     })
       .select("products")
       .sort({ createdAt: -1 });
