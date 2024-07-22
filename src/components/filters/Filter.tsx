@@ -44,9 +44,9 @@ const Filter: React.FC<{ search: string | undefined }> = ({ search }) => {
             <li>
               <Link
                 className="hover:text-sky-500 cursor-pointer"
-                href="/products/search-products?search=bag"
+                href="/products/search-products?search=laptop"
               >
-                Bag
+                Laptop
               </Link>
             </li>
           </ul>

@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
     await connectWithMongo();
 
     const orders = await Orders.find({ customer_id: userId }).select(
-      "-customer_id -__v -createdAt -updatedAt"
+      "-customer_id -__v -updatedAt"
     );
 
     return NextResponse.json(

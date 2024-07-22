@@ -61,16 +61,14 @@ export async function GET(req: NextRequest) {
         (search.includes("for men") || search.includes("for women")) &&
         !price
       ) {
-        const otherSearchTerm = search
-          .replace("for men", "")
-          .replace("for women", "")
-          .trim()
-          .toLowerCase();
         const searchCategory = search.includes("women") ? "women" : "men";
 
         return await ProductsSchema.find({
           product_category: searchCategory,
-          search_keys: { $in: [otherSearchTerm] },
+          $or: [
+            { product_name: { $regex: search, $options: "i" } },
+            { product_description: { $regex: search, $options: "i" } },
+          ],
         })
           .sort({ _id: -1 })
           .skip(skipNumber)
@@ -83,9 +81,15 @@ export async function GET(req: NextRequest) {
       ) {
         const numbers = price.match(/\d+/g);
         const values = numbers?.map(Number);
+        const otherSearchTerm = search
+          .replace("for men", "")
+          .replace("for women", "")
+          .trim()
+          .toLowerCase();
 
         return await ProductsSchema.find({
           product_category: search.includes("women") ? "women" : "men",
+          product_description: { $regex: otherSearchTerm, $options: "i" },
           current_price: { $gte: values?.[0], $lte: values?.[1] },
         })
           .sort({ _id: -1 })
@@ -111,7 +115,10 @@ export async function GET(req: NextRequest) {
         const values = numbers?.map(Number);
 
         return await ProductsSchema.find({
-          search_keys: { $in: [search] },
+          $or: [
+            { product_type: { $regex: search, $options: "i" } },
+            { product_description: { $regex: search, $options: "i" } },
+          ],
           current_price: { $gte: values?.[0], $lte: values?.[1] },
         })
           .sort({ _id: -1 })
@@ -119,7 +126,13 @@ export async function GET(req: NextRequest) {
           .limit(itemNumber)
           .select(selectText);
       } else {
-        return await ProductsSchema.find({ search_keys: { $in: [search] } })
+        return await ProductsSchema.find({
+          $or: [
+            { product_type: { $regex: search, $options: "i" } },
+            { product_description: { $regex: search, $options: "i" } },
+            { product_name: { $regex: search, $options: "i" } },
+          ],
+        })
           .sort({ _id: -1 })
           .skip(skipNumber)
           .limit(itemNumber)

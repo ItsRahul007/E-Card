@@ -42,6 +42,15 @@ const OrderTableBody = () => {
     });
   };
 
+  const tableHeaders = [
+    "Products",
+    "Payment status",
+    "delivary status",
+    "total price",
+    "order date",
+    "options",
+  ];
+
   return (
     <div className="h-auto w-full overflow-x-auto text-zinc-800">
       {isOpen && (
@@ -60,18 +69,14 @@ const OrderTableBody = () => {
       <table className="table-auto border-collapse border border-gray-300 w-full max-w-screen text-sm duration-100 overflow-x-auto">
         <thead className="bg-appTheme-500 text-white">
           <tr>
-            <th className="px-4 py-1.5 truncate border capitalize">Products</th>
-            <th className="px-4 py-1.5 truncate border capitalize">
-              Payment status
-            </th>
-            <th className="px-4 py-1.5 truncate border capitalize">
-              delivary status
-            </th>
-            <th className="px-4 py-1.5 truncate border capitalize">
-              total price
-            </th>
-            <th className="px-4 py-1.5 truncate border capitalize">options</th>
-            {/* in options give 2 options delete and view in detail */}
+            {tableHeaders.map((header) => (
+              <th
+                className="px-4 py-1.5 truncate border capitalize"
+                key={header}
+              >
+                {header}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -84,6 +89,7 @@ const OrderTableBody = () => {
                 payment_status,
                 delivary_status,
                 total_price,
+                createdAt,
               } = obj;
               return (
                 <OrdersTR
@@ -94,6 +100,7 @@ const OrderTableBody = () => {
                   total_price={total_price}
                   primaryImgUrl={products[0].primaryImgUrl}
                   totalProducts={products.length}
+                  orderDate={createdAt}
                   handleOnDelete={() => {
                     setIsOpen(true);
                     setOrderId(_id);

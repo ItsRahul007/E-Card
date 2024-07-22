@@ -10,7 +10,6 @@ const SellerProducts = async () => {
     "Name",
     "Price",
     "discount percentage",
-    "Status",
     "Primary Image",
   ];
 
@@ -21,7 +20,6 @@ const SellerProducts = async () => {
     name: obj.product_name,
     price: obj.price,
     discount: obj.discount_percentage,
-    status: <span className={classNames("text-green-500")}>Active</span>,
     primaryImage: <PrimaryImg alt="testing" src={obj.primaryImgUrl} />,
     id: obj._id,
   }));

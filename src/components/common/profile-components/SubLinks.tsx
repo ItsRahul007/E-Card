@@ -35,7 +35,7 @@ const SubLinks: FC<I_SubLinks> = ({
         <h3
           className={classNames(
             "uppercase py-3 flex items-center",
-            isSlider ? "text-slate-100" : "text-zinc-500"
+            isSlider ? "text-slate-100" : "text-rootColor"
           )}
         >
           <span className="text-xl text-appTheme-600 px-3">{headerIcon}</span>

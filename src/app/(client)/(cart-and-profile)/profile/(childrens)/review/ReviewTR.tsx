@@ -16,7 +16,7 @@ const ReviewTR: FC<ReviewObj> = ({
   ratingNumber,
 }) => {
   return (
-    <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 text-rootColor">
+    <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 dark:hover:bg-zinc-800 text-rootColor">
       <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem]">
         <Link
           href={`/single-product/${productId}`}

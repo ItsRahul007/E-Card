@@ -18,14 +18,14 @@ const Coupons = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 text-rootColor">
+            <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 dark:hover:bg-zinc-800 text-rootColor">
               <td className="border px-4 py-2">Coupon 1</td>
               <td className="border px-4 py-2">ABC123</td>
               <td className="border px-4 py-2">10%</td>
               <td className="border px-4 py-2">2024-03-20</td>
               <td className="border px-4 py-2">2024-03-30</td>
             </tr>
-            <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 text-rootColor">
+            <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 dark:hover:bg-zinc-800 text-rootColor">
               <td className="border px-4 py-2">Coupon 2</td>
               <td className="border px-4 py-2">XYZ456</td>
               <td className="border px-4 py-2">15%</td>

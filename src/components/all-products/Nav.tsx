@@ -51,10 +51,10 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
           Shoes
         </Link>
         <Link
-          href="/products/search-products?search=electronics"
+          href="/products/search-products?search=smartwatch"
           className="cursor-pointer"
         >
-          Electronics
+          Smartwatch
         </Link>
         {sellerOption}
         <Link href="/cart" className="cursor-pointer">

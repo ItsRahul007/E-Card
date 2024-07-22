@@ -2,6 +2,7 @@ import IconButton from "@/components/common/buttons/IconButton";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { parseISO, format } from "date-fns";
 
 interface I_OrdersTR {
   primaryImgUrl: string;
@@ -11,6 +12,7 @@ interface I_OrdersTR {
   totalProducts: number;
   handleOnDelete?: () => void;
   _id: string;
+  orderDate: string;
 }
 
 const OrdersTR: React.FC<I_OrdersTR> = ({
@@ -21,9 +23,15 @@ const OrdersTR: React.FC<I_OrdersTR> = ({
   total_price,
   _id,
   handleOnDelete,
+  orderDate,
 }) => {
+  const dateString = "2024-07-18T03:50:53.734Z";
+
+  const date = parseISO(dateString);
+  const formattedDate = format(date, "MMMM dd, yyyy, h:mm a");
+
   return (
-    <tr className="hover:bg-appTheme-50 hover:text-appTheme-700 text-rootColor group font-normal">
+    <tr className="hover:bg-appTheme-50 dark:hover:bg-zinc-800 hover:text-appTheme-700 text-rootColor group font-normal duration-400">
       <td className="border px-4 py-1 truncate max-w-[18rem] sm:max-w-[24rem] text-rootColor">
         <div className="mx-auto flex justify-center">
           <Image
@@ -48,6 +56,9 @@ const OrdersTR: React.FC<I_OrdersTR> = ({
       </td>
       <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem]">
         {total_price}
+      </td>
+      <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem]">
+        {formattedDate}
       </td>
       <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem] space-x-2 text-xl text-center">
         <IconButton

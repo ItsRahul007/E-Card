@@ -82,7 +82,7 @@ const ProfileSingleCompo: React.FC<I_ProfileSingleCompo> = ({
           placeholder={placeholder}
           type={inputType}
           value={inputValue}
-          className="border text-black py-3 px-4 rounded font-normal read-only:bg-zinc-100 read-only:text-zinc-400 read-only:cursor-not-allowed focus:outline-appTheme-200"
+          className="border text-rootColor py-3 px-4 rounded font-normal read-only:bg-zinc-100 dark:read-only:bg-zinc-700 read-only:text-lightColor read-only:cursor-not-allowed focus:outline-appTheme-200"
           isReadOnly={!isEditAble}
           onChange={onChange}
           minLength={inputType === "number" ? 10 : undefined}
