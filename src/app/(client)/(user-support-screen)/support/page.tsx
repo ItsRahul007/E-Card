@@ -14,13 +14,15 @@ const Support = async () => {
   const user = await User.findById(userDataObject.id).select("email name");
 
   return (
-    <div className="bg-lightBg text-rootColor md:p-4 p-2">
+    <div className="bg-lightBg text-rootColor md:p-4 sm:p-2">
       <div className="bg-rootBg p-2 md:p-5 rounded">
         <div className="flex md:flex-row flex-col gap-6 mx-auto w-full md:w-4/5">
           {/* left section */}
           <div className="w-full md:w-2/4">
             <div>
-              <h2 className="text-2xl font-bold text-start">Get in touch</h2>
+              <h2 className="text-2xl font-bold sm:text-start text-center">
+                Get in touch
+              </h2>
             </div>
             <div className="flex flex-col gap-4 mt-3 text-lightColor">
               <p>

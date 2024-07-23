@@ -35,12 +35,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
       {/* nav bar */}
       <Navbar profile />
       <div className="flex-1 flex justify-center items-center">
-        <div className="h-full w-full md:w-11/12 flex gap-3 justify-center p-2">
+        <div className="h-full w-full md:w-11/12 flex gap-3 justify-center sm:p-2">
           {/* left component */}
           <LeftMenus name={name} />
 
           {/* right component */}
-          <div className="min-h-11/12 flex flex-col gap-2 border border-lightColor w-screen lg:w-3/4 shadow-sm sm:p-4 bg-rootBg">
+          <div className="min-h-11/12 flex flex-col gap-2 sm:border sm:border-lightColor w-screen lg:w-3/4 shadow-sm sm:p-4 bg-rootBg">
             {children}
           </div>
         </div>

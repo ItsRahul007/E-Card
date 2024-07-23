@@ -10,10 +10,10 @@ const Cart: FC = () => {
   return (
     <main className="h-screen w-screen flex flex-col overflow-y-scroll bg-lightBg">
       <Navbar />
-      <div className="w-full h-auto flex justify-center items-center my-6 md:my-12">
-        <div className="h-auto w-11/12 flex flex-col lg:flex-row gap-3 lg:gap-6">
+      <div className="w-full h-auto flex justify-center items-center mb-6 sm:my-6 md:my-12">
+        <div className="h-auto sm:w-11/12 w-full flex flex-col lg:flex-row gap-3 lg:gap-6">
           {/* left component */}
-          <div className="min-h-[24rem] h-auto w-full lg:w-9/12 bg-rootBg border-2 border-lightColor rounded-xl flex flex-col overflow-hidden p-3 pb-5 lg:mb-5">
+          <div className="min-h-[24rem] h-auto w-full lg:w-9/12 bg-rootBg sm:border-2 sm:border-lightColor sm:rounded-xl flex flex-col overflow-hidden p-3 pb-5 lg:mb-5">
             {/* heading */}
             <div className="h-14 flex items-center pt-3 pb-7">
               <h1 className="!font-nunito ml-3 text-2xl text-rootColor font-semibold">
@@ -48,8 +48,8 @@ const Cart: FC = () => {
           {/* right component */}
           <div className="flex-1 flex flex-col gap-4">
             {/* cupon component */}
-            <div className="sm:w-full min-w-80 bg-rootBg border-2 border-lightColor rounded-lg px-6 py-4 flex flex-col justify-center items-start h-28 gap-2">
-              <h4 className="text-base font-normal text-lightColor">
+            <div className="sm:w-full min-w-80 bg-rootBg sm:border-2 sm:border-lightColor sm:rounded-lg px-6 py-4 flex flex-col justify-center items-start h-28 gap-2">
+              <h4 className="text-base font-normal text-rootColor">
                 Have coupon?
               </h4>
               <div className="flex w-full">
@@ -62,7 +62,7 @@ const Cart: FC = () => {
                 <Button
                   text="Apply"
                   type="button"
-                  className="uppercase border text-xs px-3 border-l-0 rounded-r font-medium bg-stone-100 hover:bg-stone-200 text-gray-500"
+                  className="uppercase border text-xs px-3 border-l-0 rounded-r font-medium bg-stone-100 hover:bg-stone-200 text-gray-500 dark:bg-zinc-800 dark:text-rootColor dark:hover:bg-zinc-900 dark:border-zinc-600"
                 />
               </div>
             </div>

@@ -39,7 +39,7 @@ const TotalPeice = () => {
   return (
     <>
       {!isLoading && data.cartProducts && data.cartProducts.length > 0 && (
-        <div className="sm:w-full w-80 h-auto bg-rootBg border-2 border-lightColor rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2">
+        <div className="sm:w-full h-auto bg-rootBg sm:border-2 sm:border-lightColor sm:rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2">
           <div className="w-full flex flex-col font-rubik text-rootColor text-sm">
             <div className="flex justify-between h-9">
               <span>Subtotal</span>
@@ -74,7 +74,7 @@ const TotalPeice = () => {
               </Link>
               <Link
                 href="/products/all"
-                className="uppercase border-2 border-lightColor bg-rootBg text-xs py-2 rounded-md text-lightColor hover:text-rootColor hover:border-rootColor font-medium inline text-center"
+                className="uppercase border-2 border-lightColor bg-rootBg text-xs py-2 rounded-md sm:text-lightColor text-rootColor hover:text-rootColor hover:border-rootColor font-medium inline text-center"
               >
                 back to shop
               </Link>
@@ -83,7 +83,7 @@ const TotalPeice = () => {
         </div>
       )}
       {isLoading && (
-        <div className="sm:w-full w-80 h-auto bg-rootBg border-2 rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2">
+        <div className="sm:w-full h-auto bg-rootBg sm:border-2 sm:rounded-lg px-6 py-4 flex flex-col justify-center items-start gap-2">
           <PageLoading />
         </div>
       )}
