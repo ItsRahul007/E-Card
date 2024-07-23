@@ -1,12 +1,19 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { decode, verify } from "jsonwebtoken";
-import { failedToUpdateOrderStatus } from "../util/toastMessages";
+import { verify } from "jsonwebtoken";
+import {
+  failedToGetProducts,
+  failedToUpdateOrderStatus,
+} from "../util/toastMessages";
 import connectWithMongo from "../mongoConnection/mongoConnect";
 import { invalidRequest } from "../util/apiMessages";
 import Orders from "../model/ordersSchema";
-import { ObjectId } from "mongoose";
+import Products from "../model/productSchema";
+import {
+  I_BestSaleGetProducts,
+  I_BestSalesSingleItem,
+} from "../types/productTyps";
 
 type T_UpdateOrderStatus = {
   orderId: string;
@@ -61,5 +68,62 @@ export const updateOrderStatus = async ({
       success: false,
       message: failedToUpdateOrderStatus,
     };
+  }
+};
+
+export const getNewReleaseProducts = async () => {
+  try {
+    const newReleaseProducts = await Products.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("product_name _id primaryImgUrl current_price");
+    return newReleaseProducts;
+  } catch (err: any) {
+    console.log(err.message);
+    throw new Error(failedToGetProducts);
+  }
+};
+
+export const getProductsByIds = async (
+  productsIds: { productId: string; quantity: any }[]
+) => {
+  try {
+    const allProducts = await Promise.all(
+      productsIds.map(async ({ productId, quantity }) => {
+        const product = (await Products.findById(productId).select(
+          "product_name _id primaryImgUrl current_price ratings"
+        )) as I_BestSaleGetProducts;
+
+        //? getting the total rating number
+        let totalRatingNumber: number = 0;
+        product.ratings &&
+          product.ratings.length > 0 &&
+          product.ratings.map((obj: any) => {
+            const prevTotal = totalRatingNumber;
+            totalRatingNumber = prevTotal + obj.ratingNumber;
+          });
+
+        // Round the rating to the nearest half
+        const rating: number =
+          totalRatingNumber > 0
+            ? totalRatingNumber / product.ratings.length
+            : 0;
+        const roundedRating = Math.round(rating * 2) / 2;
+
+        const formatedProductObject: I_BestSalesSingleItem = {
+          _id: product._id,
+          product_name: product.product_name,
+          primaryImgUrl: product.primaryImgUrl,
+          current_price: product.current_price,
+          quantity,
+          ratingNumber: roundedRating === 0 ? "No Ratings" : roundedRating,
+        };
+        return formatedProductObject;
+      })
+    );
+    return allProducts;
+  } catch (err: any) {
+    console.log(err.message);
+    throw new Error(failedToGetProducts);
   }
 };

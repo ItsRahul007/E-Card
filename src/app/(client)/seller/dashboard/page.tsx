@@ -7,6 +7,7 @@ import {
   getOrders,
   getProducts,
   getSales,
+  getTop5Products,
 } from "@/lib/server-side-actions/seller-side";
 import { ChartData } from "chart.js";
 
@@ -26,6 +27,7 @@ const Dashboard = async () => {
   const myOrders = await getOrders();
   const myProducts = await getProducts();
   const sales = await getSales();
+  const top5bestSales = await getTop5Products();
 
   return (
     <div className="h-auto w-full">
@@ -70,7 +72,7 @@ const Dashboard = async () => {
           <h4>top 5 best selling</h4>
         </div>
         <div className="w-full sm:mt-2 h-auto overflow-x-auto">
-          <Top5Table />
+          <Top5Table top5bestSales={top5bestSales} />
         </div>
       </section>
     </div>

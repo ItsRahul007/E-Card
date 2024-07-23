@@ -7,24 +7,13 @@ import NewReleaseGsap from "./NewReleaseGsap";
 import AddToCartButton from "./AddToCartButton";
 import { cookies } from "next/headers";
 
-const NewRelease = async () => {
+const NewRelease = async ({
+  newReleaseProducts,
+}: {
+  newReleaseProducts: any[];
+}) => {
   const authToken = cookies().get("authToken")?.value;
   const isUserLoggededIn = authToken && authToken.length > 0 ? true : false;
-
-  const getNewReleaseProducts = async () => {
-    try {
-      const newReleaseProducts = await Products.find()
-        .sort({ createdAt: -1 })
-        .limit(5)
-        .select("product_name _id primaryImgUrl current_price");
-      return newReleaseProducts;
-    } catch (err: any) {
-      console.log(err.message);
-      throw new Error("Failed to fetch products");
-    }
-  };
-
-  const newReleaseProducts = await getNewReleaseProducts();
 
   return (
     <section

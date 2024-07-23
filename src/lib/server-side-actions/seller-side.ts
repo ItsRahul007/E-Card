@@ -16,6 +16,7 @@ import {
   failedToUpdateOrderStatus,
   orderUpdated,
 } from "../util/toastMessages";
+import { getProductsByIds } from "./client-side";
 
 export const getProducts = async () => {
   const authToken = cookies().get("authToken")?.value || "";
@@ -237,6 +238,55 @@ export const getSales = async () => {
       totalSales: myOrders.length,
       lastSevenDaysSales: lastSevenDaysSales.length,
     };
+  } catch (error: any) {
+    console.log(error.message);
+    throw new Error(failedToGetSales);
+  }
+};
+
+export const getTop5Products = async () => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
+  try {
+    await connectWithMongo();
+    const orders = await Orders.find({
+      "products.brand_name": userDataObject.brandName,
+      delivary_status: "delivered",
+    })
+      .select("products createdAt")
+      .sort({ createdAt: -1 });
+
+    const productQuantities: any = {};
+    orders.forEach((order) => {
+      //* Iterate through each product in the order
+      order.products.forEach((product: any) => {
+        //? Increment the quantity for this product
+        const productId = product.product_id.toString(); //? Convert ObjectId to string for easy comparison
+        if (productQuantities[productId]) {
+          productQuantities[productId] += product.quantity;
+        } else {
+          productQuantities[productId] = product.quantity;
+        }
+      });
+    });
+
+    //* Convert productQuantities object to an array of { productId, quantity } objects
+    const productQuantitiesArray = Object.keys(productQuantities).map(
+      (productId) => ({
+        productId,
+        quantity: productQuantities[productId],
+      })
+    );
+
+    //* Sort products based on quantity in descending order
+    //* Select top 6 products
+    const top5ProductIds = productQuantitiesArray
+      .sort((a, b) => b.quantity - a.quantity)
+      .slice(0, 6);
+
+    const top5BestProducts = await getProductsByIds(top5ProductIds);
+    return top5BestProducts;
   } catch (error: any) {
     console.log(error.message);
     throw new Error(failedToGetSales);

@@ -1,29 +1,29 @@
-import Link from "next/link";
 import Table from "../Table";
 
-type top5ProductsArray = {
+type T_Top5ProductsArray = {
   id: number;
   product: string;
   price: string;
-  orders: string;
+  sales: string;
   rating: string | number;
 };
 
-const products: top5ProductsArray[] = Array.from({ length: 5 }).map((_, i) => ({
-  id: i + 1,
-  rank: "#" + (i + 1),
-  product: "product " + (i + 1),
-  price: "price " + (i + 1),
-  orders: "orders " + (i + 1),
-  rating: i + 1,
-}));
-
-export default function Top5Table() {
+export default function Top5Table({ top5bestSales }: { top5bestSales: any[] }) {
+  const top5ProductsArray: T_Top5ProductsArray[] = top5bestSales.map(
+    (obj, i) => ({
+      id: obj._id,
+      rank: "#" + (i + 1),
+      product: obj.product_name,
+      price: obj.current_price,
+      sales: obj.quantity,
+      rating: obj.ratingNumber,
+    })
+  );
   return (
     <Table
       isEditOption
-      bodyData={products}
-      headers={["ID", "product", "price", "orders", "rating"]}
+      bodyData={top5ProductsArray}
+      headers={["ID", "product", "price", "sales", "rating"]}
       tableScreenName="Top5Table"
     />
   );
