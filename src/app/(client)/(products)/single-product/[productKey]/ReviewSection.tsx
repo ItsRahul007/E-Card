@@ -86,7 +86,7 @@ const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
 
   return (
     <section className="w-full flex justify-center items-center mt-2 mb-5">
-      <div className="w-11/12 h-auto border-[3px] border-lightColor p-2 bg-rootBg flex flex-col gap-4 rounded-lg">
+      <div className="md:w-11/12 w-full h-auto md:border-2 border-lightColor p-2 bg-rootBg flex flex-col gap-4 rounded-lg">
         {/* header */}
         <div className="w-full text-2xl md:text-3xl mt-2">
           <h1 className={"ml-5 font-rubik font-medium"}>Reviews</h1>

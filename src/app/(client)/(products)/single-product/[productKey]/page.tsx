@@ -39,7 +39,7 @@ export async function generateMetadata({
 
   //? fetching product
   const response = await axios.get(
-    `https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=${productId}`,
+    `${process.env.DOMAIN}api/single-product?productId=${productId}`,
     {
       headers: {
         AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN!),
@@ -68,7 +68,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
   const productId = params.productKey;
 
   const product = await axios.get(
-    `https://e-card-itsrahul007s-projects.vercel.app/api/single-product?productId=${productId}`,
+    `${process.env.DOMAIN}api/single-product?productId=${productId}`,
     {
       headers: {
         AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN!),
@@ -136,12 +136,12 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
   };
 
   return (
-    <div className="h-screen w-screen bg-lightBg flex flex-col">
+    <div className="min-h-screen h-auto w-screen bg-lightBg flex flex-col">
       <AllProductNav />
-      <div className="overflow-scroll w-screen bg-lightBg flex flex-col gap-3">
+      <div className="overflow-scroll w-screen h-auto bg-lightBg flex flex-col gap-3 p-2">
         {/* first section (product) */}
-        <section className="w-full md:max-h-[35rem] h-auto">
-          <div className="h-full w-full lg:w-11/12 p-4 px-6 flex sm:flex-row flex-col lg:gap-2 max-[639.5px]:items-center gap-6">
+        <section className="w-full h-auto">
+          <div className="h-full w-full lg:w-11/12 sm:p-4 p-2 sm:px-6 flex md:flex-row flex-col lg:gap-2 max-[639.5px]:items-center gap-6">
             {/* images container */}
             <ImageContainer
               primaryImgUrl={primaryImgUrl}
@@ -152,7 +152,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
             {/* text container */}
             <div className="lg:flex-1">
               {/* product name */}
-              <div className="min-h-8 h-auto max-md:w-72 text-left text-2xl capitalize text-ellipsis sm:text-3xl">
+              <div className="min-h-8 h-auto w-full text-left text-2xl capitalize text-ellipsis sm:text-3xl">
                 <h4 className={`font-outfit font-medium`}>{product_name}</h4>
               </div>
 
@@ -184,7 +184,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
               </div>
 
               {/* about the product */}
-              <div className="font-medium text-sm text-gray-500 md:w-[90%] w-72 mt-4">
+              <div className="font-medium text-sm text-gray-500 dark:text-gray-400 md:w-[90%] mt-4">
                 {ProductDescription ||
                   "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quis minus quia adipisci perferendis! Distinctio illo officiis sapiente. Ex perferendis, quae rerum odit doloremque, accusantium blanditiis dolores est quos incidunt animi labore recusandae velit quaerat commodi laboriosam eaque eveniet, distinctio aperiam. Earum, ipsam. Illum pariatur laboriosam aliquid doloribus rerum, maxime assumenda soluta ut quidem sint reiciendis optio cupiditate nihil unde harum ipsa dolorem maiores repudiandae distinctio quia delectus possimus quasi non! Ex quasi suscipit, laboriosam quaerat maxime doloribus voluptas tenetur maiores illum eligendi provident, veniam, vitae expedita eveniet aperiam nemo quos commodi reiciendis culpa aspernatur eius. Quidem odio dolorum ipsa enim id beatae cum totam sapiente in quasi similique minus atque optio accusamus, exercitationem officia. Eligendi quasi ut optio sunt distinctio dolorem sapiente necessitatibus quod temporibus deserunt unde facilis quidem corrupti omnis delectus harum aliquam voluptatem corporis ducimus odio aut, et consequuntur neque dolores? Quod qui magnam laborum ad libero."}
               </div>
@@ -211,10 +211,9 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
           product_category={product_category}
           productId={productId}
         />
-
-        {/* footer */}
-        <Footer />
       </div>
+      {/* footer */}
+      <Footer />
     </div>
   );
 };

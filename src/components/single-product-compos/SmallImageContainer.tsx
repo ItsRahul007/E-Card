@@ -16,7 +16,7 @@ const SmallImageContainer: FC<I_SmallImageContainer> = ({
 }) => {
   return (
     <button
-      className="h-20 w-16 max-[385px]:h-16 max-[385px]:w-14 rounded relative border-2 border-lightColor overflow-hidden"
+      className="h-20 w-16 max-[385px]:h-16 max-[385px]:w-14 rounded relative border-2 border-slate-600 overflow-hidden"
       onClick={onClick}
     >
       <Image
