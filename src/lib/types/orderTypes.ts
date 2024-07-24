@@ -80,6 +80,7 @@ export type orderProduct = {
 
 export interface T_myOrders extends orderProduct {
   orderId: string;
+  createdAt?: Date;
 }
 
 export type T_Orders = {

@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  scales,
 } from "chart.js";
 
 const LineTable = ({ data }: { data: any }) => {
@@ -33,6 +34,20 @@ const LineTable = ({ data }: { data: any }) => {
       title: {
         display: true,
         text: "Last Seven Days Sales",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: "rgba(148, 163, 184, 0.5)",
+        },
+      },
+      x: {
+        beginAtZero: true,
+        grid: {
+          color: "rgba(148, 163, 184, 0.5)",
+        },
       },
     },
   };

@@ -148,7 +148,7 @@ export const updateOrderStatus = async (
       });
 
       //? sending email to the customer
-      const user = await User.findById(allProducts.customer_id);
+      const user = await User.findById(allProducts.customer_id).select("email");
 
       const { success, problem } = await sendEmail({
         subject: "Order Delivered",
@@ -179,6 +179,31 @@ export const updateOrderStatus = async (
       message: failedToUpdateOrderStatus,
     };
   }
+};
+
+const calculateDailySales = (lastSevenDaysSales: T_myOrders[]) => {
+  // Create an array to store daily sales counts
+  const dailySales: number[] = new Array(7).fill(0);
+  const today = new Date();
+
+  // Iterate through the lastSevenDaysSales array
+  lastSevenDaysSales.forEach((order) => {
+    // Get the order date
+    const orderDate = new Date(order.createdAt!);
+
+    // Calculate the difference in days between the order date and today
+    const daysDifference = Math.floor(
+      (today.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    // If the order is within the last 7 days
+    if (daysDifference >= 0 && daysDifference < 7) {
+      // Increment the sales count for the corresponding day
+      dailySales[daysDifference]++;
+    }
+  });
+
+  return dailySales;
 };
 
 export const getSales = async () => {
@@ -233,10 +258,12 @@ export const getSales = async () => {
 
       return orderDate >= currentDate;
     });
+    const last7DaySalesCounts = calculateDailySales(lastSevenDaysSales);
 
     return {
       totalSales: myOrders.length,
       lastSevenDaysSales: lastSevenDaysSales.length,
+      last7DaySalesCounts,
     };
   } catch (error: any) {
     console.log(error.message);

@@ -18,18 +18,20 @@ const StatusDropdown: React.FC<I_StatusDropdown> = ({
   productArrId,
 }) => {
   const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // setSelectValue(e.target.value);
+    toast.loading("Updating status...");
     const response = await updateOrderStatus(
       e.target.value,
       orderId,
       productArrId
     );
+
+    toast.dismiss();
     if (response.success) {
-      toast.success(response.message);
       revalidateUrl({
         revalidatePathUrl: "/seller/dashboard/orders",
         revalidateLayout: "page",
       });
+      toast.success(response.message);
     } else {
       toast.error(response.message);
       console.log(response.problem);
