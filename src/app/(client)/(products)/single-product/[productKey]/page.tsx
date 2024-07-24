@@ -39,7 +39,7 @@ export async function generateMetadata({
 
   //? fetching product
   const response = await axios.get(
-    `${process.env.DOMAIN}api/single-product?productId=${productId}`,
+    `${process.env.DOMAIN}/api/single-product?productId=${productId}`,
     {
       headers: {
         AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN!),
@@ -68,7 +68,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
   const productId = params.productKey;
 
   const product = await axios.get(
-    `${process.env.DOMAIN}api/single-product?productId=${productId}`,
+    `${process.env.DOMAIN}/api/single-product?productId=${productId}`,
     {
       headers: {
         AUTH_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_AUTH_TOKEN!),

@@ -17,12 +17,11 @@ const RelatedProducts: FC<I_RelatedProducts> = async ({
 }) => {
   const selectText =
     "product_name primaryImgUrl current_price ratings discount_percentage";
-  console.log(product_type, product_category);
 
   await connectWithMongo();
   const relatedProducts = await Products.find({
-    product_type,
-    $or: [{ product_category }],
+    product_type: { $regex: product_type, $options: "i" },
+    $or: [{ product_category: { $regex: product_category, $options: "i" } }],
   })
     .limit(5)
     .select(selectText);

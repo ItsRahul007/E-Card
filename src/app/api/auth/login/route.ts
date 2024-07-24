@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
         name: user.name,
         userRole: user.userRole,
         brandName: user.brandName || "",
+        avatar: user.avatar || "",
       },
     };
 
@@ -145,7 +146,7 @@ export async function PUT(req: NextRequest) {
     await connectWithMongo();
     const updatedData = await User.findByIdAndUpdate(userId, updateObject, {
       new: true,
-    }).select("_id userRole name");
+    }).select("_id userRole name brandName avatar");
 
     if (!updatedData) {
       return NextResponse.json(
@@ -169,6 +170,7 @@ export async function PUT(req: NextRequest) {
         name: updatedData.name,
         userRole: updatedData.userRole,
         brandName: updatedData.brandName || "",
+        avatar: updatedData.avatar,
       },
     };
 

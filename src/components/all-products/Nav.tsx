@@ -10,9 +10,10 @@ import SellerOption from "../landing page/banner/SellerOption";
 interface I_ProductNav {
   filters?: boolean;
   profile?: boolean;
+  avatar?: string;
 }
 
-const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
+const Navbar: React.FC<I_ProductNav> = ({ filters, profile, avatar }) => {
   const authToken = cookies().get("authToken")?.value || "";
   let userObj: any = {
     name: "E-Card user",
@@ -37,6 +38,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile }) => {
         profile={profile}
         name={userObj.name}
         sellerOption={sellerOption}
+        avatar={avatar}
       />
 
       {/* search keys and cart favourite */}

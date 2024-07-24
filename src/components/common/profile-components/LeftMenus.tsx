@@ -12,6 +12,7 @@ interface I_LeftMenus {
   closeSlider?: () => void;
   isSlider?: boolean;
   name?: string;
+  avatar?: string;
 }
 
 type T_CurrentTab =
@@ -25,6 +26,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({
   closeSlider = () => {},
   isSlider,
   name,
+  avatar,
 }) => {
   const router = useRouter();
   const pathName = usePathname() as T_CurrentTab;
@@ -53,7 +55,7 @@ const LeftMenus: React.FC<I_LeftMenus> = ({
         {/* image */}
         <div className="w-20 h-full flex items-center justify-center">
           <Image
-            src={profileImage}
+            src={avatar ? avatar : profileImage}
             alt="profile"
             width={50}
             height={50}

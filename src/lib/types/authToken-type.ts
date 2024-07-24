@@ -10,6 +10,7 @@ export type T_JwtVerifyDataType = {
     name: string;
     userRole?: "seller" | "user" | "admin";
     brandName?: string;
+    avatar?: string;
   };
   iat: number | string;
 };

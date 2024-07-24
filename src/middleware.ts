@@ -1,5 +1,4 @@
 import { decode } from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { T_JwtVerifyDataType } from "./lib/types/authToken-type";

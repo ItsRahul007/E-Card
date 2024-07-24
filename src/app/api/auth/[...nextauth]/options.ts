@@ -11,18 +11,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
       async profile(profile) {
-        function generateAndSaveAuthToken(
-          id: string,
-          name: string,
-          userRole: string,
-          brandName?: string
-        ) {
+        function generateAndSaveAuthToken({
+          id,
+          name,
+          userRole,
+          brandName,
+          avatar,
+        }: {
+          id: string;
+          name: string;
+          userRole: string;
+          brandName?: string;
+          avatar?: string;
+        }) {
           const data = {
             user: {
               id,
               name,
               userRole,
               brandName,
+              avatar,
             },
           };
           const JWT_SECRET: string = process.env.JWT_SECRET!;
@@ -49,19 +57,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 socialUser: true,
               });
 
-              generateAndSaveAuthToken(
-                newUser._id,
-                newUser.name,
-                newUser.userRole
-              );
+              generateAndSaveAuthToken({
+                id: newUser._id,
+                name: newUser.name,
+                userRole: newUser.userRole,
+                avatar: newUser.avatar,
+              });
             }
+            user.avatar = profile.picture;
+            await user.save();
 
-            generateAndSaveAuthToken(
-              user._id,
-              user.name,
-              user.userRole,
-              user.brandName
-            );
+            generateAndSaveAuthToken({
+              id: user._id,
+              name: user.name,
+              userRole: user.userRole,
+              brandName: user.brandName,
+              avatar: user.avatar,
+            });
           } catch (error: any) {
             console.log(error.message);
           }

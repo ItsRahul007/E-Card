@@ -20,6 +20,7 @@ interface I_ProductNav {
   searchBarFalse?: boolean;
   noSearchKeys?: boolean;
   dashboardNav?: boolean;
+  avatar?: string;
 }
 
 const SideNavBar: FC<I_ProductNav> = ({
@@ -32,6 +33,7 @@ const SideNavBar: FC<I_ProductNav> = ({
   searchBarFalse,
   noSearchKeys = false,
   dashboardNav = false,
+  avatar,
 }) => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
@@ -224,7 +226,12 @@ const SideNavBar: FC<I_ProductNav> = ({
           )}
           {profile && (
             <div className="w-full h-auto mt-4 block lg:hidden select-none">
-              <LeftMenus closeSlider={closeSlider} isSlider name={name} />
+              <LeftMenus
+                closeSlider={closeSlider}
+                isSlider
+                name={name}
+                avatar={avatar}
+              />
             </div>
           )}
         </div>
