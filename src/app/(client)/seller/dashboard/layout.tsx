@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
+  process.setMaxListeners(20);
   await connectWithMongo();
   const authToken = cookies().get("authToken")?.value || "";
 

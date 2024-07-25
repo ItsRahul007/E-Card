@@ -26,6 +26,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  process.setMaxListeners(20);
   return (
     <html lang="en" className="!scroll-smooth">
       <body

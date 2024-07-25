@@ -12,6 +12,7 @@ import User from "../model/usersSchema";
 import {
   failedToGetOrder,
   failedToGetProducts,
+  failedToGetReviews,
   failedToGetSales,
   failedToUpdateOrderStatus,
   orderUpdated,
@@ -98,6 +99,37 @@ export const getOrders = async () => {
   } catch (error: any) {
     console.log(error.message);
     throw new Error(failedToGetOrder);
+  }
+};
+
+export const getProductReviews = async () => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+  try {
+    await connectWithMongo();
+    const reviewsAndRatings = await Products.find({
+      brand_name: userDataObject.brandName,
+      ratings: { $ne: [] },
+    })
+      .select("ratings primaryImgUrl product_name")
+      .sort({ createdAt: -1 });
+
+    const filteredReviews = reviewsAndRatings
+      .map((obj) => {
+        const filteredRatings = obj.ratings.filter(
+          (obj: any) => obj.ratingBy !== "system"
+        );
+        return {
+          ...obj.toObject(),
+          ratings: filteredRatings,
+        };
+      })
+      .filter((obj) => obj.ratings.length > 0);
+
+    return filteredReviews;
+  } catch (error: any) {
+    console.log(error.message);
+    throw new Error(failedToGetReviews);
   }
 };
 

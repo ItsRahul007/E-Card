@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Layout({ children }: { children: ReactNode }) {
+  process.setMaxListeners(20);
   const authToken = cookies().get("authToken")?.value || "";
   if (!authToken) {
     redirect("/logout");

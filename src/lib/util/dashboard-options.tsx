@@ -22,9 +22,9 @@ export const dashboardOptions: DashboardOptions[] = [
     url: "/seller/dashboard/add-products",
   },
   {
-    label: "Help",
-    icon: <i className="ri-question-fill"></i>,
-    url: "/help",
+    label: "Ratings & reviews",
+    icon: <i className="ri-star-half-fill"></i>,
+    url: "/seller/dashboard/reviews",
   },
   {
     label: "Support",

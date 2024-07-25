@@ -18,6 +18,7 @@ export const itemAlreadyExistsInCart = "Item is already added to cart";
 
 //? review messages
 export const reviewAddesSuccessMessage = "Review added successfully";
+export const failedToGetReviews = "Failed to get reviews, please try again!";
 
 //? order messages
 export const placingOrder = "Placing order...";
