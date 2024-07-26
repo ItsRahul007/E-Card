@@ -59,12 +59,14 @@ const OrdersTR: React.FC<I_OrdersTR> = ({
         {formattedDate}
       </td>
       <td className="border px-4 py-1 truncate max-w-[15rem] sm:max-w-[20rem] space-x-2 text-xl text-center">
-        <IconButton
-          icon={<i className="ri-close-circle-line text-[22px]"></i>}
-          className="px-2 py-1 rounded-full hover:text-red-500 group-hover:text-red-500"
-          type="button"
-          onClick={handleOnDelete}
-        />
+        {delivary_status.toLowerCase() !== "delivered" && (
+          <IconButton
+            icon={<i className="ri-close-circle-line text-[22px]"></i>}
+            className="px-2 py-1 rounded-full hover:text-red-500 group-hover:text-red-500"
+            type="button"
+            onClick={handleOnDelete}
+          />
+        )}
         <Link
           href={`/profile/orders/${_id}`}
           target="_blank"

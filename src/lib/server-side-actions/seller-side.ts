@@ -193,6 +193,7 @@ export const updateOrderStatus = async (
     return {
       success: false,
       message: failedToUpdateOrderStatus,
+      problem: error.message,
     };
   }
 };
@@ -276,6 +277,7 @@ export const getSales = async () => {
     });
     const last7DaySalesCounts = calculateDailySales(lastSevenDaysSales);
 
+    //? return the benifit or loss percentage by comparing last seven day sales with previous 7 day sales
     return {
       totalSales: myOrders.length,
       lastSevenDaysSales: lastSevenDaysSales.length,
