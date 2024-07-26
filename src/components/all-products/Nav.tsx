@@ -42,7 +42,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile, avatar }) => {
       />
 
       {/* search keys and cart favourite */}
-      <span className="h-full flex-1 sm:flex hidden justify-center items-center gap-8 text-white text-base font-medium font-poppins">
+      <span className="h-full flex-1 md:flex hidden justify-center items-center gap-8 text-white text-base font-medium font-poppins">
         <Link href="/products/search-products" className="cursor-pointer">
           All Products
         </Link>
@@ -65,10 +65,13 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile, avatar }) => {
         <Link href="/profile" className="cursor-pointer">
           My Profile <i className="ri-user-3-fill"></i>
         </Link>
+        <Link href="/profile" className="cursor-pointer">
+          Support <i className="ri-hand-heart-fill"></i>
+        </Link>
       </span>
 
       {/* cart and favourite for small screens */}
-      <span className="flex-1 sm:hidden flex justify-end items-center gap-4 mr-3 text-sm font-medium font-poppins">
+      <span className="flex-1 md:hidden flex justify-end items-center gap-4 mr-3 text-sm font-medium font-poppins">
         <Link href="/cart" className="cursor-pointer">
           Cart <i className="ri-shopping-cart-2-fill font-thin"></i>
         </Link>

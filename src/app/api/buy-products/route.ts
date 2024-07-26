@@ -7,7 +7,6 @@ import {
   didNotGetOrderid,
   encryptedStringNotMatched,
   invalidRequest,
-  orderObjectDidNotMatched,
   orderPlacied,
   paymentFailed,
   userNotFound,
@@ -17,6 +16,7 @@ import { serverSideStripe } from "@/lib/util/stripe/stripe";
 import { decode, sign } from "jsonwebtoken";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
 import User from "@/lib/model/usersSchema";
+import { sendEmailToSeller } from "@/lib/send-email/send-emails";
 
 interface I_PUT_Req_JSON {
   orderId: string;
@@ -101,15 +101,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const allProductsByBrandNames: any = {};
+
     const modifiedProducts: routeProduct[] = products.map((obj) => {
       const {
         _id,
-        current_price,
+        current_price: product_price,
         primaryImgUrl,
         product_name,
         quantity = 1,
         brand_name,
       } = obj;
+
+      //? if the brand name is not exist earlier then adding it and keeping the value as empty array
+      if (!allProductsByBrandNames[brand_name]) {
+        allProductsByBrandNames[brand_name] = [];
+      }
+
+      allProductsByBrandNames[brand_name].push({
+        product_name,
+        quantity,
+      });
 
       return {
         product_id: _id,
@@ -117,9 +129,11 @@ export async function POST(req: NextRequest) {
         product_name,
         quantity,
         brand_name,
-        product_price: current_price,
+        product_price,
       };
     });
+
+    sendEmailToSeller(allProductsByBrandNames);
 
     const orderObj: Order = {
       customer_id: userId!,

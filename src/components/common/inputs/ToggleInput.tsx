@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Switch } from "@headlessui/react";
 import classNames from "@/lib/util/classNames";
+import { setIsUserSendEmailActive } from "@/lib/server-side-actions/seller-side";
+import toast from "react-hot-toast";
 
 interface I_ToggleInput {
   label: string;
@@ -12,12 +14,23 @@ interface I_ToggleInput {
 const ToggleInput: React.FC<I_ToggleInput> = ({ label, value }) => {
   const [enabled, setEnabled] = useState(value);
 
+  const handleOnChange = async (e: boolean) => {
+    setEnabled(e);
+    const { success, message, problem } = await setIsUserSendEmailActive(e);
+    if (success) {
+      toast.success(message);
+    } else {
+      toast.error(message);
+      console.error(problem);
+    }
+  };
+
   return (
     <div className="col-span-1 row-span-1 text-sm flex flex-col gap-y-3">
       <label className="font-medium capitalize text-rootColor">{label}</label>
       <Switch
         checked={enabled}
-        onChange={setEnabled}
+        onChange={handleOnChange}
         className={classNames(
           enabled ? "bg-indigo-600" : "bg-lightColor",
           "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"

@@ -25,9 +25,7 @@ const OrdersTR: React.FC<I_OrdersTR> = ({
   handleOnDelete,
   orderDate,
 }) => {
-  const dateString = "2024-07-18T03:50:53.734Z";
-
-  const date = parseISO(dateString);
+  const date = parseISO(orderDate);
   const formattedDate = format(date, "MMMM dd, yyyy, h:mm a");
 
   return (

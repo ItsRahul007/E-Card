@@ -76,6 +76,7 @@ export async function POST(req: NextRequest) {
         name: user.name,
         userRole: "seller",
         brandName: user.brandName,
+        avatar: user.avatar,
       },
     };
 

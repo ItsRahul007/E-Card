@@ -153,6 +153,9 @@ const SideNavBar: FC<I_ProductNav> = ({
                   >
                     Electronics
                   </Link>
+                  <Link href="/profile" onClick={closeSlider}>
+                    Support
+                  </Link>
                 </>
               ) : (
                 searchKeys.map(({ label, link }) => (
@@ -214,9 +217,9 @@ const SideNavBar: FC<I_ProductNav> = ({
                     <li>
                       <Link
                         onClick={closeSlider}
-                        href="/products/search-products?search=bag"
+                        href="/products/search-products?search=laptop"
                       >
-                        Bag
+                        Laptop
                       </Link>
                     </li>
                   </ul>

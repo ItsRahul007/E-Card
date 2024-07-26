@@ -1,8 +1,12 @@
 import NonEditableField from "@/components/common/inputs/NonEditableField";
 import ToggleInput from "@/components/common/inputs/ToggleInput";
+import { getIsUserSendEmailActive } from "@/lib/server-side-actions/seller-side";
 import React from "react";
 
-const SellerSettings = () => {
+const SellerSettings = async () => {
+  const isSendEmailActive = await getIsUserSendEmailActive();
+  console.log(isSendEmailActive);
+
   return (
     <div className="bg-rootBg w-full h-auto md:shadow-md rounded-md p-2 pb-4">
       <div className="sm:w-full w-fit mx-auto h-10 text-xl md:text-2xl font-semibold capitalize md:mt-4 mt-2 md:ml-6">
@@ -12,7 +16,10 @@ const SellerSettings = () => {
         <NonEditableField label="Brand name" value="The Titan" />
         <NonEditableField label="contact email" value="rg890458@gmail.com" />
         <NonEditableField label="contact number" value="7478386405" />
-        <ToggleInput value={false} label="Send email when get an order" />
+        <ToggleInput
+          value={isSendEmailActive}
+          label="Send email when get an order"
+        />
       </div>
     </div>
   );

@@ -27,10 +27,9 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
 
   const decodedToken = decode(authToken) as T_JwtVerifyDataType;
 
-  const getUserAvatar = await User.findById(decodedToken.user.id).select(
-    "avatar"
-  );
-  const userAvatar = getUserAvatar.avatar || "/images/profile-pic.png";
+  const getUserAvatar = decodedToken.user.avatar;
+
+  const userAvatar = getUserAvatar || "/images/profile-pic.png";
 
   return (
     <main className="min-h-screen h-auto w-screen max-w-[1540px] mx-auto bg-lightBg font-poppins md:p-4">

@@ -18,6 +18,7 @@ import {
   orderUpdated,
 } from "../util/toastMessages";
 import { getProductsByIds } from "./client-side";
+import { sendEmailToCustomer } from "../send-email/send-emails";
 
 export const getProducts = async () => {
   const authToken = cookies().get("authToken")?.value || "";
@@ -180,24 +181,7 @@ export const updateOrderStatus = async (
       });
 
       //? sending email to the customer
-      const user = await User.findById(allProducts.customer_id).select("email");
-
-      const { success, problem } = await sendEmail({
-        subject: "Order Delivered",
-        html: `
-        <h1>Your given order on E-Card is delivered</h1> <br>
-        <strong>Products:</strong>
-        <ul>${allProductNames.join("")}</ul>
-        `,
-        to: user?.email,
-      });
-      if (!success) {
-        return {
-          success: false,
-          message: failedToUpdateOrderStatus,
-          problem,
-        };
-      }
+      sendEmailToCustomer(allProducts.customer_id!, allProductNames);
     }
 
     return {
@@ -342,12 +326,56 @@ export const getTop5Products = async () => {
     //* Select top 6 products
     const top5ProductIds = productQuantitiesArray
       .sort((a, b) => b.quantity - a.quantity)
-      .slice(0, 6);
+      .slice(0, 5);
 
     const top5BestProducts = await getProductsByIds(top5ProductIds);
     return top5BestProducts;
   } catch (error: any) {
     console.log(error.message);
     throw new Error(failedToGetSales);
+  }
+};
+
+export const getIsUserSendEmailActive = async () => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
+  try {
+    await connectWithMongo();
+    const isSendEmailActive = await User.findById(userDataObject.id).select(
+      "send_email_when_get_an_order"
+    );
+    return isSendEmailActive.send_email_when_get_an_order
+      ? isSendEmailActive.send_email_when_get_an_order
+      : false;
+  } catch (error: any) {
+    console.log(error.message);
+    throw new Error("Failed to get user");
+  }
+};
+
+export const setIsUserSendEmailActive = async (value: boolean) => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
+  try {
+    await connectWithMongo();
+
+    await User.findByIdAndUpdate(
+      userDataObject.id,
+      {
+        $set: { send_email_when_get_an_order: value },
+      },
+      { new: true }
+    );
+
+    return { success: true, message: "Updated successfully" };
+  } catch (error: any) {
+    console.log(error.message);
+    return {
+      success: true,
+      message: "Failed to updated",
+      problem: error.message,
+    };
   }
 };

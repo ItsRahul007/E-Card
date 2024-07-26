@@ -54,6 +54,10 @@ const userModel = new Schema({
     type: Number,
     unique: [true, "Contact number already exists."],
   },
+  send_email_when_get_an_order: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const User = models.users || model("users", userModel);
