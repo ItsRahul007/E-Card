@@ -198,22 +198,27 @@ export const updateOrderStatus = async (
   }
 };
 
-const calculateDailySales = (lastSevenDaysSales: T_myOrders[]) => {
+const calculateDailySales = (
+  salesArray: T_myOrders[],
+  startDate: Date,
+  dayCountGrater?: boolean
+) => {
   // Create an array to store daily sales counts
   const dailySales: number[] = new Array(7).fill(0);
-  const today = new Date();
 
-  // Iterate through the lastSevenDaysSales array
-  lastSevenDaysSales.forEach((order) => {
+  // Iterate through the salesArray
+  salesArray.forEach((order) => {
     // Get the order date
     const orderDate = new Date(order.createdAt!);
 
-    // Calculate the difference in days between the order date and today
+    // Calculate the difference in days between the order date and startDate
     const daysDifference = Math.floor(
-      (today.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24)
+      dayCountGrater
+        ? (orderDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+        : (startDate.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    // If the order is within the last 7 days
+    // If the order is within the last 7 days from startDate
     if (daysDifference >= 0 && daysDifference < 7) {
       // Increment the sales count for the corresponding day
       dailySales[daysDifference]++;
@@ -275,13 +280,49 @@ export const getSales = async () => {
 
       return orderDate >= currentDate;
     });
-    const last7DaySalesCounts = calculateDailySales(lastSevenDaysSales);
 
     //? return the benifit or loss percentage by comparing last seven day sales with previous 7 day sales
+    const previousSevenDaysSales = myOrders.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 14); // 14 days ago
+
+      // 7 day ago
+      const sevenDaysLater = new Date();
+      sevenDaysLater.setDate(sevenDaysLater.getDate() - 7);
+
+      return orderDate >= currentDate && orderDate < sevenDaysLater; // Between 14 and 7 days ago
+    });
+
+    const last7DaySalesCounts = calculateDailySales(
+      lastSevenDaysSales,
+      new Date()
+    ); //* Use today's date for last 7 days
+    const previous7DaySalesCounts = calculateDailySales(
+      previousSevenDaysSales,
+      new Date(new Date().setDate(new Date().getDate() - 14)), //* Use 14 days ago as the start date for previous 7 days
+      true
+    );
+
+    // Calculate profit/loss percentage
+    let profitLossPercentage = 0;
+    const previous7SumValues = previous7DaySalesCounts.reduce(
+      (a, b) => a + b,
+      0
+    );
+
+    if (previous7SumValues > 0) {
+      profitLossPercentage =
+        ((lastSevenDaysSales.length - previousSevenDaysSales.length) /
+          previousSevenDaysSales.length) *
+        100;
+    }
+
     return {
       totalSales: myOrders.length,
       lastSevenDaysSales: lastSevenDaysSales.length,
       last7DaySalesCounts,
+      profitLossPercentage,
     };
   } catch (error: any) {
     console.log(error.message);

@@ -28,7 +28,7 @@ const RelatedProducts: FC<I_RelatedProducts> = async ({
 
   return (
     <>
-      {relatedProducts && relatedProducts.length > 0 ? (
+      {relatedProducts && relatedProducts.length > 0 && (
         <section className="w-full my-5">
           <div className="h-auto w-full xl:w-11/12 flex flex-col p-2 gap-4">
             {/* heading */}
@@ -41,7 +41,7 @@ const RelatedProducts: FC<I_RelatedProducts> = async ({
               <div className="grid grid-rows-none gap-4 justify-center relative grid-cols-2 sm:grid-cols-3 md:p-4 p-2 lg:grid-cols-4 xl:grid-cols-5">
                 {relatedProducts.map((item) => {
                   if (JSON.stringify(item._id) === JSON.stringify(productId))
-                    return <></>;
+                    return null;
                   return (
                     <ItemCard
                       key={JSON.stringify(item._id) + "related-products"}
@@ -72,8 +72,6 @@ const RelatedProducts: FC<I_RelatedProducts> = async ({
             </div>
           </div>
         </section>
-      ) : (
-        <></>
       )}
     </>
   );

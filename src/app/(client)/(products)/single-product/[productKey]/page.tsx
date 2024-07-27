@@ -125,7 +125,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
       stars.push(
         <span
-          key={i}
+          key={i + "rating-stars"}
           className={`text-xl max-[385px]:text-lg ${starColorClass}`}
         >
           &#9733;

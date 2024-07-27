@@ -61,7 +61,7 @@ const Dashboard = async () => {
           title="last seven days sales"
           icon={<i className="ri-bar-chart-box-fill"></i>}
           iconColorAndIconBg="bg-blue-100 text-blue-500"
-          profitOrLossPercentage={5}
+          profitOrLossPercentage={sales.profitLossPercentage}
         />
         <StatusCard
           number={myProducts.length}

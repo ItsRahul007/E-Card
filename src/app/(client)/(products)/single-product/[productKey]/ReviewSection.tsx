@@ -100,7 +100,7 @@ const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
           ) : reviewComments.length > 0 ? (
             reviewComments.map((reviewObj: any, i: number) => (
               <ReviewBox
-                key={reviewObj._id || i}
+                key={(reviewObj._id || i) + "review-id"}
                 rating={reviewObj.ratingNumber}
                 reviewText={reviewObj.comment || "Settings rating"}
               />
