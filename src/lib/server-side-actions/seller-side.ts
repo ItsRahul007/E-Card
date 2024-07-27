@@ -322,7 +322,7 @@ export const getSales = async () => {
       totalSales: myOrders.length,
       lastSevenDaysSales: lastSevenDaysSales.length,
       last7DaySalesCounts,
-      profitLossPercentage,
+      profitLossPercentage: Math.round(profitLossPercentage * 100) / 100,
     };
   } catch (error: any) {
     console.log(error.message);

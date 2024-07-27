@@ -62,6 +62,7 @@ const Dashboard = async () => {
           icon={<i className="ri-bar-chart-box-fill"></i>}
           iconColorAndIconBg="bg-blue-100 text-blue-500"
           profitOrLossPercentage={sales.profitLossPercentage}
+          isOnLoss={sales.profitLossPercentage < 0}
         />
         <StatusCard
           number={myProducts.length}
