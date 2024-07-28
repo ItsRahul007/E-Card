@@ -75,6 +75,7 @@
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 0 20px #000;
+  background-color: rgba(030, 030, 030, 0.25);
 }
 
 .half_star {

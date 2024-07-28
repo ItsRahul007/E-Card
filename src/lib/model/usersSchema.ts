@@ -58,6 +58,14 @@ const userModel = new Schema({
     type: Boolean,
     default: false,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationCode: {
+    type: Number || null,
+    default: null,
+  },
 });
 
 const User = models.users || model("users", userModel);

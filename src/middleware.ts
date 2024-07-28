@@ -8,6 +8,22 @@ export function middleware(req: NextRequest) {
   const authToken = req.cookies.get("authToken")?.value || false;
   const { pathname } = req.nextUrl;
 
+  //? if user have auth token but verified is not true
+  if (authToken && !pathname.startsWith("/verify-email")) {
+    const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
+    if (!decodedAuthToken.user.isVerified)
+      return NextResponse.redirect(new URL("/verify-email", req.url));
+  }
+
+  if (pathname.startsWith("/verify-email")) {
+    if (!authToken) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+    const decodedAuthToken = decode(authToken) as T_JwtVerifyDataType;
+    if (decodedAuthToken.user.isVerified)
+      return NextResponse.redirect(new URL("/", req.url));
+  }
+
   //? if it's an api request
   if (pathname.includes("/api/")) {
     //? getting the auth token from headers
@@ -116,5 +132,7 @@ export const config = {
     "/login",
     "/logout",
     "/signup",
+    "/verify-email",
+    "/",
   ],
 };

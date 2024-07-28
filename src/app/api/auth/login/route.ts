@@ -14,6 +14,7 @@ import {
   wrongPassword,
 } from "@/lib/util/apiMessages";
 import { checkAuth } from "@/lib/util/checkAuth";
+import { sendEmailVerificationCode } from "@/lib/send-email/send-emails";
 
 export async function GET(req: NextRequest) {
   try {
@@ -78,6 +79,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!user.isVerified) {
+      sendEmailVerificationCode(user._id);
+    }
+
     const data = {
       user: {
         id: user._id,
@@ -85,6 +90,7 @@ export async function POST(req: NextRequest) {
         userRole: user.userRole,
         brandName: user.brandName || "",
         avatar: user.avatar || "",
+        isVerified: user.isVerified || false,
       },
     };
 
@@ -119,12 +125,14 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const { userRole, name, mobile_number, orders } = await req.json();
-    let updateObject: any = {};
+    const { userRole, name, mobile_number, orders, isVerified } =
+      await req.json();
+    const updateObject: any = {};
 
     //! adding the given values in a object
     if (userRole) updateObject.userRole = userRole;
     if (name) updateObject.name = name;
+    if (isVerified) updateObject.isVerified = isVerified;
     if (mobile_number) updateObject.mobile_number = mobile_number;
     if (orders) updateObject.$push = { orders: orders };
 
@@ -171,6 +179,7 @@ export async function PUT(req: NextRequest) {
         userRole: updatedData.userRole,
         brandName: updatedData.brandName || "",
         avatar: updatedData.avatar,
+        isVerified: isVerified || updatedData.isVerified || false,
       },
     };
 

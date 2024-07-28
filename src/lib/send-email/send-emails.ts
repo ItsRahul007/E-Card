@@ -60,3 +60,30 @@ export const sendEmailToSeller = async (allProductsByBrandNames: any) => {
     );
   }
 };
+
+export const sendEmailVerificationCode = async (customer_id: string) => {
+  //? Generate a random number between 100000 and 999999 (inclusive)
+  const code = Math.floor(Math.random() * 900000) + 100000;
+
+  const user = await User.findByIdAndUpdate(
+    customer_id,
+    {
+      verificationCode: code,
+    },
+    { new: true }
+  ).select("email");
+
+  const { success, problem } = await sendEmail({
+    subject: "Verify your email on E-Card",
+    html: `
+        <h1>Here is your verification code for verifying your email on E-Card</h1> <br>
+        <strong>Code: ${code}</strong>
+        <p>Please do not share this code with others.</p>
+        `,
+    to: user?.email,
+  });
+  if (!success) {
+    console.error("Failed to send email to customer: ", problem);
+  }
+  return success;
+};

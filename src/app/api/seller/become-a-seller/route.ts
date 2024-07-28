@@ -77,6 +77,7 @@ export async function POST(req: NextRequest) {
         userRole: "seller",
         brandName: user.brandName,
         avatar: user.avatar,
+        isVerified: user.isVerified || false,
       },
     };
 

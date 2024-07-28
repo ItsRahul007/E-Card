@@ -10,6 +10,7 @@ import {
   invalidEmail,
   userAlreadyExists,
 } from "@/lib/util/apiMessages";
+import { sendEmailVerificationCode } from "@/lib/send-email/send-emails";
 
 export async function POST(req: Request) {
   try {
@@ -39,12 +40,17 @@ export async function POST(req: Request) {
 
     const user = await User.create({ name, email, password: secPas });
 
+    if (!user.isVerified) {
+      sendEmailVerificationCode(user._id);
+    }
+
     const data = {
       user: {
         id: user._id,
         name: user.name,
         userRole: user.userRole,
         brandName: user.brandName || "",
+        isVerified: false,
       },
     };
 

@@ -5,6 +5,15 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { cookies } from "next/headers";
 
+type T_GenerateAndSaveAuthTokenProps = {
+  id: string;
+  name: string;
+  userRole: string;
+  brandName?: string;
+  avatar?: string;
+  isVerified: boolean;
+};
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Google({
@@ -17,13 +26,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           userRole,
           brandName,
           avatar,
-        }: {
-          id: string;
-          name: string;
-          userRole: string;
-          brandName?: string;
-          avatar?: string;
-        }) {
+          isVerified = false,
+        }: T_GenerateAndSaveAuthTokenProps) {
           const data = {
             user: {
               id,
@@ -31,6 +35,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               userRole,
               brandName,
               avatar,
+              isVerified,
             },
           };
           const JWT_SECRET: string = process.env.JWT_SECRET!;
@@ -55,6 +60,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 email: profile.email,
                 avatar: profile.picture,
                 socialUser: true,
+                isVerified: true,
               });
 
               generateAndSaveAuthToken({
@@ -62,9 +68,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 name: newUser.name,
                 userRole: newUser.userRole,
                 avatar: newUser.avatar,
+                isVerified: true,
               });
             }
             user.avatar = profile.picture;
+            user.isVerified = true;
             await user.save();
 
             generateAndSaveAuthToken({
@@ -73,6 +81,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               userRole: user.userRole,
               brandName: user.brandName,
               avatar: user.avatar,
+              isVerified: true,
             });
           } catch (error: any) {
             console.log(error.message);
