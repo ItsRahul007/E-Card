@@ -153,7 +153,7 @@ const SideNavBar: FC<I_ProductNav> = ({
                   >
                     Electronics
                   </Link>
-                  <Link href="/profile" onClick={closeSlider}>
+                  <Link href="/support" onClick={closeSlider}>
                     Support
                   </Link>
                 </>

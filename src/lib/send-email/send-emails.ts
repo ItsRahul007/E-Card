@@ -42,16 +42,18 @@ export const sendEmailToSeller = async (allProductsByBrandNames: any) => {
         )
         .join("");
 
-      await sendEmail({
-        to: user.contactEmail,
-        subject: "Got a new order on E-Card",
-        html: `
+      user &&
+        user.contactEmail &&
+        (await sendEmail({
+          to: user.contactEmail,
+          subject: "Got a new order on E-Card",
+          html: `
               <h1>Got a new order on E-Card</h1> <br>
               <strong>Products:</strong>
               <ul>${orders}</ul> <br>
               <a href="${process.env.DOMAIN}/seller/dashboard/orders" target="_blank">Check it out on E-Card</a>
           `,
-      });
+        }));
     });
   } catch (error: any) {
     console.error(

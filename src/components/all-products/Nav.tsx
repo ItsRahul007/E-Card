@@ -65,7 +65,7 @@ const Navbar: React.FC<I_ProductNav> = ({ filters, profile, avatar }) => {
         <Link href="/profile" className="cursor-pointer">
           My Profile <i className="ri-user-3-fill"></i>
         </Link>
-        <Link href="/profile" className="cursor-pointer">
+        <Link href="/support" className="cursor-pointer">
           Support <i className="ri-hand-heart-fill"></i>
         </Link>
       </span>

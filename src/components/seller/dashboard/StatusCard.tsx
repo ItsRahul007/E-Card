@@ -36,7 +36,7 @@ const StatusCard: React.FC<I_StatusCard> = ({
                 : "bg-green-100 text-green-500"
             )}
           >
-            {!isOnLoss ? "+" : "-"}
+            {!isOnLoss && "+"}
             {profitOrLossPercentage}%
           </div>
         )}
