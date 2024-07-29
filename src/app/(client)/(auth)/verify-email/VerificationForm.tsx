@@ -14,8 +14,6 @@ interface I_VerificationForm {
   user_id: string;
 }
 
-//! test once if it's working properly or not
-
 const VerificationForm: React.FC<I_VerificationForm> = ({ user_id }) => {
   const router = useRouter();
   const [code, setCode] = useState<string>("");
@@ -49,7 +47,7 @@ const VerificationForm: React.FC<I_VerificationForm> = ({ user_id }) => {
 
   const resendEmail = async () => {
     setIsResendEmailLoading(true);
-    const success = await sendEmailVerificationCode(user_id);
+    const { success, problem } = await sendEmailVerificationCode(user_id);
     setIsResendEmailLoading(false);
     setSuccess(false);
     setError(null);
@@ -57,6 +55,7 @@ const VerificationForm: React.FC<I_VerificationForm> = ({ user_id }) => {
       toast.success("Verification code sent successfully!");
     } else {
       toast.error("Failed to send verification code, please try again!");
+      console.error(problem);
     }
   };
 

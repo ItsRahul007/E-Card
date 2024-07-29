@@ -85,5 +85,5 @@ export const sendEmailVerificationCode = async (customer_id: string) => {
   if (!success) {
     console.error("Failed to send email to customer: ", problem);
   }
-  return success;
+  return { success, problem };
 };
