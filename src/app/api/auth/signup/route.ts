@@ -11,6 +11,7 @@ import {
   userAlreadyExists,
 } from "@/lib/util/apiMessages";
 import { sendEmailVerificationCode } from "@/lib/send-email/send-emails";
+import { getDateFromNumber } from "@/lib/util/checkAuth";
 
 export async function POST(req: Request) {
   try {
@@ -38,7 +39,21 @@ export async function POST(req: Request) {
     // hashing password and adding salt with it
     const secPas = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ name, email, password: secPas });
+    const coupon = {
+      coupon_name: "First order discount",
+      coupon_code: "first-order",
+      coupon_discount: 10,
+      starts_on: getDateFromNumber(0),
+      ends_on: getDateFromNumber(15),
+      is_active: true,
+    };
+
+    const user = await User.create({
+      name,
+      email,
+      password: secPas,
+      coupons: [coupon],
+    });
 
     if (!user.isVerified) {
       sendEmailVerificationCode(user._id);

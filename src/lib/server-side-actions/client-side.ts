@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { verify } from "jsonwebtoken";
+import { decode, sign, verify } from "jsonwebtoken";
 import {
   failedToGetProducts,
   failedToUpdateOrderStatus,
@@ -14,6 +14,9 @@ import {
   I_BestSaleGetProducts,
   I_BestSalesSingleItem,
 } from "../types/productTyps";
+import { T_JwtVerifyDataType } from "../types/authToken-type";
+import User from "../model/usersSchema";
+import { couponType } from "../types/orderTypes";
 
 type T_UpdateOrderStatus = {
   orderId: string;
@@ -125,5 +128,50 @@ export const getProductsByIds = async (
   } catch (err: any) {
     console.log(err.message);
     throw new Error(failedToGetProducts);
+  }
+};
+
+export const getCouponByCouponCode = async (couponCode: string) => {
+  const authToken = cookies().get("authToken")?.value || "";
+  const { user: userDataObject } = decode(authToken) as T_JwtVerifyDataType;
+
+  try {
+    await connectWithMongo();
+    const user = (await User.findById(userDataObject.id).select("coupons")) as {
+      coupons: couponType[];
+    };
+
+    const coupon: couponType[] = user.coupons
+      ? user.coupons.filter(
+          (couponObj: couponType) => couponObj.coupon_code === couponCode
+        )
+      : [];
+    console.log("coupon", coupon);
+
+    if (coupon.length > 0) {
+      const encrypetedDiscountPrice = sign(
+        {
+          coupon_discount: coupon[0].coupon_discount,
+        },
+        process.env.JWT_SECRET!
+      );
+
+      return {
+        success: true,
+        message: "Coupon found",
+        coupon_discount: coupon[0].coupon_discount,
+        encrypetedDiscountPrice,
+      };
+    }
+    return {
+      success: false,
+      message: "Coupon not found",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: "Failed to get coupon",
+      problem: error.message,
+    };
   }
 };

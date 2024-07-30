@@ -1,5 +1,6 @@
 import User from "@/lib/model/usersSchema";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
+import { getDateFromNumber } from "@/lib/util/checkAuth";
 import { sign } from "jsonwebtoken";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
@@ -54,6 +55,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             await connectWithMongo();
             const user = await User.findOne({ email: profile.email });
 
+            const coupon = {
+              coupon_name: "First order discount",
+              coupon_code: "first-order",
+              coupon_discount: 10,
+              starts_on: getDateFromNumber(0),
+              ends_on: getDateFromNumber(15),
+              is_active: true,
+            };
+
             if (!user || user === null) {
               const newUser = await User.create({
                 name: profile.name,
@@ -61,6 +71,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 avatar: profile.picture,
                 socialUser: true,
                 isVerified: true,
+                coupons: [coupon],
               });
 
               generateAndSaveAuthToken({

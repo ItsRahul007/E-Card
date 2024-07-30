@@ -11,7 +11,12 @@ import {
   paymentFailed,
   userNotFound,
 } from "@/lib/util/apiMessages";
-import { Order, T_orderObj, routeProduct } from "@/lib/types/orderTypes";
+import {
+  Order,
+  T_orderObj,
+  couponType,
+  routeProduct,
+} from "@/lib/types/orderTypes";
 import { serverSideStripe } from "@/lib/util/stripe/stripe";
 import { decode, sign } from "jsonwebtoken";
 import connectWithMongo from "@/lib/mongoConnection/mongoConnect";
@@ -33,9 +38,9 @@ export async function GET(req: NextRequest) {
 
     await connectWithMongo();
 
-    const orders = await Orders.find({ customer_id: userId }).select(
-      "-customer_id -__v -updatedAt"
-    );
+    const orders = await Orders.find({ customer_id: userId })
+      .select("-customer_id -__v -updatedAt")
+      .sort({ createdAt: -1 });
 
     return NextResponse.json(
       {
@@ -73,6 +78,7 @@ export async function POST(req: NextRequest) {
       total_discount,
       tax,
       delivary_status,
+      coupon_code,
     }: T_orderObj = await req.json();
 
     if (
@@ -99,6 +105,60 @@ export async function POST(req: NextRequest) {
         },
         { status: 400 }
       );
+    }
+
+    //? checking if address is already exists or not
+    const isAddressInArray = (addresses: any[], address: any) => {
+      return addresses.some((existingAddress) => {
+        return (
+          existingAddress.full_name === address.full_name &&
+          existingAddress.phone_number === address.phone_number &&
+          existingAddress.address === address.address
+        );
+      });
+    };
+
+    await connectWithMongo();
+    const user = await User.findById(userId).select("addresses coupons");
+    const isAddressAlreadyExists = isAddressInArray(
+      user.addresses,
+      shipping_address
+    );
+
+    const isGivenCouponCodeValid: couponType[] = coupon_code
+      ? user.coupons?.filter(
+          (coupon: couponType) =>
+            coupon.coupon_code === coupon_code &&
+            new Date(coupon.ends_on) >= new Date() &&
+            coupon.is_active
+        ) || []
+      : [];
+
+    //? check why this condition is sending as false
+    if (coupon_code && isGivenCouponCodeValid.length <= 0) {
+      return NextResponse.json(
+        {
+          error: "Invalid coupon code",
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
+
+    //? if the address not exists then add it
+    if (!isAddressAlreadyExists) {
+      user.addresses.push(shipping_address);
+      await user.save();
+    }
+
+    if (coupon_code && isGivenCouponCodeValid.length > 0) {
+      //? if we use the given coupon the set the is active to false
+      user.coupons.map((coupon: couponType) => {
+        if (coupon.coupon_code === coupon_code) {
+          coupon.is_active = false;
+        }
+      });
+      await user.save();
     }
 
     const allProductsByBrandNames: any = {};
@@ -129,7 +189,12 @@ export async function POST(req: NextRequest) {
         product_name,
         quantity,
         brand_name,
-        product_price,
+        //? if isGivenCouponCodeValid length then giving discount to app the products for getting the exact total price
+        product_price:
+          isGivenCouponCodeValid.length > 0
+            ? product_price -
+              product_price * (isGivenCouponCodeValid[0].coupon_discount / 100)
+            : product_price,
       };
     });
 
@@ -145,40 +210,10 @@ export async function POST(req: NextRequest) {
       tax,
     };
 
+    //? if the coupon exists then adding the coupon
+    coupon_code && (orderObj.coupon = isGivenCouponCodeValid[0]);
+
     if (delivary_status) orderObj.delivary_status = delivary_status;
-
-    const isAddressInArray = (addresses: any[], address: any) => {
-      return addresses.some((existingAddress) => {
-        return (
-          existingAddress.full_name === address.full_name &&
-          existingAddress.phone_number === address.phone_number &&
-          existingAddress.address === address.address
-        );
-      });
-    };
-
-    await connectWithMongo();
-    const user = await User.findById(userId).select("addresses");
-    const isAddressAlreadyExists = isAddressInArray(
-      user.addresses,
-      shipping_address
-    );
-    if (!isAddressAlreadyExists) {
-      const responce = await User.findByIdAndUpdate(
-        userId,
-        { $push: { addresses: shipping_address } },
-        {
-          new: true,
-        }
-      );
-
-      if (!responce) {
-        return NextResponse.json(
-          { error: userNotFound, success: false },
-          { status: 400 }
-        );
-      }
-    }
 
     const newOrder = await Orders.create(orderObj);
 
@@ -196,13 +231,24 @@ export async function POST(req: NextRequest) {
         cancel_url:
           `${process.env.DOMAIN}/profile/orders?payment=failed&order=` +
           encriptedOrderId,
-        line_items: products.map((obj) => {
+        line_items: products.map((obj, i) => {
           const {
             current_price,
             primaryImgUrl,
             product_name,
             quantity = 1,
           } = obj;
+
+          const unit_amount = Math.round(
+            //? if it's the first one then adding tax charge with the price
+            i === 0 ? (current_price + 20) * 100 : current_price * 100
+          );
+
+          const productPrice =
+            isGivenCouponCodeValid.length > 0
+              ? unit_amount -
+                unit_amount * (isGivenCouponCodeValid[0].coupon_discount / 100)
+              : unit_amount;
 
           return {
             price_data: {
@@ -211,7 +257,7 @@ export async function POST(req: NextRequest) {
                 name: product_name,
                 images: [primaryImgUrl],
               },
-              unit_amount: current_price * 100,
+              unit_amount: productPrice,
             },
             quantity,
           };

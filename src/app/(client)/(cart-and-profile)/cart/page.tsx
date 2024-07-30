@@ -1,10 +1,8 @@
 import React, { FC } from "react";
 import Navbar from "@/components/all-products/Nav";
-import InputCompo from "@/components/common/inputs/InputCompo";
-import Button from "@/components/common/buttons/Button";
 import Footer from "@/components/common/footer/Footer";
 import CartItems from "./CartItems";
-import TotalPeice from "./TotalPeice";
+import CartRightSideCompo from "./CartRightSideCompo";
 
 const Cart: FC = () => {
   return (
@@ -46,30 +44,7 @@ const Cart: FC = () => {
           </div>
 
           {/* right component */}
-          <div className="flex-1 flex flex-col gap-4">
-            {/* cupon component */}
-            <div className="sm:w-full min-w-80 bg-rootBg sm:border-2 sm:border-lightColor sm:rounded-lg px-6 py-4 flex flex-col justify-center items-start h-28 gap-2">
-              <h4 className="text-base font-normal text-rootColor">
-                Have coupon?
-              </h4>
-              <div className="flex w-full">
-                <InputCompo
-                  name="cupon_code"
-                  type="text"
-                  placeholder="Coupon code"
-                  className="border px-2 py-1 rounded-l focus:outline-blue-400 shadow-none w-full bg-lightBg text-rootColor"
-                />
-                <Button
-                  text="Apply"
-                  type="button"
-                  className="uppercase border text-xs px-3 border-l-0 rounded-r font-medium bg-stone-100 hover:bg-stone-200 text-gray-500 dark:bg-zinc-800 dark:text-rootColor dark:hover:bg-zinc-900 dark:border-zinc-600"
-                />
-              </div>
-            </div>
-
-            {/* total price component */}
-            <TotalPeice />
-          </div>
+          <CartRightSideCompo />
         </div>
       </div>
       <Footer />

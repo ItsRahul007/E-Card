@@ -6,7 +6,17 @@ import { useGetFetchedQuery } from "@/lib/customHook/useGetFetchedQuery";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const TotalPeice = () => {
+interface I_TotalPeice {
+  coupon_discount?: number;
+  coupon_code?: string;
+  encryptedDiscount?: string;
+}
+
+const TotalPeice: React.FC<I_TotalPeice> = ({
+  coupon_discount,
+  coupon_code,
+  encryptedDiscount,
+}) => {
   const [price, setPrice] = useState({
     subtotal: 0,
     discount: 0,
@@ -36,6 +46,8 @@ const TotalPeice = () => {
     }
   }, [data, refetch]);
 
+  const totalPriceWithoutTax = Math.round(price.subtotal - price.discount);
+
   return (
     <>
       {!isLoading && data.cartProducts && data.cartProducts.length > 0 && (
@@ -49,6 +61,12 @@ const TotalPeice = () => {
               <span>Discount</span>
               <span>${Math.round(price.discount)}</span>
             </div>
+            {coupon_discount && (
+              <div className="flex justify-between h-9 text-green-500 border-green-500">
+                <span>Coupon discount</span>
+                <span>{coupon_discount}%</span>
+              </div>
+            )}
             <div className="flex justify-between h-9">
               <span>TAX</span>
               <span>${price.tax}</span>
@@ -59,14 +77,28 @@ const TotalPeice = () => {
             <div className="flex justify-between h-9 font-medium text-base">
               <span>Total</span>
               <span>
-                ${Math.round(price.subtotal - price.discount + price.tax)}
+                $
+                {coupon_discount
+                  ? Math.round(
+                      totalPriceWithoutTax -
+                        totalPriceWithoutTax * (coupon_discount / 100) +
+                        price.tax
+                    )
+                  : Math.round(totalPriceWithoutTax + price.tax)}
               </span>
             </div>
 
             {/* buttons */}
             <div className="w-full h-auto flex flex-col gap-3 mt-3">
               <Link
-                href="/buy-products/all"
+                href={`/buy-products/all${
+                  coupon_code
+                    ? "?couponCode=" +
+                      coupon_code +
+                      "&discount=" +
+                      encryptedDiscount
+                    : ""
+                }`}
                 className="uppercase border-2 bg-green-600 border-green-600 text-xs py-2 rounded-md text-white font-medium inline text-center"
                 target="_blank"
               >

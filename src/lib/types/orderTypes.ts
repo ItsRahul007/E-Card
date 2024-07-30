@@ -26,6 +26,18 @@ export interface routeProduct {
   product_price: number;
 }
 
+export type orderCouponType = {
+  coupon_name: string;
+  coupon_code: string;
+  coupon_discount: number;
+};
+
+export type couponType = orderCouponType & {
+  starts_on: Date;
+  ends_on: Date;
+  is_active: boolean;
+};
+
 //? schema structure
 export interface Order {
   customer_id: string;
@@ -43,6 +55,7 @@ export interface Order {
   payment_type: "cash-on-delivery" | "stripe" | string;
   payment_status?: "pending" | "success" | "failed";
   is_paid?: boolean;
+  coupon?: orderCouponType;
 }
 
 export type T_orderObj = {
@@ -60,6 +73,7 @@ export type T_orderObj = {
     | "shipped"
     | "delivered"
     | "cancelled";
+  coupon_code?: string;
 };
 
 export type orderProduct = {

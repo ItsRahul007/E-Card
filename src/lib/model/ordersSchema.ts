@@ -84,6 +84,20 @@ const ordersModel = new Schema(
       enum: ["pending", "success", "failed"],
       default: "pending",
     },
+    coupon: {
+      coupon_name: {
+        type: String,
+        default: null,
+      },
+      coupon_code: {
+        type: String,
+        default: null,
+      },
+      coupon_discount: {
+        type: Number,
+        default: null,
+      },
+    },
   },
   { timestamps: true, get: (time: any) => time.toDateString() }
 );

@@ -30,6 +30,8 @@ const paymentMethods = [
 
 interface I_OrderSummary {
   product: orderProductType[] | [];
+  couponCode?: string;
+  coupon_discount?: number;
 }
 
 const initialShippingAddress: addressTypeInputValues = {
@@ -38,7 +40,11 @@ const initialShippingAddress: addressTypeInputValues = {
   address: "",
 };
 
-const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
+const OrderSummary: FC<I_OrderSummary> = ({
+  product,
+  couponCode,
+  coupon_discount,
+}) => {
   const [products, setProducts] = useState<orderProductType[] | []>(product);
   const [isCartProducts, setIsCartProducts] = useState<boolean>(false);
   const [isChooseAddressOpen, setIsChooseAddressOpen] =
@@ -123,6 +129,8 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
 
   const orderMutation = useOrderMutation();
 
+  const totalPriceWithoutTax = Math.round(price.subtotal - price.discount);
+
   const handleConfirmPlaceOrder = useCallback(async () => {
     toast.loading(placingOrder);
 
@@ -130,11 +138,19 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
     const orderObject: T_orderObj = {
       shipping_address: shippingAddress,
       products,
-      total_price: Math.round(price.subtotal - price.discount + price.tax),
+      total_price: coupon_discount
+        ? Math.round(
+            totalPriceWithoutTax -
+              totalPriceWithoutTax * (coupon_discount / 100) +
+              price.tax
+          )
+        : Math.round(totalPriceWithoutTax + price.tax),
       total_discount: price.discount,
       tax: price.tax,
       payment_type: paymentType,
     };
+
+    couponCode && (orderObject.coupon_code = couponCode);
 
     orderMutation.mutate(orderObject, {
       onSuccess: (data) => {
@@ -144,9 +160,9 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
         }
         push(paymentType === "stripe" ? data.url : "/profile/orders");
       },
-      onError: () => {
+      onError: (err: any) => {
         toast.dismiss();
-        toast.error(ErrorMessage);
+        toast.error(err.response.data.error || ErrorMessage);
       },
     });
   }, [price, paymentType, shippingAddress, products, orderMutation, push]);
@@ -207,7 +223,7 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
               <div className="mt-1">
                 <InputCompo
                   name="phone_number"
-                  type="tel"
+                  type="number"
                   isRequired
                   className="block w-full rounded-md border-lightColor bg-rootBg text-rootColor shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   onChange={handleChange}
@@ -326,6 +342,12 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
                   ${Math.round(price.discount)}
                 </dd>
               </div>
+              {coupon_discount && (
+                <div className="flex items-center justify-between text-green-500">
+                  <dt className="text-sm">Coupon Discount</dt>
+                  <dd className="text-sm font-medium">%{coupon_discount}</dd>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <dt className="text-sm">Taxes</dt>
                 <dd className="text-sm font-medium text-rootColor">
@@ -335,7 +357,14 @@ const OrderSummary: FC<I_OrderSummary> = ({ product }) => {
               <div className="flex items-center justify-between border-t border-lightColor pt-6">
                 <dt className="text-base font-medium">Total</dt>
                 <dd className="text-base font-medium text-rootColor">
-                  ${Math.round(price.subtotal - price.discount + price.tax)}
+                  $
+                  {coupon_discount
+                    ? Math.round(
+                        totalPriceWithoutTax -
+                          totalPriceWithoutTax * (coupon_discount / 100) +
+                          price.tax
+                      )
+                    : Math.round(totalPriceWithoutTax + price.tax)}
                 </dd>
               </div>
             </dl>

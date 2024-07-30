@@ -66,6 +66,16 @@ const userModel = new Schema({
     type: Number || null,
     default: null,
   },
+  coupons: [
+    {
+      coupon_name: String,
+      coupon_code: String,
+      coupon_discount: Number,
+      starts_on: Date,
+      ends_on: Date,
+      is_active: Boolean,
+    },
+  ],
 });
 
 const User = models.users || model("users", userModel);

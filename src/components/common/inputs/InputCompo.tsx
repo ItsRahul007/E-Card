@@ -15,6 +15,7 @@ interface I_InputComponent {
   isReadOnly?: boolean;
   minLength?: number;
   autoComplete?: "on" | "off";
+  disabled?: boolean;
 }
 
 const InputCompo: React.FC<I_InputComponent> = ({
@@ -29,6 +30,7 @@ const InputCompo: React.FC<I_InputComponent> = ({
   isReadOnly,
   minLength,
   autoComplete = "on",
+  disabled,
 }) => {
   return (
     <input
@@ -52,6 +54,7 @@ const InputCompo: React.FC<I_InputComponent> = ({
       readOnly={isReadOnly}
       minLength={minLength}
       autoComplete={autoComplete}
+      disabled={disabled}
     />
   );
 };
