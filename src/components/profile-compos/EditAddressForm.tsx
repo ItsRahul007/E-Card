@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FC } from "react";
-import InputCompo from "@/components/common/inputs/InputCompo";
 import Button from "@/components/common/buttons/Button";
 import { addressTypeInputValues } from "@/lib/types/addressTypes";
 import toast from "react-hot-toast";
@@ -66,7 +65,7 @@ const EditAddressForm: FC<I_EditAddressForm> = ({
                 name="phone_number"
                 inputType="tel"
                 onChange={onChange}
-                value={full_name}
+                value={phone_number}
                 required
                 minLength={10}
                 autoComplete="off"
