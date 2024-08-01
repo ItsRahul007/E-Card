@@ -4,7 +4,6 @@ import style from "@/app/style/style.module.css";
 import Footer from "@/components/common/footer/Footer";
 import ImageContainer from "@/components/single-product-compos/ImageContainer";
 import type { Metadata } from "next";
-import { getProductDescription } from "@/lib/gimini-AI/giminiAI";
 import BuyAndAddToCartButtons from "./BuyAndAddToCartButtons";
 import ReviewSection from "./ReviewSection";
 import { cookies } from "next/headers";
@@ -49,14 +48,9 @@ export async function generateMetadata({
 
   const { product } = response.data;
 
-  const description = await getProductDescription(
-    product.product_type,
-    product.product_name
-  );
-
   return {
     title: "E-Card - " + capitalizeText(product.product_name),
-    description,
+    description: product.product_description,
   };
 }
 
@@ -90,14 +84,10 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
     discount_percentage,
     current_price,
     product_category,
+    product_description,
   } = product.data.product;
 
   const encriptedProductId = sign(productId, process.env.JWT_SECRET!);
-
-  const ProductDescription = await getProductDescription(
-    product_type,
-    product_name
-  );
 
   //? Function to generate star icons based on the rounded rating
   const generateStars = () => {
@@ -185,7 +175,7 @@ const SingleProductPage: FC<I_SingleProductPage> = async ({ params }) => {
 
               {/* about the product */}
               <div className="font-medium text-sm text-gray-500 dark:text-gray-400 md:w-[90%] mt-4">
-                {ProductDescription ||
+                {product_description ||
                   "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quis minus quia adipisci perferendis! Distinctio illo officiis sapiente. Ex perferendis, quae rerum odit doloremque, accusantium blanditiis dolores est quos incidunt animi labore recusandae velit quaerat commodi laboriosam eaque eveniet, distinctio aperiam. Earum, ipsam. Illum pariatur laboriosam aliquid doloribus rerum, maxime assumenda soluta ut quidem sint reiciendis optio cupiditate nihil unde harum ipsa dolorem maiores repudiandae distinctio quia delectus possimus quasi non! Ex quasi suscipit, laboriosam quaerat maxime doloribus voluptas tenetur maiores illum eligendi provident, veniam, vitae expedita eveniet aperiam nemo quos commodi reiciendis culpa aspernatur eius. Quidem odio dolorum ipsa enim id beatae cum totam sapiente in quasi similique minus atque optio accusamus, exercitationem officia. Eligendi quasi ut optio sunt distinctio dolorem sapiente necessitatibus quod temporibus deserunt unde facilis quidem corrupti omnis delectus harum aliquam voluptatem corporis ducimus odio aut, et consequuntur neque dolores? Quod qui magnam laborum ad libero."}
               </div>
 

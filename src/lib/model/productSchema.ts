@@ -22,10 +22,12 @@ const productSchema = new Schema(
     product_type: {
       required: true,
       type: String,
+      set: (value: string) => value.toLowerCase(),
     },
     product_category: {
       required: true,
       type: String,
+      set: (value: string) => value.toLowerCase(),
     },
     current_price: {
       required: true,

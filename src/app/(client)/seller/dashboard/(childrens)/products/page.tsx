@@ -19,7 +19,7 @@ const SellerProducts = async () => {
   const products = usersProducts.map((obj) => ({
     name: obj.product_name,
     price: obj.price,
-    discount: obj.discount_percentage,
+    discount: obj.discount_percentage + "%",
     primaryImage: <PrimaryImg alt="testing" src={obj.primaryImgUrl} />,
     id: obj._id,
   }));

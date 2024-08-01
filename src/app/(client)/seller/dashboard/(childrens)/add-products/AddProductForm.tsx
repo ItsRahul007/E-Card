@@ -13,6 +13,7 @@ import {
   productUpdatedSuccessMessage,
 } from "@/lib/util/toastMessages";
 import { revalidateUrl } from "@/lib/util/revalidate";
+import { getProductDescription } from "@/lib/gimini-AI/giminiAI";
 
 const formDataInitialValues: T_FormVariables = {
   product_name: "",
@@ -46,6 +47,7 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
   const [formVariables, setFormVariables] = useState<T_FormVariables>(
     formDataInitialValues
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (productObj) {
@@ -143,6 +145,23 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
     }
   };
 
+  const handleGenerateDescription = async () => {
+    try {
+      setIsLoading(true);
+      const text = await getProductDescription(
+        formVariables.product_type,
+        formVariables.product_name,
+        formVariables.product_category
+      );
+      formVariables.product_description = text || "";
+      setIsLoading(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      toast.error(ErrorMessage);
+      console.error(error.message);
+    }
+  };
+
   return (
     <form className="w-full h-auto" onSubmit={handleSubmit}>
       <div className="w-full h-auto grid lg:grid-cols-3 sm:grid-cols-2 gap-x-4 md:gap-x-10">
@@ -212,7 +231,7 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
           handleStoreImages={handleStoreImages}
           imgUrl={formVariables.secondry_image_3}
         />
-        <div className="mb-4">
+        <div className="mb-4 flex flex-col gap-3">
           <label
             htmlFor="productDescription"
             className="block text-sm font-medium text-rootColor"
@@ -226,8 +245,20 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
             onChange={handleOnChange}
             className="mt-1 block w-full px-3 py-2 border border-lightColor bg-rootBg rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
-            rows={5}
+            rows={7}
           />
+          <span
+            className="px-3 py-2 rounded-md bg-indigo-600 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed w-fit text-sm cursor-pointer"
+            aria-disabled={
+              formVariables.product_type === "" ||
+              formVariables.product_name === "" ||
+              formVariables.product_category === "" ||
+              isLoading
+            }
+            onClick={handleGenerateDescription}
+          >
+            {isLoading ? "Loading..." : "Generate description (AI)"}
+          </span>
         </div>
       </div>
       <div>
@@ -235,6 +266,7 @@ const AddProductForm: React.FC<I_AddProductForm> = (productObj) => {
           type="submit"
           text={`${productObj.forUpdate ? "Update" : "Add"} Product`}
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          disabled={isLoading}
         />
       </div>
     </form>

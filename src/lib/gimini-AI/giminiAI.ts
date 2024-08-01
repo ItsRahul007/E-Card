@@ -1,10 +1,13 @@
+"use server";
+
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GIMINI_AI_API_KEY || "");
 
 export async function getProductDescription(
   productKey: string,
-  productName?: string
+  productName?: string,
+  category?: string
 ) {
   // For text-only input, use the gemini-pro model
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -20,6 +23,7 @@ export async function getProductDescription(
   For now, the product type is ${productKey} ${
     productName ? "and the product name is " + productName : ""
   }
+  ${category ? "and the category is " + category : ""}
   `;
 
   try {
