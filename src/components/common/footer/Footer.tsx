@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { FC } from "react";
 
 const Footer: FC = () => {
@@ -42,18 +43,27 @@ const Footer: FC = () => {
         <div className="flex md:justify-between md:flex-row flex-col md:gap-0 gap-2 w-[95%]">
           <span>Copyright &#169; 2024 All Rights Reserved by Rahul</span>
           <span className="flex gap-2">
-            <button className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center">
+            <Link
+              href="https://www.facebook.com/people/Rahul-Ghosh/pfbid02Fp1XpuRRXzXEAsQZA4hk5YVjDEvockQx7eXVeRBdHAX3zsdkhErb8EgK8zgPLe5jl/"
+              target="_blank"
+              className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center"
+            >
               <i className="ri-facebook-fill"></i>
-            </button>
-            <button className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center">
-              <i className="ri-twitter-fill"></i>
-            </button>
-            <button className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center">
-              <i className="ri-global-line"></i>
-            </button>
-            <button className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center">
+            </Link>
+            <Link
+              href="https://github.com/itsrahul007"
+              target="_blank"
+              className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center"
+            >
+              <i className="ri-github-fill"></i>
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/rahul-ghosh-123624273/?originalSubdomain=in"
+              target="_blank"
+              className="bg-[#35383f] rounded-full text-xl cursor-pointer h-7 w-7 p-5 flex items-center justify-center"
+            >
               <i className="ri-linkedin-fill"></i>
-            </button>
+            </Link>
           </span>
         </div>
       </div>
