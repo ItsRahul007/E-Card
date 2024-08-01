@@ -36,7 +36,7 @@ const AddProducts: React.FC<I_AddProducts> = async ({ searchParams }) => {
           secondry_image_3={product.secondaryImgUrls[2]}
           product_type={product.product_type}
           productId={JSON.stringify(product._id)}
-          forUpdate
+          forUpdate={encodedProductId.length > 0}
         />
       ) : (
         <AddProductForm />

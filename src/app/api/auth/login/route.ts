@@ -125,8 +125,13 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const { userRole, name, mobile_number, orders, isVerified } =
-      await req.json();
+    const {
+      userRole,
+      name,
+      mobile_number,
+      orders,
+      isVerified = undefined,
+    } = await req.json();
     const updateObject: any = {};
 
     //! adding the given values in a object
@@ -154,7 +159,7 @@ export async function PUT(req: NextRequest) {
     await connectWithMongo();
     const updatedData = await User.findByIdAndUpdate(userId, updateObject, {
       new: true,
-    }).select("_id userRole name brandName avatar");
+    }).select("_id userRole name brandName avatar isVerified");
 
     if (!updatedData) {
       return NextResponse.json(
