@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verify } from "jsonwebtoken";
-import { authTokenType } from "../types/authToken-type";
+import { T_JwtVerifyDataType } from "../types/authToken-type";
 
 export async function checkAuth(req: NextRequest) {
   //! If no auth token found in cookies
@@ -16,7 +16,7 @@ export async function checkAuth(req: NextRequest) {
     const verifiedToken = verify(
       authToken,
       process.env.JWT_SECRET!
-    ) as authTokenType;
+    ) as T_JwtVerifyDataType;
     if (!verifiedToken) {
       const response = NextResponse.redirect(new URL("/login", req.url));
       //! clearing the auth token cookie
