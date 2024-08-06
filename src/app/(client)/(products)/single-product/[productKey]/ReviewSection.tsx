@@ -93,7 +93,7 @@ const ReviewSection: FC<I_ReviewSection> = ({ _id, isUserLoggededIn }) => {
         </div>
 
         {/* reviews */}
-        <div className="w-full h-96 overflow-scroll flex flex-col gap-3 justify-start">
+        <div className="w-full max-h-96 overflow-scroll flex flex-col gap-3 justify-start">
           {/* review components */}
           {isLoading ? (
             <PageLoading />
