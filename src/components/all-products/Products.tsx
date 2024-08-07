@@ -107,7 +107,7 @@ const Products: React.FC<I_Products> = ({
             ref={loadingRef}
           >
             <span
-              className={`h-10 w-10 block border-4 border-transparent rounded-full border-r-black animate-spin ${
+              className={`h-10 w-10 block border-4 border-transparent rounded-full border-r-rootColor border-b-rootColor animate-spin ${
                 !isFetchingNextPage && "!hidden"
               }`}
             />
