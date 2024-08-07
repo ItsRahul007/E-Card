@@ -10,9 +10,23 @@ import {
   invalidEmail,
   userAlreadyExists,
 } from "@/lib/util/apiMessages";
-// import { sendEmailVerificationCode } from "@/lib/send-email/send-emails";
 import { getDateFromNumber } from "@/lib/util/checkAuth";
 import { sendEmail } from "@/lib/server-side-actions/nodemailer";
+
+const sendEmailVerificationCode = async (code: number, email: string) => {
+  const { success, problem } = await sendEmail({
+    subject: "Verify your email on E-Card",
+    html: `
+        <h1>Here is your verification code for verifying your email on E-Card</h1> <br>
+        <strong>Code: ${code}</strong>
+        <p>Please do not share this code with others.</p>
+        `,
+    to: email,
+  });
+  if (!success) {
+    console.error("Failed to send email to customer: ", problem);
+  }
+};
 
 export async function POST(req: Request) {
   try {
@@ -61,22 +75,7 @@ export async function POST(req: Request) {
       verificationCode: code,
     });
 
-    const sendEmailVerificationCode = async () => {
-      const { success, problem } = await sendEmail({
-        subject: "Verify your email on E-Card",
-        html: `
-        <h1>Here is your verification code for verifying your email on E-Card</h1> <br>
-        <strong>Code: ${code}</strong>
-        <p>Please do not share this code with others.</p>
-        `,
-        to: email,
-      });
-      if (!success) {
-        console.error("Failed to send email to customer: ", problem);
-      }
-    };
-
-    sendEmailVerificationCode();
+    await sendEmailVerificationCode(code, email);
 
     const data = {
       user: {
