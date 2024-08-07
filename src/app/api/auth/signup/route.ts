@@ -10,8 +10,9 @@ import {
   invalidEmail,
   userAlreadyExists,
 } from "@/lib/util/apiMessages";
-import { sendEmailVerificationCode } from "@/lib/send-email/send-emails";
+// import { sendEmailVerificationCode } from "@/lib/send-email/send-emails";
 import { getDateFromNumber } from "@/lib/util/checkAuth";
+import { sendEmail } from "@/lib/server-side-actions/nodemailer";
 
 export async function POST(req: Request) {
   try {
@@ -48,16 +49,34 @@ export async function POST(req: Request) {
       is_active: true,
     };
 
+    //? Generate a random number between 100000 and 999999 (inclusive)
+    const code = Math.floor(Math.random() * 900000) + 100000;
+
     const user = await User.create({
       name,
       email,
       password: secPas,
       coupons: [coupon],
+      isVerified: false,
+      verificationCode: code,
     });
 
-    if (!user.isVerified) {
-      sendEmailVerificationCode(user._id);
-    }
+    const sendEmailVerificationCode = async () => {
+      const { success, problem } = await sendEmail({
+        subject: "Verify your email on E-Card",
+        html: `
+        <h1>Here is your verification code for verifying your email on E-Card</h1> <br>
+        <strong>Code: ${code}</strong>
+        <p>Please do not share this code with others.</p>
+        `,
+        to: email,
+      });
+      if (!success) {
+        console.error("Failed to send email to customer: ", problem);
+      }
+    };
+
+    sendEmailVerificationCode();
 
     const data = {
       user: {
